@@ -1,0 +1,57 @@
+{
+    "id": 12,
+    "title": 12,
+    "key": "o_12",
+    "orig": "xz.png",
+    "mod": {
+        "key": "gltf",
+        "name": "box2.gltf"
+    },
+    "param": {
+        "tOt": false,
+        "tNa": false,
+        "rO": -1,
+        "kesh": false,
+        "sG": false,
+        "clone": true
+    },
+    "resurs": {
+        "array": []
+    },
+    "iNum": {
+        "rect": [
+            -25,
+            0,
+            -25,
+            50,
+            100,
+            50
+        ],
+        "rect1": [
+            -25,
+            0,
+            -25,
+            50,
+            100,
+            50
+        ],
+        "bool": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "num": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "str": [
+            "0",
+            "0",
+            "0",
+            "0"
+        ]
+    }
+}
