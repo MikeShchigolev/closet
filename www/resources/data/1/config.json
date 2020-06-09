@@ -1,0 +1,21 @@
+{
+    "id": 1,
+    "title": 1,
+    "key": "o_1",
+    "orig": "Screenshot_16.png",
+    "mod": {
+        "key": "n",
+        "name": "n"
+    },
+    "param": {
+        "tOt": false,
+        "tNa": false,
+        "rO": -1,
+        "kesh": false,
+        "sG": false,
+        "clone": true
+    },
+    "resurs": {
+        "array": []
+    }
+}

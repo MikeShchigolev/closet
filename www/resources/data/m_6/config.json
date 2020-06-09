@@ -1,0 +1,37 @@
+{
+    "id": "m_6",
+    "title": "title_m_6",
+    "key": "MeshPhongMaterial",
+    "obj": {
+        "type": "MeshPhongMaterial",
+        "color": "#ffffff",
+        "skinning": false,
+        "flatShading": false,
+        "depthFunc": 3,
+        "blending": 1,
+        "side": 0,
+        "opacity": 1,
+        "transparent": true,
+        "alphaTest": 0,
+        "wireframe": false,
+        "reflectivity": 1,
+        "refractionRatio": 0.98,
+        "emissive": "#000000",
+        "specular": "#111111",
+        "shininess": 30,
+        "textur": [
+            {
+                "link": "resources/data/m_6/textur/0.png",
+                "l": "0.png",
+                "name": "map",
+                "rx": 1,
+                "ry": 1
+            }
+        ]
+    },
+    "mirro": false,
+    "resurs": {
+        "array": []
+    },
+    "orig": "xz.png"
+}

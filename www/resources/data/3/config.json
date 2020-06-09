@@ -1,0 +1,21 @@
+{
+    "id": 3,
+    "title": 3,
+    "key": "o_3",
+    "orig": "null",
+    "mod": {
+        "key": "n",
+        "name": "n"
+    },
+    "param": {
+        "tOt": false,
+        "tNa": false,
+        "rO": -1,
+        "kesh": false,
+        "sG": false,
+        "clone": true
+    },
+    "resurs": {
+        "array": []
+    }
+}
