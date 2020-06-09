@@ -261,6 +261,8 @@ export class Galleres  {
             this.index=0;
 
 
+
+
             //выподание группы
             this.array[3].kolII=2;
             this.array[3].widthPic=128;
@@ -273,7 +275,7 @@ export class Galleres  {
             this.array[3].scrollBarV.alpha=0.5;
             this.array[3].whPic=128;
             this.array[3].otstup=this.otstup;
-            this.array[3].finalLink=this.finalLink//"256.png"
+            this.array[3].finalLink=this.finalLink;//"256.png";
             this.array[3].intText=2;
             this.array[3].otstupBlok=0;  
             this.array[3].x=self.widthBig;
