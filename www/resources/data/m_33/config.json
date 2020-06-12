@@ -1,0 +1,36 @@
+{
+    "id": "m_33",
+    "title": "m_33",
+    "key": "MeshStandardMaterial",
+    "obj": {
+        "type": "MeshStandardMaterial",
+        "color": "#f6f6f6",
+        "skinning": false,
+        "flatShading": false,
+        "depthFunc": 3,
+        "blending": 1,
+        "side": 0,
+        "opacity": 1,
+        "transparent": false,
+        "alphaTest": 0,
+        "wireframe": false,
+        "reflectivity": 1,
+        "refractionRatio": 0.98,
+        "roughness": 1.32,
+        "metalness": 0,
+        "emissive": "#000000",
+        "textur": [
+            {
+                "link": "resources/data/m_33/textur/al6l_2.jpg",
+                "l": "al6l_2.jpg",
+                "name": "map",
+                "rx": 1,
+                "ry": "-1"
+            }
+        ]
+    },
+    "mirro": false,
+    "resurs": {
+        "array": []
+    }
+}

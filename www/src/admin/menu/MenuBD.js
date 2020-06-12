@@ -43,7 +43,7 @@ function MenuBD(menu, fun) {
     var naObj=undefined    
     this.gallery.funOver=function(e){
         naObj=e 
-        trace(e)      
+             
     }
 
     this.gallery.funOut=function(){
@@ -59,7 +59,7 @@ function MenuBD(menu, fun) {
     }
     this.drag=function(){
         var o=self.gallery.array[self.gallery.index].object;
-        trace(self.gallery.array[self.gallery.index].object)
+       
         self.par.dragPic.start(32, aGlaf.resursData+""+o.id+"/64.png", o);       
     }
 
@@ -300,7 +300,7 @@ function MenuBD(menu, fun) {
 
 
     function startPapis(idS,idNa){
-        trace(idS,idNa);
+        
         const a=['32.png','64.png','100.png','128.png','256.png','original.png',
                 'y32.png','y64.png','y100.png','y128.png','y256.png','yoriginal.png']
 

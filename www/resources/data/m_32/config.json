@@ -1,0 +1,28 @@
+{
+    "id": "m_32",
+    "title": "m_32",
+    "key": "MeshStandardMaterial",
+    "obj": {
+        "type": "MeshStandardMaterial",
+        "color": "#ffffff",
+        "skinning": false,
+        "flatShading": false,
+        "depthFunc": 3,
+        "blending": 1,
+        "side": 0,
+        "opacity": 1,
+        "transparent": false,
+        "alphaTest": 0,
+        "wireframe": true,
+        "reflectivity": 1,
+        "refractionRatio": 1,
+        "envMapIntensity": 0.15,
+        "roughness": 0.5,
+        "metalness": 0.5,
+        "emissive": "#000000"
+    },
+    "mirro": true,
+    "resurs": {
+        "array": []
+    }
+}

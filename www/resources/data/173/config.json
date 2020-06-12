@@ -1,0 +1,67 @@
+{
+    "id": 173,
+    "title": 173,
+    "key": "o_173",
+    "bool": [
+        0,
+        0,
+        0,
+        0
+    ],
+    "num": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "str": [
+        "BGroup",
+        "{|type|:|BPieceTop|,|id|:14,|x|:104.23141892481223,|y|:220,|children|:[{|type|:|BPieceObject|,|id|:42,|x|:0,|y|:0,|intSah|:0,|intSah1|:0,|hrenNiz|:{|intSah|:0,|intSah1|:-1},|polka|:false,|children|:[],|idColor|:|m_8|},{|type|:|BPieceObject|,|id|:42,|x|:0,|y|:-38.400000000000006,|intSah|:0,|intSah1|:0,|hrenNiz|:{|intSah|:0,|intSah1|:0},|polka|:true,|children|:[],|idColor|:|m_8|},{|type|:|BPieceObject|,|id|:42,|x|:0,|y|:-144,|intSah|:0,|intSah1|:0,|hrenNiz|:{|intSah|:0,|intSah1|:-1},|polka|:false,|children|:[],|idColor|:|m_8|}]}",
+        "0",
+        "0",
+        "0",
+        "0"
+    ],
+    "orig": "low_2.jpg",
+    "mod": {
+        "key": "n",
+        "name": "n",
+        "r": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "r1": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "plus": [
+        "N",
+        "-",
+        "N",
+        "N",
+        "N"
+    ],
+    "plus1": [
+        "N",
+        "N",
+        "N",
+        "N",
+        "N"
+    ],
+    "priority": 0,
+    "bagY": 0,
+    "resurs": {
+        "array": []
+    }
+}

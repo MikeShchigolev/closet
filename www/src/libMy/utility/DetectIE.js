@@ -102,13 +102,13 @@ function DetectIE (_div, link) { // Проверка на поддержку Web
 		var r=true;
 		if (navigator.userAgent.indexOf('MSIE') !== -1 ||navigator.appVersion.indexOf('Trident/') > 0) {
 			var a=navigator.appVersion.split("Trident/")
-
+			trace(a[1][0])
 			var vv=a[1][0]*1
 			if(isNaN(vv)==true)return false
 			if(vv<7){
 				return false
 			}
-
+			trace(navigator.appVersion)
 		}
 
 		return r

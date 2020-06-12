@@ -2,56 +2,66 @@
     "id": 12,
     "title": 12,
     "key": "o_12",
-    "orig": "xz.png",
+    "bool": [
+        0,
+        0,
+        0,
+        0
+    ],
+    "num": [
+        0,
+        0,
+        0,
+        0,
+        "0",
+        "0"
+    ],
+    "str": [
+        "BGroup",
+        "{|type|:|BPieceTop|,|id|:14,|x|:205.20783056395564,|y|:197.22188997952486,|children|:[{|type|:|BPieceObject|,|id|:54,|x|:-15,|y|:-45.49999956643086,|intSah|:0,|intSah1|:0,|children|:[]},{|type|:|BPieceObject|,|id|:54,|x|:15,|y|:-35.899999566430864,|intSah|:0,|intSah1|:0,|children|:[]},{|type|:|BPieceObject|,|id|:54,|x|:-15,|y|:-23.09999956643088,|intSah|:0,|intSah1|:0,|children|:[]},{|type|:|BPieceObject|,|id|:54,|x|:-15,|y|:-67.89999956643088,|intSah|:0,|intSah1|:0,|children|:[]}]}",
+        "0",
+        "0",
+        "0",
+        "0"
+    ],
+    "orig": "0.png",
     "mod": {
-        "key": "gltf",
-        "name": "box2.gltf"
+        "key": "n",
+        "name": "n",
+        "r": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "r1": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
-    "param": {
-        "tOt": false,
-        "tNa": false,
-        "rO": -1,
-        "kesh": false,
-        "sG": false,
-        "clone": true
-    },
+    "plus": [
+        "данные",
+        "данные",
+        "данные",
+        "1000",
+        "1000"
+    ],
+    "plus1": [
+        "данные",
+        "данные",
+        "данные",
+        "1000",
+        "xz"
+    ],
+    "priority": 0,
+    "bagY": 0,
     "resurs": {
         "array": []
-    },
-    "iNum": {
-        "rect": [
-            -25,
-            0,
-            -25,
-            50,
-            100,
-            50
-        ],
-        "rect1": [
-            -25,
-            0,
-            -25,
-            50,
-            100,
-            50
-        ],
-        "bool": [
-            0,
-            0,
-            0,
-            0
-        ],
-        "num": [
-            0,
-            0,
-            0,
-            0
-        ],
-        "str": [
-            "0",
-            "0",
-            "0",
-            "0"
-        ]
     }
 }

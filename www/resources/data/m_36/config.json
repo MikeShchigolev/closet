@@ -1,0 +1,51 @@
+{
+    "id": "m_36",
+    "title": "niz",
+    "key": "MeshStandardMaterial",
+    "obj": {
+        "type": "MeshStandardMaterial",
+        "color": "#ffffff",
+        "skinning": false,
+        "flatShading": false,
+        "depthFunc": 3,
+        "blending": 1,
+        "side": 0,
+        "opacity": 1,
+        "transparent": false,
+        "alphaTest": 0,
+        "wireframe": false,
+        "reflectivity": 1,
+        "refractionRatio": 0.98,
+        "textur": [
+            {
+                "link": "resources/data/m_36/textur/2.jpg",
+                "l": "2.jpg",
+                "name": "map",
+                "rx": "1.4",
+                "ry": "1.4"
+            },
+            {
+                "link": "resources/data/m_36/textur/2_n.jpg",
+                "l": "2_n.jpg",
+                "name": "normalMap",
+                "rx": "1.4",
+                "ry": "1.4"
+            },
+            {
+                "link": "resources/data/m_36/textur/2_s.jpg",
+                "l": "2_s.jpg",
+                "name": "roughnessMap",
+                "rx": "1.4",
+                "ry": "1.4"
+            }
+        ],
+        "roughness": 1.38,
+        "metalness": 0.05,
+        "emissive": "#000000"
+    },
+    "mirro": false,
+    "resurs": {
+        "array": []
+    },
+    "orig": "Пол_тест_06_1.png"
+}

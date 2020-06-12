@@ -1,0 +1,34 @@
+{
+    "id": "m_1",
+    "title": "m_d1",
+    "key": "MeshPhongMaterial",
+    "obj": {
+        "type": "MeshPhongMaterial",
+        "color": "#808080",
+        "skinning": false,
+        "flatShading": false,
+        "depthFunc": 3,
+        "blending": 1,
+        "side": 0,
+        "opacity": 0.55,
+        "transparent": false,
+        "alphaTest": 0.53,
+        "wireframe": false,
+        "reflectivity": 0.010000000000000009,
+        "refractionRatio": 0.2,
+        "textur": [],
+        "depthTest": true,
+        "roughness": 0.66,
+        "metalness": 0.61,
+        "clearCoat": 0.36,
+        "clearCoatRoughness": 0.53,
+        "emissive": "#000000",
+        "specular": "#111111",
+        "shininess": 30
+    },
+    "mirro": false,
+    "orig": "Screenshot_3.png",
+    "resurs": {
+        "array": []
+    }
+}

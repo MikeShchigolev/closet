@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
   	entry: './src/index.js',
   	output: {
     	path: path.resolve(__dirname, 'build'),
-		filename: 'closet.js',
+		filename: 'larvij.js',
 		publicPath: 'build/'
   	},
   	devServer: {       

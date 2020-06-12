@@ -15,7 +15,7 @@
 	var path="src/"
 	var plus=""
 	var manifest = []	
-	var main,_detectIE
+	var lMain,_detectIE
 
 	var  video
 	function sizeWindow () {
@@ -26,7 +26,7 @@
 		if(window.innerWidth!=undefined)w = window.innerWidth;
 		if(window.innerHeight!=undefined)h = window.innerHeight;
 	
-		if (main) main.sizeWindow(w, h);		
+		if (lMain) lMain.sizeWindow(w, h);		
 		if (appLoader) appLoader.sizeWindow(w,h);
 	}
 
@@ -65,7 +65,7 @@
 			{src: path + 'lib/shader/ShaderAll.js' + plus},
 			{src: path + '/lib/tween.min.js' + plus},
 
-			//{src: path + 'component3d/BoxHelper.js' + plus},
+			{src: path + 'component3d/BoxHelper.js' + plus},
 			{src: path + 'libMy/DragPic.js' + plus},
 
 			{src: path + 'lib/loaders/GLTFLoader.js' + plus},
@@ -79,11 +79,11 @@
 			{src: path + '/php/Php.js' + plus},
 			{src: path + 'libMy/utility/Calc.js' + plus},
 			{src: path + 'libMy/utility/Rectangle.js' + plus},	
-			//{src: path + 'SceneSB.js' + plus},
+			{src: path + 'SceneSB.js' + plus},
 			{src: path + 'libMy/t3d.js' + plus},
 			{src: 'resources/font/SFUIDisplay-Bold.ttf', type:"FontFace", name:'SFUIDisplay-Bold'},		
 	    	{src: 'resources/font/SFUIDisplay-Light.ttf', type:"FontFace", name:'SFUIDisplay-Light'},
-			{src:'build/closet.js' + plus}
+			{src:'build/larvij.js' + plus}
 		];
 
 		if(window["Promise"]==undefined){
@@ -125,7 +125,7 @@
 				Это, я не вижу тасков и обьемки задачь. Предлогаю переходить на почасовку. Давай звониться обсудим данный вопрос
 				*/
 				
-				main=new Main(function(s){
+				lMain=new LMain(function(s){
 					if(s=="init"){
 
 						appLoader.indicator.procent = 100;
@@ -134,7 +134,7 @@
 						/*trace("v: 1.0")*/
 						
 						sizeWindow();
-						//startInfo();
+						startInfo();
 						//korektTrace();
 					}
 				},plus)				

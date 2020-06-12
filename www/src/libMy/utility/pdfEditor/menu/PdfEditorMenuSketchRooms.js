@@ -30,7 +30,7 @@ function PdfEditorMenuSketchRooms (_pdfEditorMenu) {
 	this.gallSketchRooms.heightPic = this.btnHeight;
 
 	this.setArray = function (_array) {
-
+		trace('<<>>--setArray--', _array)
 		this.gallSketchRooms.start(_array);
 	};
 

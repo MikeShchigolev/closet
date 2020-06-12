@@ -19,10 +19,7 @@ export function LocalStorage(fun,_key) {
 		}else {
 			this.object = jQuery.parseJSON(this.object); // если localStorage не пуст записываем содержимое предварительно
 		}	
-		if(this.fun){
-			setTimeout(function() {self.fun();}, 1);
-			
-		}
+		if(this.fun)self.fun();
 	}
 	
 	// если localStorage пуст, записываем обьект

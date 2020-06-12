@@ -39,7 +39,7 @@ function DopInfo(par, fun) {
                                  
             },
             error:function function_name(data) {
-
+                trace("Что то случилось с конфигом");
                 self.confText={};
                 self.confText.email="xz@xz.xz";
                 self.confText.array=[]  ;  
@@ -49,24 +49,20 @@ function DopInfo(par, fun) {
             }
         });
     }
-    this.init()
+
     this.init2=function(){        
         this.array[0]=this.vsakoe=new DIVsakoe(this);
         this.array[1]=this.arrText=new DIArrText(this);
-        //this.array[2]=this.devSettings=new DevSettings(this);
         this.setActiv(this.vsakoe);
-
-
-
-        this.sizeWindow()
+        this.sizeWindow();
     }
 
 
 
     this.setActiv = function(o){  
-
+        trace(o)        
         for (var i = 0; i < this.array.length; i++) {
-
+            trace(i+"  "+this.array[i])
             if(this.array[i].type==o.type) this.array[i].active = true
             else this.array[i].active = false
         }
@@ -138,11 +134,6 @@ function DopInfo(par, fun) {
 }
 
 
-
-
-
-
-
 function DIVsakoe(par) {  
     var self=this;  
     this.type="DIVsakoe";
@@ -150,89 +141,153 @@ function DIVsakoe(par) {
     this.otstup=aGlaf.otstup;
     this._active=false;
 
+    
+
     this.dCont=new DCont(this.par.w.content);
     this.dCont.visible=false   
     this.button=new DButton(this.par.w, this.otstup, this.otstup,"Всякое", function(s){       
-        self.par.setActiv(self)
+        self.par.setActiv(self);
     });
     this.button.height=28;
 
-
-
-    var y=this.otstup;
-
-    let b=false
-    trace("self.confText ",self.confText);
-    if(b==true)self.par.saveTime();
+    
+    var yy=this.otstup
 
 
 
-    this.chek1=new DCheckBox(this.dCont, this.otstup, y, "Уточнения действий, защита от слкучайного удаления 'durak'", function(s){ 
+    this.panel=new DPanel(this.dCont, this.otstup, yy);
+    this.panel.width=1000;
+    this.panel.height=70;
+
+    let l=new DLabel(this.panel, this.otstup,this.otstup,"u1 Включена замена полок апдейт up1_10_06_2020  ").width=600
+    l.width = this.panel.width;
+
+    this.chekU1=new DCheckBox(this.panel, this.otstup, this.otstup+20, "active", function(s){ 
+        self.confText.up1.active = this.value; 
+        self.par.saveTime();       
+    })  
+
+    this.slidU1W=new DSliderBig(this.panel, 100, this.otstup+20, function(s){ 
+        self.confText.up1.width = this.value; 
+        self.par.saveTime(); 
+    }, "width", 100, 1000);
+    this.slidU1W.width=200
+    this.slidU1W.okrug=1
+    
+    this.slidU1H=new DSliderBig(this.panel, 100+210, this.otstup+20, function(s){ 
+        self.confText.up1.height = this.value; 
+        self.par.saveTime(); 
+    }, "height", 100, 1000);
+    this.slidU1H.width=200
+    this.slidU1H.okrug=1
+
+    this.slidU1S=new DSliderBig(this.panel, 100+210*2, this.otstup+20, function(s){ 
+        self.confText.up1.sahTime = this.value; 
+        self.par.saveTime(); 
+    }, "sahTime", 0, 100);
+    this.slidU1S.width=200
+    this.slidU1S.okrug=1
+
+    this.inputU1=new DInput(this.dCont, 100+210*3, this.otstup+22,"null", function(s){ 
+        self.confText.up1.link= this.text; 
+        self.par.saveTime(); 
+    });
+    this.inputU1.timeFun=1;
+    this.inputU1.width=this.panel.width-this.inputU1.x-this.otstup*2;
+
+
+
+
+
+    yy+=this.panel.height+this.otstup*2
+
+    this.chek1=new DCheckBox(this.dCont, this.otstup, yy, "Уточнения действий, защита от слкучайного удаления 'durak'", function(s){ 
         self.confText.settings.durak = this.value;
         aGlaf.durak=this.value
         self.par.saveTime();
     })
 
-
-    y+=32
-
+    yy+=32
 
 
-    this.b=new DButton(this.dCont, this.otstup, y,"load csv", function(s){ 
-        var a=s.split("base64,")       
-        var str=window.atob( a[1] )
-        self.par.par.menuVerh.bigZamena(str);       
+
+
+    new DLabel(this.dCont, 110,yy+8,"Загружаем цены через csv").width=200
+
+
+    this.b=new DButton(this.dCont, this.otstup, yy,"load csv New", function(s){        
+        var a=s.split("base64,");
+        var str=window.atob(a[1]);
+        self.korektText(str);
     })    
     this.b.startFile("csv"); 
-    new DLabel(this.dCont, 110,y+10,"Загружаем цены через csv").width=200
 
-    y+=40
 
-    this.input=new DInput(this.dCont, this.otstup, y,"null", function(s){ 
+    yy+=40
+
+
+
+    this.input=new DInput(this.dCont, this.otstup, yy,"null", function(s){ 
         self.confText.email= this.text; 
         self.par.saveTime(); 
     });
     this.input.timeFun=1
     this.input.width=300//designer@larvij.ru,vorodis2@gamil.com
-    new DLabel(this.dCont, 310,y+10,"Эмел на который будет уходить заказ, можно через запетую <<,>> без пробелов ").width=600
+    new DLabel(this.dCont, 310,yy+8,"Эмел на который будет уходить заказ, можно через запетую <<,>> без пробелов ").width=600
 
-    y+=40
+    yy+=40
+
+
+
+
+
+
+
+
+
+
 
     this.infoObj={
         sah:0,
         version:"1.0"
     }
-    this.inputVersion=new DInput(this.dCont, this.otstup, y,"null", function(s){ 
+    this.inputVersion=new DInput(this.dCont, this.otstup, yy,"null", function(s){ 
         
     });
-    this.inputVersion.object.disabled="disabled" 
+    this.inputVersion.object.disabled="disabled"; 
 
 
-
-    this.b=new DButton(this.dCont, this.otstup+105, y,"+", function(s){ 
+    this.b=new DButton(this.dCont, this.otstup+105, yy,"+", function(s){ 
         var s=   self.inputVersion.text.split(".") 
         var ss= s[0]+"."+(s[1]*1+1);
         self.infoObj.version=ss
         self.inputVersion.text=ss
         self.saveLoad()
     }).width=32
-    new DLabel(this.dCont, this.otstup+145, y+10,"Версия приложения").width=200
+    new DLabel(this.dCont, this.otstup+145, yy+8,"Версия приложения").width=200
 
-    y+=40
+
+    yy+=40
 
     //Акция------------------------------
-    this.panel=new DPanel(this.dCont, this.otstup, y);
+    this.panel=new DPanel(this.dCont, this.otstup, yy);
     new DLabel(this.panel, this.otstup,this.dCont,"Акция").width=200
 
     this.bLink=new DButton(this.panel, this.otstup, 20, "Load", function(s){ 
         var ll = '../resources/scane/'+this.files[0].name;
-        php.savePhoto(ll, s, function (e) {            
-            self.confText.action.link = ll; 
+        var ll2 = 'resources/scane/'+this.files[0].name;        
+        php.savePhoto(ll, s, function (e) {                     
+            self.confText.action.link = ll2; 
             self.par.saveTime(); 
-            self.bLink.loadImeg(ll);
+            self.bLink.loadImeg(ll2);
+            setTimeout(function() {                
+                self.bLink.image.width=self.bLink.width
+            }, 500);
+
         });
     })
     this.bLink.width=this.bLink.height=this.panel.height-20-this.otstup*2;
+
     this.bLink.startFile();
 
 
@@ -247,9 +302,81 @@ function DIVsakoe(par) {
     }, "kolSah", 1, 10)
     this.slid.okrug=1;
     this.panel.width=190;
+
+    
+
+    this.chekBuy=new DCheckBox(this.panel, this.otstup, yy-15, "кноп. Заказ", function(s){ 
+        self.confText.buy = this.value; 
+        self.par.saveTime();   
+        trace(self.confText)
+    })
+    yy+=32
+   
+    yy+=110
+
+
+    
+
+    
+
+    //Хрень с точками продажи
+    this.dopSamovuvoz=new DopSamovuvoz(this.dCont, this.otstup, yy, function(s,p){
+        self.par.saveTime(); 
+        trace(self.confText)
+    });
     
         
-    
+    ///////////////////////////////////////////
+
+    //КИРИЛИЦА!!!!!!!!!!!!!!!!!!!!
+    ///////////////////////////////
+    var es='й|ц|у|к|е|н|г|ш|щ|з|х|ъ|ф|ы|в|а|п|р|о|л|д|ж|э|я|ч|с|м|и|т|ь|б|ю|Й|Ц|У|К|Е|Н|Г|Ш|Щ|З|Х|Ъ|Ф|Ы|В|А|П|Р|О|Л|Д|Ж|Э|Я|Ч|С|М|И|Т|Ь|Б|Ю';
+    var es1='Ð¹|Ñ|Ñ|Ðº|Ðµ|Ð½|Ð³|Ñ|Ñ|Ð·|Ñ|Ñ|Ñ|Ñ|Ð²|Ð°|Ð¿|Ñ|Ð¾|Ð»|Ð´|Ð¶|Ñ|Ñ|Ñ|Ñ|Ð¼|Ð¸|Ñ|Ñ|Ð±|Ñ|Ð|Ð¦|Ð£|Ð|Ð|Ð|Ð|Ð¨|Ð©|Ð|Ð¥|Ðª|Ð¤|Ð«|Ð|Ð|Ð|Ð |Ð|Ð|Ð|Ð|Ð­|Ð¯|Ð§|Ð¡|Ð|Ð|Ð¢|Ð¬|Ð|Ð®'
+    var aa, aa1,bb
+    this.testStr = function(str){  
+        var r=null
+        if(aa==undefined){
+            aa=es.split("|")
+            aa1=es1.split("|")
+        }
+        
+        for (var i = 0; i < aa1.length; i++) {
+            if(str.indexOf(aa1[i])!=-1){
+                r=''
+                break;
+            }
+        }
+        if(r!=null){
+           r= this.testStr2(str)
+        }
+        return r;
+    }
+
+    var aaw,sw
+    this.testStr2 = function(str){        
+        var r=str;            
+        for (var i = 0; i < aa1.length; i++) {
+            if(r.indexOf(aa1[i])!=-1){
+                aaw=r.split(aa1[i]);
+                r=''
+                
+                for (var j= 0; j < aaw.length; j++) {
+                    if(j==0){
+                        r+=aaw[j]
+                    }else{
+                        r+=aa[i]+aaw[j]
+                    }
+                }
+            }
+        }
+        return r;
+    }
+
+    this.korektText=function(s){
+        
+        let str=this.testStr(s);
+        self.par.par.menuVerh.novaZamena(str); 
+    }
 
 
     //////////////////////////////////////////
@@ -270,8 +397,6 @@ function DIVsakoe(par) {
                    self.infoObj[s]=sss[s]
                 }
                 self.inputVersion.text=self.infoObj.version;
-
-
                                          
             },
             error:function function_name(data) {
@@ -296,31 +421,60 @@ function DIVsakoe(par) {
 
     this.confText
     this.setConf=function(confText){
-        console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",confText)
         
         this.confText=confText    
         this.input.text=this.confText.email;
+
+
+        //if(this.confText.emailNa==undefined)this.confText.emailNa="null"
+       //this.inputNa.text=this.confText.emailNa; 
+
+       
+        if(this.confText.dopS==undefined)this.confText.dopS={}
+        this.dopSamovuvoz.setObject(this.confText.dopS) 
+
+        
+        if(this.confText.buy==undefined)this.confText.buy=true;
+
+        this.chekBuy.value=this.confText.buy;
+
 
         if(this.confText.action==undefined){
             this.confText.action={}
             this.confText.action.link="null";
             this.confText.action.active=false;
             this.confText.action.kolSah=1;
-        }        
-        if(this.confText.action.link!="null")this.bLink.loadImeg(this.confText.action.link);
+        } 
+              
+        if(this.confText.action.link!="null"){
+            this.bLink.loadImeg(this.confText.action.link);
+            setTimeout(function() {                
+                self.bLink.image.width=self.bLink.width
+            }, 500);
+        }
         this.chek.value=this.confText.action.active;
         this.slid.value=this.confText.action.kolSah;
 
 
-        if(this.confText.settings==undefined){
-            this.confText.settings={}
+        if(this.confText.up1==undefined){
+            this.confText.up1={};
+            this.confText.up1.active=false;
+            this.confText.up1.width=200;
+            this.confText.up1.height=200;
+            this.confText.up1.link="up1.html";
         }
-        if(this.confText.settings.durak==undefined)this.confText.settings.durak=true;
+        this.chekU1.value=this.confText.up1.active;
+        this.slidU1W.value=this.confText.up1.width;
+        this.slidU1H.value=this.confText.up1.height;
+        this.inputU1.value=this.confText.up1.link;
+
+        if(this.confText.up1.sahTime==undefined)this.confText.up1.sahTime=10
+        this.slidU1S.value=this.confText.up1.sahTime;
+
+
+         if(this.confText.settings.durak==undefined)this.confText.settings.durak=true;
         aGlaf.durak=this.confText.settings.durak
         this.chek1.value=this.confText.settings.durak;
-
-
-            
     }
     
     this.setConf(this.par.confText)
@@ -341,6 +495,204 @@ function DIVsakoe(par) {
     });
 }
 
+function DopSamovuvoz(dCont,x,y, fun) {  
+    var self=this;  
+    this.type="DopSamovuvoz";
+    this.fun=fun;
+    this.otstup=aGlaf.otstup;
+    this._active=false;
+    this.object=undefined
+    this.fun=fun
+
+    this.dCont=new DCont(dCont);
+    this.dCont.x=x;
+    this.dCont.y=y;
+
+    this.array=[];
+    this._index=-1
+
+    this.w=new DWindow(this.dCont, 0, 0,"Настройки самовывоза");
+    this.w.width=250;
+
+
+    this.chek=new DCheckBox(this.w.content, this.otstup, this.otstup, "active", function(s){ 
+        if(self.object!=undefined){
+            self.object.active=this.value;
+            self.fun();
+        }
+    })
+
+    var yy=32
+
+    this.input=new DInput(this.w.content, 0, yy,"null", function(s){ 
+        self.object.strName[0]=this.value;
+        self.fun();
+    });
+    this.input.timeFun=1
+    this.input.width=this.w.width/3
+
+
+    this.input1=new DInput(this.w.content, this.w.width/3, yy,"null", function(s){ 
+        self.object.strName[1]=this.value;
+        self.fun();
+    });
+    this.input1.timeFun=1
+    this.input1.width=this.w.width/3
+
+    this.input2=new DInput(this.w.content, this.w.width/3*2, yy,"null", function(s){ 
+        self.object.strName[2]=this.value;
+        self.fun();
+    });
+    this.input2.timeFun=1;
+    this.input2.width=this.w.width/3;
+
+    yy+=32
+
+    this.button=new DButton(this.w.content, 0, yy,"Добавить", function(s){ 
+        
+        self.object.array.push(["null","null"])
+
+        self.drag()
+        self.index=self.object.array.length-1
+        self.fun();
+    })
+    this.button.width=this.w.width/2;
+    this.button1=new DButton(this.w.content, this.w.width/2, yy,"Удалить", function(s){ 
+        self.object.array.splice(self._index-1, 1)
+        self.drag()
+        self.fun();
+        self._index=-1
+        self.index=0
+
+    })
+    this.button1.width=this.w.width/2;
+    this.button1.alpha=0.5
+
+    yy+=32;
+
+    this.drag=function(){
+        for (var i = 0; i < this.array.length; i++) {
+            this.array[i].dCont.visible=false;
+        }
+        for (var i = 0; i < this.object.array.length; i++) {
+            if(this.array[i]==undefined){
+                this.array[i]=new DSBox(this.w.content,  this.w.width, function(){                    
+                    self.object.array[this.idArr][0]=this.input.value
+                    self.object.array[this.idArr][1]=this.input1.value
+                    self.fun();
+                    self.index=this.idArr
+                } )
+                this.array[i].idArr=i;
+                this.array[i].dCont.y=yy+2+(40)*i
+            }
+            this.array[i].input.value=self.object.array[i][0]
+            this.array[i].input1.value=self.object.array[i][1]
+           
+
+
+            this.array[i].dCont.visible=true;
+            this.object.array[i];
+        }
+
+        this.w.height=yy+2+(34)*this.object.array.length
+
+    }        
+
+
+
+
+    this.setObject=function(o){
+        this.object=o;
+        
+
+        if(this.object.active==undefined)this.object.active=false;
+        if(this.object.strName==undefined)this.object.strName=["null","null","null"];
+        if(this.object.array==undefined)this.object.array=[];
+
+        
+
+        this.chek.value=this.object.active;
+        this.input.value=this.object.strName[0];
+        this.input1.value=this.object.strName[1];
+        this.input2.value=this.object.strName[2]; 
+
+        this.drag();   
+    }
+
+     //this._index
+
+    Object.defineProperty(this, "index", {
+        set: function (value) {            
+            if(this._index!=value){
+                this._index=value;
+                var b=false;
+                trace("dfgdfg",this._index )
+                for (var i = 0; i < this.array.length; i++) {
+                    if(i==this._index){
+                        this.array[i].active=true
+                        b=true;
+                    }
+                    else this.array[i].active=false
+
+                } 
+
+                if(b)this.button1.alpha=1
+                else this.button1.alpha=0.5            
+                             
+            }           
+        },
+        get: function () {
+            return this._index;
+        }
+    });
+}
+
+
+function DSBox(dCont, w, fun) {  
+    var self=this;  
+    this.type="DopSamovuvoz";
+    this.fun=fun;
+    this.otstup=aGlaf.otstup;
+    this._active=false;
+    this.object=undefined
+    this._active=false;
+
+    this.dCont=new DCont(dCont);
+
+    this.panel=new DPanel(this.dCont, 2, 2);
+    this.panel.width=w-4
+    this.panel.height=38
+
+    var ww=(w-12)/2
+    this.input=new DInput(this.panel, 2, 2,"null", function(s){ 
+        self.fun()
+    });
+    this.input.timeFun=1
+    this.input.width=ww
+
+
+    this.input1=new DInput(this.panel, 4+ww, 2,"null", function(s){ 
+        self.fun()
+    });
+    this.input1.timeFun=1
+    this.input1.width=ww;
+
+    this.ccc=this.panel.color1
+
+    Object.defineProperty(this, "active", {
+        set: function (value) {            
+            if(this._active!=value){
+                this._active=value;
+                if(this._active) this.panel.color1="#747371" 
+                else  this.panel.color1=this.ccc      
+                             
+            }           
+        },
+        get: function () {
+            return this._active;
+        }
+    });
+}
 
 
 
@@ -475,7 +827,7 @@ function DIArrText(par) {
         set: function (value) {            
             if(this._active!=value){
                 this._active=value;
-
+                trace("this._active   ",this._active)
                 if(value) this.button.alpha =0.5
                 else this.button.alpha =1
                 this.dCont.visible=value;
@@ -660,3 +1012,7 @@ function BoxXZ333(dCont, _x, _y, _fun, par) {
 }
 BoxXZ333.prototype = Object.create(DBox.prototype);
 BoxXZ333.prototype.constructor = BoxXZ333;
+
+
+
+

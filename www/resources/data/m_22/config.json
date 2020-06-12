@@ -1,0 +1,37 @@
+{
+    "id": "m_22",
+    "title": "sten",
+    "key": "MeshStandardMaterial",
+    "obj": {
+        "type": "MeshStandardMaterial",
+        "color": "#e8e7e2",
+        "skinning": false,
+        "flatShading": false,
+        "depthFunc": 3,
+        "blending": 1,
+        "side": 0,
+        "opacity": 1,
+        "transparent": false,
+        "alphaTest": 0,
+        "wireframe": false,
+        "reflectivity": 1,
+        "refractionRatio": 0.98,
+        "roughness": 1.1,
+        "metalness": 0,
+        "emissive": "#000000",
+        "textur": [
+            {
+                "link": "resources/data/m_22/textur/ssss.jpg",
+                "l": "ssss.jpg",
+                "name": "roughnessMap",
+                "rx": "5",
+                "ry": "5"
+            }
+        ]
+    },
+    "mirro": false,
+    "resurs": {
+        "array": []
+    },
+    "orig": "3.png"
+}

@@ -1,51 +1,37 @@
 {
     "id": "m_7",
-    "title": "title_m_7",
+    "title": "m_base1",
     "key": "MeshPhongMaterial",
     "obj": {
         "type": "MeshPhongMaterial",
-        "color": "#ffffff",
+        "color": "#f1f1f1",
         "skinning": false,
         "flatShading": false,
         "depthFunc": 3,
         "blending": 1,
         "side": 0,
         "opacity": 1,
-        "transparent": false,
+        "transparent": true,
         "alphaTest": 0,
         "wireframe": false,
-        "reflectivity": 1,
+        "reflectivity": 0.09999999999999998,
         "refractionRatio": 0.98,
+        "shininess": 58.54,
+        "specular": "#050505",
         "textur": [
             {
-                "link": "resources/data/m_7/textur/q3.jpg",
-                "l": "q3.jpg",
+                "link": "resources/data/m_7/textur/atlos111s3.png",
+                "l": "atlos111s3.png",
                 "name": "map",
                 "rx": 1,
-                "ry": 1
-            },
-            {
-                "link": "resources/data/m_7/textur/q3.jpg",
-                "l": "q3.jpg",
-                "name": "bumpMap",
-                "rx": 1,
-                "ry": 1
-            },
-            {
-                "link": "resources/data/m_7/textur/q3.jpg",
-                "l": "q3.jpg",
-                "name": "lightMap",
-                "rx": 1,
-                "ry": 1
+                "ry": "-1"
             }
         ],
-        "emissive": "#000000",
-        "specular": "#111111",
-        "shininess": 30
+        "emissive": "#000000"
     },
     "mirro": false,
+    "orig": "2.png",
     "resurs": {
         "array": []
-    },
-    "orig": "xz.png"
+    }
 }

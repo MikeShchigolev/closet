@@ -322,7 +322,9 @@ function PdfEditorDebuger (_comp) {
 		self.image.width = this.picWidth;
 		self.image.height = this.picHeight;
 		self.image.x = self.window.width;
-
+		trace('<<>>--------------------------------------------------')
+		trace('<<>>--размер картинки--', this.picWidth, this.picHeight)
+		trace('<<>>--------------------------------------------------')
 		self.image.scale.set(scale, scale)
 
 		// imgGpaph.x = -self.image.width*scale;

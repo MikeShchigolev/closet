@@ -1,0 +1,67 @@
+{
+    "id": 111,
+    "title": 111,
+    "key": "o_111",
+    "bool": [
+        0,
+        0,
+        0,
+        0
+    ],
+    "num": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "str": [
+        "BGroup",
+        "{|type|:|BPieceTop|,|id|:14,|x|:171.85806466081766,|y|:207.64661090858456,|children|:[{|type|:|BPieceObject|,|id|:53,|x|:-30,|y|:-57.599999999999994,|intSah|:0,|intSah1|:0,|hrenNiz|:{|intSah|:0,|intSah1|:-1},|polka|:false,|children|:[],|idColor|:|m_8|},{|type|:|BPieceObject|,|id|:51,|x|:30,|y|:0,|intSah|:0,|intSah1|:0,|hrenNiz|:{|intSah|:0,|intSah1|:-1},|polka|:false,|children|:[],|idColor|:1,|sahSuper|:null},{|type|:|BPieceObject|,|id|:60,|x|:30,|y|:-124.80000000000001,|intSah|:0,|intSah1|:0,|hrenNiz|:{|intSah|:0,|intSah1|:-1},|polka|:false,|children|:[],|idColor|:|m_8|}]}",
+        "0",
+        "0",
+        "0",
+        "0"
+    ],
+    "orig": "null",
+    "mod": {
+        "key": "n",
+        "name": "n",
+        "r": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "r1": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "plus": [
+        "данные",
+        "данные",
+        "данные",
+        "1000",
+        "xz"
+    ],
+    "plus1": [
+        "данные",
+        "данные",
+        "данные",
+        "1000",
+        "xz"
+    ],
+    "priority": 0,
+    "resurs": {
+        "array": []
+    },
+    "bagY": 0
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>i3d</title>	
+
+
+
+
+
+<script>
+
+
+	var trace = window.console.log.bind(window.console);
+	var canvas
+	var video
+	function init () {
+		addbaton(0,400,"local Test",function(){
+			video.src="resources/video/test.mp4"
+			video.play()
+		})
+		addbaton(100,400,"test Mac",function(){
+			getVideo()
+		})
+		korektTrace(0,420)
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	//создание кнопи
+	function addbaton(x,y,t,f) {
+		this.object=document.createElement('input');   	
+		this.object.style.top = y+'px';
+		this.object.style.left = x+'px';
+		this.object.style.position = 'fixed';
+		this.object.style.width=100;		
+		this.object.type = 'button';
+		this.object.value ="local Test"
+
+		document.body.appendChild(this.object);		
+		this.object.onclick=function(){			
+			f()
+		}
+	}
+
+	//вывод трейсов
+	function korektTrace (x,y) {
+		var textarea = document.createElement('textarea')
+		textarea.style.width=(400)+"px";
+		textarea.style.height=(150)+"px";
+		textarea.style.position = 'fixed';
+		textarea.style.top = y+'px';
+		textarea.style.left = x+'0px';
+		document.body.appendChild(textarea)	
+		trace=function(s){			
+			textarea.value=s+"\n"+textarea.value;
+		}
+	}	
+
+
+
+
+	
+	//document.querySelector('#showVideo').addEventListener('click', e => init(e));
+
+</script>
+
+<style type="text/css">
+	#stats { position: absolute; top:0; left: 200px; }
+</style>
+<video id="video" webkit-playsinline>	</video>
+<canvas id="canvas"></canvas>
+
+</head>
+<meta name="viewport" content="width=device-width,height=device-height,user-scalable=no user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<body onload="init()">
+	
+</body></html>

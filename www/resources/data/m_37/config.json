@@ -1,0 +1,27 @@
+{
+    "id": "m_37",
+    "title": "m_37",
+    "key": "MeshStandardMaterial",
+    "obj": {
+        "type": "MeshStandardMaterial",
+        "color": "#919191",
+        "skinning": false,
+        "flatShading": false,
+        "depthFunc": 3,
+        "blending": 1,
+        "side": 0,
+        "opacity": 1,
+        "transparent": false,
+        "alphaTest": 0,
+        "wireframe": false,
+        "reflectivity": 1,
+        "refractionRatio": 0.98,
+        "roughness": 0.36,
+        "metalness": 0.44,
+        "emissive": "#000000"
+    },
+    "mirro": false,
+    "resurs": {
+        "array": []
+    }
+}

@@ -12315,10 +12315,10 @@ function VisualContentLoader(cont, _x, _y, _fun) {
 
     if (self.funGetFile) {
       self.funGetFile(base64, function (_link) {
-
+        trace('vghjgfhj', _link);
         var link = _link !== null ? _link : self.linkError;
         self.link = _link;
-
+        trace('vghjgfhdsfgdsgfj', self.link);
         if (self.fun) self.fun();
         if (self.onload) self.onload(false);
       });
@@ -12365,7 +12365,7 @@ function VisualContentLoader(cont, _x, _y, _fun) {
   this.linkClear.width = this._wh;
 
   this.image.funError = function () {
-
+    trace("vghjgfhj   bbb " + self.link);
     self.image.link = self.linkError; //self.link = self.linkError;
     //self.input.value = self.linkError;
     //self.link = self.linkError;

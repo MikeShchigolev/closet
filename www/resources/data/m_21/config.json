@@ -1,0 +1,26 @@
+{
+    "id": "m_21",
+    "title": "line3",
+    "key": "MeshPhongMaterial",
+    "obj": {
+        "type": "MeshPhongMaterial",
+        "color": "#ffffff",
+        "roughness": 0.5,
+        "metalness": 0.5,
+        "clearCoat": 0,
+        "clearCoatRoughness": 0,
+        "emissive": "#000000",
+        "skinning": false,
+        "flatShading": false,
+        "opacity": 0.22,
+        "transparent": true,
+        "alphaTest": 0,
+        "wireframe": false,
+        "specular": "#111111",
+        "shininess": 30
+    },
+    "mirro": false,
+    "resurs": {
+        "array": []
+    }
+}

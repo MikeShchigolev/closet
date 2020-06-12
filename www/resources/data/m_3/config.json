@@ -1,37 +1,35 @@
 {
     "id": "m_3",
-    "title": "title_m_3",
+    "title": "m_d2",
     "key": "MeshPhongMaterial",
     "obj": {
         "type": "MeshPhongMaterial",
-        "color": "#008cba",
+        "color": "#a1a1a1",
         "skinning": false,
         "flatShading": false,
         "depthFunc": 3,
         "blending": 1,
-        "side": 2,
+        "side": 0,
         "opacity": 1,
-        "transparent": false,
+        "transparent": true,
         "alphaTest": 0,
         "wireframe": false,
         "reflectivity": 1,
-        "refractionRatio": 0.98,
-        "textur": [
-            {
-                "link": "resources/data/m_3/textur/normal2.jpg",
-                "l": "normal2.jpg",
-                "name": "normalMap",
-                "rx": "4",
-                "ry": "4"
-            }
-        ],
-        "emissive": "#000000",
-        "specular": "#111111",
-        "shininess": 30
+        "refractionRatio": 0.43,
+        "roughness": 0.55,
+        "metalness": 0.33,
+        "clearCoat": 0.57,
+        "clearCoatRoughness": 0.56,
+        "textur": [],
+        "shininess": 24.53,
+        "specular": "#282828",
+        "emissive": "#030303",
+        "depthTest": true,
+        "depthWrite": true
     },
     "mirro": false,
+    "orig": "Screenshot_9.png",
     "resurs": {
         "array": []
-    },
-    "orig": "xz.png"
+    }
 }

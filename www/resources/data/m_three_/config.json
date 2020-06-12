@@ -1,0 +1,22 @@
+{
+    "id": "m_three_",
+    "title": "title_m_three_",
+    "key": "MeshPhongMaterial",
+    "obj": {
+        "type": "MeshPhongMaterial",
+        "color": "#c97e00",
+        "skinning": false,
+        "flatShading": false,
+        "depthFunc": 3,
+        "blending": 1,
+        "side": 0,
+        "opacity": 1,
+        "transparent": false,
+        "alphaTest": 0,
+        "wireframe": false,
+        "reflectivity": 1,
+        "refractionRatio": 0.98,
+        "textur": []
+    },
+    "mirro": false
+}

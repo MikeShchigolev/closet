@@ -1,0 +1,248 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>larvij</title>	
+<script src='common/AppLoader.js'></script>
+<script src='src/libMy/utility/DetectIE.js'></script>
+<script src='src/lib/jquery-1.11.3.js'></script>
+
+
+<script>
+
+	var trace = window.console.log.bind(window.console);
+	var tStyle
+	var dcmParam;	
+	var appLoader;
+	var path="src/"
+	var plus=""
+	var manifest = []	
+	var lMain,_detectIE
+
+	var  video
+	function sizeWindow () {
+		var w = document.documentElement.clientWidth;
+		var h = document.documentElement.clientHeight;
+
+
+		if(window.innerWidth!=undefined)w = window.innerWidth;
+		if(window.innerHeight!=undefined)h = window.innerHeight;
+	
+		if (lMain) lMain.sizeWindow(w, h);		
+		if (appLoader) appLoader.sizeWindow(w,h);
+	}
+
+	function init () {
+		var sss
+		$.ajax({
+            url: "resources/info.json?"+Math.random(),
+            success: function function_name(data) {                         
+                if(typeof data === "string") {
+					var conf = JSON.parse(data)
+					sss = conf;
+				} else sss = data;
+				plus="?v=1.0"
+				if(sss.version)plus="?v="+sss.version;
+				
+				init2()					                         
+            },
+            error:function function_name(data) {
+                console.log("Что то случилось с конфигом")
+            }
+        }); 
+	}
+
+
+	function init2 () {	
+		var manifest = [
+			{src: path + 'libMy/divLib.js' + plus},		
+
+			{src: path + 'lib/pixi.js' + plus},		
+			{src: path + '/lib/jspdf.min.js' + plus},	
+			{src: path + '/lib/pdfkit.js' + plus},	
+			{src: path + '/lib/blob-stream-v0.1.2.js' + plus},	
+			
+			{src: path + 'lib/three99.js' + plus},
+			//{src: path + 'lib/three.min112.js' + plus},
+			{src: path + 'lib/shader/ShaderAll.js' + plus},
+			{src: path + '/lib/tween.min.js' + plus},
+
+			{src: path + 'component3d/BoxHelper.js' + plus},
+			{src: path + 'libMy/DragPic.js' + plus},
+
+			{src: path + 'lib/loaders/GLTFLoader.js' + plus},
+			{src: path + 'lib/loaders/RGBELoader.js' + plus},
+
+			{src: path + 'lib/encoding.js' + plus},
+			{src: path + 'lib/encoding-indexes.js' + plus},
+			{src: path + 'lib/fileSaver.js' + plus},
+			{src: path + 'lib/windows1251.js' + plus},	
+			
+			{src: path + '/php/Php.js' + plus},
+			{src: path + 'libMy/utility/Calc.js' + plus},
+			{src: path + 'libMy/utility/Rectangle.js' + plus},	
+			{src: path + 'SceneSB.js' + plus},
+			{src: path + 'libMy/t3d.js' + plus},
+			{src: 'resources/font/SFUIDisplay-Bold.ttf', type:"FontFace", name:'SFUIDisplay-Bold'},		
+	    	{src: 'resources/font/SFUIDisplay-Light.ttf', type:"FontFace", name:'SFUIDisplay-Light'},
+			{src:'build/larvij.js' + plus}
+		];
+
+		if(window["Promise"]==undefined){
+			manifest.push({src: path + "lib/bluebird.min.js"})
+		}
+		
+		window.onresize = sizeWindow;
+		_detectIE = new DetectIE(document.body,"/resources/image/ie.png");
+		if (_detectIE.isWebGL() == false || _detectIE.getIEV() == false) {
+			_detectIE.init();
+			_detectIE.sizeWindow(document.documentElement.clientWidth, document.documentElement.clientHeight)
+			sizeWindow();
+			return;
+		}
+		video = document.getElementById('video');   
+		video.style.position = 'fixed';
+		video.style.top = '9354px';
+
+			
+			
+		appLoader = new AppLoader(
+			"resources/image/pic3.png",
+			'resources/image/pic4.png',
+			manifest,
+			function () {		 
+				
+				
+				
+				korektTrace()
+				//либа для интерфейсов в HTML к vorodis2@gmail.com
+        		//или https://github.com/vorodis2/T3Comp/
+				dcmParam = new DCM();
+				trace("sah0: "+dcmParam.mobile)
+				if(dcmParam.mobile==false){
+					let r = navigator.userAgent.match(/iPhone|iPad|iPod/i);
+					trace("sah1: "+r)
+			        if(r==null ){	
+			        	trace("sah2: "+navigator.userAgent.match(/Mac OS/i))        	
+			            if(navigator.userAgent.match(/Mac OS/i)!=null){
+			            	trace("sah3: "+window.matchMedia("(any-pointer:coarse)").matches)
+			                if(window.matchMedia("(any-pointer:coarse)").matches==true){
+			                    trace("sah4")
+			                    dcmParam.mobile=true
+			                }
+			            }
+			        }
+				}
+				
+				//либа для помогания в 3д, если что к vorodis2@gmail.com
+        		//или https://github.com/vorodis2/divLib/
+				tStyle=new TStyle();
+				/*
+				Это, я не вижу тасков и обьемки задачь. Предлогаю переходить на почасовку. Давай звониться обсудим данный вопрос
+				*/
+				
+				lMain=new LMain(function(s){
+					if(s=="init"){
+
+						appLoader.indicator.procent = 100;
+
+						
+						/*trace("v: 1.0")*/
+						
+						sizeWindow()					
+					}
+				},plus)				
+				sizeWindow()
+				trace("sah5!!!!"+dcmParam.mobile)
+				if(textarea)document.body.appendChild(textarea)	
+				
+				/*video = document.getElementById('video'); 
+				 
+				video.style.position = 'fixed';
+				video.style.top = '9354px';*/
+
+				
+			},
+			'resources/image/pic2.png',
+			-85		
+		)
+		
+		
+
+		window.onresize = sizeWindow;
+		sizeWindow();
+	}
+	var textarea
+	function korektTrace () {
+		textarea = document.createElement('textarea')
+		textarea.style.width=(150)+"px";
+		textarea.style.height=(150)+"px";
+		textarea.style.position = 'fixed';
+		textarea.style.top = '400px';
+		textarea.style.left = '0px';
+		document.body.appendChild(textarea)	
+		trace=function(s){			
+			textarea.value=s+"\n"+textarea.value
+		}
+	}
+
+	
+	function startInfo () {
+
+		(function (d, w, c) {
+	    (w[c] = w[c] || []).push(function() {
+	    	
+	        try {
+	        	
+	            w.yaCounter33060308 = new Ya.Metrika({
+	                id:33060308,
+	                clickmap:true,
+	                trackLinks:true,
+	                accurateTrackBounce:true,
+	                webvisor:true,
+	                trackHash:true
+	            });
+	        } catch(e) { 
+	        	
+	        }
+	    });
+
+	    var n = d.getElementsByTagName("script")[0],
+	        s = d.createElement("script"),
+	        f = function () { n.parentNode.insertBefore(s, n); };
+	    
+	    s.type = "text/javascript";
+	    s.async = true;
+	    s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+	    if (w.opera == "[object Opera]") {
+	        d.addEventListener("DOMContentLoaded", f, false);
+	    } else { f(); }
+		})(document, window, "yandex_metrika_callbacks");
+		
+/*
+		document.write("<a href='http://www.liveinternet.ru/click' "+
+		"target=_blank><img src='http://counter.yadro.ru/hit?t44.1;r"+
+		escape(document.referrer)+((typeof(screen)=="undefined")?"":
+		";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+		screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+		";"+Math.random()+
+		"' alt='' title='LiveInternet' "+
+		"border='0' width='31' height='31'><\/a>")*/
+
+		//trace(document.body.firstChild)
+		//document.body.firstChild.style.position = 'fixed';
+		//document.body.firstChild.style.top = '2000px';
+	}
+
+	startInfo();
+
+</script>
+
+<style type="text/css">
+	#stats { position: absolute; top:0; left: 200px; }
+</style>
+
+</head>
+<meta name="viewport" content="width=device-width,height=device-height,user-scalable=no user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<body onload="init()">
+	<video id="video" autoplay playsinline></video>	
+</body></html>

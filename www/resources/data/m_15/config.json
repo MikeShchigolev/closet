@@ -1,0 +1,46 @@
+{
+    "id": "m_15",
+    "title": "niz",
+    "key": "MeshStandardMaterial",
+    "obj": {
+        "type": "MeshStandardMaterial",
+        "color": "#ffffff",
+        "roughness": 0.53,
+        "metalness": 0,
+        "emissive": "#000000",
+        "skinning": false,
+        "flatShading": false,
+        "opacity": 1,
+        "transparent": false,
+        "alphaTest": 0,
+        "wireframe": false,
+        "textur": [
+            {
+                "link": "resources/data/m_15/textur/lgmap_ChevronAgedParquet_Diffuse.png",
+                "l": "lgmap_ChevronAgedParquet_Diffuse.png",
+                "name": "map",
+                "rx": "2.5",
+                "ry": "2.5"
+            },
+            {
+                "link": "resources/data/m_15/textur/lgmap_ChevronAgedParquet_Normal.png",
+                "l": "lgmap_ChevronAgedParquet_Normal.png",
+                "name": "normalMap",
+                "rx": "2.5",
+                "ry": "2.5"
+            },
+            {
+                "link": "resources/data/m_15/textur/lgmap_ChevronAgedParquet_Glossiness.png",
+                "l": "lgmap_ChevronAgedParquet_Glossiness.png",
+                "name": "roughnessMap",
+                "rx": "2.5",
+                "ry": "2.5"
+            }
+        ]
+    },
+    "mirro": false,
+    "orig": "4.png",
+    "resurs": {
+        "array": []
+    }
+}

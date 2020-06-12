@@ -3,16 +3,38 @@
 
 
 
-require('phpmailer/class.phpmailer.php');
+require('phpmailer/PHPMailerAutoload.php');
 
+$rez='ot== v2 '.$_POST['mailMeil'].'  na=='.$_POST['mailmy'].' Yshlo!!!!         '.$_POST['mailTitle'];
 
 $email = new PHPMailer();
 
 
 $email->CharSet = 'UTF-8';
 
-$email->From      = $_POST['mailMeil'];//'xz@gmail.com';//от кого
-$email->FromName  = 'Planner Wardrobe Larvij';
+
+if($_POST['boolSMART']==true){
+    // Настройки SMTP
+    $email->isSMTP();
+    $email->SMTPAuth = true;
+    $email->SMTPDebug = 0;
+     
+    $email->Host = $_POST['host'];//'ssl://smtp.mail.ru';
+    $email->Port = $_POST['port'];//465;
+    $email->Username = $_POST['username'];//'planer@formarosta.ru';
+    $email->Password = $_POST['password'];//'FRlarvij1015';
+    $rez=$rez."    boolSMART!!";
+}
+
+
+
+
+
+
+
+$email->From      = $_POST['mailMeil'];//от кого
+
+$email->FromName  = 'Larvij Wardrobe Planner';
 $email->Subject   = $_POST['mailTitle'];
 $email->Body      = $_POST['mailText'];
 $email->AddAddress($_POST['mailmy']);//куда
@@ -26,12 +48,14 @@ if($_POST['id']!='nullxz'){
 	$xz = '../save/'.$_POST['id'].'/infoTime/info.pdf';
 	$file_to_attach ='../save/'.$_POST['id'].'/infoTime/info.pdf';
 	$email->AddAttachment( $file_to_attach , 'info.pdf');
+
+    $rez=$rez."   file_to_attach!!!!!!!!!!!!!!";
 }
 //
 
 $email->Send();
 
-echo '$email 222mailmy== '.$_POST['mailTitle'].' file_to_attach= '.$file_to_attach.$file_to_attach.$xz;
+echo $rez;
 
 
 /*

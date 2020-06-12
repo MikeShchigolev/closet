@@ -1,0 +1,27 @@
+{
+    "id": "m_18",
+    "title": "line1",
+    "key": "MeshPhongMaterial",
+    "obj": {
+        "type": "MeshPhongMaterial",
+        "color": "#00e5df",
+        "skinning": false,
+        "flatShading": false,
+        "depthFunc": 3,
+        "blending": 1,
+        "side": 0,
+        "opacity": 0.86,
+        "transparent": false,
+        "alphaTest": 0.38,
+        "wireframe": false,
+        "reflectivity": 0.84,
+        "refractionRatio": 0.98,
+        "emissive": "#000000",
+        "specular": "#000000",
+        "shininess": 30.59
+    },
+    "mirro": false,
+    "resurs": {
+        "array": []
+    }
+}

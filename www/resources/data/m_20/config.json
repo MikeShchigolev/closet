@@ -1,0 +1,45 @@
+{
+    "id": "m_20",
+    "title": "line2",
+    "key": "MeshPhongMaterial",
+    "obj": {
+        "type": "MeshPhongMaterial",
+        "color": "#00e5df",
+        "emissive": "#000000",
+        "specular": "#020202",
+        "shininess": 26.47,
+        "skinning": false,
+        "flatShading": false,
+        "opacity": 1,
+        "transparent": false,
+        "alphaTest": 0,
+        "wireframe": false,
+        "depthFunc": 3
+    },
+    "mirro": false,
+    "resurs": {
+        "array": [
+            {
+                "name": "0.png",
+                "size": 26401,
+                "b": false,
+                "i": "x1",
+                "i1": "x"
+            },
+            {
+                "name": "p2.png",
+                "size": 427,
+                "b": false,
+                "i": "x",
+                "i1": "x"
+            },
+            {
+                "name": "p3.png",
+                "size": 260,
+                "b": false,
+                "i": "x",
+                "i1": "x"
+            }
+        ]
+    }
+}

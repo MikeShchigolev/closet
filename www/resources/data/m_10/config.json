@@ -1,0 +1,33 @@
+{
+    "id": "m_10",
+    "title": "m_10",
+    "key": "MeshStandardMaterial",
+    "obj": {
+        "type": "MeshStandardMaterial",
+        "color": "#ffffff",
+        "roughness": 1.93,
+        "metalness": 0.06,
+        "emissive": "#000000",
+        "skinning": false,
+        "flatShading": false,
+        "opacity": 1,
+        "transparent": false,
+        "alphaTest": 0,
+        "wireframe": false,
+        "textur": [
+            {
+                "link": "resources/data/m_10/textur/al6l.jpg",
+                "l": "al6l.jpg",
+                "name": "map",
+                "rx": 1,
+                "ry": "-1"
+            }
+        ],
+        "side": 2
+    },
+    "mirro": false,
+    "orig": "Screenshot_21.png",
+    "resurs": {
+        "array": []
+    }
+}

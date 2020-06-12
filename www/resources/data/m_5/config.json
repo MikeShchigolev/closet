@@ -1,0 +1,23 @@
+{
+    "id": "m_5",
+    "title": "m_d4",
+    "key": "MeshPhongMaterial",
+    "obj": {
+        "type": "MeshPhongMaterial",
+        "color": "#535353",
+        "skinning": false,
+        "flatShading": false,
+        "depthFunc": 3,
+        "blending": 1,
+        "side": 2,
+        "opacity": 1,
+        "transparent": true,
+        "alphaTest": 0,
+        "wireframe": false,
+        "reflectivity": 1,
+        "refractionRatio": 0.98,
+        "textur": []
+    },
+    "mirro": false,
+    "orig": "Screenshot_6.png"
+}

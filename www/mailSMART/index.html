@@ -1,0 +1,229 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>larvij</title>	
+<script src='divLib.js'></script>
+
+<script src='jquery-1.11.3.js'></script>
+
+
+<script>
+
+
+
+	var trace = window.console.log.bind(window.console);
+
+
+
+
+
+
+	function init () {
+		dcmParam = new DCM();
+		scane= new DCont(document.body);
+		new DLabel(scane,10,10,"vers 1" );
+		var salf=this
+		var array=[
+			{par:"mailmy",text:"куда отправим <mailmy> ",obj:null},
+			{par:"mailMeil",text:"от кого <mailMeil> ",obj:null},
+			{par:"mailTitle",text:"титл письма <mailTitle> ",obj:null},
+			{par:"mailText",text:"текст письма <mailText> ",obj:null},
+
+			{par:"host",text:"<host> типа: 'ssl://smtp.mail.ru'  если == null письмо не будет юзать SMART",obj:null},
+			{par:"port",text:"<port> типа: 465",obj:null},
+			{par:"username",text:"<username> типа: 'planer@formarosta.ru'",obj:null},
+			{par:"password",text:"<password> типа: 'FRlarvij1015'",obj:null}
+
+		]
+
+
+		this.drag=function(){
+			ll.object.array[this.idArr]=this.value
+			ll.save()	
+		}
+
+		for (var i = 0; i < array.length; i++) {
+			var l=new DLabel(scane,220,35+i*36,array[i].text);
+			l.width=550;
+			array[i].obj=new DInput(scane,10,30+i*36,"vorodis2@gmail.com",this.drag);
+			array[i].obj.idArr=i
+			array[i].obj.width=200;
+		}
+
+
+		var chek = new DCheckBox(scane,10,30+i*36,"Используем SMTP",function(){
+
+			ll.object.chek=this.value;
+			ll.save()
+		})
+
+		chek.value=true
+
+
+		var button = new DButton(scane,10,60+i*36,"Посылаем",function(){			
+			var obj={};
+			for (var i = 0; i < array.length; i++) {
+				obj[array[i].par]=array[i].obj.value;
+			}
+			obj.id="nullxz";
+
+			if(chek.value==true){
+				obj.boolSMTP=true
+			}
+
+
+			var ss="send_mail.php";
+			$.post(ss, obj, function(data){
+				trace(data)	            
+	                  
+	        });
+
+			trace(obj)
+
+
+
+		}).width=200;
+
+
+		var button1 = new DButton(scane,10,60+(i+1)*36,">> send_mail2.php >>",function(){			
+			var obj={};
+			for (var i = 0; i < array.length; i++) {
+				obj[array[i].par]=array[i].obj.value;
+			}
+			obj.id="nullxz";
+
+			if(chek.value==true){
+				obj.boolSMTP=true
+			}
+			
+
+			var ss="send_mail2.php";
+			$.post(ss, obj, function(data){
+				trace(data)	                   
+	        });
+
+	
+
+		}).width=200;
+		
+
+
+
+
+		this.dragLL=function(){
+			trace("==",ll.object)
+			var bb=false
+			if(ll.object.array==undefined){
+				ll.object.array=[]
+				bb=true
+			}
+			for (var i = 0; i < array.length; i++) {
+				if(ll.object.array[i]==undefined){
+					ll.object.array[i]="null";
+					bb=true
+				}
+				array[i].obj.value=ll.object.array[i]
+			}
+
+			if(ll.object.chek!=undefined){
+				chek.value=ll.object.chek
+			}
+
+
+			if(bb==true){
+				ll.save()	
+			}
+		}
+
+		var ll=new LocalStorage(this.dragLL,"xz")
+
+
+
+	}
+
+	function creatPDF() {
+		var doc = new jsPDF();
+		doc.setProperties({
+			 	title: 'Спецификация',
+			 	subject: 'Спецификация',
+			 	author: ' Larvij',
+			 	keywords: 'xz',
+			 	creator: 'Larvij'
+			});              
+        doc.setTextColor(100,100,100);
+        doc.text(["test pdf"], 10, 10);
+
+
+        return doc
+
+	}
+
+
+	function LocalStorage(fun,_key) {
+		this.fun = fun;
+		var self = this;
+		this.object;
+		this.key = _key||'shirt';
+		this.object; // тут храняться все данные с localStorage
+		var b;
+		// инициализация localStorage
+		this.initLoad=function() {
+			b=true;
+			this.object = window.localStorage[this.key];
+			if(this.object == "undefined")b=false;
+			if(this.object == undefined)b=false;
+			
+			// проверка пуст ли  localStorage
+			if(b == false) {
+				this.object = this.getStartObj(); // если localStorage пуст, записываем обьект с функции getStartObj
+			}else {
+				this.object = jQuery.parseJSON(this.object); // если localStorage не пуст записываем содержимое предварительно
+			}		
+			self.fun();
+		}
+		
+		// если localStorage пуст, записываем обьект
+		this.getStartObj = function() {
+			var obj = {
+				activ:false,
+				dubag:false,
+				sort:-2,
+				menu:{},
+				xz:{}
+			};
+			return obj;
+		}
+
+		// сохраняем в localStorage данные
+		this.save = function() {		
+			window.localStorage[this.key] = JSON.stringify(self.object);
+		}
+
+		// сохраняем в localStorage данные
+		this.clear = function() {
+			window.localStorage[this.key] = undefined;
+		}
+		setTimeout(function() {self.initLoad();}, 1);
+			
+	}
+
+	
+
+
+
+</script>
+
+<style type="text/css">
+	#stats { position: absolute; top:0; left: 200px; }
+	/*@font-face {
+	  font-family: "SFUIDisplay-Bold";
+	  src: url(resources/font/SFUIDisplay-Bold.ttf) format("truetype");
+	}
+	@font-face {
+	  font-family: "SFUIDisplay-Light";
+	  src: url(resources/font/SFUIDisplay-Light.ttf) format("truetype");
+	}*/	
+</style>
+
+</head>
+<meta name="viewport" content="width=device-width,height=device-height,user-scalable=no user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<body onload="init()"></body></html>

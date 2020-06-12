@@ -23,6 +23,8 @@
   			//this.server ="http://larvij/";
 			//this.server = "http://larvij/"
 			this.id=getURLParameters("id")
+			
+
   		}
 
   		//customDepth+trasparent

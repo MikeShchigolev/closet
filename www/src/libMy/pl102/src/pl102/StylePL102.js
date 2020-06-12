@@ -552,7 +552,7 @@ function CtrlCV (cont) {
 		if (e.keyCode === 17) {
 			if (self.boolCntr === true) {
 				self.boolCntr = false;
-
+				trace('up' + e.keyCode);
 			}
 		}
 		if (e.keyCode === 67) {

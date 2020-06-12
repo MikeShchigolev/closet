@@ -66,7 +66,7 @@ export default function App () {
 			self.renderer.resize(self._width, self._height);
 			self.renderer.resolution = precresol;// ставим обратно разрешение
 		}
-
+		trace('<<>>--000000--', self.appView)
 		self.appView.sizeWindow(self._width, self._height);
 	}
 

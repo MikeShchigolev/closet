@@ -1,0 +1,73 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>larvij v1</title>	
+<script src='common/AppLoader.js'></script>
+
+<script>
+	var trace = window.console.log.bind(window.console);
+	var dcmParam;	
+	var appLoader;
+	var path="src/"
+	var plus="?"+Math.random()
+	var manifest = [
+		{src: path + 'libMy/divLib.js' + plus},		
+		{src: path + 'lib/jquery-1.11.3.js' + plus},
+		{src: path + 'lib/pixi.js' + plus},		
+		{src: path + 'lib/tween.min.js' + plus},
+
+		{src: path + 'localStorage/LocalStorage.js' + plus},
+		{src: path + 'trello/Glaf.js' + plus},
+		{src: path + 'trello/Main.js' + plus},	
+
+		{src: path + 'libMy/DragPic.js' + plus},
+		{src: path + 'trello/menu/MenuProdukt.js' + plus},
+		{src: path + 'trello/menu/Setings.js' + plus},
+		{src: path + 'trello/menu/Menu.js' + plus},
+		
+		{src: path + 'admin/menu/MInfo.js' + plus},
+
+
+		{src: path + '/php/Php.js' + plus}
+	];
+
+
+	
+	function sizeWindow () {
+		var w = document.documentElement.clientWidth;
+		var h = document.documentElement.clientHeight;
+		if (main) main.sizeWindow(w, h);		
+		if (appLoader) appLoader.sizeWindow(w,h);
+	}
+
+	var main
+	function init () {
+		window.onresize = sizeWindow;
+		appLoader = new AppLoader(
+			"resources/image/pic3.png",
+			'resources/image/pic4.png',
+			manifest,
+			function () {
+				dcmParam = new DCM();
+				main=new Main(function(s){
+					if(s=="init"){
+						appLoader.indicator.procent = 100;
+						sizeWindow()
+					}
+				})				
+				sizeWindow()
+			},
+			'resources/image/pic2.png',
+			-85		
+		)
+		sizeWindow();
+	}	
+
+</script>
+
+<style type="text/css">
+	#stats { position: absolute; top:0; left: 200px; }
+</style>
+
+</head>
+<meta name="viewport" content="width=device-width,height=device-height,user-scalable=no user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<body onload="init()"></body></html>

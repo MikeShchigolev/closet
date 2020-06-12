@@ -73,7 +73,7 @@ function DragPic(dC) {
     */
     this.start = function(wh,link,object,fUp,boolTim){
         if(this.whBase!=null)wh=this.whBase
-        this.image.link=link+"?"+Math.random();
+        this.image.link=link;
         this.image.width=wh;
         this.image.height=wh;
         this.image.x=-wh/2;
@@ -278,7 +278,7 @@ function BoxDragPic(dr, dCont, fun, idArr) {
     })
     
     this.start=function(){
-        if(this.visibleTest(this.dCont)==false)return;
+        if(this.visibleTest(this.dCont)==false)return;       
         this.dCont.add(this.panel);
         this.panel.width=this.dCont.width;
         this.panel.height=this.dCont.height;
@@ -294,9 +294,9 @@ function BoxDragPic(dr, dCont, fun, idArr) {
         point.x=0;
         point.y=0;
         this.getXY(this.dCont, point)        
-        if (_x > point.x && _x < point.x + this.dCont.width){
-            if (_y > point.y && _y < point.y + this.dCont.height) {
-                self.fun(dr.object, dr.link);
+        if(_x>point.x&&_x<point.x+this.panel.width){
+            if(_y>point.y&&_y<point.y+this.panel.height){                
+                self.fun(dr.object,dr.link)
             }            
         }
     }

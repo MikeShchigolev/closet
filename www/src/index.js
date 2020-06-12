@@ -1,3 +1,3 @@
-import { Main} from './closet/Main.js';
-global.Main = Main;
-export { Main };
+import { LMain} from './larvij/LMain.js';
+global.LMain = LMain;
+export { LMain};

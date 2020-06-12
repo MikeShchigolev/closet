@@ -1,0 +1,97 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>larvij</title>	
+<script src='divLib.js'></script>
+<script src='jspdf.min.js'></script>
+<script src='jquery-1.11.3.js'></script>
+
+
+<script>
+
+	/*var head = document.getElementsByTagName('head')[0];
+		// eslint-disable 
+
+		var sc3 = document.createElement('script');
+		sc3.src = 'planer/utility/DetectIE.js';
+		head.appendChild(sc3);*/
+
+	var trace = window.console.log.bind(window.console);
+
+
+
+
+
+
+	function init () {
+		dcmParam = new DCM();
+		scane= new DCont(document.body);
+
+
+
+
+		/*new DLabel(scane,10,25,"emeil");	
+		var mail= new DInput(scane,110,10,"vorodis2@gmail.com");
+		mail.width=200;
+
+		
+
+		new DButton(scane,10,50,"генерим пдф",function(){
+			var doc=creatPDF()			
+			doc.output('dataurlnewwindow');
+		}).width=300;	
+
+		new DButton(scane,10,90,"отпарвить в3",function(){
+			var obj={}
+			obj.mailmy=mail.text;
+        	obj.mailMeil="vorodis2@gmail.com";
+        	obj.mailTitle="xz";
+        	obj.fileName="docxz.pdf"
+        	trace(obj)
+			$.post("send_mail.php", obj, function(data){   
+	            trace("data===",data)        
+	        });
+		}).width=300;
+
+
+		trace("asdfdasf")*/	
+
+	}
+
+	function creatPDF() {
+		var doc = new jsPDF();
+		doc.setProperties({
+			 	title: 'Спецификация',
+			 	subject: 'Спецификация',
+			 	author: ' Larvij',
+			 	keywords: 'xz',
+			 	creator: 'Larvij'
+			});              
+        doc.setTextColor(100,100,100);
+        doc.text(["test pdf"], 10, 10);
+
+
+        return doc
+
+	}
+
+	
+
+
+
+</script>
+
+<style type="text/css">
+	#stats { position: absolute; top:0; left: 200px; }
+	/*@font-face {
+	  font-family: "SFUIDisplay-Bold";
+	  src: url(resources/font/SFUIDisplay-Bold.ttf) format("truetype");
+	}
+	@font-face {
+	  font-family: "SFUIDisplay-Light";
+	  src: url(resources/font/SFUIDisplay-Light.ttf) format("truetype");
+	}*/	
+</style>
+
+</head>
+<meta name="viewport" content="width=device-width,height=device-height,user-scalable=no user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<body onload="init()"></body></html>

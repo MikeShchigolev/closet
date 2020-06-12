@@ -1,25 +1,39 @@
 {
     "id": "m_8",
-    "title": "title_m_8",
-    "key": "MeshBasicMaterial",
+    "title": "m_base0",
+    "key": "MeshPhongMaterial",
     "obj": {
-        "type": "MeshBasicMaterial",
-        "color": "#ffffff",
+        "type": "MeshPhongMaterial",
+        "color": "#e3e3e3",
         "skinning": false,
         "flatShading": false,
-        "depthFunc": 3,
-        "blending": 1,
-        "side": 0,
+        "depthFunc": 0,
+        "blending": 0,
+        "side": 2,
         "opacity": 1,
-        "transparent": false,
-        "alphaTest": 0,
+        "transparent": true,
+        "alphaTest": 0.33000000000000007,
         "wireframe": false,
-        "reflectivity": 1,
-        "refractionRatio": 0.98
+        "reflectivity": 0.17,
+        "refractionRatio": 1,
+        "shininess": 31.5,
+        "textur": [
+            {
+                "link": "resources/data/m_8/textur/atlos1112.png",
+                "l": "atlos1112.png",
+                "name": "map",
+                "rx": 1,
+                "ry": "-1"
+            }
+        ],
+        "specular": "#c9c9c9",
+        "emissive": "#1f1f1f",
+        "depthTest": true,
+        "depthWrite": true
     },
     "mirro": false,
+    "orig": "1.png",
     "resurs": {
         "array": []
-    },
-    "orig": "xz.png"
+    }
 }

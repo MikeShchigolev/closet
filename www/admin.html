@@ -1,7 +1,7 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
 <title>админ</title>	
-<script src='common/AppLoader.js'></script>
+<script src='common/AppLoaderV1.js'></script>
 <script src='src/lib/jquery-1.11.3.js'></script>
 
 <script>
@@ -31,9 +31,7 @@
 		{src: path + 'lib/tween.min.js' + plus},
 		//{src: path + 'lib/loaders/TDSLoader.js' + plus},
 		{src: path + 'lib/loaders/inflate.min.js' + plus},
-		/*{src: path + 'lib/loaders/FBXLoader.js' + plus},
-		
-		{src: path + 'lib/loaders/RGBELoader.js' + plus},*/
+	
 
 
 		{src: path + 'lib/loaders/GLTFLoader.js' + plus},
@@ -152,19 +150,16 @@
 		init2();		
 	}
 
-
-
 	function init2 () {
 		
-		window.onresize = sizeWindow;		
+		window.onresize = sizeWindow;
+        trace("drg")		
 		appLoader = new AppLoader(
 			null,
 			'resources/image/pic3.png',
 			manifest,
-			function () {
-				
-				dcmParam = new DCM();	
-				
+			function () {				
+				dcmParam = new DCM();			
 				lMain=new AMain(function(s){
 					if(s=="init"){
 						appLoader.indicator.procent = 100;

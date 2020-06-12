@@ -6,8 +6,8 @@ function AppLoader (link, link1, manifest, fun, link3, py) {
 	this._width = 100;
 	this._height = 100;
 	this.fun = fun;
-
-	var maxProcFile = 0.7;
+	
+	var maxProcFile = 0.8;
 
 	this.indicator = new Indicator(link, link1, function indicatorRedy () {
 		self.sizeWindow();
@@ -22,7 +22,6 @@ function AppLoader (link, link1, manifest, fun, link3, py) {
 	}
 
 	function onProgressJS () {
-		
 		self.indicator.procent = this.procent * maxProcFile;
 	}
 
@@ -44,7 +43,7 @@ function Indicator (imageName, imageName1, fun, imageName2,py) {
 	var self = this;
 
 	this.fun = fun; // сработает когда индикатор готов
-	this._tipView = 2; // тип как показавать загрузку 0 - с верху в низ; 1 - слева на право; 2 - с низу в вверх; 3 - с права на лево
+	this._tipView = 1; // тип как показавать загрузку 0 - с верху в низ; 1 - слева на право; 2 - с низу в вверх; 3 - с права на лево
 	this._procent = 0;
 	this._visible = false;
 	this.autoHide = true; // автоматически скрыть когда procent === 100%
@@ -54,19 +53,9 @@ function Indicator (imageName, imageName1, fun, imageName2,py) {
 
 	this.img = new Image();
 	this.img.onload = onLoadImage;
-
-	var link=imageName;
-	if(link==null){
-		link=imageName1;
-		this.img.style.opacity=0.25
-	}
-
-
-	this.img.src = link;
+	this.img.src = imageName;
 	this.img.style.position = 'absolute';
 	this.img.style.pointerEvents = 'none';
-
-	
 
 	this.img1 = new Image();
 	this.img1.onload = onLoadImage;
@@ -74,59 +63,26 @@ function Indicator (imageName, imageName1, fun, imageName2,py) {
 	this.img1.style.position = 'absolute';
 	this.img1.style.pointerEvents = 'none';
 
-
-	if(imageName1==null){
-		
-		trace("11111")
-	}
-
-
 	this.countImgLoaded = 0;
 	this.baseImg = { width: 100, height: 100 };
-
-	this.divGlob= document.createElement('div');
-	this.divGlob.style.position = 'fixed';
-	this.divGlob.style.top = '0px';
-	this.divGlob.style.left = '0px';
-
-
-
-	this.divFon= document.createElement('div');
-	this.divFon.style.position = 'fixed';
-	this.divFon.style.top = '0px';
-	this.divFon.style.left = '0px';
-	this.divFon.style.width='100px';
-	this.divFon.style.height='100px';
-	this.divFon.style.background="#ffffff"
-
-	this.divGlob.appendChild(this.divFon)
 
 	this.img2=undefined
 	this.div2= document.createElement('div');
 	this.div2.style.position = 'fixed';
 	this.div2.style.top = '0px';
 	this.div2.style.left = '0px';
-
-	this.divGlob.appendChild(this.div2)
-
-	this.divGlob.appendChild(this.img)	
-	this.divGlob.appendChild(this.img1)
-
 	this.timerId
 	var deg=0
 	this.py=py||0
-	if(imageName2!=undefined){
+	if(imageName2){
 		this.img2 = new Image();
 		this.img2.onload = function(){
-			this.width=64;
-			this.height=64;/**/
 			self.img2.style.top = -this.width/2+'px';
 			self.img2.style.left = -this.height/2+'px';
 			self.div2.appendChild(self.img2);
-
 		};
 		this.img2.src = imageName2;
-		this.img2.style.position = 'fixed';
+		this.img2.style.position = 'absolute';
 		this.img2.style.pointerEvents = 'none';
 
 		this.timerId = setInterval(function(){
@@ -173,13 +129,11 @@ function Indicator (imageName, imageName1, fun, imageName2,py) {
 			self.div2.style.left = _width/2+'px';
 			self.div2.style.top = _height/2+self.py+'px';
 		}
-		this.divFon.style.width=self._width+'px';
-		this.divFon.style.height=self._height+'100px';
+		
 	};
 
 	// отображение процесса загрузки
 	this.viewProcess = function () {
-
 		var w = self._width / 2 - self.img1.width / 2;
 		var h = self._height / 2 - self.img1.height / 2;
 		var imW = self.img1.width / 100 * self._procent;
@@ -189,8 +143,6 @@ function Indicator (imageName, imageName1, fun, imageName2,py) {
 		self.img.style.left = w + 'px';
 		self.img1.style.top = h + 'px';
 		self.img1.style.left = w + 'px';
-
-
 
 		switch (self.tipView) {
 			case 1:
@@ -238,15 +190,15 @@ Object.defineProperties(Indicator.prototype, {
 			if (this._visible === value) return;
 			this._visible = value;
 			if (this._visible) {
-				document.body.appendChild(this.divGlob);
-				/*document.body.appendChild(this.img);
+
+				document.body.appendChild(this.img);
 				document.body.appendChild(this.img1);
-				document.body.appendChild(this.div2);*/
+				document.body.appendChild(this.div2);
 			} else {
-				document.body.removeChild(this.divGlob);
-				/*document.body.removeChild(this.img);
+				
+				document.body.removeChild(this.img);
 				document.body.removeChild(this.img1);
-				document.body.removeChild(this.div2);*/
+				document.body.removeChild(this.div2);
 				if(this.timerId!=undefined){
 					clearInterval(this.timerId);
 				}
@@ -316,11 +268,8 @@ function JSLoader (onLoad, onProgress, onError) {
 		for (var i in scope.procentObj) {
 			sum += scope.procentObj[i];
 		}
-
-		sum = itemsLoaded/itemsTotal;
-
-		
-		scope.procent = sum*100;
+		sum /= itemsTotal;
+		scope.procent = sum;
 	}
 
 	this.itemError = function (url, event) {

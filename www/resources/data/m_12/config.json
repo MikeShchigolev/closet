@@ -1,0 +1,49 @@
+{
+    "id": "m_12",
+    "title": "niz",
+    "key": "MeshStandardMaterial",
+    "obj": {
+        "type": "MeshStandardMaterial",
+        "color": "#ffffff",
+        "roughness": 1.33,
+        "metalness": 0,
+        "emissive": "#030303",
+        "skinning": false,
+        "flatShading": false,
+        "opacity": 1,
+        "transparent": false,
+        "alphaTest": 0,
+        "wireframe": false,
+        "textur": [
+            {
+                "link": "resources/data/m_12/textur/Kitchedfyhyn.jpg",
+                "l": "Kitchedfyhyn.jpg",
+                "name": "map",
+                "rx": "2",
+                "ry": "1.5"
+            },
+            {
+                "link": "resources/data/m_12/textur/Kitchen-bump.jpg",
+                "l": "Kitchen-bump.jpg",
+                "name": "bumpMap",
+                "rx": "2",
+                "ry": "1.5"
+            },
+            {
+                "link": "resources/data/m_12/textur/Kitchesssn-spec-1.jpg",
+                "l": "Kitchesssn-spec-1.jpg",
+                "name": "roughnessMap",
+                "rx": "2",
+                "ry": "1.5"
+            }
+        ],
+        "blending": 1,
+        "depthFunc": 2,
+        "side": 0
+    },
+    "mirro": false,
+    "orig": "3.png",
+    "resurs": {
+        "array": []
+    }
+}

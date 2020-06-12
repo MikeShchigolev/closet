@@ -1,0 +1,39 @@
+{
+    "id": "m_14",
+    "title": "niz",
+    "key": "MeshStandardMaterial",
+    "obj": {
+        "type": "MeshStandardMaterial",
+        "color": "#ffffff",
+        "roughness": 0.78,
+        "metalness": 0,
+        "emissive": "#000000",
+        "skinning": false,
+        "flatShading": false,
+        "opacity": 1,
+        "transparent": false,
+        "alphaTest": 0,
+        "wireframe": false,
+        "textur": [
+            {
+                "link": "resources/data/m_14/textur/ss.jpg",
+                "l": "ss.jpg",
+                "name": "map",
+                "rx": 1,
+                "ry": 1
+            },
+            {
+                "link": "resources/data/m_14/textur/5.jpg",
+                "l": "5.jpg",
+                "name": "roughnessMap",
+                "rx": 1,
+                "ry": 1
+            }
+        ]
+    },
+    "mirro": false,
+    "orig": "2.png",
+    "resurs": {
+        "array": []
+    }
+}

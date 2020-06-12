@@ -401,7 +401,7 @@ THREE.RenderPass.prototype = Object.assign( Object.create( THREE.Pass.prototype 
 THREE.ShaderPass = function ( shader, textureID ) {
 
 	THREE.Pass.call( this );
-	console.warn("@@@@@@@@@")
+
 	this.textureID = ( textureID !== undefined ) ? textureID : "tDiffuse";
 
 	if ( shader instanceof THREE.ShaderMaterial ) {

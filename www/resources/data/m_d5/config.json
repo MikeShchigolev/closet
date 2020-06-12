@@ -1,0 +1,24 @@
+{
+    "id": "m_d5",
+    "title": "m_d12",
+    "key": "MeshBasicMaterial",
+    "obj": {
+        "type": "MeshBasicMaterial",
+        "color": "#ffffff",
+        "skinning": false,
+        "flatShading": false,
+        "depthFunc": 3,
+        "blending": 1,
+        "side": 0,
+        "opacity": 1,
+        "transparent": false,
+        "alphaTest": 0,
+        "wireframe": false,
+        "reflectivity": 1,
+        "refractionRatio": 0.98
+    },
+    "mirro": false,
+    "resurs": {
+        "array": []
+    }
+}

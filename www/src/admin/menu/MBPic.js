@@ -51,7 +51,7 @@ function MBPic(c,x,y,f) {
     } 
 
 
-    this.button=new DButton(this.panel,this.otstup,this.otstup," ",function(base64){        
+    this.button=new DButton(this.panel,this.otstup,this.otstup,"",function(base64){        
         if(base64!=undefined){ 
             self.l.text=this.files[0].name;            
             self.o.orig=this.files[0].name;

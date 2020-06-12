@@ -1,0 +1,37 @@
+{
+    "id": "m_three",
+    "title": "title_m_three",
+    "key": "MeshPhongMaterial",
+    "obj": {
+        "type": "MeshPhongMaterial",
+        "color": "#ffffff",
+        "skinning": false,
+        "flatShading": false,
+        "depthFunc": 3,
+        "blending": 1,
+        "side": 0,
+        "opacity": 1,
+        "transparent": false,
+        "alphaTest": 0,
+        "wireframe": false,
+        "reflectivity": 1,
+        "refractionRatio": 0.98,
+        "textur": [
+            {
+                "link": "resources/data/m_three/textur/WOOD.JPG",
+                "l": "WOOD.JPG",
+                "name": "map",
+                "rx": 1,
+                "ry": 1
+            }
+        ],
+        "shininess": 35.62,
+        "specular": "#3c3c3c",
+        "emissive": "#000000"
+    },
+    "mirro": false,
+    "orig": "WOOD.JPG",
+    "resurs": {
+        "array": []
+    }
+}

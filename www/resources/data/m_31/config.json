@@ -1,0 +1,27 @@
+{
+    "id": "m_31",
+    "title": "m_31",
+    "key": "MeshPhongMaterial",
+    "obj": {
+        "type": "MeshPhongMaterial",
+        "color": "#1c1c1c",
+        "skinning": false,
+        "flatShading": false,
+        "depthFunc": 3,
+        "blending": 1,
+        "side": 0,
+        "opacity": 1,
+        "transparent": false,
+        "alphaTest": 0,
+        "wireframe": false,
+        "reflectivity": 1,
+        "refractionRatio": 0.98,
+        "emissive": "#000000",
+        "specular": "#cacaca",
+        "shininess": 13.66
+    },
+    "mirro": false,
+    "resurs": {
+        "array": []
+    }
+}
