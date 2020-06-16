@@ -12,7 +12,7 @@
 
 
 
-import { NizMenu } from './NizMenu.js';
+import { NizMenu } from './nizMenu/NizMenu.js';
 import { MInfo } from './MInfo.js';
 import { MPrint } from './MPrint.js';
 import { GalleryMani } from './GalleryMani.js';

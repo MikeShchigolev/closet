@@ -675,7 +675,8 @@ function MBLOt(p,c,x,y,f) {
     sah+=20+this.otstup;
 
     this.buttonRect=new DButton(this.panel,this.otstup, sah, "get rect",function(){        
-        var a=aGlaf.s3d.sMod.getRect();        
+        var a=aGlaf.s3d.sMod.getRect();  
+              
         if(a[0]==Infinity){
             for (var i = 0; i < 6; i++) {
                 self.o.mod.r[i] = self.ar[i].text= 0;

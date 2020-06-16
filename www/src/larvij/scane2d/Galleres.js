@@ -224,7 +224,7 @@ export class Galleres  {
             this.array[0].finalLink=this.linkF
             this.array[0].boolScale=this.boolScale;
             this.array[0].start(a); 
-
+            this.array[0].panel.visible=false
 
             //1 подветка            
             this.array[1].kolII=1;
@@ -253,9 +253,13 @@ export class Galleres  {
             this.array[1].funDragOwer=function(box){               
                 self.array1Bat.push(box)
             };
-
+            this.array[2].panel.visible=false
             this.array[2].visible=false;
+
+
             this.index=0;
+
+
 
 
             //выподание группы

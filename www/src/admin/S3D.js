@@ -290,6 +290,13 @@ function SHelp(s3d) {
             return;
         } 
 
+        if(this.object.mod && this.object.mod.r){
+            this.dragObjNWD(self.boxHelper, this.object.mod.r);
+            this.dragObjNWD(self.boxHelper1, this.object.mod.r1);
+            this.par.redrag(); 
+            return 
+        }
+
 
         if(this.object.iNum!=undefined){
             this.dragObjNWD(self.boxHelper, this.object.iNum.rect);
@@ -306,9 +313,9 @@ function SHelp(s3d) {
 
     this.dragObjNWD=function(bH, a){
 
-        bH.visible=false
-        if(a==undefined)return 
-        bH.visible=true    
+        bH.visible=false;
+        if(a==undefined)return; 
+        bH.visible=true;    
 
 
         if(a[3]>0 && a[4]>0 && a[5]>0){            

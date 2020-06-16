@@ -20,6 +20,9 @@ import {  BWindow } from './blok/BWindow.js';
 import {  BTumba } from './blok/BTumba.js';
 import {  BTVstavka } from './blok/BTVstavka.js';
 
+import {  BTBox } from './blok/BTBox.js';
+import {  BTBoxVstavka } from './blok/BTBoxVstavka.js';
+
 import {  BPieceObject } from './blok/BPieceObject.js';
 import {  BPieceTop } from './blok/BPieceTop.js';
 import {  MUtilit  } from './MUtilit.js';
@@ -517,6 +520,8 @@ export class MenedsherObject  {
         this._materialBase=undefined;
         this.objectBase=undefined;
         this.arrayKey=["fbx", "3ds", "gltf"];
+        this.wN=[50,85,100];
+        this.hN=[50,75,100]; 
 
         this._visiMark = false; 
 
@@ -535,6 +540,16 @@ export class MenedsherObject  {
             color:0x476875,
             transparent:true,
             opacity:0.3
+        });
+        this.matRed1 = new THREE.MeshPhongMaterial({
+            color:0xff0000,
+            transparent:true,
+            opacity:0.7
+        });
+        this.mat2 = new THREE.MeshPhongMaterial({
+            color:0x00ff00,
+            transparent:true,
+            opacity:0.7
         });
 
         this.dragPriceScane=function(){ 
@@ -681,6 +696,7 @@ export class MenedsherObject  {
 
 
         this.blokTumba
+        this.btBox
         this.objB2={}
         this.setOB=function(oo){
             this.objectBase=oo 
@@ -712,6 +728,35 @@ export class MenedsherObject  {
                     break
                 }
             }
+
+            for (var i = 0; i < this.objectBase.bd.length; i++) {
+                if(this.objectBase.bd[i].title=="btBox"){
+                    var ii=i;
+                    $.ajax({
+                        url: "resources/data/"+this.objectBase.bd[ii].id+"/config.json"+self.par.plus,
+                        success: function function_name(data) {
+                            if(typeof data === "string") {
+                                var conf = JSON.parse(data)
+                                self.objectBase.bd[ii].obj = self.csvTest(conf);
+                            } else{                                
+                                self.objectBase.bd[ii].obj = self.csvTest(data);
+                            }  
+
+                            self.btBox = new BTBox(self, self.objectBase.bd[ii].obj, -1 ,self.sob);
+                            self.btBox.init();
+                            
+                        },
+                        error:function function_name(data) {
+                            console.log("Что то случилось с конфигом")
+                        }
+                    });
+                    i=99999
+                    break
+                }
+            }
+
+
+
 
             for (var i = 0; i < this.objectBase.bd.length; i++) {
                 if(this.objectBase.bd[i].title=="pieceTop"){
@@ -775,15 +820,23 @@ export class MenedsherObject  {
                         return this.array[i];
                     }
                 }
-            }            
+            }
+
            
-            if(o.str[0]=="BDoor") blok=new BDoor(this, o, this.array.length,this.sob) 
-            if(o.str[0]=="BWindow") blok=new BWindow(this, o, this.array.length,this.sob)               
-            if(o.str[0]=="BTumba") blok=new BTumba(this, o, this.array.length,this.sob)   
-            if(o.str[0]=="BTVstavka") blok=new BTVstavka(this, o, this.array.length,this.sob)
-            if(o.str[0]=="BPieceObject") blok=new BPieceObject(this, o, this.array.length,this.sob) 
-            if(o.str[0]=="BPieceBottom") blok=new BPieceBottom(this, o, this.array.length,this.sob) 
-            if(o.str[0]=="BPieceTop") blok=new BPieceTop(this, o, this.array.length,this.sob)  
+            if(o.str[0]=="BDoor") blok=new BDoor(this, o, this.array.length,this.sob); 
+            if(o.str[0]=="BWindow") blok=new BWindow(this, o, this.array.length,this.sob);               
+            if(o.str[0]=="BTumba") blok=new BTumba(this, o, this.array.length,this.sob);   
+            if(o.str[0]=="BTVstavka") blok=new BTVstavka(this, o, this.array.length,this.sob);
+            if(o.str[0]=="BPieceObject") blok=new BPieceObject(this, o, this.array.length,this.sob); 
+            if(o.str[0]=="BPieceBottom") blok=new BPieceBottom(this, o, this.array.length,this.sob); 
+            if(o.str[0]=="BPieceTop") blok=new BPieceTop(this, o, this.array.length,this.sob); 
+
+
+
+            if(o.str[0]=="BTBox") blok=new BTBox(this, o, this.array.length,this.sob); 
+            if(o.str[0]=="BTBoxVstavka") blok=new BTBoxVstavka(this, o, this.array.length,this.sob);
+
+
 
             if(blok==null)blok = new Blok(this,o,this.array.length,this.sob)
             blok.init();

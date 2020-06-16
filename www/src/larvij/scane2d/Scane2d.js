@@ -57,11 +57,24 @@ export class Scane2d  {
             self.par.menuDiv.mHelp.testStartHelp()
         });   
         this.button.height=32
-        this.button.object.style.borderRadius=this.button.height/2+"px";
+        //this.button.object.style.borderRadius=this.button.height/2+"px";
         this.button.object.style.fontFamily="SFUIDisplay-Light";
+        this.button.borderRadius=32
         this.button.fontSize=20;
         this.button.colorText="#000000";
-        this.button.color="#ffffff";        
+        this.button.color="#ffffff";  
+        this.button.label.x-=2;  
+
+        
+        setTimeout(function() {            
+            if(main.glaf.scane3d.dubag.active==true){
+                self.par.scane3d.bactive=true;
+                self.par.menuDiv.mHelp.testStartHelp()                
+            }
+        }, 500);
+
+        
+           
 
         
         this.tween = new TWEEN.Tween(this.dC);
