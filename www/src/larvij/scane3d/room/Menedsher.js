@@ -520,8 +520,9 @@ export class MenedsherObject  {
         this._materialBase=undefined;
         this.objectBase=undefined;
         this.arrayKey=["fbx", "3ds", "gltf"];
-        this.wN=[50,85,100];
-        this.hN=[50,75,100]; 
+        this.wN=[50,75,100];
+        this.hN=[35,58]; 
+
 
         this._visiMark = false; 
 
@@ -947,8 +948,7 @@ export class Hron  {
             }
         }
      
-        if(key=="gltf"){      
-
+        if(key=="gltf"||key=="glb"){
             mO.loaderGLTF.load( link, function ( object ) { 
                 let dd
                 if(link.indexOf("resources/data/65/")!=-1){
@@ -961,6 +961,7 @@ export class Hron  {
             })
         } 
        
+
 
         this.getObj3D=function(o3d){
             var o=new THREE.Object3D();

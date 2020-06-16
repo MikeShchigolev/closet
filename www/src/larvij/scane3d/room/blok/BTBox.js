@@ -30,8 +30,8 @@ export class BTBox extends Blok {
         this._indexW=0;
         this._indexH=0;
 
-        this.wN=mO.wN//[50,75,100];
-        this.hN=mO.hN//[50,75,100]; 
+        this.wN=mO.wN;
+        this.hN=mO.hN; 
 
         this.arrObj=[];
         for (var i = 0; i < this.wN.length; i++) {
@@ -126,7 +126,7 @@ export class BTBox extends Blok {
         this.funInitMod = function(){
 
             this.creadDebag(self.cont3dLoad.children[0]);
-
+            trace(self.cont3dLoad.children[0])
             var o=self.cont3dLoad.children[0];
             var h;
             let p=-1
@@ -146,17 +146,19 @@ export class BTBox extends Blok {
 
 
             } 
-            
-            var dd=1
-            for (var i = 0; i < 22; i++) {
-                h=new BHronTumba();
-                h.x=p.position.x;
-                h.y=p.position.y;
-                h.z=p.position.z+dd;
-                self.arrPosit.push(h);
-                self.arrPositZ.push(-p.position.z-dd);
-                dd+=3;
+            if(p!=-1){
+                var dd=1
+                for (var i = 0; i < 22; i++) {
+                    h=new BHronTumba();
+                    h.x=p.position.x;
+                    h.y=p.position.y;
+                    h.z=p.position.z+dd;
+                    self.arrPosit.push(h);
+                    self.arrPositZ.push(-p.position.z-dd);
+                    dd+=3.2;
+                }
             }
+            
 
 
 
@@ -196,7 +198,9 @@ export class BTBox extends Blok {
         }
 
 
-        this.creadDebag=function(o){            
+        this.creadDebag=function(o){  
+            trace(">>>>>>>>>>>",o) 
+            trace(">>>>",this.object)         
             for (var i = 0; i < this.arrObj.length; i++){ 
                 for (var j = 0; j < this.arrObj[i].length; j++) {    
                     let p=-1;
@@ -213,22 +217,27 @@ export class BTBox extends Blok {
                         m.scale.set(this.arrObj[i][j].w,this.arrObj[i][j].d,1)
                         m.position.set(0,this.arrObj[i][j].d/2,j*1+i*5);
                     }
+
                 }
             }
 
             //наполняем массив обьектами
             for (var i = 0; i < this.arrObj.length; i++){ 
                 for (var j = 0; j < this.arrObj[i].length; j++) {
-                    for (var ii = o.children.length-1; ii >=0; ii--) {                        
+                    for (var ii = o.children.length-1; ii >=0; ii--) { 
+                        trace(ii+"===!!!!!!!!!!!===",o.children[ii].name)                       
                         if(o.children[ii].name=="mod_"+this.wN[i]+"_"+this.hN[j]){
+
                             this.arrObj[i][j].object=o.children[ii]
                         }
                     }
                 }
             }
 
+
+
             for (var ii = o.children.length-1; ii >=0; ii--) {                        
-                trace(ii+"",o.children[ii].name)
+                trace(ii+"  ===  ",o.children[ii].name)
             }
 
         }
