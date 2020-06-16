@@ -63,5 +63,13 @@
     "bagY": 0,
     "resurs": {
         "array": []
+    },
+    "param": {
+        "tOt": false,
+        "tNa": false,
+        "rO": -1,
+        "kesh": false,
+        "sG": false,
+        "clone": true
     }
 }
