@@ -300,10 +300,21 @@ export class VuborMat  {
 
         this._vusot=this.par._vusot;
 
-        this.icon=new DImage(this.dCont, 0,0,this.link,function(){
-            this.width=this.picWidth; // реальные размеры картинки
-            this.height=this.picHeight;
-        });
+        if(this.link){
+            this.icon=new DImage(this.dCont, 0,0,this.link,function(){
+                //if(this.picWidth<self._vusot){
+                    
+                //}
+                let s=self._vusot/this.picWidth
+                if(s>self._vusot/this.picHeight){
+                    s=self._vusot/this.picHeight
+                }
+                trace(s)
+                this.width=this.picWidth*s; // реальные размеры картинки
+                this.height=this.picHeight*s; 
+                
+            });
+        }
 
 
         /*this.image = new DImage(this.dCont, this._vusot, 0,null,function(){
@@ -356,7 +367,7 @@ export class VuborMat  {
 
 
 
-export class GaleriLitel {
+export class GaleriLitel{
     constructor(par,x,y,arrObj,fun) {          
         this.type="GaleriLitel";
         var self=this;

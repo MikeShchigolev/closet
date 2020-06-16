@@ -23,7 +23,7 @@ export class BTBox extends Blok {
         this.arrPositZ=[];
         this._polka=false;
         this._pod=false;
-        this.aa.push("verhTumb");
+        this.aa.push();
 
         this.plusObj=new PlusObj(this);
 
@@ -74,7 +74,7 @@ export class BTBox extends Blok {
             }
         }
 
-        this.dragImeag=function(){self.drahShadow()}
+        this.dragImeag = function(){self.drahShadow()}
 
         this.dddddd=function(a,_x){
             var r= false;
@@ -126,37 +126,41 @@ export class BTBox extends Blok {
         this.funInitMod = function(){
 
             this.creadDebag(self.cont3dLoad.children[0]);
-            trace(self.cont3dLoad.children[0])
+            
             var o=self.cont3dLoad.children[0];
             var h;
             let p=-1
             for (var i = o.children.length-1; i >=0; i--) {
 
-                if(o.children[i].name=="marker_")p=o.children[i]
+                if(o.children[i].name=="marker_"){
+                    p=o.children[i]
+                    o.remove(p);
+                }
 
-                /*if(o.children[i].name.indexOf("marker_")!=-1){
-                    h=new BHronTumba();
-                    h.x=o.children[i].position.x;
-                    h.y=o.children[i].position.y;
-                    h.z=o.children[i].position.z;
-                    self.arrPosit.push(h);
-                    self.arrPositZ.push(-o.children[i].position.z);
-                    o.remove(o.children[i]);
-                }*/
-
-
+               
             } 
             if(p!=-1){
                 var dd=1
-                for (var i = 0; i < 22; i++) {
+                for (var i = 0; i < 222222; i++) {
                     h=new BHronTumba();
                     h.x=p.position.x;
                     h.y=p.position.y;
                     h.z=p.position.z+dd;
                     self.arrPosit.push(h);
-                    self.arrPositZ.push(-p.position.z-dd);
-                    dd+=3.2;
+                    let dddd=-p.position.z-dd
+                    if(dddd>self.object.mod.r[2]){
+                        self.arrPositZ.push(dddd);
+                        dd+=3.2;
+
+                    }else{
+                        break
+                    }
+                    
+
+
                 }
+                trace(self.object)
+                trace(self.arrPositZ)
             }
             
 
@@ -172,8 +176,9 @@ export class BTBox extends Blok {
             self.content3d.position.z = 0.5;        
 
             self.prosZ=2;
-            self.dragObjNWD()
-
+            self.dragIndex();
+            self.dragObjNWD();
+            
 
         }
 
@@ -189,10 +194,15 @@ export class BTBox extends Blok {
                 }
             }
 
-            if(this.arrObj[this._indexW]&&this.arrObj[this._indexW][this._indexH]&& this.arrObj[this._indexW][this._indexH].object){
 
-                this.arrObj[this._indexW][this._indexH].object.visible=true;
+            if(this.arrObj[this._indexW]&&this.arrObj[this._indexW][this._indexH]&& this.arrObj[this._indexW][this._indexH].object){
+                this.arrObj[this._indexW][this._indexH].object.visible=true;                
+                self.rect[3]=this.wN[this._indexW]
+                self.rect[4]=this.hN[this._indexH]
             }
+            
+
+            self.dragObjNWD();
 
             self.fun("visi3d");
         }
@@ -521,6 +531,16 @@ export class BTBox extends Blok {
                 self.polka=!self.polka;
                 self.testPodBig()
             }
+
+            if(s=="indexW"){
+                self.indexW=p 
+                self.mO.par.par.visiActiv.setObject(self)                
+            }
+            if(s=="indexH"){
+                self.indexH=p  
+                self.mO.par.par.visiActiv.setObject(self)               
+            }
+
             setTimeout(function() {self.fun("visi3d");}, 10);
             self.mO.dragPriceScane()
         }
@@ -634,7 +654,10 @@ export class BTBox extends Blok {
         if(this._indexW!=v){
             this._indexW = v;  
             this.dragIndex();     
-            this.fun("visi3d");      
+            this.fun("visi3d"); 
+            for (var i = 0; i < this.children.length; i++) {
+                if(this.children[i].indexW!=undefined)this.children[i].indexW=this._indexW
+            }     
         }           
     }   
     get indexW() { return  this._indexW;} 
@@ -643,7 +666,10 @@ export class BTBox extends Blok {
         if(this._indexH!=v){
             this._indexH = v;  
             this.dragIndex();     
-            this.fun("visi3d");      
+            this.fun("visi3d"); 
+            for (var i = 0; i < this.children.length; i++) {
+                if(this.children[i].indexH!=undefined)this.children[i].indexH=this._indexW
+            }     
         }           
     }   
     get indexH() { return  this._indexH;} 

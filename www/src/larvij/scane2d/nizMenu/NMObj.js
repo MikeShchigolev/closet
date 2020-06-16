@@ -106,10 +106,14 @@ export class NMObj  {
             this.arrLine[0].x=this.otstup+this._vusot*2-this._vusot*0.25
 
             
-            this.butArAr.setObject(o)
+            
 
             xx=this.otstup+this._vusot*2+this._vusot*0.5 
             if(bColor==false) xx+=-113
+
+            if(this.butArAr.setObject(o)==true) {
+                xx+=200
+            }   
 
             if(this.object.type=="BDoor"||this.object.type=="BWindow"){
                 this.dragWHXZ.setObject(this.object);
@@ -217,55 +221,63 @@ export class ButArAr  {
         this._visible=false;
         this.ab
         this.ab1
+        global.butArAr=this
 
         this.dCont=new DCont(this.par.dCont);
         this.dCont.visible=false;
         this.object=undefined
-        this.dCont.y=-100
-
-        this.vuborMat
+        this.dCont.y=10
+        this.dCont.x=122
+        this._vusot=this.par._vusot;
+        this.vuborW
 
         this.down=function(){
             self.object[this.name]=this.idArr
         }
 
         this.setObject=function(o){
-            if(o.wN==undefined){
+            if(o.type!="BTBox"){
                 this.visible=false
-                return
+                return false
             }
             this.object=o
             this.visible=true
             if(this.ab==undefined){
                 this.ab=[];
-                this.ab1=[];
-               /* let a=[]
-                a
-                this.vuborMat = new VuborMat(this,-200,0,"resources/data/33/32.png",{array:[
-                    "resources/data/32/32.png",
-                    "resources/data/33/32.png",
-                    "resources/data/34/32.png",
-                    "resources/data/35/32.png"
-                    ]},function(){
-                   
-                   
-                });            
-                this.vuborMat.index = 0; */
 
+                let a={array:[ ]};                
                 for (var i = 0; i < o.wN.length; i++) {
-                    let b= new DButton(this.dCont,0,i*34,""+o.wN[i],this.down)
-                    b.idArr=i;
-                    b.name="indexW";
+                    a.array.push("resources/image/boxw_"+o.wN[i]+".png")
                 }
+                this.vuborW = new VuborMat(this,0,0,"resources/image/boxw.png",a,function(){     
+                    trace(this.index)
+                    //self.object.indexW=this.index
+                    //batArrGlobal.setObject(self.object)
+                    self.object.aaSob("indexW",this.index) 
+                    //self.setObject(self.object)
+                });            
+                this.vuborW.index = 0; 
 
 
-
+                a={array:[ ]};                
                 for (var i = 0; i < o.hN.length; i++) {
-                    let b= new DButton(this.dCont,102,i*34,""+o.hN[i],this.down)
-                    b.idArr=i;
-                    b.name="indexH";
-                }
-            }            
+                    a.array.push("resources/image/boxh_"+o.hN[i]+".png")
+                } 
+                this.vuborH = new VuborMat(this,100,0,"resources/image/boxh.png",a,function(){     
+                    //self.object.indexH=this.index
+                    self.object.aaSob("indexH",this.index) 
+                    //self.setObject(self.object)
+                });            
+                this.vuborH.index = 0; 
+
+            }
+
+
+            this.vuborW.index = self.object.indexW; 
+            this.vuborH.index = self.object.indexH; 
+
+            return true
+
         }
     }
 
