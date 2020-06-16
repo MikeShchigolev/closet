@@ -80,7 +80,7 @@ export class NMObj  {
 
         })
 
-        this.butArAr=new ButArAr(this)
+        this.butArAr=new ButArAr(this);
 
 
         this.batArr=new BatArr(this,0,this.otstup,function(t,s){            
@@ -223,6 +223,8 @@ export class ButArAr  {
         this.object=undefined
         this.dCont.y=-100
 
+        this.vuborMat
+
         this.down=function(){
             self.object[this.name]=this.idArr
         }
@@ -235,8 +237,20 @@ export class ButArAr  {
             this.object=o
             this.visible=true
             if(this.ab==undefined){
-                this.ab=[]
-                this.ab1=[]
+                this.ab=[];
+                this.ab1=[];
+               /* let a=[]
+                a
+                this.vuborMat = new VuborMat(this,-200,0,"resources/data/33/32.png",{array:[
+                    "resources/data/32/32.png",
+                    "resources/data/33/32.png",
+                    "resources/data/34/32.png",
+                    "resources/data/35/32.png"
+                    ]},function(){
+                   
+                   
+                });            
+                this.vuborMat.index = 0; */
 
                 for (var i = 0; i < o.wN.length; i++) {
                     let b= new DButton(this.dCont,0,i*34,""+o.wN[i],this.down)
@@ -245,21 +259,20 @@ export class ButArAr  {
                 }
 
 
+
                 for (var i = 0; i < o.hN.length; i++) {
                     let b= new DButton(this.dCont,102,i*34,""+o.hN[i],this.down)
                     b.idArr=i;
                     b.name="indexH";
                 }
-            }
-            
+            }            
         }
-
     }
+
     set visible(v) {
         if(this._visible!=v){
             this._visible = v;   
-            this.dCont.visible=this._visible;
-            
+            this.dCont.visible=this._visible;            
         }
     }
     get visible() { return  this._visible;}   

@@ -319,14 +319,8 @@ export class VuborMat  {
         this.but2Link.boolLine=false;
         this.but2Link.width=this._vusot; 
         this.but2Link.height=this._vusot;
-        this.but2Link.color =dcmParam.compToHexArray(dcmParam.hexDec(dcmParam._color1), -10); 
-
-
-         
+        this.but2Link.color =dcmParam.compToHexArray(dcmParam.hexDec(dcmParam._color1), -10);    
        
-
-        
-
 
         this.galeri = new GaleriLitel(this,this._vusot,-this._vusot,arrObj,function(s,p){
             if(s=="index"){
@@ -334,9 +328,6 @@ export class VuborMat  {
                 self.fun();
             }
         });
-
-
-
 
 
         /*this.botton=new DButton(this.dCont, 0,0," ",function(){
@@ -412,7 +403,6 @@ export class GaleriLitel {
             }            
         }
 
-
         document.addEventListener("mousedown", this.mouseDown);
     }
 
@@ -457,7 +447,12 @@ export class GLBox  {
         this._active=false;
         this.dCont=new DCont(dCont);
         this.dC=new DCont(this.dCont);
-        this.link="resources/data/"+obj.id+"/yoriginal.png";
+        
+        if(obj.id!=undefined){
+            this.link="resources/data/"+obj.id+"/yoriginal.png";
+        }else{
+            this.link=obj;
+        }
         if(obj.src!=undefined){
             this.link=obj.src
         }

@@ -288,6 +288,7 @@ export class Blok{
 
             mO.getModel(this.linkMod, o.mod.key, function(o){
                 self.cont3dLoad=o;
+                trace(">>@@@@@@>>");
                 
                 self.markers.setO3D(self.cont3dLoad) 
                 self.c3dNa.add(self.cont3dLoad);
