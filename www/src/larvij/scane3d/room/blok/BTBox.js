@@ -121,7 +121,7 @@ export class BTBox extends Blok {
         }
 
 
-         
+        this.boolLoad=false       
 
         this.funInitMod = function(){
 
@@ -153,11 +153,7 @@ export class BTBox extends Blok {
                         break;
                     }
                 }
-            }
-            
-
-
-
+            }      
 
             self.arrPosit.sort(function(a, b) {
                 return a.z - b.z;
@@ -168,6 +164,7 @@ export class BTBox extends Blok {
             self.content3d.position.z = 0.5;        
 
             self.prosZ=2;
+            self.boolLoad=true
             self.dragIndex();
             self.dragObjNWD();
             
@@ -180,6 +177,7 @@ export class BTBox extends Blok {
         //--------------------------------------
 
         this.dragIndex=function(){
+            if(self.boolLoad==false)return
             for (var i = 0; i < this.arrObj.length; i++){ 
                 for (var j = 0; j < this.arrObj[i].length; j++) { 
                     this.arrObj[i][j].object.visible=false;
@@ -189,16 +187,30 @@ export class BTBox extends Blok {
 
             if(this.arrObj[this._indexW]&&this.arrObj[this._indexW][this._indexH]&& this.arrObj[this._indexW][this._indexH].object){
                 this.arrObj[this._indexW][this._indexH].object.visible=true;                
+                
+
                 self.rect[3]=this.wN[this._indexW];
                 self.rect[0]=-this.wN[this._indexW]/2;
                 self.rect[4]=this.hN[this._indexH];
 
+                trace(this.boxColizi)
+                trace(this.boxColizi.rectCollisMeshdy)
+                trace(this.boxColizi.width)
+                trace(this.boxColizi.sx)
+                trace(this.boxColizi.x)
 
-                
-                this.boxColizi.width=this.wN[this._indexW];
+                let t=this.wN[this._indexW]+0.02
+                this.boxColizi.width=t;
+                this.boxColizi.rectCollisMeshdy.width=t;
+                this.boxColizi.sx=-t/2;
+                this.boxColizi.x=-t/2;
+
+
+                /*this.boxColizi.width=this.wN[this._indexW];
+                this.boxColizi.rectCollisMeshdy.width=this.boxColizi.width;
                 this.boxColizi.sx=-this.boxColizi.width/2
                 this.boxColizi.x=-this.boxColizi.width/2
-                this.boxColizi.rectCollisMeshdy.width=this.wN[this._indexW];
+                 */
                 
                // this.boxColizi.rectCollisMeshdy.
             }
@@ -208,8 +220,7 @@ export class BTBox extends Blok {
 
 
         this.creadDebag=function(o){  
-            trace(">>>>>>>>>>>",o) 
-            trace(">>>>",this.object)         
+                    
             for (var i = 0; i < this.arrObj.length; i++){ 
                 for (var j = 0; j < this.arrObj[i].length; j++) {    
                     let p=-1;
@@ -228,6 +239,12 @@ export class BTBox extends Blok {
                     }
 
                 }
+            }
+
+            if(this.idArr==-1){
+                let m=new THREE.Mesh(this.mO.gBox, this.mO.matRed2);
+                o.add(m)                       
+                m.scale.set(10,10,10)
             }
 
             //наполняем массив обьектами
@@ -590,6 +607,8 @@ export class BTBox extends Blok {
             for (var i = 0; i < this.children.length; i++) {
                 obj.children[i] = this.children[i].getObj();
             }
+            obj.indexW=this.indexW  
+            obj.indexH=this.indexH  
             return obj;            
         }
 
@@ -609,6 +628,11 @@ export class BTBox extends Blok {
                 this.pod=obj.pod
                 this.polka=obj.polka
             }
+            if(obj.indexW!=undefined){
+                this.indexW=obj.indexW;
+                this.indexH=obj.indexH;
+            }
+
             return obj;            
         }
     }

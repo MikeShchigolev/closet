@@ -79,6 +79,8 @@ export class Room  {
 
         this.visiActiv=new VisiActiv(this);
 
+        //this.visiActiv.vaBox.rect3d.x=-5
+
 
         this.clearScane = function(){
             this.menedsher.menedsherObject.clear()

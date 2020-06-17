@@ -58,16 +58,17 @@ export class BTBoxVstavka extends Blok {
             }      
         }
 
-
+        this.boolLoad = false 
         this.funInitMod = function(){
-
             this.creadDebag(self.cont3dLoad.children[0]);
-
+            self.boolLoad=true;
+            this.dragIndex();
         }
 
         //--------------------------------------
 
         this.dragIndex=function(){
+            if(self.boolLoad==false)return
             for (var i = 0; i < this.arrObj.length; i++){ 
                 for (var j = 0; j < this.arrObj[i].length; j++) { 
                     this.arrObj[i][j].object.visible=false;
@@ -77,8 +78,24 @@ export class BTBoxVstavka extends Blok {
             if(this.arrObj[this._indexW]&&this.arrObj[this._indexW][this._indexH]&& this.arrObj[this._indexW][this._indexH].object){
 
                 this.arrObj[this._indexW][this._indexH].object.visible=true;
-            }
 
+                self.rect[3]=this.wN[this._indexW];
+                self.rect[0]=-this.wN[this._indexW]/2;
+                self.rect[4]=this.hN[this._indexH];
+
+                trace(this.boxColizi)
+                trace(this.boxColizi.rectCollisMeshdy)
+                trace(this.boxColizi.width)
+                trace(this.boxColizi.sx)
+                trace(this.boxColizi.x)
+
+                let t=this.wN[this._indexW]+0.00002
+                this.boxColizi.width=t;
+                this.boxColizi.rectCollisMeshdy.width=t;
+                this.boxColizi.sx=-t/2;
+                this.boxColizi.x=-t/2;
+            }
+            self.dragObjNWD();
             self.fun("visi3d");
         }
 
@@ -115,9 +132,7 @@ export class BTBoxVstavka extends Blok {
                 }
             }
 
-            for (var ii = o.children.length-1; ii >=0; ii--) {                        
-                trace(ii+"",o.children[ii].name)
-            }
+            
 
         }
 
@@ -382,8 +397,7 @@ export class BTBoxVstavka extends Blok {
                 ad[9]=this.object.id;
                 ad[10]=1;
                 ad[11]=aa[3]*1;                
-            } 
-                
+            }                 
             return [ad]
         }
     }
@@ -391,8 +405,7 @@ export class BTBoxVstavka extends Blok {
 
 
     set parent(v) {
-        if(this._parent!=v){ 
-            trace("p",v)                   
+        if(this._parent!=v){                               
             if(this._parent!=undefined){
                 if(this._parent.type=="BTBox"){
                     if(this._parent.content){                        
@@ -402,8 +415,8 @@ export class BTBoxVstavka extends Blok {
                     }
                 }
             }
+            this._parent= v;  
 
-            this._parent= v;             
             if(this._parent==undefined){
                 this.collision=undefined
                 this.mO.visi3D.event3DArr.removeChild(this.c3dNa);
@@ -413,8 +426,7 @@ export class BTBoxVstavka extends Blok {
                 this.mO.visi3D.event3DArr.addChild(this.c3dNa);
                 if(this._parent.content)this._parent.content.addChild(this.content)
 
-                if(this._parent.indexW!=undefined){
-                    trace("this._parent.indexW  ",this._parent.indexW)
+                if(this._parent.indexW!=undefined){                    
                     this.indexW=this._parent.indexW 
                     this.indexH=this._parent.indexH   
                 }  

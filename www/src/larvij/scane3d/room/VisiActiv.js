@@ -28,6 +28,8 @@ export class VisiActiv  {
         this._matText=this.par.menedsher.mMaterial.geterMat.getTestTitle("line2");
         this._matBox=this.par.menedsher.mMaterial.geterMat.getTestTitle("line3");
 
+        
+
         this._sah=1;
         this._fontSize=6       
         if(this.par.par.par.par.localStorage.object.sts!=undefined){
@@ -480,7 +482,16 @@ export class VABox  {
         this._fontSize=this.par._fontSize
         this._sah=this.par._sah;
         this._otstup=this.par._otstup
-        this.content3d = new THREE.Object3D(); 
+        this.content3d = new THREE.Object3D();
+
+        this.rect3d={
+            x:0,
+            y:0,
+            z:0,
+            w:0,
+            h:0,
+            d:0
+        }
 
         this.meshBox=new THREE.Mesh(this.par.boxBufferGeometry,this.par._matBox);
         this.meshBox.renderOrder=3;
@@ -516,6 +527,14 @@ export class VABox  {
         this.label2.object3d.scale.z=0.02
 
         this.setWHD=function(w,h,d,n){
+
+            for (var i = 0; i < this.array.length; i++) {
+                this.array[i].content3d.position.x=this.rect3d.x
+                this.array[i].content3d.position.y=this.rect3d.y
+                this.array[i].content3d.position.z=this.rect3d.z
+            }
+
+
             this.array[0].distans=this.array[2].distans=this.array[4].distans=this.array[6].distans=w            
             this.array[0].content3d.position.z=d
             this.array[2].content3d.position.z=d
@@ -529,30 +548,30 @@ export class VABox  {
             this.array[7].content3d.position.y=-h
 
             this.array[1].content3d.position.z=d
-            this.array[1].content3d.position.x=w
+            this.array[1].content3d.position.x=w+this.rect3d.x
             this.array[3].content3d.position.z=d
             this.array[5].content3d.position.z=d
 
             this.array[8].distans=this.array[9].distans=this.array[10].distans=this.array[11].distans=d
-            this.array[9].content3d.position.x=w
-            this.array[10].content3d.position.x=w
+            this.array[9].content3d.position.x=w+this.rect3d.x
+            this.array[10].content3d.position.x=w+this.rect3d.x
             this.array[10].content3d.position.y=-h
             this.array[11].content3d.position.y=-h 
 
             this.meshBox.scale.set(w,h,d)
-            this.meshBox.position.set(w/2,-h/2,d/2)
+            this.meshBox.position.set(w/2+this.rect3d.x,-h/2,d/2)
 
             this.label.text=Math.round(w)+ "0мм"; 
             this.label.x = w/2+this._otstup;
             this.label.y = this._fontSize+this._otstup;
 
             this.label1.text=Math.round(h)+ "0мм"; 
-            this.label1.x = w+this._otstup
+            this.label1.x = w+this._otstup+this.rect3d.x
             this.label1.y = -h/2+this._fontSize/2
             this.label1.object3d.position.z=d
 
             this.label2.text=Math.round(d)+ "0мм";
-            this.label2.x = w+this._otstup
+            this.label2.x = w+this._otstup+this.rect3d.x
             this.label2.y = this._fontSize
             this.label2.object3d.position.z=d/2
 

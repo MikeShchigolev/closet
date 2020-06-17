@@ -521,7 +521,7 @@ export class MenedsherObject  {
         this.objectBase=undefined;
         this.arrayKey=["fbx", "3ds", "gltf"];
         this.wN=[50,75,100];
-        this.hN=[35,58]; 
+        this.hN=[58,35]; 
 
 
         this._visiMark = false; 
