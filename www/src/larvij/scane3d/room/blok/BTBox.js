@@ -135,9 +135,7 @@ export class BTBox extends Blok {
                 if(o.children[i].name=="marker_"){
                     p=o.children[i]
                     o.remove(p);
-                }
-
-               
+                }               
             } 
             if(p!=-1){
                 var dd=1
@@ -151,16 +149,10 @@ export class BTBox extends Blok {
                     if(dddd>self.object.mod.r[2]){
                         self.arrPositZ.push(dddd);
                         dd+=3.2;
-
                     }else{
-                        break
+                        break;
                     }
-                    
-
-
                 }
-                trace(self.object)
-                trace(self.arrPositZ)
             }
             
 
@@ -197,13 +189,20 @@ export class BTBox extends Blok {
 
             if(this.arrObj[this._indexW]&&this.arrObj[this._indexW][this._indexH]&& this.arrObj[this._indexW][this._indexH].object){
                 this.arrObj[this._indexW][this._indexH].object.visible=true;                
-                self.rect[3]=this.wN[this._indexW]
-                self.rect[4]=this.hN[this._indexH]
+                self.rect[3]=this.wN[this._indexW];
+                self.rect[0]=-this.wN[this._indexW]/2;
+                self.rect[4]=this.hN[this._indexH];
+
+
+                
+                this.boxColizi.width=this.wN[this._indexW];
+                this.boxColizi.sx=-this.boxColizi.width/2
+                this.boxColizi.x=-this.boxColizi.width/2
+                this.boxColizi.rectCollisMeshdy.width=this.wN[this._indexW];
+                
+               // this.boxColizi.rectCollisMeshdy.
             }
-            
-
             self.dragObjNWD();
-
             self.fun("visi3d");
         }
 
