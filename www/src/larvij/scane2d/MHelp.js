@@ -22,8 +22,8 @@ export class MHelp  {
         this.colorS=aGlaf.visi3D.utility.sky.color;
         this.colorF="#525253";
 
-
-
+        global.mHelp=this
+        this.dCNM=undefined
 
 
         this.load=function(){
@@ -148,8 +148,12 @@ export class MHelp  {
         })
         
         this.mouseup=function(e) {
-            self.tween.stop();
-        	self.tween.to({alpha:0.0},1000).start();            
+            
+         
+            
+            self.dHalp.visible=false;
+            self.dCIframe.visible=true;   
+
         	if(dcmParam.mobile==false){	 				
   				document.removeEventListener("mousedown", self.mouseup);
   			}else{  				
@@ -194,6 +198,10 @@ export class MHelp  {
 
 
         this.setHelp=function(text,link,cont,poz) {
+            trace(this.dHalp.alpha,text,this.dHalp.text  )
+            if(this.dHalp.visible==true && text==this.dHalp.text )return
+            this.mouseup()   
+
         	cont.add(this.dHalp)
             this.dHalp.visible=true
             this.dCIframe.visible=false
@@ -201,8 +209,8 @@ export class MHelp  {
         	this.dHalp.link=link;
         	this.dHalp.x=poz.x;
         	this.dHalp.y=poz.y;
-        	this.dHalp.alpha=1
-        	this.tween.stop();
+        	
+        	
         	setTimeout(function() {
 				if(dcmParam.mobile==false){	 				
 	  				document.addEventListener("mousedown", self.mouseup);

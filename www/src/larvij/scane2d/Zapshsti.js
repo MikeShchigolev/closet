@@ -309,7 +309,7 @@ export class VuborMat  {
                 if(s>self._vusot/this.picHeight){
                     s=self._vusot/this.picHeight
                 }
-                trace(s)
+                
                 this.width=this.picWidth*s; // реальные размеры картинки
                 this.height=this.picHeight*s; 
                 

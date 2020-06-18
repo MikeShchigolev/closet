@@ -30,6 +30,7 @@ export function CollisionDetection() {
 	this.correct = function (b) {
 		isCorrect = true;
 		this.checkArrPoint();
+		//trace(this.activBox)
 		
 		if (this.isStick)this.stick();// прилипалка
 		// console.clear()
@@ -137,7 +138,8 @@ export function CollisionDetection() {
 
 	// прилипать краями к краям
 	this.stick = function () {
-		this.collUtil.stickBox(this.activBox, this.arrBox, this.disStick);
+		
+		this.collUtil.stickBox(this.activBox, this.arrBox, this.activBox.disStick);
 	};
 
 	// позиционируем бокс с миром если он в позиции большой коробки
@@ -400,13 +402,13 @@ export function CollisionDetection() {
 			if (!bool && this.fun) {
 				this.fun(i);
 			}
-		}
-		
+		}		
 	};
 
 	// достаем пересеченые боксы
 	// не учитываем скрытые бокты и ofsetBox
 	this.getCollisionBox = function (box, arrBox, ofsetBox) {
+		
 		if (arrBox == undefined)arrBox = this.arrBox;
 		var collisionBox = [];
 		if (!box) return collisionBox;

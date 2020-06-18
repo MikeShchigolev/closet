@@ -79,7 +79,16 @@ export class Room  {
 
         this.visiActiv=new VisiActiv(this);
 
-        //this.visiActiv.vaBox.rect3d.x=-5
+
+        var dd=0.5
+        this.visiActiv.vaBox.rect3d.x=-dd
+        this.visiActiv.vaBox.rect3d.y=-dd
+        this.visiActiv.vaBox.rect3d.z=-dd
+
+        this.visiActiv.vaBox.rect3d.w=dd*2
+        this.visiActiv.vaBox.rect3d.h=dd*2
+        this.visiActiv.vaBox.rect3d.d=dd*2
+
 
 
         this.clearScane = function(){

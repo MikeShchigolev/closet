@@ -83,11 +83,7 @@ export class BTBoxVstavka extends Blok {
                 self.rect[0]=-this.wN[this._indexW]/2;
                 self.rect[4]=this.hN[this._indexH];
 
-                trace(this.boxColizi)
-                trace(this.boxColizi.rectCollisMeshdy)
-                trace(this.boxColizi.width)
-                trace(this.boxColizi.sx)
-                trace(this.boxColizi.x)
+       
 
                 let t=this.wN[this._indexW]+0.00002
                 this.boxColizi.width=t;
@@ -278,7 +274,7 @@ export class BTBoxVstavka extends Blok {
                 }
             }
             mO.btBox.setXY(_x,_y);
-            trace(bbb);
+           
             
             if(bbb==true){
                 var mm=-3333
@@ -370,7 +366,7 @@ export class BTBoxVstavka extends Blok {
         this.getPrice=function(intColor,idMat){  
             var ad=[]
             var aa=null
-            //trace("------------------")
+            
             if(this.parent==undefined)return []
             if(this.parent.parent==undefined)return []    
            

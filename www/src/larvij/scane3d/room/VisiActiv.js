@@ -526,62 +526,69 @@ export class VABox  {
         this.label1.object3d.scale.z=0.02
         this.label2.object3d.scale.z=0.02
 
-        this.setWHD=function(w,h,d,n){
+
+        var w,h,d,n;
+        this.setWHD=function(_w,_h,_d,_n){
+
+            w=_w+this.rect3d.w
+            h=_h+this.rect3d.h
+            d=_d+this.rect3d.d
+            n=_n
 
             for (var i = 0; i < this.array.length; i++) {
                 this.array[i].content3d.position.x=this.rect3d.x
-                this.array[i].content3d.position.y=this.rect3d.y
+                this.array[i].content3d.position.y=-this.rect3d.y
                 this.array[i].content3d.position.z=this.rect3d.z
             }
 
 
             this.array[0].distans=this.array[2].distans=this.array[4].distans=this.array[6].distans=w            
-            this.array[0].content3d.position.z=d
-            this.array[2].content3d.position.z=d
-            this.array[2].content3d.position.y=-h
-            this.array[6].content3d.position.y=-h
+            this.array[0].content3d.position.z=d+this.rect3d.z
+            this.array[2].content3d.position.z=d+this.rect3d.z
+            this.array[2].content3d.position.y=-h-this.rect3d.y
+            this.array[6].content3d.position.y=-h-this.rect3d.y
 
             this.array[1].distans=this.array[3].distans=this.array[5].distans=this.array[7].distans=h
-            this.array[1].content3d.position.y=-h
-            this.array[3].content3d.position.y=-h
-            this.array[5].content3d.position.y=-h
-            this.array[7].content3d.position.y=-h
+            this.array[1].content3d.position.y=-h-this.rect3d.y
+            this.array[3].content3d.position.y=-h-this.rect3d.y
+            this.array[5].content3d.position.y=-h-this.rect3d.y
+            this.array[7].content3d.position.y=-h-this.rect3d.y
 
-            this.array[1].content3d.position.z=d
+            this.array[1].content3d.position.z=d+this.rect3d.z
             this.array[1].content3d.position.x=w+this.rect3d.x
-            this.array[3].content3d.position.z=d
-            this.array[5].content3d.position.z=d
+            this.array[3].content3d.position.z=d+this.rect3d.z
+            this.array[5].content3d.position.z=d+this.rect3d.z
 
             this.array[8].distans=this.array[9].distans=this.array[10].distans=this.array[11].distans=d
             this.array[9].content3d.position.x=w+this.rect3d.x
             this.array[10].content3d.position.x=w+this.rect3d.x
-            this.array[10].content3d.position.y=-h
-            this.array[11].content3d.position.y=-h 
+            this.array[10].content3d.position.y=-h-this.rect3d.y
+            this.array[11].content3d.position.y=-h-this.rect3d.y 
 
             this.meshBox.scale.set(w,h,d)
-            this.meshBox.position.set(w/2+this.rect3d.x,-h/2,d/2)
+            this.meshBox.position.set(w/2+this.rect3d.x,-h/2-this.rect3d.y,d/2+this.rect3d.z)
 
-            this.label.text=Math.round(w)+ "0мм"; 
-            this.label.x = w/2+this._otstup;
+            this.label.text=Math.round(_w)+ "0мм"; 
+            this.label.x = w/2+this._otstup+this.rect3d.x;
             this.label.y = this._fontSize+this._otstup;
 
-            this.label1.text=Math.round(h)+ "0мм"; 
+            this.label1.text=Math.round(_h)+ "0мм"; 
             this.label1.x = w+this._otstup+this.rect3d.x
             this.label1.y = -h/2+this._fontSize/2
-            this.label1.object3d.position.z=d
+            this.label1.object3d.position.z=d+this.rect3d.z
 
-            this.label2.text=Math.round(d)+ "0мм";
+            this.label2.text=Math.round(_d)+ "0мм";
             this.label2.x = w+this._otstup+this.rect3d.x
             this.label2.y = this._fontSize
-            this.label2.object3d.position.z=d/2
+            this.label2.object3d.position.z=d/2+this.rect3d.z
 
             if(n==undefined||n==0){
-                this.label.object3d.position.z=0
+                this.label.object3d.position.z=this.rect3d.z
                 
             }else{
                 if(n==1){
-                    this.label.object3d.position.z=d
-                    this.label1.y = -h/2
+                    this.label.object3d.position.z=d+this.rect3d.z
+                    this.label1.y = -h/2-this.rect3d.y
                 }
             }
         } 
