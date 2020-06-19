@@ -47,6 +47,23 @@ export function CollisionRect(id) {
     var arrRect=[];
     this.arrRect = arrRect
 
+   /* this.isRect=function(r){
+        
+        this.colozi.activBox= r.rectCollisMeshdy;
+        let b = this.colozi.correct();
+        
+        trace("bbb====",b)
+
+        if (!b) {
+            return false
+        }  
+        //let a=this.colozi.getCollisionBox(r.rectCollisMeshdy)  
+
+        return true
+
+        
+    }*/
+
     var p;
     this.addRect=function(r, isNotRemove){
         p=9999999;
@@ -56,12 +73,15 @@ export function CollisionRect(id) {
                 break;
             }
         }
+        if(r.rectCollisMeshdy.disStick==undefined){
+            r.rectCollisMeshdy.disStick=this.colozi.disStick
+        }
 
         if(p==9999999){
             r.rectartID();
             arrRect.push(r);
             this.colozi.arrBox.push(r.rectCollisMeshdy);
-            this.colozi.activBox=r.rectCollisMeshdy;
+            this.colozi.activBox = r.rectCollisMeshdy;
             
             if (isNotRemove) {
                 var b = this.colozi.correct();
@@ -261,6 +281,7 @@ export function RectCollisMeshdy(_x,_y,_width,_height, fun) {
 
     this.boolZ=true;
     this.active=true;
+    this.disStick = undefined;
 
 
     this.width=_width||100;
@@ -308,6 +329,8 @@ export function RectCollis(_x,_y,_width,_height, fun) {
 
     this.width=_width||100;
     this.height=_height||100;
+
+
 
 
 

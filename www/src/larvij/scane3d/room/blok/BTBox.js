@@ -46,15 +46,29 @@ export class BTBox extends Blok {
 
 
 
+
+
+
         this.setXY=function(_x,_y){           
-            this.boxColizi.position._x = _x;
-            this.boxColizi.position.y = _y;
-            if(this.testTumbu(_x,_y)==true){
+            
+            
+
+            /*if(this.testTumbu(_x,_y)==true){
                 return;
-            }  
+            }*/ 
+
             if(this.parent!=undefined){
+              
+                let xx=this.isWA(this.parent.collision.arrRect,_x,this.boxColizi.width,this.boxColizi,this.parent.collision.colozi.bigBox.width)
+                if(xx!=false){
+                    _x=xx
+                }
+                this.boxColizi.position._x = _x;
+                this.boxColizi.position.y = _y;
+
                 this.parent.collision.testRect(this.boxColizi);
-                this.drahShadow();                
+                this.drahShadow();  
+                return              
             }            
         }
 
@@ -79,7 +93,7 @@ export class BTBox extends Blok {
         this.dddddd=function(a,_x){
             var r= false;
             for (var i = 0; i < this.collision.arrRect.length; i++) {
-                if(this.collision.arrRect[i].parent.type=="BTBox")
+                if(this.collision.arrRect[i].parent.type == "BTBox" || this.collision.arrRect[i].parent.type == "BTumba" )
                 if(this.collision.arrRect[i].idRandom!=this.boxColizi.idRandom){
                     col=this.collision.arrRect[i]; 
                     if(_x>col.rectCollisMeshdy.x){
@@ -101,9 +115,9 @@ export class BTBox extends Blok {
         this.testTumbu=function(_x,_y){
             if(this.collision==undefined)return false
             var r= false; 
-            aa=[];            
+           /* aa=[];            
             r=this.dddddd(aa, _x);                       
-
+            
             if(r==true){//сортируем приметивы
                 r=this.testverh(this.boxColizi, aa)
             }
@@ -116,12 +130,18 @@ export class BTBox extends Blok {
                 this.boxColizi.position.y = 0;
             } 
             this.drahShadow() 
-            this.testPodBig()           
+            this.testPodBig()   */ 
+
+
+            // this.boxColizi.position.y = 0;
+
+
+
             return r;
         }
 
 
-         
+        this.boolLoad=false       
 
         this.funInitMod = function(){
 
@@ -135,9 +155,7 @@ export class BTBox extends Blok {
                 if(o.children[i].name=="marker_"){
                     p=o.children[i]
                     o.remove(p);
-                }
-
-               
+                }               
             } 
             if(p!=-1){
                 var dd=1
@@ -151,21 +169,11 @@ export class BTBox extends Blok {
                     if(dddd>self.object.mod.r[2]){
                         self.arrPositZ.push(dddd);
                         dd+=3.2;
-
                     }else{
-                        break
+                        break;
                     }
-                    
-
-
                 }
-                trace(self.object)
-                trace(self.arrPositZ)
-            }
-            
-
-
-
+            }      
 
             self.arrPosit.sort(function(a, b) {
                 return a.z - b.z;
@@ -176,11 +184,126 @@ export class BTBox extends Blok {
             self.content3d.position.z = 0.5;        
 
             self.prosZ=2;
+            self.boolLoad=true
             self.dragIndex();
             self.dragObjNWD();
+
+
             
 
         }
+
+        this.creatBCFun=function(){
+            
+            self.boxColizi.rectCollisMeshdy.coliziStop = {
+                x: -999,
+                y: 0,
+                z: 0,
+                width: 9999,
+                height: 236,
+                depth: 100
+            }
+            self.boxColizi.rectCollisMeshdy.funErr = self.clear;
+            self.boxColizi.rectCollisMeshdy.disStick=1
+        }
+
+        this.isOver=function(sten,_xx,_yy){
+            trace(">>>Продолжим сдесь, тупо проверка а можно ли вситавить ",sten.collision);
+            
+
+            
+            if(this.isWA(sten.collision.arrRect,_xx,this.boxColizi.width,this.boxColizi,sten.collision.colozi.bigBox.width)!=false){
+                return true
+            }
+
+            return false
+        }
+
+
+        this.isWA = function(arrRect,_xx, _ww, _not, _wBig){
+            if(_xx<_ww/2)_xx=_ww/2
+            if(_xx>_wBig-_ww/2)_xx=_wBig-_ww/2   
+            //trace(">>>>>>>,_xx,_yy  ",arrRect,_xx, _ww, _not, _wBig);
+            let a =[];
+
+            for (var i = 0; i < arrRect.length; i++) {
+                if(_not){
+                    if(_not.idRandom==arrRect[i].idRandom)continue;                    
+                    let yy=arrRect[i].rectCollisMeshdy._y-arrRect[i].rectCollisMeshdy.height                    
+                    if(arrRect[i].rectCollisMeshdy._y>_not.rectCollisMeshdy.height)continue; 
+                }                        
+                a.push(arrRect[i].rectCollisMeshdy.x,arrRect[i].rectCollisMeshdy.x+arrRect[i].rectCollisMeshdy.width);
+            }
+            let rb=true
+            for (var i = 0; i < a.length; i+=2) {
+                //trace(i+"  ",a[i],a[i+1])
+                if(calc.test2d(a[i],a[i+1],_xx-_ww/2,_xx+_ww/2)==true){                    
+                    rb=false
+                }
+            }
+            if(rb==true)return _xx*1;
+            let aaa =[];
+            let xp=0
+            let bb=false
+
+            for (i = 0; i < a.length; i+=2) {
+                //лево
+                bb=true
+                xp=a[i]-_ww/2;
+
+                if(xp<_ww/2)bb=false
+                
+
+                if(bb==true)   
+                for (let j = 0; j < a.length; j+=2) {
+                    if(i!=j){
+                        if(calc.test2d(a[j],a[j+1],xp-_ww/2,xp+_ww/2)==true){                    
+                            bb=false
+                        }
+                    }
+                }
+                if(bb==true){
+                    aaa.push(xp)
+                }
+                //право
+                bb=true
+                xp=a[i+1]+_ww/2;                
+                if(xp>_wBig-_ww/2)bb=false; 
+
+                if(bb==true)   
+                for (let j = 0; j < a.length; j+=2) {
+                    if(i!=j){
+                        if(calc.test2d(a[j],a[j+1],xp-_ww/2,xp+_ww/2)==true){                    
+                            bb=false
+                        }
+                    }
+                }
+                if(bb==true){
+                    aaa.push(xp)
+                }
+                
+            }
+            if(aaa.length==0)return false
+            let max=9999999999999
+            let ind=-1
+
+
+            for (i = 0; i < aaa.length; i++) {
+                if(Math.abs(aaa[i]-_xx)<max){
+                    max=Math.abs(aaa[i]-_xx)
+                    ind=i
+                }
+            }
+                
+
+           // trace(aaa[ind],aaa)
+           //trace(rb,_xx-_ww/2,_xx+_ww/2)
+
+
+            return aaa[ind]
+        }
+
+
 
         
 
@@ -188,6 +311,7 @@ export class BTBox extends Blok {
         //--------------------------------------
 
         this.dragIndex=function(){
+            if(self.boolLoad==false)return
             for (var i = 0; i < this.arrObj.length; i++){ 
                 for (var j = 0; j < this.arrObj[i].length; j++) { 
                     this.arrObj[i][j].object.visible=false;
@@ -197,20 +321,39 @@ export class BTBox extends Blok {
 
             if(this.arrObj[this._indexW]&&this.arrObj[this._indexW][this._indexH]&& this.arrObj[this._indexW][this._indexH].object){
                 this.arrObj[this._indexW][this._indexH].object.visible=true;                
-                self.rect[3]=this.wN[this._indexW]
-                self.rect[4]=this.hN[this._indexH]
+                
+
+                self.rect[3]=this.wN[this._indexW];
+                self.rect[0]=-this.wN[this._indexW]/2;
+                self.rect[4]=this.hN[this._indexH];
+
+        
+
+                let xx=this.boxColizi.rectCollisMeshdy.x+this.boxColizi.width/2
+
+                let t=this.wN[this._indexW]+0.02
+                this.boxColizi.width=t;
+                this.boxColizi.rectCollisMeshdy.width=t;
+                this.boxColizi.sx=-t/2;
+                this.boxColizi.x=-t/2;
+
+                this.boxColizi.rectCollisMeshdy.x=xx-this.boxColizi.width/2;
+
+                /*this.boxColizi.width=this.wN[this._indexW];
+                this.boxColizi.rectCollisMeshdy.width=this.boxColizi.width;
+                this.boxColizi.sx=-this.boxColizi.width/2
+                this.boxColizi.x=-this.boxColizi.width/2
+                 */
+                
+               // this.boxColizi.rectCollisMeshdy.
             }
-            
-
             self.dragObjNWD();
-
             self.fun("visi3d");
         }
 
 
         this.creadDebag=function(o){  
-            trace(">>>>>>>>>>>",o) 
-            trace(">>>>",this.object)         
+                    
             for (var i = 0; i < this.arrObj.length; i++){ 
                 for (var j = 0; j < this.arrObj[i].length; j++) {    
                     let p=-1;
@@ -231,13 +374,17 @@ export class BTBox extends Blok {
                 }
             }
 
+            if(this.idArr==-1){
+                let m=new THREE.Mesh(this.mO.gBox, this.mO.matRed2);
+                o.add(m)                       
+                m.scale.set(10,10,10)
+            }
+
             //наполняем массив обьектами
             for (var i = 0; i < this.arrObj.length; i++){ 
                 for (var j = 0; j < this.arrObj[i].length; j++) {
-                    for (var ii = o.children.length-1; ii >=0; ii--) { 
-                        trace(ii+"===!!!!!!!!!!!===",o.children[ii].name)                       
+                    for (var ii = o.children.length-1; ii >=0; ii--) {                                             
                         if(o.children[ii].name=="mod_"+this.wN[i]+"_"+this.hN[j]){
-
                             this.arrObj[i][j].object=o.children[ii]
                         }
                     }
@@ -264,6 +411,7 @@ export class BTBox extends Blok {
 
         var __xxx
         this.testverh = function( col, arrColl){                         
+           // return
             if(col==undefined){
                 var r= false; 
                 aa=[];            
@@ -314,7 +462,7 @@ export class BTBox extends Blok {
         var point1=new THREE.Vector2()
         this.testPodBig=function(){
             arc=this.collision.arrRect;
-            trace("testPodBig---")
+            
             arcIdArr=[];
             arcIdBool=[];
             sah=0;
@@ -533,8 +681,32 @@ export class BTBox extends Blok {
             }
 
             if(s=="indexW"){
+                if(self.wN[p]){
+                    if(self.parent!=undefined){
+                        let xxxx=this.boxColizi.rectCollisMeshdy.x+this.boxColizi.rectCollisMeshdy.width/2
+                        let xx=this.isWA(
+                            this.parent.collision.arrRect,
+                            xxxx,
+                            self.wN[p],
+                            this.boxColizi,
+                            this.parent.collision.colozi.bigBox.width
+                        )
+                        trace(xx,xxxx)
+                        if(xx==false){
+
+                            
+                            mHelp.setHelp("Данная ширина не влазит, не хватает пространства","resources/image/mhelp.png",mHelp.dCNM,{x:13,y:-13});
+                            return
+                        }else{
+                            this.setXY(xx,0)  
+
+                        }
+                    }
+
+                }
                 self.indexW=p 
-                self.mO.par.par.visiActiv.setObject(self)                
+                self.mO.par.par.visiActiv.setObject(self) 
+
             }
             if(s=="indexH"){
                 self.indexH=p  
@@ -591,6 +763,8 @@ export class BTBox extends Blok {
             for (var i = 0; i < this.children.length; i++) {
                 obj.children[i] = this.children[i].getObj();
             }
+            obj.indexW=this.indexW  
+            obj.indexH=this.indexH  
             return obj;            
         }
 
@@ -610,6 +784,11 @@ export class BTBox extends Blok {
                 this.pod=obj.pod
                 this.polka=obj.polka
             }
+            if(obj.indexW!=undefined){
+                this.indexW=obj.indexW;
+                this.indexH=obj.indexH;
+            }
+
             return obj;            
         }
     }

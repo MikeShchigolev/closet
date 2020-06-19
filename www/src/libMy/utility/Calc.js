@@ -91,6 +91,13 @@ function Calc () {
 		return point;
 	};
 
+	//сверяем две полосы
+    this.test2d=function(ps,pf,ps1,pf1){            
+        if(ps1>=ps &&ps1<=pf)return true;
+        if(ps>=ps1 &&ps<=pf1)return true;
+        return false;
+    }
+
 	// от угла и длины получаем вектор точки
 	this.isPointInLin = function (p1, p2, pTest, dist, otstup) {
 		this.getTreeAngel(p1, p2, pTest);

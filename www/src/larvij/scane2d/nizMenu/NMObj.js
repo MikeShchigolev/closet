@@ -86,6 +86,7 @@ export class NMObj  {
         this.batArr=new BatArr(this,0,this.otstup,function(t,s){            
             if(t=="polka"){//не можем поставить полку
                 self.par.par.mHelp.setHelp("В данном положении полки, установка перекладины невозможна","resources/image/mhelp.png",this.dCont,{x:24,y:-13});
+            
             }
             if(t=="saveMod"){//не можем поставить полку
                 self.room.par.tudaSuda.saveMod();

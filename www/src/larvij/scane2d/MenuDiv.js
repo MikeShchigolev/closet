@@ -54,6 +54,8 @@ export class MenuDiv  {
         this.mInfo = new MInfo(this.dCont);//окно поверх с инпутами
 
 
+        this.mHelp.dCNM=this.nizMenu.nmObj.dCont;
+
         var ss=3;    
 
         if(this.par.par.tip==0){
@@ -119,7 +121,8 @@ export class MenuDiv  {
         this.upDate = function () {
             this.menuSave.upDate()    
              
-        }			
+        }	
+
   	}
 }
 

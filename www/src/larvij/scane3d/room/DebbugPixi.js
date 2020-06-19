@@ -19,7 +19,7 @@ export class KorektMarker  {
 
         if(this.debag==true){
             this.deb=new DebbugPixi()          
-            this.w=new DWindow(par.par.par.dCont, 1400, 200,"тест маркеров");           
+            this.w=new DWindow(par.par.par.dCont, 1600, 200,"тест маркеров");           
             this.w.content.div.appendChild(this.deb.div)
         }
 

@@ -231,11 +231,28 @@ export class Menedsher  {
                     //strace(">>")
                     self.sten=e.target.sten
                     if(self.object!=undefined){//разруливаем тоскаемый элемент                    
-                        if(self.object.parent==undefined){                            
-                            e.target.sten.add(self.object);
-                            self.move(e)
-                            self.glaf.dragPic.stop();
-                            self.dragPriceScane()                            
+                        if(self.object.parent==undefined){
+                            let b=true;
+                            intersects=self.par.par.par.visi3D.event3DArr.raycaster.intersectObjects([self.mPanel], true);
+                            _xx=self.pointZdvig.x + (intersects[0].uv.x-0.5)*self.whDrag;
+                            _yy=self.pointZdvig.y + (intersects[0].uv.y-0.5)*self.whDrag;
+
+                            if(self.object.isOver)b=self.object.isOver(e.target.sten,_xx,_yy)
+                            /*if(e.target.sten.collision.isRect(self.object.boxColizi)==false){
+                                b=false;
+                            }*/
+                            trace(mHelp.dCNM)
+
+                            if(b){//если можно пихнуть
+                                e.target.sten.add(self.object);
+                                self.move(e)
+                                self.glaf.dragPic.stop();
+                                self.dragPriceScane()   
+                            }else{
+                                mHelp.setHelp("Данный обьект не может быть размещен, не хватает пространства","resources/image/mhelp.png",mHelp.dCNM,{x:13,y:-13});
+                            }
+                            
+
                         }
                         self.fun("visi3d");
                         if(self.object.overDrag)self.object.overDrag()                   
@@ -521,7 +538,7 @@ export class MenedsherObject  {
         this.objectBase=undefined;
         this.arrayKey=["fbx", "3ds", "gltf"];
         this.wN=[50,75,100];
-        this.hN=[35,58]; 
+        this.hN=[58,35]; 
 
 
         this._visiMark = false; 
