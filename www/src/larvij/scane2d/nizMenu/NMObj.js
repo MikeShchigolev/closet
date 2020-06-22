@@ -39,7 +39,7 @@ export class NMObj  {
 
         this.up1Menu=undefined;
 
-
+        window.nMObj=this
         
         setTimeout(function() {
            if(main.glaf.up1 == true){//Включена смена 55 up1

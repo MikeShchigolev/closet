@@ -8,7 +8,7 @@ function MenuBD(menu, fun) {
     this.par=menu;
     this._active=false
     this._sort=-2;   
-    if(localS.object.sort!=undefined)this._sort=localS.object.sort; 
+
     
 
     this.otstup=aGlaf.otstup;
@@ -40,6 +40,11 @@ function MenuBD(menu, fun) {
     this.gallery.widthPic=46;
     this.gallery.heightPic=46;
 
+
+    this.dragColorGal=function(){
+        this.gallery.dragColorGal()
+    }
+
     var naObj=undefined    
     this.gallery.funOver=function(e){
         naObj=e 
@@ -51,12 +56,38 @@ function MenuBD(menu, fun) {
     }
 
 
+    this.setId=function(id){        
+        for (var i = 0; i < self.gallery.arrayObj.length; i++) {
+            if(self.gallery.arrayObj[i].id==id){
+                self.gallery.index=i
+                this._index=i;
+                this.objDin=self.gallery.arrayObj[i]; 
+                this.par.menuObject.setObj(this.objDin); 
+                return;
+            }
+        }
+        var p=-1
+        for (var i = 0; i < this.objectBase.bd.length; i++) {           
+            if(this.objectBase.bd[i].id==id){
+                p=i
+                break;
+            }
+        }
+        if(p==-1)return;
+        this.objDin=this.objectBase.bd[p]; 
+        this.par.menuObject.setObj(this.objDin);        
+    }
 
 
 
     this.clik=function(){
-        self.index=self.gallery.index;       
+        self.index=self.gallery.index;        
+        let a=php.ser.split("?");
+        history.pushState(null, null, a[0]+'?obj='+self.gallery.array[self.index].object.id);
     }
+
+
+    this.startObj
     this.drag=function(){
         var o=self.gallery.array[self.gallery.index].object;
        
@@ -177,6 +208,7 @@ function MenuBD(menu, fun) {
                 php.load({tip: 'mkdir', dir: '../'+aGlaf.resursData + id}, function (e) {                        
                     php.load({tip: 'copyDir', dirWith: '../'+aGlaf.resurs+'base/', dir: '../'+aGlaf.resursData + id + '/'}, function (e) {    
                         var o={id:id, title:id, name:"xz",key:"o_"+id}
+                        o.sort=self._sort
                         self.objectBase.bd.unshift(o);                    
                         aGlaf.save();
                         self.reDrag();               
@@ -293,9 +325,13 @@ function MenuBD(menu, fun) {
         this.gallery.height=this.w.height-32;   
     }
    // this.reDrag();
-  
-    this.mSort.sort=this._sort; 
-    this.reDrag();  
+    if(localS.object.sort==undefined)localS.object.sort=-2
+
+    trace("localS  ",localS.object.sort)
+    //this.sort = localS.object.sort;
+    setTimeout(function() {self.sort = localS.object.sort;}, 10); 
+    //this.mSort.sort=this._sort; 
+    //this.reDrag();  
 
 
 
@@ -357,7 +393,7 @@ function MenuBD(menu, fun) {
 
      Object.defineProperty(this, "sort", {
         set: function (value) { 
-
+            trace(this._sort+" ######################### !=  "+value)
             if(this._sort!=value){
                 this._sort=value; 
 
@@ -373,126 +409,4 @@ function MenuBD(menu, fun) {
     });
   
 }
-
-
-function MSort(par, cont) {  
-    var self=this   
-    this.type="MSort";
-    this.par=par;
-    
-    this._sort=-3;
-
-    this.otstup=aGlaf.otstup;
-    this.wh=aGlaf.wh;
-    this.whv=aGlaf.whv;
-    this.widthBig=aGlaf.widthBig;
-
-
-
-    this.dCont=new DCont(cont);
-    this.panel=new DPanel(this.dCont, this.otstup, 34);
-    this.panel.height=32;
-    this.panel.width= this.widthBig-this.otstup*2;
-
-
-    this.kol=5;
-    var ww=(130) / this.kol;
-
-    this.bAll=new DButton(this.panel.content, this.otstup+155, this.otstup ,"A", function(){
-        self.par.sort=-1;   
-    }) 
-    this.bAll.width=ww-2;
-    this.bAll.height=this.panel.height-this.otstup*4;
-    
-
-    this.bNot=new DButton(this.panel.content, this.otstup, this.otstup ,"N", function(){
-        self.par.sort=-2;   
-    }) 
-    this.bNot.width=ww-2;
-    this.bNot.height=this.panel.height-this.otstup*4
-    this.bNot.alpha=0.5;
-
-
-    
-    this.aaaa=[];
-    for (var i = 0; i < this.kol; i++) {
-        this.aaaa[i] = new DButton(this.panel.content, ww-2+this.otstup*2+(ww)*i, this.otstup ,i+"", function(){
-            self.par.sort=this.idArr;
-        })
-        this.aaaa[i].width=ww-2;
-        this.aaaa[i].idArr=i;
-        this.aaaa[i].height=this.panel.height-this.otstup*4
-    }
-
-
-    this.testXY=function(_x,_y){
-        var r=null;
-        for (var i = 0; i < this.aaaa.length; i++) {
-            if(this.testXY2(this.aaaa[i],_x,_y)==true)return i;
-        }
-
-        if(this.testXY2(this.aaaa[0],_x+32,_y)==true){
-            return -1;
-        }
-
-        if(this.testXY2(this.bAll,_x,_y)==true)return -1;
-
-
-        return r;
-    }
-
-    this.getBigPar=function(o, p){
-        if(o.parent==undefined)return o;
-        
-        if(o.x)p.x+=o.x;
-        if(o.y)p.y+=o.y;
-        return this.getBigPar(o.parent, p)
-    }
-    
-    var oo1={x:0,y:0}
-    this.testXY2=function(_o,_x,_y){
-        oo1.x=0        
-        oo1.y=0
-
-        this.getBigPar(_o, oo1);
-        if(oo1.x<_x)if(oo1.x+_o.width>_x){
-            if(oo1.y<_y)if(oo1.y+_o.height>_y){                
-                return true
-            }            
-        }
-
-       
-        return false;
-
-    }   
-
-
-    Object.defineProperty(this, "sort", {
-        set: function (value) {            
-            if(this._sort!=value){
-                this._sort=value; 
-                this.bAll.alpha=1;
-                this.bNot.alpha=1;
-                
-                for (var i = 0; i < this.kol; i++) {
-                    if(i==this._sort){
-                        this.aaaa[i].alpha=0.5;
-                        
-                    }else{
-                        this.aaaa[i].alpha=1;
-                    }                    
-                }
-                if(this._sort==-1)this.bAll.alpha=0.5;
-                if(this._sort==-2)this.bNot.alpha=0.5;
-
-                          
-                             
-            }           
-        },
-        get: function () {
-            return this._sort;
-        }
-    });
-}
-
 

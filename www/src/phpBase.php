@@ -3,6 +3,16 @@
 	$tip = $_REQUEST['tip']; 
 
 
+
+	if($tip == "saveFile") {
+		$dest = $_REQUEST['dest'];
+		$res = move_uploaded_file($_FILES['file']['tmp_name'], $dest);
+		if($res) {
+			echo "ok";
+		}
+		return;
+	}
+
 	if($tip == "saveJSON") {//Сохронения конфигурации проекта		
 		$mytext = stripslashes($_REQUEST['text']);	
 		$fp2 = fopen ($_REQUEST['link'], "w");  
@@ -28,8 +38,13 @@
 
 	if($tip == "mkdir") {//Создание нового проекта	
     	$dir = $_REQUEST['dir'];		
-		mkdir($dir);
-		echo "ok_mkdir";	
+		$rezult = mkdir($dir);
+		if($rezult==true){
+			echo "mkdir== yes";	
+		}else{
+			echo "mkdir== not ".$dir;	
+		}
+		
 		return;
     }
     

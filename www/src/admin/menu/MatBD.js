@@ -18,17 +18,21 @@ function MatBD(menu, fun) {
     this.objectBase=this.par.objectBase;
     this.dCont=new DCont(this.par.dCont);
 
+    this._sort=-2
+
     this.w=new DWindow(null, 0, this.whv," ");
     this.w.width=this.widthBig;
     this.w.dragBool=false;
     this.w.hasMinimizeButton=false;
+
+    this.mSort=new MSort(this, this.w);
 
     this._width=100;
     this._height=100;
 
     this._index=-1;
     this.objDin=undefined;
-    this.gallery=new GalleryXZ(this.w, this.otstup ,32,function(){
+    this.gallery=new GalleryXZ(this.w, this.otstup ,68,function(){
         //self.index=this.index;
 
         self.par.dragPic.testDrag(15,self.clik,self.drag);
@@ -39,9 +43,45 @@ function MatBD(menu, fun) {
     this.gallery.heightPic=46;
 
 
+
+    this.setId=function(id){
+        
+
+
+
+        for (var i = 0; i < self.gallery.arrayObj.length; i++) {
+            if(self.gallery.arrayObj[i].id==id){
+                self.gallery.index=i
+                this._index=i;
+                this.objDin=self.gallery.arrayObj[i];
+                this.par.matObject.setObj(this.objDin);                 
+                this.par.matObject.objDin=this.objDin; 
+                //this.par.menuObject.setObj(this.objDin); 
+                trace(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+                return;
+            }
+        }
+        var p=-1
+        for (var i = 0; i < this.objectBase.materials.length; i++) {           
+            if(this.objectBase.materials[i].id==id){
+                p=i
+                break;
+            }
+        }
+        if(p==-1)return;
+        this.objDin=this.objectBase.materials[p]; 
+
+        this.par.matObject.setObj(this.objDin);                 
+        this.par.matObject.objDin=this.objDin;        
+    }
+
+
+
+
     this.clik=function(){
         self.index=self.gallery.index;
-       
+        let a=php.ser.split("?");
+        history.pushState(null, null, a[0]+'?mat='+self.gallery.array[self.index].object.id);       
     }
     this.drag=function(){
         var o=self.gallery.array[self.gallery.index].object;
@@ -60,9 +100,56 @@ function MatBD(menu, fun) {
         }, 500);
     }
 
-    this.reDrag=function(){        
+   /* this.reDrag=function(){        
         this.gallery.start(self.objectBase.materials);
+    }*/
+
+
+    self.par.dragPic.addFunAp(function(){        
+        var num=self.mSort.testXY(self.par.dragPic._x, self.par.dragPic._y); 
+        if(num!=null){
+
+            self.gallery.array[self.gallery.index].object.sort=num;
+            self.reDrag()
+            aGlaf.save();
+            return
+        }       
+    })
+
+
+    var aZZ=[]
+    this.reDrag=function(){       
+        var b=true
+        if(this._sort==-1){
+            this.gallery.start(self.objectBase.materials);
+            b=false; 
+        }
+        if(this._sort==-2){
+            aZZ=[];
+            for (var i = 0; i < self.objectBase.materials.length; i++) {
+                if(self.objectBase.materials[i].sort==undefined)self.objectBase.materials[i].sort=-1;
+                if(self.objectBase.materials[i].sort==-1){
+                    aZZ.push(self.objectBase.materials[i])
+                }
+            }
+            this.gallery.start(aZZ);            
+            b=false; 
+        }
+
+        if(b==true){
+            aZZ=[];
+            for (var i = 0; i < self.objectBase.materials.length; i++) {
+                if(self.objectBase.materials[i].sort==undefined)self.objectBase.materials[i].sort=-1;
+                if(self.objectBase.materials[i].sort==this._sort){
+                    aZZ.push(self.objectBase.materials[i])
+                }
+            }
+            this.gallery.start(aZZ);
+        }
+        
     }
+
+
 
     this.down=function(){
         var id=self.grtMaxPlus()
@@ -238,6 +325,10 @@ function MatBD(menu, fun) {
     }
     this.reDrag();
 
+
+    if(localS.object.sortmat==undefined)localS.object.sortmat=-2
+    setTimeout(function() {self.sort = localS.object.sortmat;}, 10);     
+
    //setTimeout(function() {self.index=0}, 10);
    
 
@@ -275,6 +366,23 @@ function MatBD(menu, fun) {
         },
         get: function () {
             return this._active;
+        }
+    });
+
+    Object.defineProperty(this, "sort", {
+        set: function (value) { 
+
+            if(this._sort!=value){
+                this._sort=value; 
+
+                localS.object.sortmat=value
+                localS.save()
+                this.mSort.sort=value; 
+                this.reDrag()             
+            }           
+        },
+        get: function () {
+            return this._sort;
         }
     });
   

@@ -23,19 +23,42 @@ export class BTBoxVstavka extends Blok {
 
         this._indexW=0;
         this._indexH=0;
-        this.wN=mO.wN//[50,75,100];
-        this.hN=mO.hN//[50,75,100]; 
+        this.wN=mO.wN;
+        this.hN=mO.hN; 
+
+
+
+        
+        this.bvPlus=new BVPlus(this);
+
+
+
 
         this.arrObj=[];
+        this.objObj={};
         for (var i = 0; i < this.wN.length; i++) {
             this.arrObj[i]=[]
             for (var j = 0; j < this.hN.length; j++) {
                 this.arrObj[i][j]={}
                 this.arrObj[i][j].name="mod_"+this.wN[i]+"_"+this.hN[j]
-                this.arrObj[i][j].w=this.wN[i]
-                this.arrObj[i][j].d=this.hN[j]
+                this.arrObj[i][j].w=this.wN[i];
+                this.arrObj[i][j].d=this.hN[j];
+                this.objObj[this.wN[i]+"_"+this.hN[j]]=this.arrObj[i][j];              
             }
         }
+
+        
+        let aaa=this.object.str[1].split(",")
+        for (var i = 0; i < aaa.length; i++) {
+            let ooo=mO.getIdObj(aaa[i])
+            if(ooo && ooo.title){
+                this.objObj[ooo.title].obj=ooo.obj;                
+            }            
+        }
+
+        
+
+
 
 
         
@@ -96,8 +119,8 @@ export class BTBoxVstavka extends Blok {
         }
 
 
-        this.creadDebag=function(o){
-            
+
+        this.creadDebag=function(o){            
             for (var i = 0; i < this.arrObj.length; i++){ 
                 for (var j = 0; j < this.arrObj[i].length; j++) {    
                     let p=-1;
@@ -127,9 +150,6 @@ export class BTBoxVstavka extends Blok {
                     }
                 }
             }
-
-            
-
         }
 
 
@@ -289,7 +309,7 @@ export class BTBoxVstavka extends Blok {
 
 
         this.overDrag=function(){             
-            mO.par.glaf.dragPic.stop();
+            mO.par.glaf.dragPic.stop();            
             mO.btBox.add(this);
         }
 
@@ -343,15 +363,10 @@ export class BTBoxVstavka extends Blok {
 
 
         this.clear = function (b) {
-            
-
-
-
             if(this._parent&&b==undefined){                
                 this._parent.remove(this);
                 this.parent=undefined                
-            } 
-
+            }
 
             if(this.children.length!=0) {
                 for (var i = this.children.length - 1; i >= 0; i--) {
@@ -370,30 +385,26 @@ export class BTBoxVstavka extends Blok {
             if(this.parent==undefined)return []
             if(this.parent.parent==undefined)return []    
            
+            
 
-            aa=menedsherMaterial.getArrOtObj(this.object,idMat,intColor)     
+            
+            trace(this._indexW,this._indexH,this.arrObj[this._indexW][this._indexH])
+            let ooo= this.arrObj[this._indexW][this._indexH].obj;
+            ooo.priority= this.object.priority;
+            aa=menedsherMaterial.getArrOtObj(ooo,idMat,intColor); 
 
-           /* if(intColor==0){
-                if(this.object.plus!=undefined){
-                    aa=this.object.plus;
-                }
-            }
-            if(intColor==1){
-                if(this.object.plus1!=undefined){
-                    aa=this.object.plus1;
-                }
-            }*/
             if(aa!=null){
                 ad=[];                         
                 for (var j = 0; j < aa.length; j++) {
                     ad[j]=aa[j];                                
                 }
                 ad[6]="BTVstavka";
-                ad[8]=this.object;
-                ad[9]=this.object.id;
+                ad[8]=ooo;
+                ad[9]=ooo.id;
                 ad[10]=1;
                 ad[11]=aa[3]*1;                
-            }                 
+            }  
+            trace(">>>>>>>>>>>>>>>>>>>>>",ooo)               
             return [ad]
         }
     }
@@ -450,4 +461,23 @@ export class BTBoxVstavka extends Blok {
     }   
     get indexH() { return  this._indexH;} 
 }
+
+
+//хреновинки с боков
+export class BVPlus {
+    constructor(par) {    
+        var self=this;    
+        this.type = "HrenNiz";        
+        this.par=par;
+
+
+
+
+    }
+}
+
+
+
+
+
 

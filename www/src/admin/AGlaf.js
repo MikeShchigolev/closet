@@ -29,8 +29,9 @@ function AGlaf(main) {
 
     this.serverDo=aa[0];
 
+
     this.durak = true //защита от дурака, выподения инфы
-    
+    trace("@@@@@@@@@@@durak@@@@@@@@@@@@@@@@@")
 
 
 
@@ -192,8 +193,8 @@ function Save(aGlaf) {
         /*this.objectBase.bd=[]
         this.objectBase.materials=[]
         this.objectBase.three=[]*/
-        trace(this.objectBase)
-        trace(JSON.stringify(this.objectBase.scene))
+        //trace(this.objectBase)
+        //trace(JSON.stringify(this.objectBase.scene))
         var ss  =JSON.stringify(this.objectBase); 
         var l = "../"+this.par.resurs+"config.json";        
         aGlaf.php.load({tip:"saveJSON", link:l, text:ss},function(e){

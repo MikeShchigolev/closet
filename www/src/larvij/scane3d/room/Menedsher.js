@@ -223,7 +223,7 @@ export class Menedsher  {
 
       
         this.over = function (e) { 
-            //trace(">>over")
+            
             
             if(self.par.par.bactive==false)return
             if(e)if(e.target){
@@ -237,20 +237,20 @@ export class Menedsher  {
                             _xx=self.pointZdvig.x + (intersects[0].uv.x-0.5)*self.whDrag;
                             _yy=self.pointZdvig.y + (intersects[0].uv.y-0.5)*self.whDrag;
 
-                            if(self.object.isOver)b=self.object.isOver(e.target.sten,_xx,_yy)
+                            if(self.object.isOver!=undefined)b=self.object.isOver(e.target.sten,_xx,_yy)
                             /*if(e.target.sten.collision.isRect(self.object.boxColizi)==false){
                                 b=false;
                             }*/
                             trace(mHelp.dCNM)
 
-                            if(b){//если можно пихнуть
+                            //if(b){//если можно пихнуть
                                 e.target.sten.add(self.object);
                                 self.move(e)
                                 self.glaf.dragPic.stop();
                                 self.dragPriceScane()   
-                            }else{
+                           /* }else{
                                 mHelp.setHelp("Данный обьект не может быть размещен, не хватает пространства","resources/image/mhelp.png",mHelp.dCNM,{x:13,y:-13});
-                            }
+                            }*/
                             
 
                         }
@@ -749,6 +749,7 @@ export class MenedsherObject  {
 
             for (var i = 0; i < this.objectBase.bd.length; i++) {
                 if(this.objectBase.bd[i].title=="btBox"){
+                    
                     var ii=i;
                     $.ajax({
                         url: "resources/data/"+this.objectBase.bd[ii].id+"/config.json"+self.par.plus,

@@ -78,6 +78,8 @@ export class LMain  {
             this.fina()
 		};
 
+		//188,189,190,191,192,193
+
 		//стартуем дальше
         this.fina = function () {            	
 			self.glaf=new Glaf(self)
@@ -162,6 +164,7 @@ export class LMain  {
   		this.startCSV = function(){  
   			//грузим текстовый фаил
 	  		$.ajax({
+	  			//url: "resources/csvConfigOld.csv"+this.plus,
 	            url: "resources/csvConfig.csv"+this.plus,
 	            success: function function_name(data) {                         
 	                 
@@ -378,6 +381,7 @@ export class KlassCSVObj  {
 	            }            
 	        }
 	        this.csvConfigArray=array;
+	        trace(this.csvConfigArray)
 	    }
 	    this.bigZamena(csvConfig)	   
   	}
