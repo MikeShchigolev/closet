@@ -34,6 +34,7 @@ export class BTBox extends Blok {
         this.hN=mO.hN; 
 
         this.arrObj=[];
+        this.objObj={};        
         for (var i = 0; i < this.wN.length; i++) {
             this.arrObj[i]=[]
             for (var j = 0; j < this.hN.length; j++) {
@@ -41,9 +42,20 @@ export class BTBox extends Blok {
                 this.arrObj[i][j].name="mod_"+this.wN[i]+"_"+this.hN[j]
                 this.arrObj[i][j].w=this.wN[i]
                 this.arrObj[i][j].d=this.hN[j]
+                this.objObj[this.wN[i]+"_"+this.hN[j]]=this.arrObj[i][j];  
             }
         }
 
+        let aaa11=this.object.str[1].split(",")
+        
+        for (var i = 0; i < aaa11.length; i++) {
+            let ooo=mO.getIdObj(aaa11[i])
+            trace(ooo.title,ooo)            
+            if(ooo && ooo.title){
+                if(this.objObj[ooo.title])this.objObj[ooo.title].obj=ooo.obj;
+                              
+            }           
+        }
 
 
 
@@ -139,15 +151,26 @@ export class BTBox extends Blok {
 
             return r;
         }
+        this.c3dDebag=undefined        
+        if(tStyle.glaf.debug==true)this.c3dDebag = new THREE.Object3D();
+            
 
+        
 
         this.boolLoad=false       
 
         this.funInitMod = function(){
 
             this.creadDebag(self.cont3dLoad.children[0]);
+
+            
             
             var o=self.cont3dLoad.children[0];
+            if(this.c3dDebag){
+                o.add(this.c3dDebag)
+            }
+
+
             var h;
             let p=-1
             for (var i = o.children.length-1; i >=0; i--) {
@@ -168,10 +191,20 @@ export class BTBox extends Blok {
                     let dddd=-p.position.z-dd
                     if(dddd>self.object.mod.r[2]){
                         self.arrPositZ.push(dddd);
+
+                        if(this.c3dDebag){
+                            let aa=new THREE.AxesHelper( 100 )
+                            this.c3dDebag.add(aa)
+                            aa.position.z=dd+self.object.mod.r[2]
+                        }
+
+
+
                         dd+=3.2;
                     }else{
                         break;
                     }
+
                 }
             }      
 
@@ -338,6 +371,12 @@ export class BTBox extends Blok {
                 this.boxColizi.x=-t/2;
 
                 this.boxColizi.rectCollisMeshdy.x=xx-this.boxColizi.width/2;
+
+
+                if(this.c3dDebag){
+                    this.c3dDebag.position.x=-this.boxColizi.width/2+1.5
+                    this.c3dDebag.position.y=1.5;
+                }
 
                 /*this.boxColizi.width=this.wN[this._indexW];
                 this.boxColizi.rectCollisMeshdy.width=this.boxColizi.width;
@@ -580,18 +619,43 @@ export class BTBox extends Blok {
 
         var aaa,aa,ad
         this.getPrice=function(intColor,idMat){
+            
+
+            var ad=[]
+            var aa=null
+            //trace(">>>>>>>>>>>>>>>>>>>>>",this.parent) 
+            if(this.parent==undefined)return []
+            //if(this.parent.parent==undefined)return []    
+           
+            
+
+              
+
+            let ooo= this.arrObj[this._indexW][this._indexH].obj;
+            ooo.priority= this.object.priority;
+            aa=menedsherMaterial.getArrOtObj(ooo,idMat,intColor); 
+
+            if(aa!=null){
+                ad=[];                         
+                for (var j = 0; j < aa.length; j++) {
+                    ad[j]=aa[j];                                
+                }
+                ad[6]="BTVstavka";
+                ad[8]=ooo;
+                ad[9]=ooo.id;
+                ad[10]=1;
+                ad[11]=aa[3]*1;                
+            }  
+                        
+            return [ad]
+/*            
+
+
+
+
             aaa=[];
             aa=menedsherMaterial.getArrOtObj(this.object,idMat,intColor) 
-            /* if(intColor==0){
-                if(this.object.plus!=undefined){
-                    aa=this.object.plus;
-                }
-            }
-            if(intColor==1){
-                if(this.object.plus1!=undefined){
-                    aa=this.object.plus1;
-                }
-            }*/
+           
 
 
             if(aa!=undefined){
@@ -607,6 +671,8 @@ export class BTBox extends Blok {
             }
             this.plusObj.getPrice(aaa, intColor,idMat);
             return aaa;
+
+*/
         }
 
 
@@ -691,15 +757,17 @@ export class BTBox extends Blok {
                             this.boxColizi,
                             this.parent.collision.colozi.bigBox.width
                         )
-                        trace(xx,xxxx)
+                        
                         if(xx==false){
-
-                            
-                            mHelp.setHelp("Данная ширина не влазит, не хватает пространства","resources/image/mhelp.png",mHelp.dCNM,{x:13,y:-13});
+                            nMObj.setObject(self)                            
+                            mHelp.setHelp("Данная ширина не влазит, не хватает пространства","resources/image/mhelp.png",mHelp.dCNM,{x:200,y:-13});
                             return
                         }else{
-                            this.setXY(xx,0)  
-
+                           /* setTimeout(function() {
+                                mHelp.setHelp("Тестируем большой текст Тестируем большой текст Тестируем большой текст Тестируем большой текст Тестируем большой текст Тестируем большой текст Данная ширина не влазит, не хватает пространства","resources/image/mhelp.png",mHelp.dCNM,{x:200,y:-13});
+                               
+                            }, 100);*/
+                            this.setXY(xx,0); 
                         }
                     }
 

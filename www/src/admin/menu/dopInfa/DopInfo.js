@@ -471,8 +471,8 @@ function DIVsakoe(par) {
         if(this.confText.up1.sahTime==undefined)this.confText.up1.sahTime=10
         this.slidU1S.value=this.confText.up1.sahTime;
 
-
-         if(this.confText.settings.durak==undefined)this.confText.settings.durak=true;
+        if(this.confText.settings==undefined)this.confText.settings={};
+        if(this.confText.settings.durak==undefined)this.confText.settings.durak=true;
         aGlaf.durak=this.confText.settings.durak
         this.chek1.value=this.confText.settings.durak;
     }

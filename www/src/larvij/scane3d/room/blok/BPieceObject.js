@@ -1819,10 +1819,6 @@ export class UP1 {
             this.o178 = this.par.par.mO.getIdObj(178)//пупырки
 
 
-          /*  self.o177.obj.mod.r[0]=1.19
-            self.o177.obj.mod.r[1]=-1.32
-            self.o178.obj.mod.r[1][2]=3.66*/
-
 
             var link="resources/data/"+this.o177.obj.id+"/mod/"+ this.o177.obj.mod.name;
             this.par.par.mO.getModel(link, this.o177.obj.mod.key,function(o){ 
@@ -1832,32 +1828,6 @@ export class UP1 {
                 o.rotation.z=-Math.PI/2;               
                 self.par.par.fun("visi3d");                  
                 self.o3d1.add(o); 
-
-              /*  let dCont=new DCont(main.contentHTML)
-                dCont.x=400
-                dCont.y=200;
-                this.slid=new DSliderBig(dCont, 2,2, function(s){ 
-                    o.position.x=-self.par.object.obj.mod.r[0]-this.value*1;
-                    self.par.par.fun("visi3d");  
-                }, "x", 0, 5);
-                this.slid.value=self.o177.obj.mod.r[0]*1
-                this.slid.width=200
-
-                this.slid=new DSliderBig(dCont, 2,50, function(s){ 
-                    o.position.y=this.value*1;
-                    self.par.par.fun("visi3d");  
-                }, "y", -5, 5);
-                this.slid.value=self.o177.obj.mod.r[1]*1
-                this.slid.width=200
-                this.slid=new DSliderBig(dCont, 2,100, function(s){ 
-                    o.position.z=this.value*1;
-                    self.par.par.fun("visi3d");  
-                }, "z", -5, 5);
-                this.slid.value=self.o177.obj.mod.r[2]*1
-                this.slid.width=200;*/
-
-                
-
 
             });
 
@@ -1872,8 +1842,7 @@ export class UP1 {
                 
             });
 
-            //this.materialBel=menedsherMaterial.geterMat.getIDReturn("m_8")
-            //trace("this.materialBel ",this.materialBel)
+
 
 
             var link="resources/data/"+this.o178.obj.id+"/mod/"+ this.o178.obj.mod.name;
@@ -1978,87 +1947,17 @@ export class UP1 {
                 aaa[9]=this.o178.obj.id;
                 aaa[8]=this.o178.obj; 
                 a.push(aaa);
-            }
-            
+            }          
 
 
 
 
-            /*if(this.up1.getPrice(a, intColor, idMat)) return;       
-            aaa = menedsherMaterial.getArrOtObj(this.object.obj, idMat, intColor)     
-            aaa[9]=this.object.obj.id;
-            aaa[8]=this.object.obj; 
-            a.push(aaa);*/
 
             return true;            
         }
 
         //тестируем на пересечения коробок
         this.testBool=function(){
-           /* let www=100
-            let array=[];
-            let parent=self.par.par.parent;
-
-            let r={
-                x:self.par.par.content3d.position.x+self.par.par.rect[0]+www,
-                y:-self.par.par.content3d.position.y+self.par.par.rect[2]+www,
-                w:self.par.par.rect[3],
-                h:self.par.par.rect[5]
-            }
-
-            let h=this.par.par.object.mod.r[2]
-            r.h= h+this.smesenie;
-
-            
-            for (var i = 0; i < parent.children.length; i++) {               
-                if(self.par.par.idRandom!=parent.children[i].idRandom){
-                    let o={
-                        x:parent.children[i].content3d.position.x+parent.children[i].rect[0]+www,
-                        y:-parent.children[i].content3d.position.y+parent.children[i].rect[2]+www,
-                        w:parent.children[i].rect[3],
-                        h:parent.children[i].rect[5]
-                    }
-                    array.push(o)
-                }
-                               
-            }
-            for (var i = array.length-1; i >=0 ; i--) {  
-                if(this.test2d(r.x,r.x+r.w,array[i].x,array[i].x+array[i].w)==false){
-                    array.splice(i,1);
-                }
-            }
-
-            for (var i = array.length-1; i >=0 ; i--) {  
-                if(this.test2d(r.y,r.y+r.h,array[i].y,array[i].y+array[i].h)==false){
-                    array.splice(i,1);
-                }
-            }
-
-            trace("deb   ",array)
-
-            ///дебагер
-            let deb=self.par.par.parent.parent.korektMarker.deb.deb;
-
-            trace("deb   ",deb)
-            deb.clear();
-
-            deb.drawRect(www,0,1,555,0xff0000)
-            deb.drawRect(0,www,555,1,0xff0000)
-
-            for (var i = 0; i < array.length; i++) {
-                deb.drawRect(array[i].x,array[i].y,array[i].w,array[i].h,0x00ff00)
-            }
-            deb.drawRect(r.x,r.y,r.w,r.h,0x0000ff)*/
-
-
-
-
-
-
-
-            //-----------------
-           // return {type:"messeng",text:"dasfgfdggsdfg sdf sd sdf sdfsd fsd fsdf dsfds f dfkj  "}; 
-
 
             return null;  
         }

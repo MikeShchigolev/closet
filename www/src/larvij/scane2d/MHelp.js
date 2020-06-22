@@ -134,9 +134,9 @@ export class MHelp  {
         this.dHalp.fontSize=16
         this.dHalp.colorText="#000000"
         this.dHalp.fontFamily="SFUIDisplay-Light"
-        this.dHalp.boolNiz=true
-        this.dHalp.color="#ffda00"
-        this.dHalp.borderRadius=24
+        this.dHalp.boolNiz=true;
+        this.dHalp.color="#ffda00";
+        this.dHalp.borderRadius=10;
 
 
         this.hAction=new DHAction(this)

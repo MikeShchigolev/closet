@@ -225,9 +225,9 @@ function MenuVerh(menu, fun) {
 
     }
 
-    setTimeout(function() {
+   /* setTimeout(function() {
         self.activMenu(1);
-    }, 1);
+    }, 1);*/
     
 
     var b;

@@ -34,7 +34,7 @@ function NaObj(menu, fun) {
 
     this.minV3D=new MinV3D(this)
 
-    this.psevdoThree=new PsevdoThree(this.w.content,0,0)
+    this.psevdoThree=new PsevdoThree(this.w.content,0,0, this)
 
 
 
@@ -73,15 +73,15 @@ function NaObj(menu, fun) {
         if(bb==true)return
         bb=true;
         
-        aGlaf.menu.dragPic.addFunAp(function(){ 
-            if(boolNa==false)return
-            if(aGlaf.menu.dragPic.object!=undefined){ 
-               
+        aGlaf.menu.dragPic.addFunAp(function(){
+            if(self.psevdoThree.naObject3d==undefined)return                
+            if(aGlaf.menu.dragPic.object!=undefined){               
                 if(aGlaf.menu.dragPic.object.id!=undefined){             
                     if((aGlaf.menu.dragPic.object.id+"").indexOf("m_")!=-1){                                 
-                        if(self.psevdoThree.clicObj!=undefined){                         
-                            aGlaf.s3d.setMat(self.psevdoThree.clicObj, aGlaf.menu.dragPic.object.id, null, true)                             
-                        }
+                        aGlaf.s3d.setMat(
+                            self.psevdoThree.naObject3d,
+                            aGlaf.menu.dragPic.object.id, 
+                            null, true)                             
                     }
                 }
             }
@@ -141,9 +141,10 @@ function NaObj(menu, fun) {
 }
 
 
-function PsevdoThree (cont, _x, _y) {    
+function PsevdoThree (cont, _x, _y,par) {    
     this.type = 'PLPanel';
     var self = this;
+    this.par=par
 
     this.dCont=new DCont(cont);
     
@@ -174,28 +175,39 @@ function PsevdoThree (cont, _x, _y) {
 
     this.batDofiga=new DButton(this.dCont,2,2,"Дофига обьектов FIXE",function(){
         this.visible=false;
-        self.three.visible=true
-        self.three.setObj(self.o3d)
+        self.three.visible=true;
+        self.three.setObj(self.o3d);
     })
     this.batDofiga.visible=false;
-    this.batDofiga.width=this.panel.width-4
+    this.batDofiga.width=this.panel.width-4;
 
 
     self.clicObj=undefined;
     this.three=new DThree(this.panel,2,2,function(o){
-        self.clicObj=o.obj
-        self.setActiv(o.obj)
-        aGlaf.s3d.sMod.startObj(o.obj, true)
-        
-
+        self.clicObj=o.obj;
+        self.setActiv(o.obj);
+        aGlaf.s3d.sMod.startObj(o.obj, true);
     })
     this.three.height=250
     this.three.width=this.panel.width-4;
+    this.three.heightBut = 20;
 
 
+    this.three.mouseUpFun=function(o){
+        trace(o.obj.obj)
 
+    }
 
+    this.naObject3d 
+    this.three.mouseOverFun=function(o){
+        trace("mouseOverFun",o)
+        self.naObject3d=o.obj.obj
+    }
 
+    this.three.mouseOutFun=function(o){
+        trace("mouseOutFun",o)
+        self.naObject3d=undefined
+    }
 
 
 
@@ -333,14 +345,18 @@ function PsevdoThree (cont, _x, _y) {
     //////////////////////////////////////
 
 
-    this.lab=new DLabel(this.dCont,-70,-28,"pofhj")
-    this.lab.colorText1 = "#000000";    
 
     var kolTri
     this.zborInfa = function(o3d){ 
         kolTri=0;
-        this.dsfgasdf(o3d);
-        this.lab.text="т: "+kolTri;
+        this.dsfgasdf(o3d);        
+        let s="point: "+kolTri;
+        if(o3d.children){
+            s+=" child: "+o3d.children.length
+        }
+
+        this.par.w.text=s;
+
     }
 
     this.dsfgasdf = function(o3d){        
@@ -392,14 +408,16 @@ function PsevdoThree (cont, _x, _y) {
     }
 
     
-    this.bulBat=new DButton(this.dCont, this.otstup, 0,"с", function(){
+    this.bulBat=new DButton(this.dCont, this.otstup, 0,"", function(){
         var b=true;
         if(self.arrayMat[0])if(self.arrayMat[0].wireframe!=undefined)b=!self.arrayMat[0].wireframe
      
         for (var i = 0; i < self.arrayMat.length; i++) {
             if(self.arrayMat[i].wireframe!=undefined)self.arrayMat[i].wireframe=b;
         }    
-    });
+    },'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADGklEQVRYR8WVaUhUURTH/2fG6alTY0Vg2AZCG5QUlpGEbYga7YIwRkULSYKWH6LF6oPt9aGsMIL2KEvKTEFbrGynsgWDsoJCFKkPkZjTaNn84yWvpMaZ955jva/3nvP7nXPPfVfwnz/5z3x0SiAig061gPp9km+2ENMCkemsC+uNfiLAp4+oe5cnA8xImBYYmkbmzG1DbiwEXh1UVYx/poJUTNRS1kaGoT8IvG1EbdUhGWgcD/MzMHYx35M4rkJFsPDREen7zwTiUjn4uw3Vd4+LVYVOWMBWSyuG3zotb4xKmDqCKfNI8aDvtXz5oAKnOhlOC95fP2V8DgwLJDmZASCjLF+GtK82ycnXQuwvPSN7jXTBsMCsFPJigfdKfa11JGVIICWZVyF4WXBOMr0lTElmLogRBYUyVW8XdAskJVHpo6D5ZJHvc54/m7Q2IORYhTTrkdAtsGQGG2HFnMNFcs1X4sUzOdkCFB8qlh4BE0hP5FhYcDuvVIL1JE2fRjc8iMu7JI/87dfVgawE0qbAsbNYPvtLqK6nT2J3RcHn3Zf9X0u/AmvimQMicXu5xOiBa3tWx/MBiCs7ymWDrzi/Ahsnkzk3/FfiDaIn1qfA1ol8QuBC9k3ZZKR6be/mOK4XQXL2TRlt+D+wPZph1hA0rLpjrnoNuGsCGRSEXlkV0uBNosMO5I5ni0cwLuuePDNTvRazO5ajrMSDzPui6BY4EMMEC3A27aH07Axciz0Yw0/iQeqySin7M5/XDhyNJu1uKCkv5GtABKJp6wZ8XfT47+P8SyB/FPMoiEx9KomBgGs5To1mqQWocT6V5e3z/hI4EUW73YMVEGxJft65wetI/PxIEkS2y4LcBVXiUvf9FLgcRfu3VjTVTAMGlQK9GxEaWyfuQHagJIKh0hMujWELQveEKnG1CQzj2pZ4bHVPB0JKgODyQKJ/52qOBzSGUo51CdWyrU0gnPZgB5ock4DGCsDm7poOOOxwaQy7C/Yx9fLl1wyoEo5QrLC1YI+60BU9qIxg6DcFK9sz/L4FXSHi9RZ0NcjwW/CvhH4AyKYPMODyEmQAAAAASUVORK5CYII=');
+
+
     this.bulBat.width=this.bulBat.height;
 
 
@@ -521,6 +539,12 @@ function PsevdoThree (cont, _x, _y) {
         if(o3.bs!=undefined)this.cheaBS.value=true;
         else this.cheaBS.value=false;
 
+        self.input.value=o3.name
+        let s="notMaterial"
+        if(o3.material){
+            s=o3.material.name;
+        }
+        self.input1.value=s
 
     }
 
@@ -584,10 +608,25 @@ function PsevdoThree (cont, _x, _y) {
         this.ar2[i].setNum(0.1); 
         this.ar2[i].timeFun=1  
     }
-    this.panel.height=this.ar2[0].y+this.ar2[0].height+this.otstup*2
+    var hh=35
+
+    this.input=new DInput(this.panel,this.otstup+hh, this.ar2[0].y+this.ar2[0].height," ");
+    this.input.fontSize=12
+    this.input.height=14
+    this.input.width=this.panel.width-this.otstup*4-hh
+    new DLabel(this.panel,this.otstup,this.input.y+6,"Mesh").fontSize=10
+    
+    this.input1=new DInput(this.panel,this.otstup+hh, this.ar2[0].y+this.ar2[0].height+this.otstup*2+12," ");
+    this.input1.fontSize=12
+    this.input1.height=14
+    this.input1.width=this.panel.width-this.otstup*4-hh
+    new DLabel(this.panel,this.otstup,this.input1.y+6,"Mat").fontSize=10
 
 
+    this.panel.height=this.ar2[0].y+this.ar2[0].height+this.otstup*2+24+24
 
+
+    
 
    
     var naPic
@@ -620,12 +659,16 @@ function PsevdoThree (cont, _x, _y) {
         if(bb==true)return
         bb=true;
         
-        aGlaf.menu.dragPic.addFunAp(function(){ 
+       aGlaf.menu.dragPic.addFunAp(function(){ 
+            
             if(nameMat==undefined)return
             if(aGlaf.menu.dragPic.object!=undefined){                
                 if(aGlaf.menu.dragPic.object.id!=undefined){             
                     if((aGlaf.menu.dragPic.object.id+"").indexOf("m_")!=-1){
+                        
+                        
                         aGlaf.s3d.setMat(aGlaf.s3d.c3d, aGlaf.menu.dragPic.object.id, nameMat, true) 
+                    
                     }
                 }
             }

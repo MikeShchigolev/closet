@@ -75,6 +75,32 @@ function AMain(fun) {
 		new StylePL102(this.stage, this.renderer, this.contentHTML);// document.body);		
         self.glaf = new AGlaf(this)          
 		fun("init");
+
+		let a=php.ser.split("?");
+		if(a[1]){
+			let aa=a[1].split("&");
+			
+			for (var i = 0; i < aa.length; i++) {
+				trace(i+"  "+aa[i])
+				let aaa=aa[i].split("=");
+				if(aaa[0]=="obj"){
+					setTimeout(function() {self.glaf.menu.menuVerh.activMenu(1)}, 1);					
+					self.glaf.menu.menuBD.setId(aaa[1]*1);
+					return
+				}
+				if(aaa[0]=="mat"){
+					setTimeout(function() {
+						self.glaf.menu.menuVerh.activMenu(3)
+						self.glaf.menu.matBD.setId(aaa[1]);
+					}, 1);    					
+					
+					return
+				}
+			}
+			
+		}
+
+		setTimeout(function() {self.glaf.menu.menuVerh.activMenu(1)}, 1);  
 	}
 
 
