@@ -336,9 +336,11 @@ export class VuborMat  {
         });
 
         this.object=arrObj
+        this.arrObj=arrObj
 
         this.setObj=function(o){
             this.object=o;
+            this.arrObj=o
             let b=false;
 
             if(b==false) {
@@ -353,13 +355,9 @@ export class VuborMat  {
         if(this._index!=v){
             this._index = v; 
             this.galeri.index = v;
-            if(v==-1){
-                //this.image.visible=false
-            } else{
-                //this.image.visible=true
-                if(this.galeri.array[v])this.but2Link.loadImeg(this.galeri.array[v].link);
-                
-                //this.image.link=this.galeri.array[v].link;
+            if(v==-1){                
+            } else{                
+                if(this.galeri.array[v])this.but2Link.loadImeg(this.galeri.array[v].link);              
             }        
         }
     }

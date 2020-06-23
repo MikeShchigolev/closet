@@ -17,9 +17,10 @@
         "reflectivity": 1,
         "refractionRatio": 0.98,
         "specular": "#040404",
-        "emissive": "#050505"
+        "emissive": "#050505",
+        "shininess": 30
     },
-    "mirro": false,
+    "mirro": 0,
     "resurs": {
         "array": []
     },

@@ -19,6 +19,8 @@ export class Blok{
         var self=this;
         var key="© Все права на данный планировщик принадлежат ЗАО Ларвидж интернешнел. Любое использование конструктора гардеробных систем Larvij не согласованное с компанией Ларвидж будет преследоваться по закону."; 
        
+
+        this.boolDinColor=false;
         this.object = o;
         this._visiMark= mO._visiMark; 
         this._avAct = true;
@@ -372,6 +374,19 @@ export class Blok{
             return r;
         }
 
+        this.setColorId = function(v){
+            if(this.boolDinColor == false)return
+
+            if(this._idColor== v)return
+            this._idColor=v;
+            this._material = menedsherMaterial.geterMat.getIDReturn(this._idColor,true);    
+
+            this.dragColor();
+            this.mO.dragPriceScane();
+            this.fun("visi3d");
+
+        }
+
 
         this.getObj = function(){
             var obj={}
@@ -383,7 +398,8 @@ export class Blok{
             obj.children=[];
             for (var i = 0; i < this.children.length; i++) {
                 obj.children[i]=this.children[i].getObj();
-            }
+            }          
+
             return obj;            
         }
 
@@ -391,13 +407,14 @@ export class Blok{
         var ob,ooo
         this.setObj = function(obj){                      
             this.setXYPosit(obj.x,obj.y); 
-            if(obj.children)          
+            if(obj.children);          
             for (var i = 0; i < obj.children.length; i++) {
                 ooo= mO.getIdObj(obj.children[i].id)                  
                 ob=mO.getBlok(ooo.obj)
                 ob.setObj(obj.children[i])
                 this.add(ob);                 
             }
+            
             return obj;            
         }
     }
@@ -405,7 +422,8 @@ export class Blok{
 
     set material(v) {
         if(this._material!=v){
-            this._material= v;            
+            if(this.boolDinColor == true)return
+            this._material = v;            
             this.dragColor();
         }       
     }   
@@ -414,12 +432,18 @@ export class Blok{
 
     set idColor(v) {
         if(this._idColor!=v){
+            console.warn("####",this._idColor)
+            if(this.boolDinColor == true)return
             this._idColor= v;            
+            
+
             this.dragColor();
             this.mO.dragPriceScane();
         }       
     }   
     get idColor() { return  this._idColor;}
+
+
 
 
     set visiMark(v) {

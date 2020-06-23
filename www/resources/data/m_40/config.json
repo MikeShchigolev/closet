@@ -15,9 +15,12 @@
         "alphaTest": 0,
         "wireframe": false,
         "reflectivity": 1,
-        "refractionRatio": 0.98
+        "refractionRatio": 0.98,
+        "emissive": "#000000",
+        "specular": "#111111",
+        "shininess": 30
     },
-    "mirro": false,
+    "mirro": 0,
     "resurs": {
         "array": []
     },

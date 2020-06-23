@@ -17,6 +17,9 @@ export class BTBox extends Blok {
         var self=this;
         var key="© Все права на данный планировщик принадлежат ЗАО Ларвидж интернешнел. Любое использование конструктора гардеробных систем Larvij не согласованное с компанией Ларвидж будет преследоваться по закону."; 
         
+
+        this.boolDinColor=true;//Не отрабатываает общий цвет
+
         this.heightSten=275;
         this.collision=undefined;
         this.arrPosit=[];
@@ -840,6 +843,7 @@ export class BTBox extends Blok {
             }
             obj.indexW=this.indexW  
             obj.indexH=this.indexH  
+            obj.idColor=this.idColor; 
             return obj;            
         }
 
@@ -862,6 +866,9 @@ export class BTBox extends Blok {
             if(obj.indexW!=undefined){
                 this.indexW=obj.indexW;
                 this.indexH=obj.indexH;
+            }
+            if(obj.idColor !=undefined) {                
+                this.setColorId(obj.idColor);
             }
 
             return obj;            
