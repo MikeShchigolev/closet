@@ -24,7 +24,7 @@
         "0",
         "0"
     ],
-    "orig": "Screenshot_1.jpg",
+    "orig": "xz.png",
     "mod": {
         "key": "gltf",
         "name": "bot_8_8.gltf",
@@ -63,5 +63,13 @@
     "bagY": 0,
     "resurs": {
         "array": []
+    },
+    "param": {
+        "tOt": false,
+        "tNa": false,
+        "rO": -1,
+        "kesh": false,
+        "sG": false,
+        "clone": true
     }
 }

@@ -1,0 +1,55 @@
+{
+    "id": 204,
+    "title": 204,
+    "key": "o_204",
+    "orig": "xz.png",
+    "mod": {
+        "key": "glb",
+        "name": "teleskopi_hoff.glb",
+        "r": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "r1": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "param": {
+        "tOt": false,
+        "tNa": false,
+        "rO": -1,
+        "kesh": false,
+        "sG": false,
+        "clone": true
+    },
+    "bool": [
+        0,
+        0,
+        0,
+        0
+    ],
+    "num": [
+        0,
+        0,
+        0,
+        0
+    ],
+    "str": [
+        "0",
+        "0",
+        "0",
+        "0"
+    ],
+    "resurs": {
+        "array": []
+    }
+}
