@@ -374,7 +374,7 @@ export class Mani  {
                 kkkk=arrP2[i][10]
                 if(debag==true){
                     kkkk = arrP2[i][10]+"/"+arrP2[i][8].priority+"/"+arrP2[i][8].id;
-                    trace(arrP2[i][8])
+                    
                 }
 
                 this.price+=arrP2[i][11]*1;

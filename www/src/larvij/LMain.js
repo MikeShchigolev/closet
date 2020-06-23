@@ -316,11 +316,17 @@ export class KlassCSVObj  {
 	        }
 
         
-			
+			for (var i = 0; i < ddd.length; i++) {
+				if(ddd[i].length<2){
+					ddd.splice(i,1)
+					i=0
+				}
+			}
 
 	    
 
 	        this.nz1(ar,ddd)
+
 
 	       /* for (var i = 1; i < a.length; i++) {
 	            ss=a[i].split("\r")            
@@ -341,23 +347,37 @@ export class KlassCSVObj  {
 	    this.objectBase
 	    var arrxz=[]
 	    this.nz1=function(arr,ddd){ 
-	       
+	       	trace(arr);
+	       	trace(ddd);
 	        arrxz=[];
 	        var array=[];
-	        for (var i = 0; i < arr.length; i++) {
-	            let o={}  
+	        for (var i = 0; i < arr.length; i++) {	        	
+	        	if(arr[i][0]=="colorNew"){
+	        		let ddddd=[]
+	        		for (var j = 0; j < arr[i].length; j++) {
+	        			if(arr[i][j].indexOf("m_")!=-1){
+	        				ddddd.push(arr[i][j])
+	        			}
+	        		}	        		
+	        		ddd=ddddd
+	        	}
+
+	            let o={};  
 	            o.id=arr[i][0];          
 	            o.text=arr[i][1];
 	            o.size=arr[i][2];
-	            o.color={}
+	            o.color={};
+	            o.array=[]
 	            let sah=0;
-	            for (var j = 5; j < arr[i].length; j+=4) {                
-	                
+	            for (var j = 0; j < ddd.length; j++) {       
+	                o.array[j]={id:ddd[j]}
+	                let jj=5+j*4
 	                o.color[ddd[sah]]={}
-	                o.color[ddd[sah]].art=arr[i][j];
-	                o.color[ddd[sah]].pri=arr[i][j+1]*1;
-	                o.color[ddd[sah]].niz=arr[i][j+2];
-	                o.color[ddd[sah]].xz=arr[i][j+3];
+	                //o.color[ddd[sah]].id=arr[i][0];
+	                o.color[ddd[sah]].art=arr[i][jj];
+	                o.color[ddd[sah]].pri=arr[i][jj+1]*1;
+	                o.color[ddd[sah]].niz=arr[i][jj+2];
+	                o.color[ddd[sah]].xz=arr[i][jj+3];
 	                sah++;
 	            }
 	            array.push(o);

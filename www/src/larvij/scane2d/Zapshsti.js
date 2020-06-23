@@ -300,27 +300,19 @@ export class VuborMat  {
 
         this._vusot=this.par._vusot;
 
+        this.linkPosle="yoriginal.png"
+
         if(this.link){
-            this.icon=new DImage(this.dCont, 0,0,this.link,function(){
-                //if(this.picWidth<self._vusot){
-                    
-                //}
+            this.icon=new DImage(this.dCont, 0,0,this.link,function(){                
                 let s=self._vusot/this.picWidth
                 if(s>self._vusot/this.picHeight){
                     s=self._vusot/this.picHeight
-                }
-                
+                }                
                 this.width=this.picWidth*s; // реальные размеры картинки
-                this.height=this.picHeight*s; 
-                
+                this.height=this.picHeight*s;                 
             });
         }
 
-
-        /*this.image = new DImage(this.dCont, this._vusot, 0,null,function(){
-            this.width=this.picWidth; // реальные размеры картинки
-            this.height=this.picHeight;
-        });*/
 
         this.but2Link=new DButSim(this.dCont,this._vusot, 0," ",function(){
             self.galeri.setTime(100,true);
@@ -330,7 +322,10 @@ export class VuborMat  {
         this.but2Link.boolLine=false;
         this.but2Link.width=this._vusot; 
         this.but2Link.height=this._vusot;
-        this.but2Link.color =dcmParam.compToHexArray(dcmParam.hexDec(dcmParam._color1), -10);    
+        this.but2Link.color =dcmParam.compToHexArray(dcmParam.hexDec(dcmParam._color1), -10); 
+
+
+                  
        
 
         this.galeri = new GaleriLitel(this,this._vusot,-this._vusot,arrObj,function(s,p){
@@ -340,13 +335,18 @@ export class VuborMat  {
             }
         });
 
+        this.object=arrObj
 
-        /*this.botton=new DButton(this.dCont, 0,0," ",function(){
-            self.galeri.setTime(500,!self.galeri.bool);
-        })
-        this.botton.width=this._vusot*2;
-        this.botton.height=this._vusot;
-        this.botton.alpha=0;*/
+        this.setObj=function(o){
+            this.object=o;
+            let b=false;
+
+            if(b==false) {
+
+
+                this.galeri.restart(this.object)
+            }   
+        }
     }
 
     set index(v) {
@@ -357,7 +357,8 @@ export class VuborMat  {
                 //this.image.visible=false
             } else{
                 //this.image.visible=true
-                this.but2Link.loadImeg(this.galeri.array[v].link);
+                if(this.galeri.array[v])this.but2Link.loadImeg(this.galeri.array[v].link);
+                
                 //this.image.link=this.galeri.array[v].link;
             }        
         }
@@ -384,14 +385,10 @@ export class GaleriLitel{
         this.fun0=undefined
 
         this._vusot=this.par._vusot;
+        this.object=undefined
         this.array=[]
-        for (var i = 0; i < arrObj.array.length; i++) {
-            this.array[i]=new GLBox(this.dCont, arrObj.array[i],function(){              
-                self.fun("index", this.idArr);               
-            })
-            this.array[i].idArr=i;
-            this.array[i].dCont.x=this._vusot/2
-        }
+        this.arrayCech=[]
+        this.linkPosle="yoriginal.png"
 
 
         this.bool=false;
@@ -408,11 +405,50 @@ export class GaleriLitel{
         this.prosent=0;
 
 
+        this.clear = function () {
+            for (var i = 0; i < this.arrayCech.length; i++) {
+                this.arrayCech[i].clear()
+            }
+            this.array=[]
+        }
+
+        this.restart = function (o) {
+            this.object=o;
+            this.clear();
+            
+            if(!this.object)return
+            if(!this.object.array)return    
+            for (var i = 0; i < this.object.array.length; i++) {
+                if(this.arrayCech[i]==undefined){
+                    this.arrayCech[i]=new GLBox(this.dCont, this.object.array[i],function(){              
+                        self.fun("index", this.idArr);               
+                    },this)
+                    this.arrayCech[i].idArr=i;
+                    this.arrayCech[i].dCont.x=this._vusot/2 
+                }
+                this.array[i]=this.arrayCech[i]
+                trace(i+"   ",this.object.array[i])
+                this.array[i].restart(this.object.array[i])
+                this.array[i].dCont.visible = true; 
+
+            }
+            trace("########")
+
+        }  
+
+
+        
+
+
+
+
         this.mouseDown = function (e) {
             if(self.dCont.visible==true){
                 self.setTime(100,false);
             }            
         }
+
+        this.restart(arrObj)
 
         document.addEventListener("mousedown", this.mouseDown);
     }
@@ -450,15 +486,21 @@ export class GaleriLitel{
 }
 
 export class GLBox  {
-    constructor(dCont,obj,fun) {          
+    constructor(dCont,obj,fun,par) {          
         this.type="GLBox";
         var self=this;
         this.fun=fun
         this.idArr=-1
+        this.par=par
         this._active=false;
         this.dCont=new DCont(dCont);
         this.dC=new DCont(this.dCont);
-        
+
+        this.object
+
+ 
+/*
+
         if(obj.id!=undefined){
             this.link="resources/data/"+obj.id+"/yoriginal.png";
         }else{
@@ -466,22 +508,50 @@ export class GLBox  {
         }
         if(obj.src!=undefined){
             this.link=obj.src
-        }
+        }*/
         
         this._vusot=47
 
         
-
+        this.clear = function () {
+            this.dCont.visible = false; 
+        }
 
 
         this.but2Link=new DButSim(this.dCont,-this._vusot/2, -this._vusot/2," ",function(){
             self.fun()
-        },this.link)
+        })
         this.but2Link.borderRadius=111;
         this.but2Link.boolLine=false;
         this.but2Link.width=this._vusot; 
         this.but2Link.height=this._vusot;
         this.but2Link.color =dcmParam.compToHexArray(dcmParam.hexDec(dcmParam._color1), -10); 
+
+        this.link="null"
+        this.restart = function (o) {
+            this.object=o;
+            let link="null"
+            if(obj.id!=undefined){
+                link="resources/data/"+this.object.id+"/"+this.par.linkPosle;
+            }else{
+                link=this.object;
+            }
+            if(obj.src!=undefined){
+                link=this.object.src
+            }
+            trace(link+"   "+this.link)
+            if(link!=this.link){
+                this.link=link
+                this.but2Link.loadImeg(link)
+            }
+
+        }
+
+        if(obj){
+            this.restart(obj)
+        }
+
+
 
        
     }

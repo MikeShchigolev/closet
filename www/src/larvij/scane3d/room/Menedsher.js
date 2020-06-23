@@ -815,8 +815,18 @@ export class MenedsherObject  {
         }
 
 
+
+
         this.sob=function(s,p){
             fun(s,p)
+        }
+
+        this.getBigobj=function(id){
+            for (var i = 0; i < this.objectBase.bd.length; i++) {
+                if(this.objectBase.bd[i].id==id)return this.objectBase.bd[i]
+            }
+            return null
+
         }
 
         var blok
@@ -921,6 +931,7 @@ export class MenedsherObject  {
 
     set activIndex(v) {
         if(this._activIndex!=v){
+            trace("gfhsgfdsgfdsgfdsg",v)
             this._activIndex= v;
             for (var i = 0; i < this.array.length; i++) {
                 if(i==this._activIndex)this.array[i].activTime=true;

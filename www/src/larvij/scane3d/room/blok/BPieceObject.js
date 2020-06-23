@@ -825,7 +825,7 @@ export class BKrai {
 
         this.hronPlus=undefined;        
         this.plusHron=function(num, num1){            
-            this.hronPlus=new BKHron(this, num,1)
+            this.hronPlus=new BKHron(this, num, 1)
             this.hronPlus.initHron=function(){               
                 self.initHron3();
             }            

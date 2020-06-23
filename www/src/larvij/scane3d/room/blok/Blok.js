@@ -19,7 +19,7 @@ export class Blok{
         var self=this;
         var key="© Все права на данный планировщик принадлежат ЗАО Ларвидж интернешнел. Любое использование конструктора гардеробных систем Larvij не согласованное с компанией Ларвидж будет преследоваться по закону."; 
        
-        this.object=o;
+        this.object = o;
         this._visiMark= mO._visiMark; 
         this._avAct = true;
         this.idRandom=Math.random();
@@ -54,7 +54,14 @@ export class Blok{
         this.graphics = new PIXI.Graphics();  
         this.content.addChild(this.graphics);
 
+
+        //this.color=this.object
         
+        //this.bigObject=mO.getBigobj(this.object.id)
+        //trace(this.bigObject)
+        
+
+
 
         if(o.resurs!=undefined){
             if(o.resurs.array[0]!=undefined){

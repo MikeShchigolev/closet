@@ -1,3 +1,6 @@
+
+
+
 export class BKHron {
     constructor(par, id,idArr,mO) { 
         var self=this;   
@@ -5,10 +8,7 @@ export class BKHron {
         this.par=par;
         this.id=id;
         this.idArr=idArr
-        this.obj3d=undefined
-
-
-        
+        this.obj3d=undefined       
 
         this.mO=undefined    
         if(mO)this.mO=mO

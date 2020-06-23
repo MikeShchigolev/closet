@@ -8,7 +8,7 @@
 блок в тумбе
 */
 
-
+import { BKHron } from './BKHron.js';
 import { Blok } from './Blok.js';
 
 export class BTBoxVstavka extends Blok {
@@ -26,12 +26,15 @@ export class BTBoxVstavka extends Blok {
         this.wN=mO.wN;
         this.hN=mO.hN; 
 
-
+        this.otstup=1.6
 
         
         this.bvPlus=new BVPlus(this);
 
-
+        let aa=new THREE.AxesHelper(200);
+        aa.position.x=-48
+        aa.position.y=1.5
+        this.content3d.add(aa);
 
 
         this.arrObj=[];
@@ -84,6 +87,8 @@ export class BTBoxVstavka extends Blok {
         this.boolLoad = false 
         this.funInitMod = function(){
             this.creadDebag(self.cont3dLoad.children[0]);
+
+            //self.cont3dLoad.children[0].position.z=self.object.mod.r[1]
             self.boolLoad=true;
             this.dragIndex();
         }
@@ -115,6 +120,10 @@ export class BTBoxVstavka extends Blok {
                 this.boxColizi.x=-t/2;
             }
             self.dragObjNWD();
+            if(self.activTime==true){
+                this.mO.par.par.visiActiv.setObject(this)  
+            }
+
             self.fun("visi3d");
         }
 
@@ -202,7 +211,8 @@ export class BTBoxVstavka extends Blok {
         var blok, d, py, ppy;
         this.testTumb1 = function(_x,_y, _rect){            
             blok=_rect.parent;
-            py=_y-(rcm.y+rcm.height/2) 
+            py = _y-(rcm.y+rcm.height/2) 
+            trace(_y,rcm.y,rcm.height)
             ppy=this.testBlokSvobod(py, blok)
             if(ppy==null){
                 return false;
@@ -388,7 +398,7 @@ export class BTBoxVstavka extends Blok {
             
 
             
-            trace(this._indexW,this._indexH,this.arrObj[this._indexW][this._indexH])
+           
             let ooo= this.arrObj[this._indexW][this._indexH].obj;
             ooo.priority= this.object.priority;
             aa=menedsherMaterial.getArrOtObj(ooo,idMat,intColor); 
@@ -404,7 +414,7 @@ export class BTBoxVstavka extends Blok {
                 ad[10]=1;
                 ad[11]=aa[3]*1;                
             }  
-            trace(">>>>>>>>>>>>>>>>>>>>>",ooo)               
+                         
             return [ad]
         }
     }
@@ -445,7 +455,8 @@ export class BTBoxVstavka extends Blok {
 
     set indexW(v) {
         if(this._indexW!=v){
-            this._indexW = v;  
+            this._indexW = v;
+            this.bvPlus.indexW = v;  
             this.dragIndex();     
             this.fun("visi3d");      
         }           
@@ -454,7 +465,10 @@ export class BTBoxVstavka extends Blok {
 
     set indexH(v) {
         if(this._indexH!=v){
-            this._indexH = v;  
+            console.warn(this._indexH+"----------------------",v)
+            this._indexH = v; 
+            this.bvPlus.indexH = v;
+
             this.dragIndex();     
             this.fun("visi3d");      
         }           
@@ -463,17 +477,129 @@ export class BTBoxVstavka extends Blok {
 }
 
 
+
 //хреновинки с боков
 export class BVPlus {
     constructor(par) {    
         var self=this;    
         this.type = "HrenNiz";        
         this.par=par;
+        this.activeId=-1;
+        this.boolLad=false;
+
+        this._indexW = par._indexW;
+        this._indexH = par._indexH;
+        trace(">>>>>>>>>",this.par.object)
+
+
+        this.array=[]
+        var mesh
+
+        if(this.par.object.str[2]=="187"){
+            this.activeId=187
+        }
+
+        var z0=32
+        var ooo
+        this.drag=function(){ 
+            if(this.boolLad==false)return;            
+            if(this.par.arrObj==undefined)return;
+            if(!this.par.arrObj[this._indexW])return;
+            if(!this.par.arrObj[this._indexW][this._indexH])return;
+            ooo=this.par.arrObj[this._indexW][this._indexH];
+
+            if(this.activeId==187){
+                self.array[0].rotation.y=Math.PI/2
+                self.array[0].position.z=ooo.d-3.1;
+                self.array[0].position.x=-ooo.w/2+this.par.otstup;
+
+                self.array[1].rotation.y=Math.PI/2
+                self.array[1].position.z=3.7;
+                self.array[1].position.x=-ooo.w/2+this.par.otstup;
+
+                if(ooo.d>36){
+                    self.array[2].rotation.y=Math.PI/2
+                    self.array[2].position.z=3.7+(ooo.d-3.1-3.7)/2;
+                    self.array[2].position.x=-ooo.w/2+this.par.otstup;
+                    self.array[2].visible=true;
+                }else{
+                    self.array[2].visible=false;
+                }
+                self.array[3].rotation.y=-Math.PI/2
+                self.array[3].position.z=ooo.d-3.1;
+                self.array[3].position.x=ooo.w/2-this.par.otstup;
+
+                self.array[4].rotation.y=-Math.PI/2
+                self.array[4].position.z=3.7;
+                self.array[4].position.x=ooo.w/2-this.par.otstup;
+
+                if(ooo.d>36){
+                    self.array[5].rotation.y=-Math.PI/2
+                    self.array[5].position.z=3.7+(ooo.d-3.1-3.7)/2;
+                    self.array[5].position.x=ooo.w/2-this.par.otstup;
+                    self.array[5].visible=true;
+                }else{
+                    self.array[5].visible=false;
+                }
+            }
+        }
 
 
 
 
+        if(this.activeId==-1)return;
+
+        this.content3d = new THREE.Object3D();
+        this.par.content3d.add(this.content3d);
+
+        this.hron=new BKHron(this, this.activeId, 1)
+        this.hron.initHron=function(){ 
+            
+            self.boolLad = true;
+
+            if(self.activeId==187){
+                for (var i = 0; i < 6; i++) {
+                    self.array[i]=self.hron.get();
+                    self.array[i].position.y=self.hron.object.obj.mod.r[2]
+                    let aa=new THREE.AxesHelper(20);
+                    self.array[i].add(aa);
+
+
+                }
+            }
+
+            self.drag();
+        }
+        this.hron.init();
+
+
+        let dCont=new DCont(main.contentHTML)
+        dCont.x=400;
+        dCont.y=200;
+        this.slid=new DSliderBig(dCont, 2,2, function(s){ 
+            self.array[0].position.y=this.value;
+            trace(self.par)
+            self.par.fun("visi3d");  
+        }, "z0", 0, 58);
+        this.slid.value=z0
+        this.slid.width=200
     }
+
+    set indexW(v) {
+        if(this._indexW!=v){
+            this._indexW = v;  
+            this.drag();                
+        }           
+    }   
+    get indexW() { return  this._indexW;} 
+
+    set indexH(v) {
+        if(this._indexH!=v){
+            this._indexH = v;  
+            this.drag();            
+        }           
+    }   
+    get indexH() { return  this._indexH;} 
 }
 
 

@@ -49,8 +49,7 @@ export class BTBox extends Blok {
         let aaa11=this.object.str[1].split(",")
         
         for (var i = 0; i < aaa11.length; i++) {
-            let ooo=mO.getIdObj(aaa11[i])
-            trace(ooo.title,ooo)            
+            let ooo=mO.getIdObj(aaa11[i])                      
             if(ooo && ooo.title){
                 if(this.objObj[ooo.title])this.objObj[ooo.title].obj=ooo.obj;
                               
@@ -177,25 +176,34 @@ export class BTBox extends Blok {
 
                 if(o.children[i].name=="marker_"){
                     p=o.children[i]
-                    o.remove(p);
+                    //o.remove(p);
                 }               
             } 
             if(p!=-1){
-                var dd=1
+
+                let aa=new THREE.AxesHelper(200);
+                this.c3dDebag.add(aa);
+                aa.position.z=p.position.z;
+
+                var dd=0
                 for (var i = 0; i < 222222; i++) {
                     h=new BHronTumba();
                     h.x=p.position.x;
                     h.y=p.position.y;
                     h.z=p.position.z+dd;
                     self.arrPosit.push(h);
-                    let dddd=-p.position.z-dd
+                    let dddd=-p.position.z-dd;
+
+                   
+                    
+
                     if(dddd>self.object.mod.r[2]){
                         self.arrPositZ.push(dddd);
 
                         if(this.c3dDebag){
                             let aa=new THREE.AxesHelper( 100 )
                             this.c3dDebag.add(aa)
-                            aa.position.z=dd+self.object.mod.r[2]
+                            aa.position.z=h.z//dd+self.object.mod.r[2]
                         }
 
 
@@ -432,9 +440,7 @@ export class BTBox extends Blok {
 
 
 
-            for (var ii = o.children.length-1; ii >=0; ii--) {                        
-                trace(ii+"  ===  ",o.children[ii].name)
-            }
+            
 
         }
 
@@ -777,6 +783,7 @@ export class BTBox extends Blok {
 
             }
             if(s=="indexH"){
+                trace(self.indexH+"_::_"+p)
                 self.indexH=p  
                 self.mO.par.par.visiActiv.setObject(self)               
             }
@@ -911,11 +918,12 @@ export class BTBox extends Blok {
 
     set indexH(v) {
         if(this._indexH!=v){
+            
             this._indexH = v;  
             this.dragIndex();     
             this.fun("visi3d"); 
             for (var i = 0; i < this.children.length; i++) {
-                if(this.children[i].indexH!=undefined)this.children[i].indexH=this._indexW
+                if(this.children[i].indexH!=undefined)this.children[i].indexH=this._indexH
             }     
         }           
     }   

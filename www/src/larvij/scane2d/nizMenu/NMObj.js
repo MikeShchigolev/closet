@@ -65,11 +65,11 @@ export class NMObj  {
 
 
         if(bColor==true){
-            this.vuborMat = new VuborMat(this,this.otstup,this.otstup,"resources/data/"+this.par.par.par.par.objectBase.three[2].array[2].id+"/yoriginal.png",this.par.par.par.par.objectBase.three[1],function(){
-                trace("this.arrObj.array[this.index].id    ",this.arrObj.array[this.index].id)
+            this.vuborMat = new VuborMat(this,this.otstup,this.otstup,"resources/data/"+this.par.par.par.par.objectBase.three[2].array[2].id+"/yoriginal.png",[]/*this.par.par.par.par.objectBase.three[1]*/,function(){
                 self.room.idMatObject = this.arrObj.array[this.index].id;
             });            
-            this.vuborMat.index = this.par.par.par.par.objectBase.three[1].array.length-1;        
+            this.vuborMat.index = this.par.par.par.par.objectBase.three[1].array.length-1; 
+            this.vuborMat.galeri.linkPosle= "64.png"      
 
         }else{
             this.arrLine[0].visible=false
@@ -131,6 +131,10 @@ export class NMObj  {
             this.width=xx+this.otstup;
 
             if(this.up1Menu!=undefined)this.up1Menu.setObject(o);
+
+            //trace(this.object.object.info.color)
+            this.vuborMat.setObj(this.object.object.info) 
+
         }
 
 
