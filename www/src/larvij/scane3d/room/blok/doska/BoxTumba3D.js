@@ -27,8 +27,21 @@ export class BoxTumba3D  {
         for (var i = 0; i < 6; i++) {
             this.array[i] = new Doska3D(this._material)
             this.c3d.add(this.array[i].c3d);
+
         }
 
+
+        this.drag = function(){
+
+            this.array[0].width=this._height;
+            this.array[0].depth=this._depth;
+            
+            this.array[0].c3d.position.x=-this._width/2+this._thickness/2;
+            
+            this.array[0].c3d.position.z=this._depth/2;
+        } 
+
+        this.drag()
 
     }
 
@@ -36,29 +49,29 @@ export class BoxTumba3D  {
     set height(value) {
         if(this._height!=value){
             this._height = value;
-            this.geometry.height = value;
-            this.korectBondi();           
+            
+            this.drag();           
 
         }       
     }   
     get height() { return  this._height;}
 
+
     set width(value) {
         if(this._width!=value){
             this._width = value;
-            this.geometry.width = value;
-            this.korectBondi();           
+            this.drag();           
+         
 
         }       
     }   
     get width() { return  this._width;}
 
+
     set depth(value) {
         if(this._depth!=value){
             this._depth = value;
-            this.geometry.depth = value;
-            this.korectBondi();           
-
+            this.drag();
         }       
     }   
     get depth() { return  this._depth;}

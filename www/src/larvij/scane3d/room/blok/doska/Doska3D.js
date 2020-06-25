@@ -28,7 +28,7 @@ export class Doska3D  {
     	this._krai=0.3;
 
     	this._width=100;
-    	this._height=10;
+    	this._height=100;
     	this._depth=100;
     	
     	var posInd=new Position();
