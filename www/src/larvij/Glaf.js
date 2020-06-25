@@ -228,7 +228,7 @@ export class Glaf  {
 
 
         this.webCamera=new WebCamera(this, this.dCont, document.getElementById('video'), false)  
-        //
+        
         
 
         //великая грабля с событиями 

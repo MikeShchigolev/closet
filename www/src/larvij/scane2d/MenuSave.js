@@ -16,6 +16,7 @@ export function MenuSave (par) {
     this.type = 'MenuSave';
     var key="© Все права на данный планировщик принадлежат ЗАО Ларвидж интернешнел. Любое использование конструктора гардеробных систем Larvij не согласованное с компанией Ларвидж будет преследоваться по закону.";   
         
+
     var self = this;
     this.par=par;
     this._active=false;
@@ -598,6 +599,7 @@ export function Otprovlashka (par, cont) {
                 emeil:self.par.arrComp[2].text,
                 comment:self.par.arrComp[3].text,
                 mani:aMani.price,
+                mass:aMani.mass,
 
                 dostavka:self.par.dostavka,
 

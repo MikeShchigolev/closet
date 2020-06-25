@@ -18,7 +18,7 @@ export class BTBox extends Blok {
         var key="© Все права на данный планировщик принадлежат ЗАО Ларвидж интернешнел. Любое использование конструктора гардеробных систем Larvij не согласованное с компанией Ларвидж будет преследоваться по закону."; 
         
 
-        this.boolDinColor=true;//Не отрабатываает общий цвет
+        
 
         this.heightSten=275;
         this.collision=undefined;
@@ -35,6 +35,10 @@ export class BTBox extends Blok {
 
         this.wN=mO.wN;
         this.hN=mO.hN; 
+        this.idCT="idMatObject1"
+        this.matBas="materialBase1";//Тип общего цвета
+        this.boolDinColor=true;//Не отрабатываает общий цвет
+
 
         this.arrObj=[];
         this.objObj={};        
@@ -54,7 +58,7 @@ export class BTBox extends Blok {
         for (var i = 0; i < aaa11.length; i++) {
             let ooo=mO.getIdObj(aaa11[i])                      
             if(ooo && ooo.title){
-                if(this.objObj[ooo.title])this.objObj[ooo.title].obj=ooo.obj;
+                if(this.objObj[ooo.title])this.objObj[ooo.title].obj=ooo;
                               
             }           
         }
@@ -642,14 +646,14 @@ export class BTBox extends Blok {
 
             let ooo= this.arrObj[this._indexW][this._indexH].obj;
             ooo.priority= this.object.priority;
-            aa=menedsherMaterial.getArrOtObj(ooo,idMat,intColor); 
-
+            aa=menedsherMaterial.getArrOtObj(ooo.obj,idMat,intColor); 
+            
             if(aa!=null){
                 ad=[];                         
                 for (var j = 0; j < aa.length; j++) {
                     ad[j]=aa[j];                                
                 }
-                ad[6]="BTVstavka";
+                ad[6]="BTBox";
                 ad[8]=ooo;
                 ad[9]=ooo.id;
                 ad[10]=1;
@@ -829,6 +833,21 @@ export class BTBox extends Blok {
             return true;
         }
 
+
+        /*this.setColorId = function(v){
+            
+            if(this.boolDinColor == false)return;            
+            if(this._idColor == v)return; 
+            
+            this._idColor=v;
+            this._material = roomBig[this.matBas]//menedsherMaterial.geterMat.getIDReturn(this._idColor,true); 
+            this.dragColor();
+            this.mO.dragPriceScane();
+            this.fun("visi3d");
+        }*/
+
+
+
         this.getObj = function(){
             var obj={}
             obj.type=this.type;
@@ -841,9 +860,8 @@ export class BTBox extends Blok {
             for (var i = 0; i < this.children.length; i++) {
                 obj.children[i] = this.children[i].getObj();
             }
-            obj.indexW=this.indexW  
-            obj.indexH=this.indexH  
-            obj.idColor=this.idColor; 
+            obj.indexW=this.indexW;  
+            obj.indexH=this.indexH;           
             return obj;            
         }
 
@@ -867,9 +885,7 @@ export class BTBox extends Blok {
                 this.indexW=obj.indexW;
                 this.indexH=obj.indexH;
             }
-            if(obj.idColor !=undefined) {                
-                this.setColorId(obj.idColor);
-            }
+            
 
             return obj;            
         }

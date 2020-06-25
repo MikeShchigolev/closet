@@ -260,9 +260,9 @@ function DIVsakoe(par) {
     this.b=new DButton(this.dCont, this.otstup+105, yy,"+", function(s){ 
         var s=   self.inputVersion.text.split(".") 
         var ss= s[0]+"."+(s[1]*1+1);
-        self.infoObj.version=ss
-        self.inputVersion.text=ss
-        self.saveLoad()
+        self.infoObj.version=ss;
+        self.inputVersion.text=ss;
+        self.saveLoad();
     }).width=32
     new DLabel(this.dCont, this.otstup+145, yy+8,"Версия приложения").width=200
 

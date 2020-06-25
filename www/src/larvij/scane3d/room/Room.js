@@ -20,6 +20,7 @@ export class Room  {
         this.type="Room";
         var key="© Все права на данный планировщик принадлежат ЗАО Ларвидж интернешнел. Любое использование конструктора гардеробных систем Larvij не согласованное с компанией Ларвидж будет преследоваться по закону."; 
         
+        window.roomBig=this
         var self=this;
         this._sahMenu=0
         this.par=scane3d;
@@ -31,6 +32,8 @@ export class Room  {
         this._visiMark=false;
         this._lmActive=false;
         this._materialBase=null
+        this._materialBase1=null
+        this._materialBase2=null       
         this.children=[]
         this.array=[];
         this.fun=fun
@@ -49,7 +52,11 @@ export class Room  {
             map:textur 
         });        
 
-        this._idMatObject=null;
+        this._idMatObject = null;
+        this._idMatObject1 = null;
+        this._idMatObject2 = null;
+
+
 
         this.sob=function(type, param){                    
             fun(type, param);
@@ -118,6 +125,8 @@ export class Room  {
             }
             o.niz=this.niz.getObj();
             o.idMatObject=this.idMatObject
+            o.idMatObject1=this.idMatObject1
+            o.idMatObject2=this.idMatObject2
             return o;
             
         }
@@ -126,6 +135,8 @@ export class Room  {
             if(o==undefined)  return;  
             if(o.color!=undefined)this.color=o.color
             if(o.idMatObject!=undefined)  this.idMatObject=  o.idMatObject;
+            if(o.idMatObject1!=undefined)  this.idMatObject1=  o.idMatObject1;
+            if(o.idMatObject2!=undefined)  this.idMatObject2=  o.idMatObject2;
             if(o.height!=undefined)  this.height=  o.height;
             if(o.children==undefined)  return;
             for (var i = 0; i < o.children.length; i++) {
@@ -182,13 +193,13 @@ export class Room  {
             
         }
 
-        var nameStartMat="m_8";
+        /*var nameStartMat="m_8";
         nameStartMat=this.par.par.par.objectBase.three[1].array[0].id
         
 
         var m=this.menedsher.mMaterial.geterMat.getIDReturn(nameStartMat,true);
         this.idMatObjectOld = m.idObj.id         
-        this.idMatObject=m.idObj.id
+        this.idMatObject=m.idObj.id*/
 
         var rr
         this.getMinStenHeight=function(){
@@ -253,18 +264,41 @@ export class Room  {
 
     set idMatObject(v) {
         if(this._idMatObject!=v){
+            console.warn("%%%%%sdfsdf")
             this._idMatObject = v;
                             
             this.menedsher.mMaterial.geterMat.idColor=v;
-            this.menedsher.setIdColor(v);            
+            this.menedsher.setIdColor(v, "idMatObject");            
             this.materialBase=this.menedsher.mMaterial.geterMat.getIDReturn(this._idMatObject); 
-            if(this.par.par.menuDiv!=undefined)this.par.par.menuDiv.nizMenu.setIdMatObject(this._idMatObject)
-            else this.setTidMat();
+           /*if(this.par.par.menuDiv!=undefined)this.par.par.menuDiv.nizMenu.setIdMatObject(this._idMatObject)
+            else this.setTidMat();*/
             this.par.visi3D.intRend=1;
         }       
     }   
     get idMatObject() { return  this._idMatObject;}
 
+
+    set idMatObject1(v) {
+        if(this._idMatObject1!=v){
+            this._idMatObject1 = v;
+            
+            this.materialBase1=this.menedsher.mMaterial.geterMat.getIDReturn(this._idMatObject1);
+            this.menedsher.setIdColor(v, "idMatObject1");          
+            this.par.visi3D.intRend=1;
+
+        }       
+    }   
+    get idMatObject1() { return  this._idMatObject1;}    
+
+    set idMatObject2(v) {
+        if(this._idMatObject2!=v){
+            this._idMatObject2 = v;
+            this.materialBase2=this.menedsher.mMaterial.geterMat.getIDReturn(this._idMatObject2);
+            this.menedsher.setIdColor(v, "idMatObject2");          
+            this.par.visi3D.intRend=1;
+        }       
+    }   
+    get idMatObject2() { return  this._idMatObject2;} 
 
     set color(v) {
         if(this._color!=v){

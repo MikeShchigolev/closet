@@ -239,10 +239,15 @@ export class Mani  {
         }
 
 
+
         var num, arrP,arrP2, aa;
         var _tip,_text,_razmer,_zena, _color, intColor
         var b,aT, bb;
-        this.dragPriceScane2=function(array){              
+        this.mass=0
+        this.dragPriceScane2=function(array){ 
+            trace("dragPriceScane2")  
+
+
             arrP=[];
             arrP2=[];
             this.arrPrice=[];
@@ -304,6 +309,7 @@ export class Mani  {
             this.dragPArr2();             
             this.minMani.setA(this.arrPrice);
             this.value= this.price;
+            trace(this.mass)
         }
 
         var debag=false
@@ -312,7 +318,8 @@ export class Mani  {
         var bbI, aa
         var lll
         this.dragPArr2=function(){             
-            arrP2=[]         
+            arrP2=[]   
+            this.mass=0      
             for (var i = 0; i < arrP.length; i++) {
 
                 bbI=-1;
@@ -373,11 +380,23 @@ export class Mani  {
                 
                 kkkk=arrP2[i][10]
                 if(debag==true){
-                    kkkk = arrP2[i][10]+"/"+arrP2[i][8].priority+"/"+arrP2[i][8].id;
-                    
+                    kkkk = arrP2[i][10]+"/"+arrP2[i][8].priority+"/"+arrP2[i][8].id;                    
                 }
 
                 this.price+=arrP2[i][11]*1;
+                
+                let oooo
+                if(arrP2[i][8]&&arrP2[i][8].obj&&arrP2[i][8].obj){
+                    
+                    oooo=arrP2[i][8].obj
+                }else{
+                    
+                    oooo=arrP2[i][8]
+                }
+                if(oooo&&oooo.info){
+                    this.mass+=oooo.info.mass*arrP2[i][10]
+                }                
+
                 this.arrPrice.push({
                     link:lll,
                     aText:arrP2[i],
@@ -385,6 +404,7 @@ export class Mani  {
                     price:arrP2[i][11]
                 })               
             }
+
 
             if(arrP2.length==0){
                 this.minMani.act222=false;

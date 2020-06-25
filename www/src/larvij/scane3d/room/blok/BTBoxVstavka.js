@@ -27,8 +27,10 @@ export class BTBoxVstavka extends Blok {
         this.hN=mO.hN; 
 
         this.otstup=1.6
+        this.idCT="idMatObject2"
+        this.matBas="materialBase2";//Тип общего цвета
+        this.boolDinColor=true;//Не отрабатываает общий цвет
 
-        
         this.bvPlus=new BVPlus(this);
 
         let aa=new THREE.AxesHelper(200);
@@ -55,7 +57,7 @@ export class BTBoxVstavka extends Blok {
         for (var i = 0; i < aaa.length; i++) {
             let ooo=mO.getIdObj(aaa[i])
             if(ooo && ooo.title){
-                this.objObj[ooo.title].obj=ooo.obj;                
+                this.objObj[ooo.title].obj=ooo;                
             }            
         }
 
@@ -212,7 +214,7 @@ export class BTBoxVstavka extends Blok {
         this.testTumb1 = function(_x,_y, _rect){            
             blok=_rect.parent;
             py = _y-(rcm.y+rcm.height/2) 
-            trace(_y,rcm.y,rcm.height)
+
             ppy=this.testBlokSvobod(py, blok)
             if(ppy==null){
                 return false;
@@ -400,8 +402,15 @@ export class BTBoxVstavka extends Blok {
             
            
             let ooo= this.arrObj[this._indexW][this._indexH].obj;
-            ooo.priority= this.object.priority;
-            aa=menedsherMaterial.getArrOtObj(ooo,idMat,intColor); 
+            if(ooo){
+                if(this.object.priority!=undefined)ooo.priority= this.object.priority;
+                else ooo.priority= 0;
+            }
+            else{
+                return []
+            }
+
+            aa=menedsherMaterial.getArrOtObj(ooo.obj,idMat,intColor); 
 
             if(aa!=null){
                 ad=[];                         
@@ -413,10 +422,23 @@ export class BTBoxVstavka extends Blok {
                 ad[9]=ooo.id;
                 ad[10]=1;
                 ad[11]=aa[3]*1;                
-            }  
-                         
-            return [ad]
+            }                         
+            return [ad];
         }
+
+       /* this.setColorId = function(v){
+            if(this.boolDinColor == false)return;            
+            if(this._idColor == v)return; 
+            this._idColor=v;
+            this._material = roomBig[this.matBas]//menedsherMaterial.geterMat.getIDReturn(this._idColor,true); 
+            this.dragColor();
+            this.mO.dragPriceScane();
+            this.fun("visi3d");
+        }*/
+
+
+
+
     }
 
 
@@ -489,7 +511,7 @@ export class BVPlus {
 
         this._indexW = par._indexW;
         this._indexH = par._indexH;
-        trace(">>>>>>>>>",this.par.object)
+
 
 
         this.array=[]
@@ -578,7 +600,7 @@ export class BVPlus {
         dCont.y=200;
         this.slid=new DSliderBig(dCont, 2,2, function(s){ 
             self.array[0].position.y=this.value;
-            trace(self.par)
+
             self.par.fun("visi3d");  
         }, "z0", 0, 58);
         this.slid.value=z0

@@ -66,13 +66,17 @@ export class NMObj  {
 
         if(bColor==true){
             this.vuborMat = new VuborMat(this,this.otstup,this.otstup,"resources/data/"+this.par.par.par.par.objectBase.three[2].array[2].id+"/yoriginal.png",[]/*this.par.par.par.par.objectBase.three[1]*/,function(){
-                trace(self.room.idMatObject+"  @@@   "+this.arrObj.array[this.index].id)
-                if(self.object&&self.object.boolDinColor&&self.object.boolDinColor==true){
+             
+                
+               /* if(self.object&&self.object.boolDinColor&&self.object.boolDinColor==true){
                     //self.room.idMatObject = this.arrObj.array[this.index].id;//для одного
-                    self.object.setColorId(this.arrObj.array[this.index].id)
-                }else{
-                    self.room.idMatObject = this.arrObj.array[this.index].id;//для всех
-                }
+                    //self.object.setColorId(this.arrObj.array[this.index].id)
+
+
+                }else{*/
+                    
+                    self.room[self.object.idCT] = this.arrObj.array[this.index].id;//для всех
+               // }
 
                 
 
@@ -112,13 +116,46 @@ export class NMObj  {
         this.setObject=function(o){
             this.object=o;
             this.clear()
+
+
+
             
             this.arrLine[0].x=this.otstup+this._vusot*2-this._vusot*0.25
+            
+            //cмена матерьялов
+            let bvm=false;
+
+            if(this.object.object && this.object.object.info && this.object.object.info.array && this.object.object.info.array.length>0)bvm=true;
+
+            if(bvm==true){
+                this.vuborMat.visible=true
+                this.arrLine[0].visible=true;
+                this.vuborMat.setObj(this.object.object.info);            
+                let p=-1;
+
+                for (var i = 0; i < this.object.object.info.array.length; i++) {                
+                    
+                    if(this.object.object.info.array[i].id==this.object._idColor){
+                        p=i
+                        break
+                    }
+                }
+                
+                if(p!=-1)this.vuborMat.index=p
+
+                xx=this.otstup+this._vusot*2+this._vusot*0.5     
+            }else{
+                this.vuborMat.visible=false
+                xx=this._vusot/2;
+                this.arrLine[0].visible=false;
+            }
+
+            //-----
+
+
+
 
             
-            
-
-            xx=this.otstup+this._vusot*2+this._vusot*0.5 
             if(bColor==false) xx+=-113
 
             if(this.butArAr.setObject(o)==true) {
@@ -142,8 +179,8 @@ export class NMObj  {
             if(this.up1Menu!=undefined)this.up1Menu.setObject(o);
 
             //--------------
-            this.vuborMat.setObj(this.object.object.info);
-            trace(this.object)
+            
+
 
 
 
@@ -155,7 +192,7 @@ export class NMObj  {
 
         this.setIdMatObject=function(s){            
             var p=-1; 
-            trace("bColor    ",bColor)    
+             
             if(bColor==false)return
             if(!this.vuborMat.arrObj)return 
             if(!this.vuborMat.arrObj.array)return    
@@ -273,7 +310,7 @@ export class ButArAr  {
                     a.array.push("resources/image/boxw_"+o.wN[i]+".png")
                 }
                 this.vuborW = new VuborMat(this,0,0,"resources/image/boxw.png",a,function(){     
-                    trace(this.index)
+                    
                     //self.object.indexW=this.index
                     //batArrGlobal.setObject(self.object)
                     self.object.aaSob("indexW",this.index) 

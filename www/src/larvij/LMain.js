@@ -44,8 +44,7 @@ export class LMain  {
         if(dcmParam.isMobile.any()!=null)dcmParam.mobile=true;
 
         if(dcmParam.mobile==false){
-			let r = navigator.userAgent.match(/iPhone|iPad|iPod/i);
-			trace("sah1: "+r)
+			let r = navigator.userAgent.match(/iPhone|iPad|iPod/i);			
 	        if(r==null ){	
 	        	trace("sah2: "+navigator.userAgent.match(/Mac OS/i))        	
 	            if(navigator.userAgent.match(/Mac OS/i)!=null){
@@ -129,11 +128,9 @@ export class LMain  {
   		}
 
 
-  		this.redactorCSVObj = function(){  
-  			
-  			
-  			var k=new KlassCSVObj(self.csvConfig,self.objectBase)
-  			self.csvConfigArray=k.csvConfigArray
+  		this.redactorCSVObj = function(){ 			
+  			var k=new KlassCSVObj(self.csvConfig,self.objectBase);
+  			self.csvConfigArray=k.csvConfigArray;
   		}
 
 
@@ -361,11 +358,17 @@ export class KlassCSVObj  {
 	        		}	        		
 	        		ddd=ddddd
 	        	}
+	        	trace(i+"   "+ddd)
 
 	            let o={};  
 	            o.id=arr[i][0];          
 	            o.text=arr[i][1];
 	            o.size=arr[i][2];
+
+	            
+				if(isNaN(arr[i][3]*1))o.mass=100
+	            o.mass=arr[i][3]*1
+	            
 	            o.color={};
 	            o.array=[]
 	            let sah=0;

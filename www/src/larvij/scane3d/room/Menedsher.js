@@ -96,9 +96,24 @@ export class Menedsher  {
 
 
         this.dragPriceScane=function(){
-            if(this.par.par.par.menuDiv)            
-            this.par.par.par.menuDiv.mani.dragPriceScane2(this.menedsherObject.array)
+            if(this.par.par.par.menuDiv){
+                trace("###")
+                this.dragTime()
+            }           
         }
+
+        this.sah=0
+        this.dragTime=function(){
+            this.sah++;
+            var s=this.sah;
+            setTimeout(function() {
+                if(self.sah==s){
+                    //self.save()
+                    self.par.par.par.menuDiv.mani.dragPriceScane2(self.menedsherObject.array);
+                }
+            }, 100);
+        } 
+
 
 
 
@@ -204,7 +219,7 @@ export class Menedsher  {
                 self.sten=undefined
                 if(self.object!=undefined){//разруливаем тоскаемый элемент                    
                     if(self.object.parent!=undefined){  
-                        //trace("<<out<<remove")                       
+                                    
                         e.target.sten.remove(self.object); 
                         var l=self.getLink(self.object.object)                        
                         self.glaf.dragPic.start(32, l, null,null,true);
@@ -215,7 +230,7 @@ export class Menedsher  {
                     if(self.object.outDrag)self.object.outDrag()
                 }
             }
-            //trace("<<")
+            
             window.document.body.style.cursor = "auto";    
             blok=null 
             self.par.visiActiv.dragActiv()       
@@ -228,7 +243,7 @@ export class Menedsher  {
             if(self.par.par.bactive==false)return
             if(e)if(e.target){
                 if(e.target.sten){
-                    //strace(">>")
+                   
                     self.sten=e.target.sten
                     if(self.object!=undefined){//разруливаем тоскаемый элемент                    
                         if(self.object.parent==undefined){
@@ -238,10 +253,7 @@ export class Menedsher  {
                             _yy=self.pointZdvig.y + (intersects[0].uv.y-0.5)*self.whDrag;
 
                             if(self.object.isOver!=undefined)b=self.object.isOver(e.target.sten,_xx,_yy)
-                            /*if(e.target.sten.collision.isRect(self.object.boxColizi)==false){
-                                b=false;
-                            }*/
-                            trace(mHelp.dCNM)
+                            
 
                             //if(b){//если можно пихнуть
                                 e.target.sten.add(self.object);
@@ -444,8 +456,9 @@ export class Menedsher  {
         this.visi3D.addEvent("down", this.down);
 
         
-        this.setIdColor = function (idColor) {
-            this.menedsherObject.setIdColor(idColor);
+        this.setIdColor = function (idColor, tip) {
+            if(tip==undefined)tip="idMatObject"
+            this.menedsherObject.setIdColor(idColor, tip);
         }
 
 
@@ -625,11 +638,7 @@ export class MenedsherObject  {
                     
                     o.info=this.par.csvConfigArray[i]
                    
-                   // trace("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-                    
-
-                    //this.setObjArr(o,this.par.csvConfigArray[i])
-                    
+                   
                     return o
 
                 }
@@ -899,9 +908,11 @@ export class MenedsherObject  {
         }
 
 
-        this.setIdColor = function (idColor) {       
+        this.setIdColor = function (idColor, tip) {       
             for (var i = 0; i < this.array.length; i++) {
-                this.array[i].idColor=idColor;
+                
+                if(this.array[i].idCT==tip)this.array[i].setColorId(idColor);
+                
             }
         }
         this._activTime=-1;
@@ -931,7 +942,7 @@ export class MenedsherObject  {
 
     set activIndex(v) {
         if(this._activIndex!=v){
-            trace("gfhsgfdsgfdsgfdsg",v)
+        
             this._activIndex= v;
             for (var i = 0; i < this.array.length; i++) {
                 if(i==this._activIndex)this.array[i].activTime=true;
@@ -982,7 +993,7 @@ export class Hron  {
                 let dd
                 if(link.indexOf("resources/data/65/")!=-1){
                     dd="m_8" 
-                    //strace("$$$$$$$$$$m_base0$$$$$$$$")  
+                   
                 }             
                 mO.par.mMaterial.geterMat.getTestTitleObj(object.scene, dd)
                 object.scene.rotation.x=Math.PI/2

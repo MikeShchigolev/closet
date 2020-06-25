@@ -31,7 +31,7 @@ function AGlaf(main) {
 
 
     this.durak = true //защита от дурака, выподения инфы
-    trace("@@@@@@@@@@@durak@@@@@@@@@@@@@@@@@")
+
 
 
 

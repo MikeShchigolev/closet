@@ -25,7 +25,7 @@ export class Blok{
         this._visiMark= mO._visiMark; 
         this._avAct = true;
         this.idRandom=Math.random();
-        this._idColor=Math.round(Math.random());
+        this._idColor=0;
         this.children=[];
         this.okPrice=false;
         this._activObject=false;
@@ -37,7 +37,7 @@ export class Blok{
         this.id=o.id;
         this.linkMod="resources/data/"+this.id+"/mod/"+o.mod.name;
         this.link="resources/data/"+this.id+"/original.png";
-        this._material=mO.materialBase;
+        
         this.aa=["copy","clear"]
         this.funDrag=undefined;
         this.funInitMod=undefined; 
@@ -48,6 +48,9 @@ export class Blok{
         this.content3d = new THREE.Object3D();
         this.content3d.blok=this;
 
+        this.idCT="idMatObject";//Тип общего цвета
+        this.matBas="materialBase";//Тип общего цвета
+        this._material=roomBig[this.matBas];
 
         this.c3dNa = new THREE.Object3D();
         this.content3d.add(this.c3dNa);        
@@ -56,11 +59,10 @@ export class Blok{
         this.graphics = new PIXI.Graphics();  
         this.content.addChild(this.graphics);
 
-
-        //this.color=this.object
         
-        //this.bigObject=mO.getBigobj(this.object.id)
-        //trace(this.bigObject)
+       
+        
+        
         
 
 
@@ -284,7 +286,22 @@ export class Blok{
             
         }
 
+        this.testMaterial=function(){
+    //ставим первый цвет
+            if(!roomBig[this.matBas]&&this.object && this.object.info && this.object.info.array && this.object.info.array.length>0){
+               
+                roomBig[this.idCT]=this.object.info.array[0].id
+                
+                
+            }
+            
+            
+            this._idColor=roomBig[this.idCT];
+            this._material=roomBig[this.matBas];
 
+
+            
+        }
 
 
         this.funInit=undefined
@@ -297,11 +314,11 @@ export class Blok{
 
             mO.getModel(this.linkMod, o.mod.key, function(o){
                 self.cont3dLoad=o;
-                
+                self.testMaterial();
                 
                 self.markers.setO3D(self.cont3dLoad) 
                 self.c3dNa.add(self.cont3dLoad);
-                //self.cont3dLoad.position.y=100
+                
 
                 self.recurcChild(self.cont3dLoad)                              
                 self.mO.visi3D.objShadow(self.content3d, true)
@@ -368,23 +385,27 @@ export class Blok{
             }            
             if(p!=-1){
                 r = this.children.splice(p,1)[0];
-                this.content3d.remove(blok.content3d)
-                //blok.parent=undefined;
+                this.content3d.remove(blok.content3d);
+                
             }           
             return r;
         }
 
         this.setColorId = function(v){
-            if(this.boolDinColor == false)return
+            if(this.boolDinColor == false){
+                this.idColor=v
+                this.dragColor();
+                this.mO.dragPriceScane();
+                this.fun("visi3d");
+                return;         
+            }   
+            //if(this._idColor == v)return;
 
-            if(this._idColor== v)return
             this._idColor=v;
-            this._material = menedsherMaterial.geterMat.getIDReturn(this._idColor,true);    
-
+            this._material = roomBig[this.matBas]// menedsherMaterial.geterMat.getIDReturn(this._idColor,true); 
             this.dragColor();
             this.mO.dragPriceScane();
             this.fun("visi3d");
-
         }
 
 
@@ -398,8 +419,7 @@ export class Blok{
             obj.children=[];
             for (var i = 0; i < this.children.length; i++) {
                 obj.children[i]=this.children[i].getObj();
-            }          
-
+            }
             return obj;            
         }
 
@@ -413,8 +433,7 @@ export class Blok{
                 ob=mO.getBlok(ooo.obj)
                 ob.setObj(obj.children[i])
                 this.add(ob);                 
-            }
-            
+            }            
             return obj;            
         }
     }
@@ -422,7 +441,7 @@ export class Blok{
 
     set material(v) {
         if(this._material!=v){
-            if(this.boolDinColor == true)return
+            if(this.boolDinColor == true)return;
             this._material = v;            
             this.dragColor();
         }       
@@ -431,12 +450,9 @@ export class Blok{
 
 
     set idColor(v) {
-        if(this._idColor!=v){
-            console.warn("####",this._idColor)
-            if(this.boolDinColor == true)return
-            this._idColor= v;            
-            
-
+        if(this._idColor!=v){            
+            if(this.boolDinColor == true)return;
+            this._idColor= v;
             this.dragColor();
             this.mO.dragPriceScane();
         }       

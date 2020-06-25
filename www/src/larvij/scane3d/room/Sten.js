@@ -480,7 +480,7 @@ export class Sten  {
 
             setTimeout(function() {
                 for (var i = 0; i < self.children.length; i++) {
-                    trace(i+"  ",self.children[i].type)
+             
                     if(self.children[i].type=="BPieceTop"){
                         self.children[i].dtagTime()
                     }

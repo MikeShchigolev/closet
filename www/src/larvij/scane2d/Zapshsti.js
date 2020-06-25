@@ -344,20 +344,33 @@ export class VuborMat  {
             let b=false;
 
             if(b==false) {
-
-
                 this.galeri.restart(this.object)
-            }   
+            }  
+            this.index =-1
         }
     }
+
+     set visible(v) {
+        if(this._visible!=v){
+            this._visible = v; 
+            this.dCont.visible = v;        
+        }
+    }
+    get visible() { return  this._visible;}   
 
     set index(v) {
         if(this._index!=v){
             this._index = v; 
             this.galeri.index = v;
+            
             if(v==-1){                
-            } else{                
-                if(this.galeri.array[v])this.but2Link.loadImeg(this.galeri.array[v].link);              
+            } else{  
+              
+                //            
+                if(this.galeri.array[v]){
+              
+                    this.but2Link.loadImeg(this.galeri.array[v].link); 
+                }             
             }        
         }
     }
@@ -425,12 +438,12 @@ export class GaleriLitel{
                     this.arrayCech[i].dCont.x=this._vusot/2 
                 }
                 this.array[i]=this.arrayCech[i]
-                trace(i+"   ",this.object.array[i])
+                
                 this.array[i].restart(this.object.array[i])
                 this.array[i].dCont.visible = true; 
 
             }
-            trace("########")
+         
 
         }  
 
@@ -537,7 +550,7 @@ export class GLBox  {
             if(obj.src!=undefined){
                 link=this.object.src
             }
-            trace(link+"   "+this.link)
+    
             if(link!=this.link){
                 this.link=link
                 this.but2Link.loadImeg(link)
