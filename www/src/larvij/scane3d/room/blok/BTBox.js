@@ -187,10 +187,11 @@ export class BTBox extends Blok {
                 }               
             } 
             if(p!=-1){
-
-                let aa=new THREE.AxesHelper(200);
-                this.c3dDebag.add(aa);
-                aa.position.z=p.position.z;
+                if(this.c3dDebag){
+                    let aa=new THREE.AxesHelper(200);
+                    this.c3dDebag.add(aa);
+                    aa.position.z=p.position.z;
+                }
 
                 var dd=0
                 for (var i = 0; i < 222222; i++) {
