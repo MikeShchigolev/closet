@@ -600,6 +600,7 @@ export function Otprovlashka (par, cont) {
                 comment:self.par.arrComp[3].text,
                 mani:aMani.price,
                 mass:aMani.mass,
+                volume:aMani.volume,
 
                 dostavka:self.par.dostavka,
 

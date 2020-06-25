@@ -616,7 +616,7 @@ export class Sten  {
         var yyy,zzz,xxx,pB;
         if(this.debag==true){
             this.deb=new DebbugPixi()          
-            this.w=new DWindow(this.par.par.dCont, 1000, 200,"тест колизий");           
+            this.w=new DWindow(this.par.par.dCont, 1400, 0,"тест колизий");           
             this.w.content.div.appendChild(this.deb.div);
             var zx=10;
 

@@ -23,6 +23,8 @@ import {  BTVstavka } from './blok/BTVstavka.js';
 import {  BTBox } from './blok/BTBox.js';
 import {  BTBoxVstavka } from './blok/BTBoxVstavka.js';
 
+import {  BTBoxDin } from './blok/BTBoxDin.js';
+
 import {  BPieceObject } from './blok/BPieceObject.js';
 import {  BPieceTop } from './blok/BPieceTop.js';
 import {  MUtilit  } from './MUtilit.js';
@@ -874,7 +876,7 @@ export class MenedsherObject  {
             if(o.str[0]=="BTBox") blok=new BTBox(this, o, this.array.length,this.sob); 
             if(o.str[0]=="BTBoxVstavka") blok=new BTBoxVstavka(this, o, this.array.length,this.sob);
 
-
+            if(o.str[0]=="BTBoxDin") blok=new BTBoxDin(this, o, this.array.length,this.sob); 
 
             if(blok==null)blok = new Blok(this,o,this.array.length,this.sob)
             blok.init();

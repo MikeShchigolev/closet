@@ -244,8 +244,9 @@ export class Mani  {
         var _tip,_text,_razmer,_zena, _color, intColor
         var b,aT, bb;
         this.mass=0
+        this.volume=0;  
         this.dragPriceScane2=function(array){ 
-            trace("dragPriceScane2")  
+           
 
 
             arrP=[];
@@ -308,7 +309,15 @@ export class Mani  {
              
             this.dragPArr2();             
             this.minMani.setA(this.arrPrice);
-            this.value= this.price;
+            this.value = this.price;
+            if(debag==true){
+                this.label.y=5
+                this.label.fontSize=20
+                this.label.width=40
+                this.label.text=this.price+":руб \n"+this.mass+":грам \n"+ (Math.round(this.volume*100)/100)+":m3"   
+            }
+
+            //this.label.text=this._value+" "+this._simvolMain;   
             trace(this.mass)
         }
 
@@ -319,7 +328,8 @@ export class Mani  {
         var lll
         this.dragPArr2=function(){             
             arrP2=[]   
-            this.mass=0      
+            this.mass=0;
+            this.volume=0;      
             for (var i = 0; i < arrP.length; i++) {
 
                 bbI=-1;
@@ -393,9 +403,16 @@ export class Mani  {
                     
                     oooo=arrP2[i][8]
                 }
+                
                 if(oooo&&oooo.info){
                     this.mass+=oooo.info.mass*arrP2[i][10]
-                }                
+                    trace("oooo.info.volume   ",oooo.info.volume, this.volume)
+                    this.volume+=oooo.info.volume*arrP2[i][10]
+                }
+
+                
+
+
 
                 this.arrPrice.push({
                     link:lll,
