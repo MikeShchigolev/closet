@@ -25,6 +25,7 @@ export class BTBoxDin extends Blok {
 
         this.heightSten=275;
         this.collision=undefined;
+        this.arrPositCesh=[];
         this.arrPosit=[];
         this.arrPositZ=[];
         
@@ -32,19 +33,26 @@ export class BTBoxDin extends Blok {
         this.aa.push();
 
 
-        this._width=100;
-        this._height=100;
-        this._depth=100;
-        this._thickness=1.6;
+        this._width=50;
+        this._height=236;
+        this._depth=58;
+        this._heightOld=-1
+
         this._otstup=0.3;
 
-        
-
-        this._indexW=0;
-        this._indexH=0;
+        this._static=true;
 
         this.wN=mO.wN;
         this.hN=mO.hN; 
+        this._indexW=0;
+        this._indexH=0;
+
+        this.minWidth=10;
+        this.wN=mO.wN;
+        this.hN=mO.hN; 
+
+        this._depth=this.hN[0];
+
         this.idCT="idMatObject1"
         this.matBas="materialBase1";//Тип общего цвета
         this.boolDinColor=true;//Не отрабатываает общий цвет
@@ -52,24 +60,44 @@ export class BTBoxDin extends Blok {
 
        
 
+        this.dragBool=false;
+        this.startWidth=this._width;
 
+        this._ot1=5.0;
+        this._ot=3.2;
+        this._thickness=1.6;
+        this._niz=4;
 
 
 
         this.setXY=function(_x,_y){           
-            
-            
 
-            /*if(this.testTumbu(_x,_y)==true){
-                return;
-            }*/ 
-
-            if(this.parent!=undefined){
-              
-                let xx=this.isWA(this.parent.collision.arrRect,_x,this.boxColizi.width,this.boxColizi,this.parent.collision.colozi.bigBox.width)
-                if(xx!=false){
-                    _x=xx
+            if(this.parent!=undefined){   
+                let b=true;   
+                if(!this._static && this.dragBool==true) {
+                    this.isMOWH(_x);// 
+                    if(this.minObjWH.w != -1){
+                        if(this.minObjWH.w>this.startWidth){
+                            if(this.width!=this.startWidth){
+                                this.width=this.startWidth
+                                self.mO.par.par.visiActiv.setObject(self) 
+                            }
+                        }else{
+                            this.width=this.minObjWH.w-0.02;
+                            _x=this.minObjWH.x+0.01
+                            self.mO.par.par.visiActiv.setObject(self) 
+                            b=false; 
+                        }                        
+                    }
+                }     
+                  
+                if(b==true){                    
+                    let xx=this.isWA(this.parent.collision.arrRect,_x,this.boxColizi.width,this.boxColizi,this.parent.collision.colozi.bigBox.width)
+                    if(xx!=false){
+                        _x=xx;
+                    }
                 }
+
                 this.boxColizi.position._x = _x;
                 this.boxColizi.position.y = _y;
 
@@ -117,131 +145,160 @@ export class BTBoxDin extends Blok {
         }
 
 
-        var aa,aaa
+        /*var aa,aaa
         var col
         this.testTumbu=function(_x,_y){
             if(this.collision==undefined)return false
             var r= false; 
 
             return r;
-        }
-        this.c3dDebag=undefined        
-        if(tStyle.glaf.debug==true)this.c3dDebag = new THREE.Object3D();
+        }*/
+
+        /*this.c3dDebag=undefined        
+        if(tStyle.glaf.debug==true)this.c3dDebag = new THREE.Object3D();*/
             
         this.array=[] 
 
-        this.boxTumba3D  
+        this.boxTumba3D;  
 
-        this.init=function(_obj){
+
+
+        this.dragWHD=function(){
+
+            this.boxTumba3D.width=this._width;
+            this.boxTumba3D.height=this._height;
+            this.boxTumba3D.depth=this._depth;
+
+
+            self.rect[3]=this._width;
+            self.rect[4]=this._depth;
+            self.rect[5]=this._height;
+
+            self.rect[0]=-self.rect[3]/2;
+            self.rect[1]=0;
+            self.rect[2]=-self.rect[5]/2;
+           
+
+            let xx=this.boxColizi.rectCollisMeshdy.x+this.boxColizi.width/2
+            let t=self.rect[3]
+            this.boxColizi.width=t;
+            this.boxColizi.rectCollisMeshdy.width=t;
+            this.boxColizi.sx=-t/2;
+            this.boxColizi.x=-t/2;
+
+            this.boxColizi.height=this._height;
+            this.boxColizi.rectCollisMeshdy.height=this._height;
+            this.boxColizi.sy=-this._height/2;
+            this.boxColizi.y=-this._height/2;
+
+            this.boxColizi.rectCollisMeshdy.coliziStop.height=this._height
+
+            this.cont3dLoad.position.z=this._depth/2;
             
+            if(this.dragBool==false)this.setXY(this.content.position.x, 0)
+
+
+            //self.mO.par.par.visiActiv.setObject(self) 
+            this.redregMarker()
+
+            self.dragObjNWD();
+            self.fun("visi3d");
+        }
+
+        this.init=function(_obj){            
             this.creatBC()
             this.testMaterial();
             this.modelObj=_obj;
+
+            this._static=false;
+            if(this.object.bool[0]==1)this._static=true;
+            if(this.object.num[0]!=0)this._height=this.object.num[0];
+
+
             this.cont3dLoad= new THREE.Object3D();
             self.c3dNa.add(self.cont3dLoad);
 
             this.boxTumba3D = new BoxTumba3D(this.material)
-            this.cont3dLoad.add(this.boxTumba3D.c3d)
-           /* for (var i = 0; i < 6; i++) {
-                this.array[i]=new Doska3D(this.material)
-                //.material
-                this.cont3dLoad.add(this.array[i].c3d)
-            }*/
 
+            this.boxTumba3D._ot1=this._ot1;
+            this.boxTumba3D._ot=this._ot;
+            this.boxTumba3D._thickness=this._thickness;
+            this.boxTumba3D._niz=this._niz;
+            this.boxTumba3D.drag();
+
+  
+
+            this.cont3dLoad.add(this.boxTumba3D.c3d)
+            for (var i = 0; i < this.boxTumba3D.array.length; i++) {
+                this.arrayMat.push(this.boxTumba3D.array[i].c3d);
+                visi3D.objShadow(this.boxTumba3D.array[i].c3d, true)
+            }
+            this.boxHelper.visible=false
+
+            this.prosZ=2;
             this.dragWHD();
+            /*
             let pObject=new DParamObject(main.glaf.dCont,2,300,function(){          
                 self.fun("visi3d");
             });
             setTimeout(function() {
-                pObject.addObject(self.boxTumba3D);
-            }, 10);
+                //pObject.addObject(self.boxTumba3D);
+                pObject.addObject(self);
+            }, 10);*/     
+        }
+
+
+        this.redregMarker = function(){
+
+            if(this._heightOld == this._height)return
+            this._heightOld=this._height
+
             
 
-            //this.funInitMod()
+            self.arrPosit=[]
+            self.arrPositZ=[]
+            var dd=0;
+            let sah=0;
+            for (var i = 0; i < 200; i++) {                
+                let hh=this._height/2-i*this._ot-this._ot1;
+                //if(i==0)trace(this._height+" ::0 "+i+"  "+hh+"  "+this._ot1)
+                if(hh>-this._height/2+this._thickness+this._niz){
+                    let aa=new THREE.AxesHelper(1)
+                    this.content3d.add(aa)
+                    aa.position.y=hh;
+                    aa.position.z=56;
+                    aa.position.x=-50/2+1.7;
+                    self.arrPositZ[sah]=hh;                                      
+                    sah++; 
+                }
+            }            
+        }
+
+
+
+        this.setColorId = function(v){
+            if(this.boolDinColor == false){
+                this.idColor=v
+                this.dragColor();
+                this.mO.dragPriceScane();
+                this.fun("visi3d");
+                return;         
+            }   
+            //if(this._idColor == v)return;
+
+            this._idColor=v;
+            this._material = roomBig[this.matBas]// menedsherMaterial.geterMat.getIDReturn(this._idColor,true);             
+            this.dragColor();
+            this.mO.dragPriceScane();
+            this.fun("visi3d");
         }
         
 
-        this.boolLoad=false       
-
-        this.funInitMod = function(){
-
-            this.creadDebag(self.cont3dLoad);
-
-            
-            
-            var o=self.cont3dLoad;
-            if(this.c3dDebag){
-                o.add(this.c3dDebag)
-            }
+   
 
 
-            var h;
-            let p=-1
-            for (var i = o.children.length-1; i >=0; i--) {
-
-                if(o.children[i].name=="marker_"){
-                    p=o.children[i]
-                    //o.remove(p);
-                }               
-            } 
-            if(p!=-1){
-                if(this.c3dDebag){
-                    let aa=new THREE.AxesHelper(200);
-                    this.c3dDebag.add(aa);
-                    aa.position.z=p.position.z;
-                }
-
-                var dd=0
-                for (var i = 0; i < 222222; i++) {
-                    h=new BHronTumba();
-                    h.x=p.position.x;
-                    h.y=p.position.y;
-                    h.z=p.position.z+dd;
-                    self.arrPosit.push(h);
-                    let dddd=-p.position.z-dd;
-
-                   
-                    
-
-                    if(dddd>self.object.mod.r[2]){
-                        self.arrPositZ.push(dddd);
-
-                        if(this.c3dDebag){
-                            let aa=new THREE.AxesHelper( 100 )
-                            this.c3dDebag.add(aa)
-                            aa.position.z=h.z//dd+self.object.mod.r[2]
-                        }
-
-
-
-                        dd+=3.2;
-                    }else{
-                        break;
-                    }
-
-                }
-            }      
-
-            self.arrPosit.sort(function(a, b) {
-                return a.z - b.z;
-            });
-            for (var i = 0; i < self.arrPosit.length; i++) {
-                self.arrPosit[i].idArr=i;
-            }
-            self.content3d.position.z = 0.5;        
-
-            self.prosZ=2;
-            self.boolLoad=true
-            self.dragIndex();
-            self.dragObjNWD();
-
-
-            
-
-        }
 
         this.creatBCFun=function(){
-            
             self.boxColizi.rectCollisMeshdy.coliziStop = {
                 x: -999,
                 y: 0,
@@ -254,11 +311,22 @@ export class BTBoxDin extends Blok {
             self.boxColizi.rectCollisMeshdy.disStick=1
         }
 
-        this.isOver=function(sten,_xx,_yy){
-            trace(">>>Продолжим сдесь, тупо проверка а можно ли вситавить ",sten.collision);
-            
+        this.getMOWH=function(){
+            if(this.parent==undefined)return null
 
-            
+           
+
+            this.isMOWH(this.boxColizi.position._x)
+
+            if(this.minObjWH.w!=0){
+                return this.minObjWH
+            }
+            return null
+        }
+        
+
+        this.isOver=function(sten,_xx,_yy){
+
             if(this.isWA(sten.collision.arrRect,_xx,this.boxColizi.width,this.boxColizi,sten.collision.colozi.bigBox.width)!=false){
                 return true
             }
@@ -267,12 +335,14 @@ export class BTBoxDin extends Blok {
         }
 
 
+        this.minObjWH={x:0, xL:0, xR:0, w:0 }
         this.isWA = function(arrRect,_xx, _ww, _not, _wBig){
             if(_xx<_ww/2)_xx=_ww/2
-            if(_xx>_wBig-_ww/2)_xx=_wBig-_ww/2   
-            //trace(">>>>>>>,_xx,_yy  ",arrRect,_xx, _ww, _not, _wBig);
-            let a =[];
+            if(_xx>_wBig-_ww/2)_xx=_wBig-_ww/2 
+              
+            
 
+            let a =[];
             for (var i = 0; i < arrRect.length; i++) {
                 if(_not){
                     if(_not.idRandom==arrRect[i].idRandom)continue;                    
@@ -282,23 +352,27 @@ export class BTBoxDin extends Blok {
                 a.push(arrRect[i].rectCollisMeshdy.x,arrRect[i].rectCollisMeshdy.x+arrRect[i].rectCollisMeshdy.width);
             }
             let rb=true
-            for (var i = 0; i < a.length; i+=2) {
-                //trace(i+"  ",a[i],a[i+1])
+            for (var i = 0; i < a.length; i+=2) {                
                 if(calc.test2d(a[i],a[i+1],_xx-_ww/2,_xx+_ww/2)==true){                    
                     rb=false
                 }
             }
-            if(rb==true)return _xx*1;
-            let aaa =[];
-            let xp=0
-            let bb=false
 
+            
+            let aaa =[];
+           // let aaa1 =[];
+            let xp=0
+            let bb=false;
+           // aaa1.push(0);
             for (i = 0; i < a.length; i+=2) {
                 //лево
                 bb=true
                 xp=a[i]-_ww/2;
 
                 if(xp<_ww/2)bb=false
+
+               // aaa1.push(a[i])
+               // aaa1.push(a[i+1])   
                 
 
                 if(bb==true)   
@@ -313,7 +387,7 @@ export class BTBoxDin extends Blok {
                     aaa.push(xp)
                 }
                 //право
-                bb=true
+                bb=true;
                 xp=a[i+1]+_ww/2;                
                 if(xp>_wBig-_ww/2)bb=false; 
 
@@ -327,142 +401,174 @@ export class BTBoxDin extends Blok {
                 }
                 if(bb==true){
                     aaa.push(xp)
-                }
-                
+                }                
             }
-            if(aaa.length==0)return false
-            let max=9999999999999
-            let ind=-1
+            //aaa1.push(_wBig);
 
-
+            let max = 9999999999999;
+            let ind = -1;
+            let dd;
+            
             for (i = 0; i < aaa.length; i++) {
-                if(Math.abs(aaa[i]-_xx)<max){
+                dd=aaa[i]-_xx;
+                if(Math.abs(dd)<max){
                     max=Math.abs(aaa[i]-_xx)
                     ind=i
                 }
+            } 
+
+
+            //берем новый список ищем крайнии границы для точки
+            
+          /*  for (i = 0; i < aaa.length; i++) {
+                aaa1.push(aaa[i]);
+            }*/
+            
+            /*let ml=-99999;
+            let mR=99999;
+            for (var i = 0; i < aaa1.length; i++) {
+                if(aaa1[i]<_xx){
+                    if(ml<aaa1[i]){
+                        this.minObjWH.xL=aaa1[i];
+                        ml=aaa1[i]
+                    }                    
+                }
+                if(aaa1[i]>_xx){
+                    if(mR>aaa1[i]){
+                        this.minObjWH.xR=aaa1[i];
+                        mR=aaa1[i]
+                    }
+                }
             }
-                
+            this.minObjWH.w=this.minObjWH.xR-this.minObjWH.xL;
+            this.minObjWH.x=this.minObjWH.xL+this.minObjWH.w/2;
 
-           // trace(aaa[ind],aaa)
-           //trace(rb,_xx-_ww/2,_xx+_ww/2)
+            trace(_xx+"  ",this.minObjWH,aaa1)*/
 
 
-            return aaa[ind]
+
+            if(rb==true)return _xx*1;
+
+
+            if(aaa.length==0)return false
+                     
+            return aaa[ind];
         }
+
+
+        this.minObjWH={x:0, xL:0, xR:0, w:0 }
+        var aRect,wB
+        this.isMOWH = function(_x, _p){
+
+           // 
+
+            if(_p==undefined)_p=this.parent                
+            if(_p==undefined)return null;
+                
+            aRect = _p.collision.arrRect;
+            wB = _p.collision.colozi.bigBox.width;
+
+            //МИНИМАЛЬНЫЕ ГРАНИЦЫ    
+            this.minObjWH.w=-1;//доступная ширина  если -1 хрен поставиш
+            this.minObjWH.xL=0;//ближайшая с лева
+            this.minObjWH.xR=wB;//ближайшая с права
+            this.minObjWH.x=wB/2;
+
+
+            let a =[];
+            for (var i = 0; i < aRect.length; i++) {                
+                if(this.boxColizi.idRandom==aRect[i].idRandom)continue; 
+                let yy=aRect[i].rectCollisMeshdy._y-aRect[i].rectCollisMeshdy.height                    
+                if(aRect[i].rectCollisMeshdy._y>this.boxColizi.rectCollisMeshdy.height)continue;                                         
+                a.push(aRect[i].rectCollisMeshdy.x,aRect[i].rectCollisMeshdy.x+aRect[i].rectCollisMeshdy.width);
+            }
+
+            //Сортируем
+            if(a.length>2){
+                //удолнение в нутри
+                for (var i = 0; i < a.length; i+=2) {  
+                    for (var j = 0; j < a.length; j+=2) {  
+                        if(i!=j){
+                            if(a[j]>a[i]&&a[j+1]<a[i+1]){
+                                a.splice(j,2)
+                                i=0;
+                                j=0;
+                            }
+                        }
+                    }
+                }
+                let xo,xo1
+                //обьеденение тех что на одной линии
+                for (var i = 0; i < a.length; i+=2) {  
+                    xo=-1;
+                    for (var j = 0; j < a.length; j+=2) { 
+                        if(i!=j){
+                            if(a[j]>a[i]&&a[j]<a[i+1]){
+                                xo=a[i]
+                                xo1=a[j+1];
+
+                                if(i>j){
+                                    a.splice(i,2)
+                                    a.splice(j,2)
+                                }else{
+                                    a.splice(j,2)
+                                    a.splice(i,2)                                    
+                                }
+                                a.push(xo,xo1)
+                                i=0;
+                                j=0;
+                            }
+                        }
+                    }
+                }
+
+
+                //сортируем пузфрь
+                xo=0;
+                for (var i = 2; i < a.length; i+=2) { 
+                    if(a[i]<a[i-2]){
+                        xo1=a.splice(i,2);
+                        a.splice(i-2,0,xo1[0],xo1[1])                        
+                        i=0
+                    }
+                }
+            }
+            
+            let a1 =[];
+           
+            a1.push(0)           
+            for (var i = 0; i < a.length; i+=2) {                
+                a1.push(a[i],a[i+1])                                         
+            }
+            a1.push(wB)  
+            //убираем меньше нуля и 
+            for (var i = 2; i < a1.length-2; i+=2) {                
+                if(Math.abs(a1[i]-a1[i+1])<this.minWidth){
+                    a1.splice(i,2);
+                    i=2
+                }
+            }
+            if(Math.abs(a1[0]-a1[1])<this.minWidth)a1.splice(0,2);
+
+            if(Math.abs(a1[a1.length-2]-a1[a1.length-1])<this.minWidth)a1.splice(a1.length-2,2);
+
+
+            for (var i = 0; i < a1.length; i+=2) { 
+                if(_x>a1[i]&&_x<a1[i+1]){ 
+                    this.minObjWH.xL=a1[i];//ближайшая с лева
+                    this.minObjWH.xR=a1[i+1];//ближайшая с права
+                    this.minObjWH.w=this.minObjWH.xR-this.minObjWH.xL;
+                    this.minObjWH.x=this.minObjWH.xL+this.minObjWH.w/2;
+                }
+            }
+        }
+
+            
+
 
 
 
         
-
-
-        //--------------------------------------
-
-
-        this.dragWHD=function(){
-           /* this.array[0].c3d.position.x=-this._width/2+this._thickness/2;
-            //this.array[0].position.y=-this._height/2;
-            this.array[0].c3d.position.z=this._depth/2;*/
-        }
-
-
-       /*this.dragIndex=function(){
-            if(self.boolLoad==false)return
-            for (var i = 0; i < this.arrObj.length; i++){ 
-                for (var j = 0; j < this.arrObj[i].length; j++) { 
-                    this.arrObj[i][j].object.visible=false;
-                }
-            }
-
-
-            if(this.arrObj[this._indexW]&&this.arrObj[this._indexW][this._indexH]&& this.arrObj[this._indexW][this._indexH].object){
-                this.arrObj[this._indexW][this._indexH].object.visible=true;                
-                
-
-                self.rect[3]=this.wN[this._indexW];
-                self.rect[0]=-this.wN[this._indexW]/2;
-                self.rect[4]=this.hN[this._indexH];
-
-        
-
-                let xx=this.boxColizi.rectCollisMeshdy.x+this.boxColizi.width/2
-
-                let t=this.wN[this._indexW]+0.02
-                this.boxColizi.width=t;
-                this.boxColizi.rectCollisMeshdy.width=t;
-                this.boxColizi.sx=-t/2;
-                this.boxColizi.x=-t/2;
-
-                this.boxColizi.rectCollisMeshdy.x=xx-this.boxColizi.width/2;
-
-
-                if(this.c3dDebag){
-                    this.c3dDebag.position.x=-this.boxColizi.width/2+1.5
-                    this.c3dDebag.position.y=1.5;
-                }
-
-              
-                
-               
-            }
-            self.dragObjNWD();
-            self.fun("visi3d");
-        }
-
-
-        this.creadDebag=function(o){  
-                    
-            for (var i = 0; i < this.arrObj.length; i++){ 
-                for (var j = 0; j < this.arrObj[i].length; j++) {    
-                    let p=-1;
-                    for (var ii = o.children.length-1; ii >=0; ii--) {                        
-                        if(o.children[ii].name=="mod_"+this.wN[i]+"_"+this.hN[j]){
-                            p=ii;
-                        }
-                    }
-
-                    if(p==-1){//обьект не найден
-                        let m=new THREE.Mesh(this.mO.gBox, this.mO.matRed1);
-                        o.add(m) 
-                        m.name=this.arrObj[i][j].name;                       
-                        m.scale.set(this.arrObj[i][j].w,this.arrObj[i][j].d,1)
-                        m.position.set(0,this.arrObj[i][j].d/2,j*1+i*5);
-                    }
-
-                }
-            }
-
-            if(this.idArr==-1){
-                let m=new THREE.Mesh(this.mO.gBox, this.mO.matRed2);
-                o.add(m)                       
-                m.scale.set(10,10,10)
-            }
-
-            //наполняем массив обьектами
-            for (var i = 0; i < this.arrObj.length; i++){ 
-                for (var j = 0; j < this.arrObj[i].length; j++) {
-                    for (var ii = o.children.length-1; ii >=0; ii--) {                                             
-                        if(o.children[ii].name=="mod_"+this.wN[i]+"_"+this.hN[j]){
-                            this.arrObj[i][j].object=o.children[ii]
-                        }
-                    }
-                }
-            }
-
-
-
-            
-
-        }
-*/
-
-
-        //--------------------------------------
-
-
-        this.stopDrag=function(){
-            
-            self.testverh()
-        }
 
         var __xxx
         this.testverh = function( col, arrColl){                         
@@ -624,9 +730,9 @@ export class BTBoxDin extends Blok {
             if(boolColo==true )return;   
             boolColo=true;
             this.okPrice=false;
-            for (var i = 0; i < this.arrayChild.length; i++) {
-                if(this.arrayChild[i].material){
-                    this.arrayChild[i].material=mO.matNull
+            for (var i = 0; i < this.arrayMat.length; i++) {
+                if(this.arrayMat[i].material){
+                    this.arrayMat[i].material=mO.matNull
                 }
             }
             this.arrayMat.length=0;
@@ -727,18 +833,23 @@ export class BTBoxDin extends Blok {
 
         this.aaSob=function(s,p){            
             if(s=="clear"){
-                var p=self.parent
+                var p=self.parent;
                 self.mO.par.clear(self);
-                self.clear()
+                self.clear();
                 self.mO.activIndex=-1;              
-                self.dragTumb(p)
+                self.dragTumb(p);
             }
-            if(s=="verhTumb"){                
-               
-                self.testPodBig()
+            if(s=="verhTumb"){               
+                self.testPodBig();
             }
 
-            if(s=="indexW"){
+
+            if(s=="sizeWidth"){
+                self.width=p;
+                self.mO.par.par.visiActiv.setObject(self) 
+            }
+
+            if(s=="indexW"){                
                 if(self.wN[p]){
                     if(self.parent!=undefined){
                         let xxxx=this.boxColizi.rectCollisMeshdy.x+this.boxColizi.rectCollisMeshdy.width/2
@@ -754,22 +865,18 @@ export class BTBoxDin extends Blok {
                             nMObj.setObject(self)                            
                             mHelp.setHelp("Данная ширина не влазит, не хватает пространства","resources/image/mhelp.png",mHelp.dCNM,{x:200,y:-13});
                             return
-                        }else{
-                           /* setTimeout(function() {
-                                mHelp.setHelp("Тестируем большой текст Тестируем большой текст Тестируем большой текст Тестируем большой текст Тестируем большой текст Тестируем большой текст Данная ширина не влазит, не хватает пространства","resources/image/mhelp.png",mHelp.dCNM,{x:200,y:-13});
-                               
-                            }, 100);*/
+                        }else{                           
                             this.setXY(xx,0); 
                         }
                     }
 
                 }
-                self.indexW=p 
-                self.mO.par.par.visiActiv.setObject(self) 
-
+                self.indexW=p                 
+                self.mO.par.par.visiActiv.setObject(self)              
             }
-            if(s=="indexH"){
-                trace(self.indexH+"_::_"+p)
+
+
+            if(s=="indexH"){                
                 self.indexH=p  
                 self.mO.par.par.visiActiv.setObject(self)               
             }
@@ -785,10 +892,13 @@ export class BTBoxDin extends Blok {
 
 
         this.dragStart=function(){ 
+            this.dragBool=true;
+            this.startWidth=this._width;
         }
 
 
-        this.stopDrag=function(){            
+        this.stopDrag=function(){  
+            this.dragBool=false;          
             if(this.parent==undefined){
                 if(this.boolOTS==true)if(this.objts)if(this.objts.parent){
                     this.objts.parent.add(this)                   
@@ -839,8 +949,9 @@ export class BTBoxDin extends Blok {
             for (var i = 0; i < this.children.length; i++) {
                 obj.children[i] = this.children[i].getObj();
             }
-            obj.indexW=this.indexW;  
-            obj.indexH=this.indexH;           
+            obj.width=this.width;  
+            obj.indexH=this.indexH;  
+            obj.indexW=this.indexW;         
             return obj;            
         }
 
@@ -848,24 +959,29 @@ export class BTBoxDin extends Blok {
         var ob,ooo
         this.setObj = function(obj){                     
             this.setXYPosit(obj.x,obj.y); 
+            
+            this.width=obj.width;
+            this.indexH=obj.indexH;
+            if(this._static==true)if(obj.indexW)this.indexW=obj.indexW;
+
+
             if(obj.children)          
             for (var i = 0; i < obj.children.length; i++) {
-                ooo= mO.getIdObj(obj.children[i].id)                  
-                ob=mO.getBlok(ooo.obj)
-                ob.setObj(obj.children[i])
+                ooo= mO.getIdObj(obj.children[i].id);                  
+                ob=mO.getBlok(ooo.obj);
+                ob.setObj(obj.children[i]);
                 this.add(ob);                 
             }
 
             if(obj.pod!=undefined){
-                this.pod=obj.pod
-              
+                this.pod=obj.pod              
             }
-            if(obj.indexW!=undefined){
-                this.indexW=obj.indexW;
-                this.indexH=obj.indexH;
-            }
-            
 
+           
+            
+            
+            
+            
             return obj;            
         }
     }
@@ -879,7 +995,11 @@ export class BTBoxDin extends Blok {
             } else{
                 this.collision=this._parent.collision;
                 this.mO.visi3D.event3DArr.addChild(this.c3dNa);                
-                this.drahShadow()  
+                this.drahShadow() 
+
+                this.avAct=this._parent.avAct;
+                trace("::::>>>>>>>>>",this._parent.avAct);
+                //this.avAct=true
             }                
         }       
     }   
@@ -896,36 +1016,50 @@ export class BTBoxDin extends Blok {
     }   
     get pod() { return  this._pod;}  
 
-/*
+
     set indexW(v) {
         if(this._indexW!=v){
-            this._indexW = v;  
-            this.dragIndex();     
-            this.fun("visi3d"); 
+            this._indexW = v;
+            this.width= this.wN[v];   
+            //this.dragIndex();     
+             
             for (var i = 0; i < this.children.length; i++) {
                 if(this.children[i].indexW!=undefined)this.children[i].indexW=this._indexW
-            }     
+            }
+            this.fun("visi3d");    
         }           
     }   
     get indexW() { return  this._indexW;} 
 
-    set indexH(v) {
-        if(this._indexH!=v){
-            
-            this._indexH = v;  
-            this.dragIndex();     
-            this.fun("visi3d"); 
-            for (var i = 0; i < this.children.length; i++) {
-                if(this.children[i].indexH!=undefined)this.children[i].indexH=this._indexH
-            }     
+
+    
+    set static(v) {
+        if(this._static!=v){            
+            this._static = v;            
+                        
         }           
     }   
-    get indexH() { return  this._indexH;} */
+    get static() { return  this._static;} 
+
+    set indexH(v) {
+        if(this._indexH!=v){            
+            this._indexH = v;            
+            this.depth= this.hN[v];  
+            for (var i = 0; i < this.children.length; i++) {
+                if(this.children[i].indexH!=undefined)this.children[i].indexH=this._indexH
+            }
+            this.fun("visi3d");              
+        }           
+    }   
+    get indexH() { return  this._indexH;} 
 
     set width(v) {
         if(this._width!=v){            
             this._width = v;  
-            this.dragWHD();            
+            this.dragWHD();
+            for (var i = 0; i < this.children.length; i++) {
+                if(this.children[i].type=="BTBoxDV")this.children[i].width=this._width
+            }             
         }           
     }   
     get width() { return  this._width;}
@@ -944,21 +1078,16 @@ export class BTBoxDin extends Blok {
         if(this._depth!=v){
             
             this._depth = v;  
-            this.dragWHD();     
+            this.dragWHD();  
+            for (var i = 0; i < this.children.length; i++) {
+                if(this.children[i].type=="BTBoxDV")this.children[i].depth=this._depth;
+            }    
             
         }           
     }   
     get depth() { return  this._depth;}
 
-    set thickness(v) {
-        if(this._thickness!=v){
-            
-            this._thickness = v;  
-            this.dragWHD();     
-            
-        }           
-    }   
-    get thickness() { return  this._thickness;}
+
 
 
 }

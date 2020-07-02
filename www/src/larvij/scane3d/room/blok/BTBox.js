@@ -18,8 +18,6 @@ export class BTBox extends Blok {
         var key="© Все права на данный планировщик принадлежат ЗАО Ларвидж интернешнел. Любое использование конструктора гардеробных систем Larvij не согласованное с компанией Ларвидж будет преследоваться по закону."; 
         
 
-        
-
         this.heightSten=275;
         this.collision=undefined;
         this.arrPosit=[];
@@ -73,13 +71,14 @@ export class BTBox extends Blok {
 
             /*if(this.testTumbu(_x,_y)==true){
                 return;
-            }*/ 
+            }*/
+
 
             if(this.parent!=undefined){
               
                 let xx=this.isWA(this.parent.collision.arrRect,_x,this.boxColizi.width,this.boxColizi,this.parent.collision.colozi.bigBox.width)
                 if(xx!=false){
-                    _x=xx
+                    _x=xx;
                 }
                 this.boxColizi.position._x = _x;
                 this.boxColizi.position.y = _y;
@@ -199,7 +198,7 @@ export class BTBox extends Blok {
                     h.x=p.position.x;
                     h.y=p.position.y;
                     h.z=p.position.z+dd;
-                    self.arrPosit.push(h);
+                    //self.arrPosit.push(h);
                     let dddd=-p.position.z-dd;
 
                    
@@ -222,6 +221,7 @@ export class BTBox extends Blok {
                     }
 
                 }
+                //trace(self.arrPositZ)
             }      
 
             self.arrPosit.sort(function(a, b) {

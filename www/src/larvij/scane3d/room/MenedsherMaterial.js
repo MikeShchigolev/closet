@@ -181,19 +181,16 @@ function GeterMat(visi3D, matarialArray, linkServ, par) {
             return 
         }
         
-
-
         if(this.obj[id]!=undefined){
             if(this.obj[id].bLoad==true){
                 _fun(this.obj[id])
-            }else{
-                
-                this.obj[id].arrFun.push(_fun)
+            }else{               
+                if(this.obj[id].arrFun)this.obj[id].arrFun.push(_fun)
             }
-            
             
             return this.obj[id];
         }
+        let sadsfdg=1
         var comand = 'new THREE.' + this.matarialArray[p].key + '()';
         var m = eval(comand);  
         m.idObj=matarialArray[p]

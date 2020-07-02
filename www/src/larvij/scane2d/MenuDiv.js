@@ -318,7 +318,7 @@ export class Mani  {
             }
 
             //this.label.text=this._value+" "+this._simvolMain;   
-            trace(this.mass)
+           
         }
 
         var debag=false
@@ -377,7 +377,7 @@ export class Mani  {
             });            
             for (var i = 0; i < arrP2.length; i++) {
                 lll="resources/data/"+arrP2[i][9]+"/100.png";                
-               // trace(arrP2[i])
+               
                 //if(arrP2[i][8]){
                     if(arrP2[i][8].obj!=undefined){
                         lll=this.getLink(arrP2[i][8].obj);
@@ -406,7 +406,7 @@ export class Mani  {
                 
                 if(oooo&&oooo.info){
                     this.mass+=oooo.info.mass*arrP2[i][10]
-                    trace("oooo.info.volume   ",oooo.info.volume, this.volume)
+             
                     this.volume+=oooo.info.volume*arrP2[i][10]
                 }
 

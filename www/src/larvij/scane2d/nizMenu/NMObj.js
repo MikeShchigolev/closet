@@ -157,9 +157,10 @@ export class NMObj  {
 
             
             if(bColor==false) xx+=-113
-
-            if(this.butArAr.setObject(o)==true) {
-                xx+=200
+            let inwH=this.butArAr.setObject(o)
+            //trace("+inwH"+inwH)    
+            if(inwH!=false) {
+                xx+=inwH
             }   
 
             if(this.object.type=="BDoor"||this.object.type=="BWindow"){
@@ -284,6 +285,7 @@ export class ButArAr  {
         global.butArAr=this
 
         this.dCont=new DCont(this.par.dCont);
+        this.dCWidth=new DCont(this.dCont);
         this.dCont.visible=false;
         this.object=undefined
         this.dCont.y=10
@@ -296,7 +298,7 @@ export class ButArAr  {
         }
 
         this.setObject=function(o){
-            if(o.type!="BTBox"){
+            if(o.type=="BTBox"||o.type=="BTBoxDin"){}else{
                 this.visible=false
                 return false
             }
@@ -304,39 +306,109 @@ export class ButArAr  {
             this.visible=true
             if(this.ab==undefined){
                 this.ab=[];
-
-                let a={array:[ ]};                
+                
+                var a={array:[ ]};                
                 for (var i = 0; i < o.wN.length; i++) {
                     a.array.push("resources/image/boxw_"+o.wN[i]+".png")
                 }
-                this.vuborW = new VuborMat(this,0,0,"resources/image/boxw.png",a,function(){     
-                    
-                    //self.object.indexW=this.index
-                    //batArrGlobal.setObject(self.object)
-                    self.object.aaSob("indexW",this.index) 
-                    //self.setObject(self.object)
+                this.vuborW = new VuborMat(this,0,0,"resources/image/boxw.png",a,function(){ 
+                    self.object.aaSob("indexW",this.index)                    
                 });            
                 this.vuborW.index = 0; 
 
 
-                a={array:[ ]};                
+                var a={array:[ ]};                
                 for (var i = 0; i < o.hN.length; i++) {
                     a.array.push("resources/image/boxh_"+o.hN[i]+".png")
                 } 
-                this.vuborH = new VuborMat(this,100,0,"resources/image/boxh.png",a,function(){     
-                    //self.object.indexH=this.index
-                    self.object.aaSob("indexH",this.index) 
-                    //self.setObject(self.object)
+                this.vuborH = new VuborMat(this,100,0,"resources/image/boxh.png",a,function(){
+                    self.object.aaSob("indexH",this.index)                    
                 });            
-                this.vuborH.index = 0; 
+                this.vuborH.index = 0;
+
+
+
+
+                this.slider=new DSliderBig(this.dCWidth, 0,24, function(s){
+                    //self.object.width=this.value;
+                    self.object.aaSob("sizeWidth",this.value)   
+                },"width",4,300)
+                this.slider.borderRadius=12
+                this.slider.label.visible=false;
+                this.slider.input.visible=false;
+                this.slider.width=140
+                this.slider.slider.height=12
+                this.slider.slider.okrug=1
+
+               
+
+                this.input=new DInput(this.dCWidth,0,5,"height",function(){
+                    if(isNaN(this.value*0.1)==true){
+                        this.value=Math.round(self.object.width*10);
+                    }
+                    let ww=this.value*0.1
+                    if(ww<self.object.minWidth)ww=self.object.minWidth
+                    if(ww>self.slider.max)ww=self.slider.max    
+                    self.object.aaSob("sizeWidth",ww)                   
+                })                
+                dcmParam.styleInput(this.input);
+                this.label1=new DLabel(this.dCWidth,this.input.width+5,10,"mm",function(){
+
+                })
+                this.label1.width=30;
+                this.label1.fontSize=20;
+                this.label1.fontFamily="SFUIDisplay-Light";    
+
 
             }
 
+            let sah=0;
+           /* if(this.object.indexW!=undefined){
+                this.vuborW.visible=true;
+                this.vuborW.index = self.object.indexW; 
+                sah+=this.vuborW.width;
+            }else{
+                this.vuborW.visible=false;                
+            }*/
 
-            this.vuborW.index = self.object.indexW; 
-            this.vuborH.index = self.object.indexH; 
+            if(o.static==false){
+                let oo1=self.object.getMOWH(); 
+                if(oo1!=null){                    
+                    this.dCWidth.visible = true;  
+                    this.slider.min=self.object.minWidth               
+                    this.slider.max=Math.floor(oo1.w);
+                                                  
+                    this.slider.value=self.object.width;
+                    this.input.text=self.object.width+"0"                
+                    sah+=140;
+                }else{
+                    this.dCWidth.visible=false;
+                }
+                this.vuborW.visible=false; 
+            }else{
+                this.dCWidth.visible=false;
 
-            return true
+                this.vuborW.visible=true;
+                this.vuborW.index = self.object.indexW; 
+                sah+=this.vuborW.width;
+            }
+
+
+
+
+            if(this.object.indexH!=undefined){
+                this.vuborH.visible = true;
+                this.vuborH.index = self.object.indexH; 
+                this.vuborH.dCont.x=sah
+                sah+=this.vuborH.width;
+            }else{
+                this.vuborH.visible = false;
+                
+            }   
+
+       
+
+            return sah
 
         }
     }
