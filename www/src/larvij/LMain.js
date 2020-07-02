@@ -366,9 +366,13 @@ export class KlassCSVObj  {
 	            o.size=arr[i][2];
 
 	            
-				if(isNaN(arr[i][3]*1))o.mass=100
-	            o.mass=arr[i][3]*1
+				if(arr[i][3].length==0)o.mass=100
+	            else o.mass=arr[i][3]*1
 	            
+	            if(arr[i][4].length==0)o.volume=0.1
+	            else o.volume = arr[i][4]*1
+	            
+	            	
 	            o.color={};
 	            o.array=[]
 	            let sah=0;

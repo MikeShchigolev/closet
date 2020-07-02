@@ -40,6 +40,10 @@ export class BPieceObject extends Blok {
         this.aa=["copy","clear"]; 
         this.boolKr=false;
         this.smesenie=0
+        this.notDrag=false
+
+        let rrr=new THREE.AxesHelper(50);
+        this.content3d.add(rrr);
 
         if(this.object.bool[3]==1){
             this.boolKr=true;//может быть две на одной рейке
@@ -118,7 +122,8 @@ export class BPieceObject extends Blok {
         this.bSort=false;
         var b;//приходит позиции от колайдера        
         this.setXY=function(_x,_y){            
-            b=this.testObject(_x,_y);            
+            b=this.testObject(_x,_y);  
+            trace(b)          
             if(b==false){
                 if(this.parent!=undefined){
                     if(this.bSort==true){
@@ -408,7 +413,7 @@ export class BPieceObject extends Blok {
 
         this.aaSob=function(s,p){
             var r=false
-            console.warn("::::::::",s,p)
+            
             if(s=="clear"){
                 self.mO.par.clear(self);
                 self.clear();
@@ -628,13 +633,16 @@ export class BPieceObject extends Blok {
                 this.sahSuper.setObj(obj.sahSuper)
             }            
 
-            if(obj.children)          
-            for (var i = 0; i < obj.children.length; i++) {
-                ooo= mO.getIdObj(obj.children[i].id)                  
-                ob=mO.getBlok(ooo.obj)
-                ob.setObj(obj.children[i])
-                this.add(ob);                 
-            }
+            if(obj.children){         
+                this.notDrag=true;
+                for (var i = 0; i < obj.children.length; i++) {
+                    ooo= mO.getIdObj(obj.children[i].id)                  
+                    ob=mO.getBlok(ooo.obj)
+                    ob.setObj(obj.children[i])
+                    this.add(ob);                 
+                }
+                this.notDrag=false;
+            } 
 
             if(obj.polka)this.polka=obj.polka
                 

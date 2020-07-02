@@ -39,7 +39,8 @@ export class BPieceTop extends Blok {
         this.visiNisu=new VisiNisu(this);//расчет драгеров
         this.bptColiz=new BPTColiz(this); //Дополнителдьные колизии       
 
-
+        let aa=new THREE.AxesHelper(100);
+        this.content3d.add(aa);
         
         this.funInit=function(){            
             self.boxColizi.rectCollisMeshdy.boolZ=false
@@ -454,6 +455,7 @@ export class BPieceTop extends Blok {
         this.setObj = function(obj){
             this.boolY=false;                  
             this.setXYPosit(obj.x,obj.y);           
+
             for (var i = 0; i < obj.children.length; i++) {               
                 ooo= mO.getIdObj(obj.children[i].id)                               
                 ob=mO.getBlok(ooo.obj)
@@ -462,10 +464,12 @@ export class BPieceTop extends Blok {
             }
             this.boolY=true;
             self.testWWWW();
-            self.dVertic();  
-            self.visiNisu.sort()
-            this.dtagTime()
-            this.drahShadow(obj.x,obj.y)  
+            //self.dVertic();  
+            //self.visiNisu.sort()
+            //this.dtagTime()
+            this.drahShadow(obj.x,obj.y) 
+           
+
 
         }
 
@@ -740,10 +744,19 @@ export class VisiNisu {
 
         //пигаем ночальную точку///////////////////////////////////////////
         this.position=new Position()
-        this.testPosition = function(point, _obj){                      
+        this.position=new Position()
+        this.testPosition = function(point, _obj){                               
             if(point.y>10)return null;
-            if(point.y>0)point.y=0;
+            if(point.y>0)point.y=0;           
+            //тест на не сортировку
             for (var i = 0; i < this.array.length-1; i++) { 
+                if(this.array[i].x>this.array[i+1].x){                    
+                    this.sort()
+                    break
+                }
+            }
+
+            for (var i = 0; i < this.array.length-1; i++) {                
                 if(this.array[i+1].visible==false)return null;
                 if(point.x>this.array[i].x){
                     if(point.x<this.array[i+1].x){

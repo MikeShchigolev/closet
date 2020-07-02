@@ -189,12 +189,22 @@ export class Blok{
             this.boxColizi.position.y = _y;            
         }
 
-
+        this.byZdvig=true
         this.prosZ=1    
         this.dragObjNWD=function(){  
+            console.warn(this.type+"  "+this.byZdvig+": "+this.idArr+":"+this.prosZ+"   ",this.rect)
             this.dragObjHA(self.boxHelper, this.rect);
+
             this.box.scale.set(this.rect[3],this.rect[5],this.rect[4]/this.prosZ);
-            this.box.position.z=this.rect[4]/(2*this.prosZ);                        
+            if(this.byZdvig==true)this.box.position.y=(this.rect1[1]-this.rect1[5]/2)//(2*this.prosZ)
+            else{
+                this.box.position.y=0
+            }
+
+
+            this.box.position.z=this.rect[4]/(2*this.prosZ); 
+
+
             if(this.funDrag!=undefined)this.funDrag();
             this.fun("visi3d");
         }        
@@ -509,7 +519,8 @@ export class Blok{
     set avAct(v) {
         if(this._avAct!=v){
             this._avAct = v;
-            this.c3dNa.visible=v;            
+            this.c3dNa.visible=v; 
+            console.warn(this.type+":::====="+v)           
             if(this._activTime==false)this.boxHelper.visible=!v;            
             for (var i = 0; i < this.children.length; i++) {
                 this.children[i].avAct=this._avAct
@@ -532,8 +543,8 @@ export class Markers{
         this.array=[]
         this.par=par;
         if(tStyle.glaf.debug==true){
-            this.axisHelper = new THREE.AxesHelper(100)
-            this.content3d.add(this.axisHelper);  
+           /* this.axisHelper = new THREE.AxesHelper(100)
+            this.content3d.add(this.axisHelper);  */
         }
         this.arrayOwan
         var aa, aaa
@@ -605,8 +616,8 @@ export class OMB{
         this.content3d.visible=this._visible; 
 
         if(tStyle.glaf.debug==true){
-            this.axisHelper = new THREE.AxesHelper(30)
-            this.content3d.add(this.axisHelper);
+           /* this.axisHelper = new THREE.AxesHelper(30)
+            this.content3d.add(this.axisHelper);*/
         }
        
 

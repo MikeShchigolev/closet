@@ -31,12 +31,15 @@ export class BTBoxVstavka extends Blok {
         this.matBas="materialBase2";//Тип общего цвета
         this.boolDinColor=true;//Не отрабатываает общий цвет
 
+        
         this.bvPlus=new BVPlus(this);
 
-        let aa=new THREE.AxesHelper(200);
-        aa.position.x=-48
-        aa.position.y=1.5
+        let aa=new THREE.AxesHelper(5); 
+        aa.position.z=56;
+        aa.position.x=-50/2+1.8;          
         this.content3d.add(aa);
+
+     
 
 
         this.arrObj=[];
@@ -71,25 +74,28 @@ export class BTBoxVstavka extends Blok {
         this.setXY=function(_x,_y){ 
             b=this.testTumb(_x,_y);
             if(b==true){
-                if(mO.btBox.parent!=undefined){                    
-                    if(mO.btBox.idRandom!=this.parent.idRandom){
-                        mO.btBox.parent.remove(mO.btBox)
-                    }else{
-                        mO.btBox.setXY(_x,_y);
+                if(mO.btBoxDin.parent!=undefined){                    
+                    if(mO.btBoxDin.idRandom!=this.parent.idRandom){
+                        mO.btBoxDin.parent.remove(mO.btBoxDin)
+                    }else{                        
+                        mO.btBoxDin.setXY(_x,_y);
                     }                   
                 }
                 this.drahShadow()
                 return
             }else{
                 //Эмулируем тумбочку
-                this.setXY2Tumba(_x,_y)
+                this.setXY2Tumba(_x,_y);
             }      
         }
 
+      
         this.boolLoad = false 
         this.funInitMod = function(){
             this.creadDebag(self.cont3dLoad.children[0]);
 
+
+            visi3D.objShadow(self.cont3dLoad, true)
             //self.cont3dLoad.children[0].position.z=self.object.mod.r[1]
             self.boolLoad=true;
             this.dragIndex();
@@ -113,6 +119,8 @@ export class BTBoxVstavka extends Blok {
                 self.rect[0]=-this.wN[this._indexW]/2;
                 self.rect[4]=this.hN[this._indexH];
 
+
+                trace(self.rect,this.boxColizi)
        
 
                 let t=this.wN[this._indexW]+0.00002
@@ -120,6 +128,10 @@ export class BTBoxVstavka extends Blok {
                 this.boxColizi.rectCollisMeshdy.width=t;
                 this.boxColizi.sx=-t/2;
                 this.boxColizi.x=-t/2;
+
+                //this.boxColizi.sy=-10;
+                //this.boxColizi.y=-10;
+                //this.boxColizi.rectCollisMeshdy.y=-10;
             }
             self.dragObjNWD();
             if(self.activTime==true){
@@ -189,7 +201,7 @@ export class BTBoxVstavka extends Blok {
             if(this.collision!=undefined){
                 for (var i = 0; i < this.collision.arrRect.length; i++) {                   
                     if(this.collision.arrRect[i].parent){
-                        if(this.collision.arrRect[i].parent.type=="BTBox"){                            
+                        if(this.collision.arrRect[i].parent.type=="BTBoxDin"){                            
                             rcm=this.collision.arrRect[i].rectCollisMeshdy;                                                 
                             if(_x>rcm.x){
                                 if(_x<rcm.x+rcm.width){
@@ -221,12 +233,14 @@ export class BTBoxVstavka extends Blok {
             }           
 
             if(this._parent!=undefined){
-                if(this._parent.idRandom!=blok.idRandom){                    
-                    this._parent.remove(this);
-                    blok.add(this);
+                if(blok)if(this._parent.idRandom!=blok.idRandom){                     
+                    if(blok.static==true){
+                        this._parent.remove(this);
+                        blok.add(this);
+                    }                    
                 }   
             }
-            this.boxColizi.rectCollisMeshdy.y=ppy-this.boxColizi.height;
+            this.boxColizi.rectCollisMeshdy.y=ppy+ self.rect[2]//-this.boxColizi.height;
             this.boxColizi.rectCollisMeshdy.x=-this.boxColizi.width/2                   
             return true;
         }
@@ -255,12 +269,16 @@ export class BTBoxVstavka extends Blok {
 
 
         //проверяем с остольными полками
-        var rcm1
+        var rcm1,r1
         this.testBlok2=function(_py,_py1, _blok){
+            
             for (var i = 0; i < _blok.children.length; i++) {
                 if(_blok.children[i].idArr!=this.idArr){
                     rcm1=_blok.children[i].boxColizi.rectCollisMeshdy;                    
-                    if(this.testLineXZ(_py,_py1, rcm1.y+rcm1.height, rcm1.y)==true){
+                    r1=_blok.children[i].rect;
+                    let y1=rcm1.y-r1[2]
+                    let y2=rcm1.y-r1[2]-r1[5]                    
+                    if(this.testLineXZ(_py,_py1, y1, y2)==true){    
                         return false
                     } 
                 }
@@ -278,40 +296,68 @@ export class BTBoxVstavka extends Blok {
             return false;
         }
 
+
+        this.isOver=function(sten,_xx,_yy){
+            p=mO.par.getPNa();
+            if(p==null)return false
+            else{
+                mO.btBoxDin.isMOWH(p.x, aS);
+                if(mO.btBoxDin.minObjWH.w>50) return true
+            }
+
+            return false
+        }
+
+
         //емулируем тумбу
-        this.btBox
+        this.btBoxDin
         var aS;
         var bbb
-        this.setXY2Tumba=function(_x,_y){            
-            aS=mO.par.sten
-            mO.btBox.nitColor() 
 
-            if(mO.btBox.parent==undefined){
-                aS.add(mO.btBox)
+        var p,p1
+
+        this.setXY2Tumba=function(_x,_y){            
+            aS=mO.par.sten;
+
+            //проверяем возможность но постоновку дебага
+            
+            p=mO.par.getPNa();
+            if(p==null)return
+            else{
+                mO.btBoxDin.isMOWH(p.x, aS);
+                if(mO.btBoxDin.minObjWH.w<50)return 
+            }
+            
+            /////////////////////////
+
+            if(mO.btBoxDin.parent==undefined){
+                mO.btBoxDin.nitColor() 
+                aS.add(mO.btBoxDin);
+
             }else{
-                if(aS.idArr != mO.btBox.parent.idArr){
-                    mO.btBox.parent.remove(mO.btBox)
-                    aS.add(mO.btBox)
+                if(aS.idArr != mO.btBoxDin.parent.idArr){                    
+                    mO.btBoxDin.parent.remove(mO.btBoxDin)                    
+                    aS.add(mO.btBoxDin)
                 }
             }
             bbb=false;
             if(this.parent==undefined){
                 bbb=true;
-                mO.btBox.add(this);
+                mO.btBoxDin.add(this);
             }else{
-                if(this.parent.idRandom!=mO.btBox.idRandom){
+                if(this.parent.idRandom!=mO.btBoxDin.idRandom){
                     bbb=true;
                     this.parent.remove(this)
-                    mO.btBox.add(this);
+                    mO.btBoxDin.add(this);
                 }
             }
-            mO.btBox.setXY(_x,_y);
+            mO.btBoxDin.setXY(_x,_y);
            
             
             if(bbb==true){
                 var mm=-3333
-                for (var i = 0; i < mO.btBox.arrPositZ.length; i++) {  
-                    if(-mO.btBox.arrPositZ[i]>mm)mm=mO.btBox.arrPositZ[i];
+                for (var i = 0; i < mO.btBoxDin.arrPositZ.length; i++) {  
+                    if(-mO.btBoxDin.arrPositZ[i]>mm)mm=mO.btBoxDin.arrPositZ[i];
                 }
                 this.boxColizi.rectCollisMeshdy.y=mm-this.boxColizi.height;
                 this.boxColizi.rectCollisMeshdy.x=-this.boxColizi.width/2;
@@ -322,13 +368,13 @@ export class BTBoxVstavka extends Blok {
 
         this.overDrag=function(){             
             mO.par.glaf.dragPic.stop();            
-            mO.btBox.add(this);
+            mO.btBoxDin.add(this);
         }
 
 
         this.outDrag=function(){           
-            if(mO.btBox.parent!=undefined){
-                mO.btBox.parent.remove(mO.btBox)                
+            if(mO.btBoxDin.parent!=undefined){
+                mO.btBoxDin.parent.remove(mO.btBoxDin)                
             }
             if(this.parent!=undefined){
                 this.parent.remove(this);
@@ -336,27 +382,37 @@ export class BTBoxVstavka extends Blok {
         }
 
 
-        this.stopDrag=function(){             
-            if(this.parent.idRandom==mO.btBox.idRandom){                
+        this.stopDrag=function(){   
+            if(this.parent ==undefined)return             
+            if(this.parent.idRandom==mO.btBoxDin.idRandom){                
                 this.parent.remove(this);
-                var cop=mO.getBlok(mO.btBox.object)
-                if(mO.btBox.parent!=undefined){
-                    var vv=mO.btBox.parent
-                    mO.btBox.parent.remove(mO.btBox);
+                var cop=mO.getBlok(mO.btBoxDin.object)
+                if(mO.btBoxDin.parent!=undefined){
+                    var vv=mO.btBoxDin.parent;
+                    mO.btBoxDin.parent.remove(mO.btBoxDin);
                     vv.collision.activ = false;
                     vv.add(cop);
-                    cop.boxColizi.rectCollisMeshdy.x=mO.btBox.boxColizi.rectCollisMeshdy.x;
-                    cop.boxColizi.x=mO.btBox.boxColizi.x;
-                    cop.boxColizi.sx=mO.btBox.boxColizi.sx;
-                    cop.x=mO.btBox.x;
 
-                    cop.boxColizi.rectCollisMeshdy.y=mO.btBox.boxColizi.rectCollisMeshdy.y; 
-                    cop.boxColizi.y=mO.btBox.boxColizi.y
-                    cop.boxColizi.sy=mO.btBox.boxColizi.sy
-                    cop.y=mO.btBox.y
+                    cop.indexW=0
+                    cop.indexH=0
+                    cop.width=50
+                    cop.depth=58
+                    cop.static=true
+
+                    cop.boxColizi.rectCollisMeshdy.x=mO.btBoxDin.boxColizi.rectCollisMeshdy.x;
+                    cop.boxColizi.x=mO.btBoxDin.boxColizi.x;
+                    cop.boxColizi.sx=mO.btBoxDin.boxColizi.sx;
+                    cop.x=mO.btBoxDin.x;
+
+                    cop.boxColizi.rectCollisMeshdy.y=mO.btBoxDin.boxColizi.rectCollisMeshdy.y; 
+                    cop.boxColizi.y=mO.btBoxDin.boxColizi.y
+                    cop.boxColizi.sy=mO.btBoxDin.boxColizi.sy
+                    cop.y=mO.btBoxDin.y
 
                     vv.collision.activ = true;
-                    cop.parent.collision.drawDegug()                    
+                    cop.parent.collision.drawDegug();
+
+
 
                     cop.add(this);
                     cop.drahShadow();
@@ -446,7 +502,7 @@ export class BTBoxVstavka extends Blok {
     set parent(v) {
         if(this._parent!=v){                               
             if(this._parent!=undefined){
-                if(this._parent.type=="BTBox"){
+                if(this._parent.type=="BTBoxDin"){
                     if(this._parent.content){                        
                         if(this._parent.content.funRender!=undefined){                            
                             this._parent.content.funRender(1)
@@ -454,8 +510,8 @@ export class BTBoxVstavka extends Blok {
                     }
                 }
             }
-            this._parent= v;  
-
+            this._parent= v;
+            console.warn(this,"######################",v)
             if(this._parent==undefined){
                 this.collision=undefined
                 this.mO.visi3D.event3DArr.removeChild(this.c3dNa);
@@ -487,7 +543,7 @@ export class BTBoxVstavka extends Blok {
 
     set indexH(v) {
         if(this._indexH!=v){
-            console.warn(this._indexH+"----------------------",v)
+            
             this._indexH = v; 
             this.bvPlus.indexH = v;
 
@@ -512,7 +568,8 @@ export class BVPlus {
         this._indexW = par._indexW;
         this._indexH = par._indexH;
 
-
+        this._ot2=3.1;
+        this._ot3=3.7;
 
         this.array=[]
         var mesh
@@ -520,6 +577,10 @@ export class BVPlus {
         if(this.par.object.str[2]=="187"){
             this.activeId=187
         }
+        if(this.par.object.str[2]=="204"){
+            this.activeId=204
+        }
+
 
         var z0=32
         var ooo
@@ -530,39 +591,61 @@ export class BVPlus {
             if(!this.par.arrObj[this._indexW][this._indexH])return;
             ooo=this.par.arrObj[this._indexW][this._indexH];
 
-            if(this.activeId==187){
+            if(self.activeId==187){
                 self.array[0].rotation.y=Math.PI/2
-                self.array[0].position.z=ooo.d-3.1;
+                self.array[0].position.y=0;
+                self.array[0].position.z=ooo.d-this._ot2;
                 self.array[0].position.x=-ooo.w/2+this.par.otstup;
 
                 self.array[1].rotation.y=Math.PI/2
-                self.array[1].position.z=3.7;
+                self.array[1].position.y=0;
+                self.array[1].position.z=this._ot3;
                 self.array[1].position.x=-ooo.w/2+this.par.otstup;
 
                 if(ooo.d>36){
                     self.array[2].rotation.y=Math.PI/2
-                    self.array[2].position.z=3.7+(ooo.d-3.1-3.7)/2;
+                    self.array[2].position.y=0;
+                    self.array[2].position.z=(ooo.d)/2;
                     self.array[2].position.x=-ooo.w/2+this.par.otstup;
                     self.array[2].visible=true;
                 }else{
                     self.array[2].visible=false;
                 }
                 self.array[3].rotation.y=-Math.PI/2
-                self.array[3].position.z=ooo.d-3.1;
+                self.array[3].position.y=0;
+                self.array[3].position.z=ooo.d-this._ot2;
                 self.array[3].position.x=ooo.w/2-this.par.otstup;
 
                 self.array[4].rotation.y=-Math.PI/2
-                self.array[4].position.z=3.7;
+                self.array[4].position.y=0;
+                self.array[4].position.z=this._ot3;
                 self.array[4].position.x=ooo.w/2-this.par.otstup;
 
                 if(ooo.d>36){
                     self.array[5].rotation.y=-Math.PI/2
-                    self.array[5].position.z=3.7+(ooo.d-3.1-3.7)/2;
+                    self.array[5].position.y=0;
+                    self.array[5].position.z=(ooo.d)/2;
                     self.array[5].position.x=ooo.w/2-this.par.otstup;
                     self.array[5].visible=true;
                 }else{
                     self.array[5].visible=false;
                 }
+            }
+
+            if(self.activeId==204){
+                self.array[0].rotation.y=Math.PI/2
+                self.array[0].rotation.x=-Math.PI/2
+                self.array[0].position.y=0;
+                self.array[0].position.z=ooo.d-this._ot2;
+                self.array[0].position.x=-ooo.w/2+this.par.otstup;
+
+                self.array[1].rotation.y=-Math.PI/2;
+                self.array[1].rotation.x=-Math.PI/2;
+                self.array[1].scale.x=-1
+                self.array[1].position.y=0;
+                self.array[1].position.z=ooo.d-this._ot2;
+                self.array[1].position.x=ooo.w/2-this.par.otstup;
+
             }
         }
 
@@ -572,39 +655,33 @@ export class BVPlus {
         if(this.activeId==-1)return;
 
         this.content3d = new THREE.Object3D();
-        this.par.content3d.add(this.content3d);
+        this.par.c3dNa.add(this.content3d);
+       // this.par.content3d.add(this.content3d);
 
         this.hron=new BKHron(this, this.activeId, 1)
-        this.hron.initHron=function(){ 
-            
+        this.hron.initHron=function(){            
             self.boolLad = true;
-
             if(self.activeId==187){
                 for (var i = 0; i < 6; i++) {
                     self.array[i]=self.hron.get();
-                    self.array[i].position.y=self.hron.object.obj.mod.r[2]
-                    let aa=new THREE.AxesHelper(20);
+                    let aa=new THREE.AxesHelper(2);
                     self.array[i].add(aa);
-
-
                 }
             }
-
+            if(self.activeId==204){
+                for (var i = 0; i < 2; i++) {
+                    self.array[i]=self.hron.get();
+                    let aa=new THREE.AxesHelper(2);
+                    self.array[i].add(aa);
+                }
+            }
             self.drag();
+            setTimeout(function() {
+                self.drag();
+            }, 100);
         }
         this.hron.init();
-
-
-        let dCont=new DCont(main.contentHTML)
-        dCont.x=400;
-        dCont.y=200;
-        this.slid=new DSliderBig(dCont, 2,2, function(s){ 
-            self.array[0].position.y=this.value;
-
-            self.par.fun("visi3d");  
-        }, "z0", 0, 58);
-        this.slid.value=z0
-        this.slid.width=200
+        
     }
 
     set indexW(v) {

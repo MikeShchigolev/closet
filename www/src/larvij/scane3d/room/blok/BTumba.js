@@ -24,6 +24,7 @@ export class BTumba extends Blok {
         this._polka=false;
         this._pod=false;
         this.aa.push("verhTumb");
+        this.byZdvig=false
 
         this.plusObj=new PlusObj(this);
 
@@ -128,6 +129,7 @@ export class BTumba extends Blok {
             self.content3d.position.z = 0.5;        
 
             self.prosZ=2;
+            self.byZdvig=false;
             self.dragObjNWD()
         }
 

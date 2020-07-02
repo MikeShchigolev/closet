@@ -297,6 +297,8 @@ export class VuborMat  {
         this.dCont=new DCont(this.par.dCont);
         this.dCont.x=x;
         this.dCont.y=y;
+        this.width=100
+        this._visible=true;
 
         this._vusot=this.par._vusot;
 

@@ -267,7 +267,7 @@ export class Povedeni1  {
                 h-= 2.7              
             }
 
-            if(this.par.object.type=="BTVstavka"){  
+            if(this.par.object.type=="BTVstavka"||this.par.object.type=="BTBoxVstavka"||this.par.object.type=="BTBoxDV"){  
                 this.aL[0].active=false;
                 this.aL[1].active=false;
                 this.aL[2].active=false;
@@ -283,6 +283,11 @@ export class Povedeni1  {
                 this.aL[2].content3d.position.z=d/2
                 this.aL[3].content3d.position.z=d/2
             }
+
+            if(this.par.object.type=="BTBoxVstavka"){  
+                y=-this.par.object.rect[2]
+            }
+            trace(this.par.object.type+"  zzzzzzzzz:  "+y)
 
             this.par.vaBox.setWHD(w,h,d,n)
             this.par.vaBox.setXYZ(x,y,z)
@@ -328,6 +333,8 @@ export class Povedeni1  {
                 y+=z;
                 y1+=z-2.1;
             }
+
+            
 
             if(this.par.object.type=="BDoor"||this.par.object.type=="BWindow"){
                 x-=this.par.object.rect[3]/2;
@@ -571,6 +578,9 @@ export class VABox  {
             this.label.text=Math.round(_w)+ "0мм"; 
             this.label.x = w/2+this._otstup+this.rect3d.x;
             this.label.y = this._fontSize+this._otstup;
+            
+            
+
 
             this.label1.text=Math.round(_h)+ "0мм"; 
             this.label1.x = w+this._otstup+this.rect3d.x
@@ -582,12 +592,14 @@ export class VABox  {
             this.label2.y = this._fontSize
             this.label2.object3d.position.z=d/2+this.rect3d.z
 
+            
+
             if(n==undefined||n==0){
-                this.label.object3d.position.z=this.rect3d.z
+                this.label.object3d.position.z=this.rect3d.z+2
                 
             }else{
                 if(n==1){
-                    this.label.object3d.position.z=d+this.rect3d.z
+                    this.label.object3d.position.z=d+this.rect3d.z+2
                     this.label1.y = -h/2-this.rect3d.y
                 }
             }

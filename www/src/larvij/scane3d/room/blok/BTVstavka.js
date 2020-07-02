@@ -20,7 +20,7 @@ export class BTVstavka extends Blok {
         
         this.collision//выдераем из стенки
         //перехват основоного события ведения обьекта по стенке
-        
+        this.byZdvig=false
         var b
         this.setXY=function(_x,_y){ 
             b=this.testTumb(_x,_y);

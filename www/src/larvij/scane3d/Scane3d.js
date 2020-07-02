@@ -407,6 +407,16 @@ export class Dubag  {
                 });
             })
 
+            new DButton(this.dCont,300,50,">",function(){
+                if(self.localStorage.object.positionVisi3d)self.par.visi3D.setObj(self.localStorage.object.positionVisi3d)
+            }).width=30           
+            new DButton(this.dCont,331,50,"save",function(){
+                self.localStorage.object.positionVisi3d=self.par.visi3D.getObj();
+                self.localStorage.save()
+            }).width=40
+
+
+
             this.but=new DButton(this.dCont,500,130,"arrBMP",function(){
                 var a=self.par.foto3dLarvij.get("arrayVisi",1500,1500,"image/jpeg");
                 var wh=600

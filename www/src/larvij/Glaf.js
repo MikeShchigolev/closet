@@ -282,7 +282,16 @@ export class Glaf  {
                     if(typeof data === "string") {
                         var conf = JSON.parse(data)
                         oo = conf;
-                    } else oo = data;                    
+                    } else oo = data;   
+                    trace("__________________________________") 
+                    
+                    //oo.children[1].children.splice(1,1) 
+                    //oo.children[1].children[0].children.splice(1,1)
+                    //oo.children[1].children[0].children.splice(1,1)
+                    //oo.children[1].children[0].children.splice(1,1)
+                    trace(oo.children[1].children[0])
+
+
                     if(self.scane3d.saveModel!=undefined){
                         self.scane3d.saveModel.setObj(oo)  
                     }  else{
