@@ -880,7 +880,13 @@ export class MenedsherObject  {
         }
 
         this.matBTBDV= new THREE.MeshPhongMaterial({
-            color:0xf28044
+            /*color:0xf28044,
+            transparent:true,
+            opacity:0.3*/
+
+            color:0xff0000,
+            transparent:true,
+            opacity:0.3
         });
         this.activBTBDV=function(b){
             trace(" this.activBTBDV  ",b)

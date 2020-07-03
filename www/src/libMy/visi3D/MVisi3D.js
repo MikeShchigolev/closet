@@ -203,7 +203,7 @@ export function MVisi3D (_contentHTML, _content2d, _devas, _directional, _efect,
 
 		
 		this.utility.render();
-		this.intRend = 10;
+		//this.intRend = 10;
 		if (this.shadowNeedsUpdate) {
 			this.shadowNeedsUpdate = false;
 			this.renderer.shadowMap.needsUpdate = true;
@@ -221,11 +221,28 @@ export function MVisi3D (_contentHTML, _content2d, _devas, _directional, _efect,
 		
 
 	};
+	var bbb=true
+
+
 	this.upDate = function () {
-		if (this.alwaysRender || (this.intRend == this.intRendOk)) {
+		bbb=false;
+		if (this.alwaysRender==true)bbb=true
+
+
+		/*if (this.alwaysRender || (this.intRend == this.intRendOk)) {
+			this.render();
+		}*/
+		if (this.intRend <= this.intRendOk){
+			//trace(this.intRend+"   "+this.intRendOk+"    "+this.alwaysRender)
+			bbb=true;
+		}
+
+		this.intRend++;
+
+		if(bbb==true){
+			
 			this.render();
 		}
-		if (this.intRend < 10) this.intRend++;
 	};
 
 	this.renderer.render(this.scene, this.camera);

@@ -122,7 +122,7 @@ export class Glaf  {
         this.visi3D.zume=450;
         this.visi3D.position3d.isDragPan=true;
         global.visi3D=this.visi3D
-
+        visi3D.intRendOk=20;
         this.visi3D.cubeMap=new CubeMap();
         this.visi3D.cubeMap.init(this.visi3D.renderer, this.visi3D.scene);
         this.visi3D.getEnvMap = function () {

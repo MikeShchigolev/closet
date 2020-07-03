@@ -143,10 +143,10 @@ export class BTBoxDV extends Blok {
                 
                 visi3D.objShadow(this.doska3D.c3d, true)
                 
-                let aa=new THREE.AxesHelper(100); 
+                /*let aa=new THREE.AxesHelper(100); 
                 aa.position.z=56;
                 aa.position.x=-50/2+1.8;          
-                this.content3d.add(aa);
+                this.content3d.add(aa);*/
                 this.dragWHD(); 
             }else{
 
@@ -772,8 +772,8 @@ export class BVPlus {
                 for (var i = 0; i < 2; i++) {
                     self.array[i]=self.hron.get();
                     self.array[i].position.y=self.hron.object.obj.mod.r[2]
-                    let aa=new THREE.AxesHelper(30);
-                    self.array[i].add(aa);
+                    /*let aa=new THREE.AxesHelper(30);
+                    self.array[i].add(aa);*/
                 }
             }
 

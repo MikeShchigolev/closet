@@ -42,8 +42,8 @@ export class BPieceObject extends Blok {
         this.smesenie=0
         this.notDrag=false
 
-        let rrr=new THREE.AxesHelper(50);
-        this.content3d.add(rrr);
+        /*let rrr=new THREE.AxesHelper(50);
+        this.content3d.add(rrr);*/
 
         if(this.object.bool[3]==1){
             this.boolKr=true;//может быть две на одной рейке

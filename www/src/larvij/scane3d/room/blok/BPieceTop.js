@@ -39,8 +39,8 @@ export class BPieceTop extends Blok {
         this.visiNisu=new VisiNisu(this);//расчет драгеров
         this.bptColiz=new BPTColiz(this); //Дополнителдьные колизии       
 
-        let aa=new THREE.AxesHelper(100);
-        this.content3d.add(aa);
+       /* let aa=new THREE.AxesHelper(100);
+        this.content3d.add(aa);*/
         
         this.funInit=function(){            
             self.boxColizi.rectCollisMeshdy.boolZ=false
@@ -464,9 +464,10 @@ export class BPieceTop extends Blok {
             }
             this.boolY=true;
             self.testWWWW();
-            //self.dVertic();  
-            //self.visiNisu.sort()
-            //this.dtagTime()
+           /* self.dVertic();  
+            self.visiNisu.sort()
+            this.dtagTime()*/
+
             this.drahShadow(obj.x,obj.y) 
            
 
@@ -749,12 +750,16 @@ export class VisiNisu {
             if(point.y>10)return null;
             if(point.y>0)point.y=0;           
             //тест на не сортировку
-            for (var i = 0; i < this.array.length-1; i++) { 
-                if(this.array[i].x>this.array[i+1].x){                    
-                    this.sort()
+            
+            
+            /*for (var i = 0; i < this.array.length-1; i++) { 
+                if(this.array[i].x>this.array[i+1].x){  
+                    trace("------::----------------------------");                  
+                    this.sort();
                     break
                 }
-            }
+            }*/
+
 
             for (var i = 0; i < this.array.length-1; i++) {                
                 if(this.array[i+1].visible==false)return null;
@@ -1224,7 +1229,7 @@ export class VNB {
         this.content=new PIXI.Container();
         par.par.content.addChild(this.content);
 
-
+        var dopHH=3.5
         this.dragCont=function(){
             var zd=2
             if(this.arrImage[0]){
@@ -1260,9 +1265,12 @@ export class VNB {
         
         this.hron=new BKHron(this, 166, 1,this.par.par.mO )
         this.hron.initHron=function(){
-
+            self.dragCont();
+            self.draw();
+            self.par.par.mO.dragPriceScane();
+            
         }
-        this.hron.init();
+        
         
 
         var hhh
@@ -1377,7 +1385,8 @@ export class VNB {
         }
 
         this.aInfo=this.par.par.aInfo;
-        this.kolSahArr = new KolSahArr(this.aInfo)        
+        this.kolSahArr = new KolSahArr(this.aInfo) 
+        this.kolSahArr.dopHH = dopHH         
         this.kolSahArr.arrayParam=[this.aInfo[0].obj.num[0]/10, this.aInfo[1].obj.num[0]/10, this.aInfo[2].obj.num[0]/10];
 
 
@@ -1495,6 +1504,8 @@ export class VNB {
                     a.push(aaa)
                 }
             }
+
+            this.hron.init();
         }
     }
 
@@ -1537,8 +1548,34 @@ export class KolSahArr {
         var vm=0      
         var kk, kk2 
         this.num 
+        this.dopHH = 10;
+
 
         this.set=function(num){
+            this.array=[];
+            this.value=0
+            this.num=num; 
+            let nnn=num+this.dopHH
+
+            kk=nnn/this.arrayParam[this.arrayParam.length-1];
+            kk2=Math.floor(kk);
+            for (var i = 0; i < kk2; i++) {                
+                this.array.push(this.arrayParam.length-1)
+                this.value+=this.arrayParam[this.arrayParam.length-1];
+            }
+            if(kk==kk2){//идеально длинными
+                return;
+            }            
+            vm=0;
+            for (var i = this.arrayParam.length-1; i >=0; i--) {                
+                if(this.value+this.arrayParam[i]>nnn)vm=i
+            }            
+            this.array.push(vm)
+            this.value+=this.arrayParam[vm];
+        }
+
+
+        /*this.set=function(num){
             this.array=[];
             this.value=0
             this.num =num;            
@@ -1557,7 +1594,7 @@ export class KolSahArr {
             }            
             this.array.push(vm)
             this.value+=this.arrayParam[vm];
-        }
+        }*/
 
         var o
         this.toString=function(){

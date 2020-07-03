@@ -34,10 +34,10 @@ export class BTBoxVstavka extends Blok {
         
         this.bvPlus=new BVPlus(this);
 
-        let aa=new THREE.AxesHelper(5); 
+      /*  let aa=new THREE.AxesHelper(5); 
         aa.position.z=56;
         aa.position.x=-50/2+1.8;          
-        this.content3d.add(aa);
+        this.content3d.add(aa);*/
 
      
 
@@ -706,15 +706,15 @@ export class BVPlus {
             if(self.activeId==187){
                 for (var i = 0; i < 6; i++) {
                     self.array[i]=self.hron.get();
-                    let aa=new THREE.AxesHelper(2);
-                    self.array[i].add(aa);
+                    /*let aa=new THREE.AxesHelper(2);
+                    self.array[i].add(aa);*/
                 }
             }
             if(self.activeId==204){
                 for (var i = 0; i < 2; i++) {
                     self.array[i]=self.hron.get();
-                    let aa=new THREE.AxesHelper(2);
-                    self.array[i].add(aa);
+                   /* let aa=new THREE.AxesHelper(2);
+                    self.array[i].add(aa);*/
                 }
             }
             self.drag();

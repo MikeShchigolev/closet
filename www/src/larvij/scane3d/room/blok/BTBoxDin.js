@@ -256,11 +256,11 @@ export class BTBoxDin extends Blok {
                 let hh=this._height/2-i*this._ot-this._ot1;
                 //if(i==0)trace(this._height+" ::0 "+i+"  "+hh+"  "+this._ot1)
                 if(hh>-this._height/2+this._thickness+this._niz){
-                    let aa=new THREE.AxesHelper(1)
+                   /* let aa=new THREE.AxesHelper(1)
                     this.content3d.add(aa)
                     aa.position.y=hh;
                     aa.position.z=56;
-                    aa.position.x=-50/2+1.7;
+                    aa.position.x=-50/2+1.7;*/
                     self.arrPositZ[sah]=hh;                                      
                     sah++; 
                 }
