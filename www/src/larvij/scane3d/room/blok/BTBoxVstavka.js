@@ -120,7 +120,7 @@ export class BTBoxVstavka extends Blok {
                 self.rect[4]=this.hN[this._indexH];
 
 
-                trace(self.rect,this.boxColizi)
+  
        
 
                 let t=this.wN[this._indexW]+0.00002
@@ -381,9 +381,13 @@ export class BTBoxVstavka extends Blok {
             }
         }
 
+        this.dragStart=function(){ 
+            self.mO.activBTBDV(true)
+        }
 
         this.stopDrag=function(){   
-            if(this.parent ==undefined)return             
+            if(this.parent ==undefined)return   
+            self.mO.activBTBDV(false)          
             if(this.parent.idRandom==mO.btBoxDin.idRandom){                
                 this.parent.remove(this);
                 var cop=mO.getBlok(mO.btBoxDin.object)
@@ -422,6 +426,43 @@ export class BTBoxVstavka extends Blok {
 
             }
         }
+
+        var oKrai={y:0,h:0,z:0,_y:0,_h:0}
+        var hee=0
+        var heZ=0
+        var niz, yyyy,yyyy1
+        this.getKrai= function (b) {
+            oKrai.y=this.boxColizi.rectCollisMeshdy.y-this.rect[2];            
+            if(this._parent){
+                oKrai.h=(this._parent.height/2-this._parent._thickness)-oKrai.y;
+                niz=this._parent._niz+this._parent._thickness
+                oKrai._y=-this._parent.height/2;
+                yyyy =this.boxColizi.rectCollisMeshdy.y-this.rect[5]+this.rect[2];           
+                oKrai._h =this._parent.height/2+this.boxColizi.rectCollisMeshdy.y-this.rect[5]-this.rect[2];
+                oKrai._y+=niz;
+                oKrai._h-=niz;
+                if(this._parent.children.length!=0) {
+                    for (var i = 0; i < this._parent.children.length; i++) {
+                        if(this._parent.children[i].idArr==this.idArr)continue
+                        let hhh=this._parent.children[i].boxColizi.rectCollisMeshdy.y-oKrai.y-this._parent.children[i].rect[5]-this._parent.children[i].rect[2];                        
+                        if(hhh>1&&hhh<oKrai.h){                            
+                            oKrai.h=hhh;
+                        }
+                        if(this._parent.children[i].boxColizi.rectCollisMeshdy.y<this.boxColizi.rectCollisMeshdy.y){
+                            
+                            yyyy1=this._parent.children[i].boxColizi.rectCollisMeshdy.y-this._parent.children[i].rect[2]; 
+                            let hh=yyyy-yyyy1                            
+                            if(oKrai._h>hh){                                
+                                oKrai._h=hh
+                                oKrai._y=yyyy1
+                            }
+                        }
+                    }
+                }
+            }
+            return oKrai;
+        }
+
 
         this.prosZ=1;
         this.dragObjNWD()
@@ -511,7 +552,7 @@ export class BTBoxVstavka extends Blok {
                 }
             }
             this._parent= v;
-            console.warn(this,"######################",v)
+           
             if(this._parent==undefined){
                 this.collision=undefined
                 this.mO.visi3D.event3DArr.removeChild(this.c3dNa);
@@ -553,6 +594,7 @@ export class BTBoxVstavka extends Blok {
     }   
     get indexH() { return  this._indexH;} 
 }
+
 
 
 

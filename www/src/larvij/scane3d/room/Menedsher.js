@@ -261,9 +261,7 @@ export class Menedsher  {
         }
 
         var _yy1,_xx1
-        this.over = function (e) { 
-            
-            
+        this.over = function (e) {           
             if(self.par.par.bactive==false)return
             if(e)if(e.target){
                 if(e.target.sten){
@@ -810,34 +808,7 @@ export class MenedsherObject  {
                     i=99999
                     break
                 }
-            }
-
-           /* for (var i = 0; i < this.objectBase.bd.length; i++) {
-                if(this.objectBase.bd[i].title=="btBox"){
-                    
-                    var ii=i;
-                    $.ajax({
-                        url: "resources/data/"+this.objectBase.bd[ii].id+"/config.json"+self.par.plus,
-                        success: function function_name(data) {
-                            if(typeof data === "string") {
-                                var conf = JSON.parse(data)
-                                self.objectBase.bd[ii].obj = self.csvTest(conf);
-                            } else{                                
-                                self.objectBase.bd[ii].obj = self.csvTest(data);
-                            }  
-
-                            self.btBox = new BTBox(self, self.objectBase.bd[ii].obj, -1 ,self.sob);
-                            self.btBox.init();
-                            
-                        },
-                        error:function function_name(data) {
-                            console.log("Что то случилось с конфигом")
-                        }
-                    });
-                    i=99999
-                    break
-                }
-            }*/
+            }           
 
             for (var i = 0; i < this.objectBase.bd.length; i++) {
                 if(this.objectBase.bd[i].title=="BTBoxDin"){
@@ -908,6 +879,16 @@ export class MenedsherObject  {
             }
         }
 
+        this.matBTBDV= new THREE.MeshPhongMaterial({
+            color:0xf28044
+        });
+        this.activBTBDV=function(b){
+            trace(" this.activBTBDV  ",b)
+            for (var i = 0; i < this.array.length; i++) {
+                if(this.array[i].activBTBDV)this.array[i].activBTBDV(b)
+            }
+
+        }
 
 
 

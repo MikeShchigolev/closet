@@ -22,7 +22,7 @@ export function ColiPlus(par, collision, storona, storona1) {
 
 
 	this.testR=function(r,r1){			
-		//trace(r,r1)
+		trace("----",r,r1)
 
 		if(this.testLine(r.x, r.x+r.width, r1.x, r1.x+r1.width)){
 			//trace("--")
@@ -38,8 +38,7 @@ export function ColiPlus(par, collision, storona, storona1) {
 
 
 	
-	this.testLine=function(p,p1,p2,p3){	
-		//trace(Math.round(p),Math.round(p1),Math.round(p2),Math.round(p3))		
+	this.testLine=function(p,p1,p2,p3){		
 		if(p3<p)return false
 		if(p1<p2)return false	
 		return true	
@@ -58,12 +57,13 @@ export function ColiPlus(par, collision, storona, storona1) {
 		/*if(rectCM.parent.idArr==4){
 			rectCM.rectCollisMeshdy.x=10
 		}*/
-
+		
 		if(rectCM.rectCollisMeshdy.boolZ==true){
 			
 			for (var i = 0; i < this.collision.colozi.arrBox.length; i++) {
 				box=this.collision.colozi.arrBox[i];
 				if(box.boolZ==true){
+					trace(i+"::::::::::"+rectCM.rectCollisMeshdy.depth+ " "+zzz)
 					if(this.storona==0){
                         zzz=this.collision.colozi.bigBox.width -( box.x+box.width);                        
                         this.rect.x=0;  

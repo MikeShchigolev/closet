@@ -38,6 +38,7 @@ export class BTBoxDin extends Blok {
         this._depth=58;
         this._heightOld=-1
 
+
         this._otstup=0.3;
 
         this._static=true;
@@ -73,7 +74,7 @@ export class BTBoxDin extends Blok {
         this.setXY=function(_x,_y){           
 
             if(this.parent!=undefined){   
-                let b=true;   
+               /* let b=true;   
                 if(!this._static && this.dragBool==true) {
                     this.isMOWH(_x);// 
                     if(this.minObjWH.w != -1){
@@ -96,7 +97,7 @@ export class BTBoxDin extends Blok {
                     if(xx!=false){
                         _x=xx;
                     }
-                }
+                }*/
 
                 this.boxColizi.position._x = _x;
                 this.boxColizi.position.y = _y;
@@ -145,23 +146,12 @@ export class BTBoxDin extends Blok {
         }
 
 
-        /*var aa,aaa
-        var col
-        this.testTumbu=function(_x,_y){
-            if(this.collision==undefined)return false
-            var r= false; 
 
-            return r;
-        }*/
 
-        /*this.c3dDebag=undefined        
-        if(tStyle.glaf.debug==true)this.c3dDebag = new THREE.Object3D();*/
+
             
         this.array=[] 
-
-        this.boxTumba3D;  
-
-
+        this.boxTumba3D;
 
         this.dragWHD=function(){
 
@@ -178,6 +168,9 @@ export class BTBoxDin extends Blok {
             self.rect[1]=0;
             self.rect[2]=-self.rect[5]/2;
            
+
+            this.boxColizi.rectCollisMeshdy.depth=this._depth
+
 
             let xx=this.boxColizi.rectCollisMeshdy.x+this.boxColizi.width/2
             let t=self.rect[3]
@@ -292,6 +285,16 @@ export class BTBoxDin extends Blok {
             this.mO.dragPriceScane();
             this.fun("visi3d");
         }
+
+
+        this.activBTBDV=function(b){
+            if(this._static==false){
+                for (var i = 0; i < this.arrayMat.length; i++) {
+                    if(b)this.arrayMat[i].material=this.mO.matBTBDV;
+                    else this.arrayMat[i].material=this._material;
+                }
+            }
+        }
         
 
    
@@ -338,7 +341,7 @@ export class BTBoxDin extends Blok {
         this.minObjWH={x:0, xL:0, xR:0, w:0 }
         this.isWA = function(arrRect,_xx, _ww, _not, _wBig){
             if(_xx<_ww/2)_xx=_ww/2
-            if(_xx>_wBig-_ww/2)_xx=_wBig-_ww/2 
+            if(_xx>_wBig-_ww/2)_xx=_wBig-_ww/2
               
             
 
@@ -351,6 +354,14 @@ export class BTBoxDin extends Blok {
                 }                        
                 a.push(arrRect[i].rectCollisMeshdy.x,arrRect[i].rectCollisMeshdy.x+arrRect[i].rectCollisMeshdy.width);
             }
+
+
+
+
+            ///////////////////////
+            ////////////////////
+
+
             let rb=true
             for (var i = 0; i < a.length; i+=2) {                
                 if(calc.test2d(a[i],a[i+1],_xx-_ww/2,_xx+_ww/2)==true){                    
@@ -418,40 +429,10 @@ export class BTBoxDin extends Blok {
             } 
 
 
-            //берем новый список ищем крайнии границы для точки
-            
-          /*  for (i = 0; i < aaa.length; i++) {
-                aaa1.push(aaa[i]);
-            }*/
-            
-            /*let ml=-99999;
-            let mR=99999;
-            for (var i = 0; i < aaa1.length; i++) {
-                if(aaa1[i]<_xx){
-                    if(ml<aaa1[i]){
-                        this.minObjWH.xL=aaa1[i];
-                        ml=aaa1[i]
-                    }                    
-                }
-                if(aaa1[i]>_xx){
-                    if(mR>aaa1[i]){
-                        this.minObjWH.xR=aaa1[i];
-                        mR=aaa1[i]
-                    }
-                }
-            }
-            this.minObjWH.w=this.minObjWH.xR-this.minObjWH.xL;
-            this.minObjWH.x=this.minObjWH.xL+this.minObjWH.w/2;
-
-            trace(_xx+"  ",this.minObjWH,aaa1)*/
-
 
 
             if(rb==true)return _xx*1;
-
-
-            if(aaa.length==0)return false
-                     
+            if(aaa.length==0)return false                     
             return aaa[ind];
         }
 

@@ -261,13 +261,25 @@ export class Povedeni1  {
                 y= h/2
             }
 
+            if(this.par.object.type=="BTBoxVstavka"||this.par.object.type=="BTBoxDV"){                
+               /* x=this.par.object.rect[0]
+                y=-this.par.object.rect[2]
+                h-= 2.7 */
+
+                //y=-this.par.object.rect[2]
+                //h-= 2.7 
+                this.aL[0].active=false;
+                this.aL[1].active=false;            
+            }
+
+
             if(this.par.object.type=="BPieceTop"){                
                 x=this.par.object.rect[0]
                 y=-this.par.object.rect[2]
                 h-= 2.7              
             }
 
-            if(this.par.object.type=="BTVstavka"||this.par.object.type=="BTBoxVstavka"||this.par.object.type=="BTBoxDV"){  
+            if(this.par.object.type=="BTVstavka"){  
                 this.aL[0].active=false;
                 this.aL[1].active=false;
                 this.aL[2].active=false;
@@ -287,7 +299,10 @@ export class Povedeni1  {
             if(this.par.object.type=="BTBoxVstavka"){  
                 y=-this.par.object.rect[2]
             }
-            trace(this.par.object.type+"  zzzzzzzzz:  "+y)
+            if(this.par.object.type=="BTBoxDV"){ 
+                z=this.par.object.rect[1]
+            }
+            
 
             this.par.vaBox.setWHD(w,h,d,n)
             this.par.vaBox.setXYZ(x,y,z)
@@ -303,9 +318,10 @@ export class Povedeni1  {
         var dy,dd;
         var dy2;
         var py2;
-        var rr,rrrr   
+        var rr,rrrr  
+        var zdvigZ=0 
         this.testParent=function(){
-
+            zdvigZ=0 
             if(this.par.object._parent==undefined){                
                 if(this.par.content3d.parent!=undefined){
                     this.par.content3d.parent.remove(this.par.content3d);
@@ -349,6 +365,10 @@ export class Povedeni1  {
                 }
             }
 
+         
+
+
+
             if(this.aL[0].active==true){
                 var xxx=this.par.object.x-this.par.object.rect[3]/2               
                 rr=this.par.par.menedsher.mUtilit.getGorizRay(
@@ -360,6 +380,7 @@ export class Povedeni1  {
 
                 this.aL[0].content3d.position.x=rr
                 this.aL[0].content3d.position.y=this.par.object.y-z
+                this.aL[0].content3d.position.z=zdvigZ
                 this.setDist(d-rr,this.aL[0])
             }    
                
@@ -372,6 +393,7 @@ export class Povedeni1  {
                 ) 
                 this.aL[1].content3d.position.y=this.par.object.y-z
                 this.aL[1].content3d.position.x=x1;
+                this.aL[1].content3d.position.z=zdvigZ
                 this.setDist(rr-x1,this.aL[1])
             }
 
@@ -380,6 +402,14 @@ export class Povedeni1  {
             dy2=this._height-y1;
             py2=0;
             this.b4=false;
+
+            
+
+
+
+            
+
+
             if(this.par.object.parent!=undefined && this.par.object.parent.parent!=undefined)   
             if(this.par.object.type=="BPieceObject"){ 
                 this.b4=true;
@@ -431,6 +461,9 @@ export class Povedeni1  {
                 dd=dy2-rrrr;
             }
 
+            
+
+
 
             if(this.b4==false){
                 rrrr=0;
@@ -441,17 +474,40 @@ export class Povedeni1  {
                 }
             }
 
+
+            if(this.par.object.parent!=undefined)
+            if(this.par.object.type=="BTBoxVstavka"||this.par.object.type=="BTBoxDV"){
+                let oo=this.par.object.getKrai()
+              
+
+
+                y=this._height-oo.y;
+                zdvigZ=25
+                dy=oo.h;
+
+                rrrr=oo._y
+                dd=oo._h
+
+                
+            }
+
+
             if(this.aL[2].active==true){              
                 this.aL[2].content3d.position.x=x+(x1-x)/2
-                this.aL[2].content3d.position.y=this._height-y;               
+                this.aL[2].content3d.position.y=this._height-y; 
+                this.aL[2].content3d.position.z=zdvigZ   
+                
                 this.setDist(dy,this.aL[2])
             }             
 
             if(this.aL[3].active==true){                   
                 this.aL[3].content3d.position.x=x+(x1-x)/2;
                 this.aL[3].content3d.position.y=rrrr;
+                this.aL[3].content3d.position.z=zdvigZ
+               
                 this.setDist(dd,this.aL[3]); 
             }
+           
             return true
         }
 

@@ -154,14 +154,13 @@ export function CollisionRect(id) {
     this.testRect=function(r){  
           
 
-
+        trace(this.apc, r)
         for (var i = 0; i < this.apc.length; i++) {
+            trace(i+"++",this.apc[i])
             this.apc[i].redactBox(r);
         }
 
-
-        rr=this.colozi.redactBox(r.rectCollisMeshdy);
-        
+        rr=this.colozi.redactBox(r.rectCollisMeshdy); 
 
         drawDegug()
         return rr;

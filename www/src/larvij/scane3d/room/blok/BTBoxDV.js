@@ -72,12 +72,20 @@ export class BTBoxDV extends Blok {
 
 
         this.dragWHD=function(){
-            this.doska3D.width=this._width-this._thickness*2;
-            this.doska3D.height=this._depth;
-            this.doska3D.sahWidth=this._depth;
+
+
+
+            if(this.doska3D!=undefined){
+                this.doska3D.width=this._width-this._thickness*2;
+                this.doska3D.height=this._depth;
+                this.doska3D.sahWidth=this._depth;
+            }else{
+                let xx=this._width-this._thickness*2
+                this.cont3dLoad.scale.x=xx/this.object.mod.r[3]
+            }
             this.cont3dLoad.position.z=this._depth/2;
 
-            visi3D.objShadow(this.doska3D.c3d, true)
+
             self.rect[3]=this._width;
             self.rect[4]=this._depth;
             self.rect[5]=this._height;
@@ -85,6 +93,13 @@ export class BTBoxDV extends Blok {
             self.rect[0]=-self.rect[3]/2;
             self.rect[1]=0;
             self.rect[2]=-self.rect[5]/2;
+
+            if(this.doska3D==undefined){
+
+                self.rect[4]=this._height;
+                self.rect[1]=this._depth/2;
+            }
+
 
             this.boxColizi.width=this._width;
             this.boxColizi.rectCollisMeshdy.width=this._width;
@@ -95,6 +110,9 @@ export class BTBoxDV extends Blok {
             this.boxColizi.rectCollisMeshdy.height=this._height;
             this.boxColizi.sy=-this._height/2;
             this.boxColizi.y=-this._height/2;
+
+            this.bvPlus.width=this._width;
+            this.bvPlus.depth=this._depth;
             
             if(this.activTime==true)this.mO.par.par.visiActiv.setObject(this)
             self.dragObjNWD();
@@ -104,39 +122,75 @@ export class BTBoxDV extends Blok {
 
 
 
-        this.init=function(_obj){            
+        this.init=function(_obj){           
             this.creatBC()
-            this.testMaterial();
             this.modelObj=_obj;
-            this.cont3dLoad= new THREE.Object3D();
-            self.c3dNa.add(self.cont3dLoad);
-
-            this.doska3D=new Doska3D(this.material);
-            this.cont3dLoad.add(this.doska3D.c3d);
-            this.arrayMat.push(this.doska3D.c3d);
-            this.doska3D.depth=this._height;
-           
-
+            if(self.funInit!=undefined)self.funInit();
             this.boxHelper.visible=false
-            let aa=new THREE.AxesHelper(100); 
-            aa.position.z=56;
-            aa.position.x=-50/2+1.8;          
-            this.content3d.add(aa);
-            this.dragWHD();              
+            this.cont3dLoad= new THREE.Object3D();
+            self.c3dNa.add(self.cont3dLoad);           
+
+            if(this.object.mod.name=="n"){//динамическая полка
+                //this.creatBC()
+                this.testMaterial();
+                this.modelObj=_obj;
+
+
+                this.doska3D=new Doska3D(this.material);
+                this.cont3dLoad.add(this.doska3D.c3d);
+                this.arrayMat.push(this.doska3D.c3d);
+                this.doska3D.depth=this._height;
+                
+                visi3D.objShadow(this.doska3D.c3d, true)
+                
+                let aa=new THREE.AxesHelper(100); 
+                aa.position.z=56;
+                aa.position.x=-50/2+1.8;          
+                this.content3d.add(aa);
+                this.dragWHD(); 
+            }else{
+
+                mO.getModel(this.linkMod, this.object.mod.key, function(o){
+                    self.cont3dLoad.add(o)
+                    self.testMaterial();                    
+                    self.markers.setO3D(self.cont3dLoad) 
+                    self.c3dNa.add(self.cont3dLoad);
+                    self.recurcChild(self.cont3dLoad);                              
+                    self.mO.visi3D.objShadow(self.content3d, true);
+                    self.boxHelper.visible=false;
+                    var v=self._activTime;
+                    self._activTime=null;
+                    self.activTime=v;
+                    self.init2();                
+                    self.okPrice=true;
+                    self.mO.dragPriceScane();
+                    self.testDver(o,true)
+                           
+                });
+            }
+
+
+
+
+            
+
+        }
+
+/*
+        this.stopDrag=function(){  
+            self.mO.activBTBDV(true)
         }
 
 
-
-
-
+        this.dragStart=function(){ 
+            self.mO.activBTBDV(false)
+        }*/
 
 
 
         this.boolLoad = false 
         this.funInitMod = function(){
-            this.creadDebag(self.cont3dLoad.children[0]);
-
-            //self.cont3dLoad.children[0].position.z=self.object.mod.r[1]
+            this.creadDebag(self.cont3dLoad.children[0]);            
             self.boolLoad=true;
             this.dragIndex();
         }
@@ -171,7 +225,6 @@ export class BTBoxDV extends Blok {
             if(self.activTime==true){
                 this.mO.par.par.visiActiv.setObject(this)  
             }
-
             self.fun("visi3d");
         }
 
@@ -261,12 +314,8 @@ export class BTBoxDV extends Blok {
         this.testTumb1 = function(_x,_y, _rect){            
             blok=_rect.parent;
             
-            py = _y-(rcm.y+rcm.height/2)
-
-
-            ppy=this.testBlokSvobod(py, blok)
-
-            
+            py = _y-(rcm.y+rcm.height/2);
+            ppy=this.testBlokSvobod(py, blok);
 
             if(ppy==null){
                 return false;
@@ -468,9 +517,46 @@ export class BTBoxDV extends Blok {
 
                     this.mO.dragPriceScane() 
                 }
-
             }
         }
+
+ 
+        var oKrai={y:0,h:0,z:0,_y:0,_h:0};
+        var hee=0
+        var heZ=0
+        var niz, yyyy,yyyy1
+        this.getKrai= function (b) {
+            oKrai.y=this.boxColizi.rectCollisMeshdy.y-this.rect[2];            
+            if(this._parent){
+                oKrai.h=(this._parent.height/2-this._parent._thickness)-oKrai.y;
+                niz=this._parent._niz+this._parent._thickness
+                oKrai._y=-this._parent.height/2;
+                yyyy =this.boxColizi.rectCollisMeshdy.y-this.rect[5]+this.rect[2];           
+                oKrai._h =this._parent.height/2+this.boxColizi.rectCollisMeshdy.y-this.rect[5]-this.rect[2];
+                oKrai._y+=niz;
+                oKrai._h-=niz;
+                if(this._parent.children.length!=0) {
+                    for (var i = 0; i < this._parent.children.length; i++) {
+                        if(this._parent.children[i].idArr==this.idArr)continue
+                        let hhh=this._parent.children[i].boxColizi.rectCollisMeshdy.y-oKrai.y-this._parent.children[i].rect[5]-this._parent.children[i].rect[2];                        
+                        if(hhh>1&&hhh<oKrai.h){                            
+                            oKrai.h=hhh;
+                        }
+                        if(this._parent.children[i].boxColizi.rectCollisMeshdy.y<this.boxColizi.rectCollisMeshdy.y){
+                            
+                            yyyy1=this._parent.children[i].boxColizi.rectCollisMeshdy.y-this._parent.children[i].rect[2]; 
+                            let hh=yyyy-yyyy1                            
+                            if(oKrai._h>hh){                                
+                                oKrai._h=hh
+                                oKrai._y=yyyy1
+                            }
+                        }
+                    }
+                }
+            }
+            return oKrai;
+        }
+
 
         
         this.dragObjNWD()
@@ -561,7 +647,7 @@ export class BTBoxDV extends Blok {
                 this.collision=this._parent.collision;                
                 this.mO.visi3D.event3DArr.addChild(this.c3dNa);
                 if(this._parent.content)this._parent.content.addChild(this.content)
-                trace("::"+this._parent.type+"::::::"+this._parent.avAct,this._parent)    
+                   
                 this.avAct=this._parent.avAct 
 
                 if(this._parent.width!=undefined){                    
@@ -638,60 +724,34 @@ export class BVPlus {
         this.activeId=-1;
         this.boolLad=false;
 
-        this._indexW = par._indexW;
-        this._indexH = par._indexH;
 
 
 
+        this._width=-1;
+        this._depth=-1;
         this.array=[]
         var mesh
 
-        if(this.par.object.str[2]=="187"){
-            this.activeId=187
+        if(this.par.object.str[2]=="212"){
+            this.activeId=212
         }
 
         var z0=32
         var ooo
         this.drag=function(){ 
-            if(this.boolLad==false)return;            
-            if(this.par.arrObj==undefined)return;
-            if(!this.par.arrObj[this._indexW])return;
-            if(!this.par.arrObj[this._indexW][this._indexH])return;
-            ooo=this.par.arrObj[this._indexW][this._indexH];
+            if(this.boolLad==false)return;   
 
-            if(this.activeId==187){
+            if(this.activeId==212){
                 self.array[0].rotation.y=Math.PI/2
-                self.array[0].position.z=ooo.d-3.1;
-                self.array[0].position.x=-ooo.w/2+this.par.otstup;
+                self.array[0].position.x=-this._width/2+1;
+                self.array[0].position.z=this._depth/2;
 
-                self.array[1].rotation.y=Math.PI/2
-                self.array[1].position.z=3.7;
-                self.array[1].position.x=-ooo.w/2+this.par.otstup;
 
-                if(ooo.d>36){
-                    self.array[2].rotation.y=Math.PI/2
-                    self.array[2].position.z=3.7+(ooo.d-3.1-3.7)/2;
-                    self.array[2].position.x=-ooo.w/2+this.par.otstup;
-                    self.array[2].visible=true;
-                }else{
-                    self.array[2].visible=false;
-                }
-                self.array[3].rotation.y=-Math.PI/2
-                self.array[3].position.z=ooo.d-3.1;
-                self.array[3].position.x=ooo.w/2-this.par.otstup;
+                self.array[1].rotation.y=-Math.PI/2
+                self.array[1].position.x=this._width/2-1;
+                self.array[1].position.z=this._depth/2;
 
-                self.array[4].rotation.y=-Math.PI/2
-                self.array[4].position.z=3.7;
-                self.array[4].position.x=ooo.w/2-this.par.otstup;
-
-                if(ooo.d>36){
-                    self.array[5].rotation.y=-Math.PI/2
-                    self.array[5].position.z=3.7+(ooo.d-3.1-3.7)/2;
-                    self.array[5].position.x=ooo.w/2-this.par.otstup;
-                    self.array[5].visible=true;
-                }else{
-                    self.array[5].visible=false;
-                }
+                             
             }
         }
 
@@ -708,14 +768,12 @@ export class BVPlus {
             
             self.boolLad = true;
 
-            if(self.activeId==187){
-                for (var i = 0; i < 6; i++) {
+            if(self.activeId==212){
+                for (var i = 0; i < 2; i++) {
                     self.array[i]=self.hron.get();
                     self.array[i].position.y=self.hron.object.obj.mod.r[2]
-                    let aa=new THREE.AxesHelper(20);
+                    let aa=new THREE.AxesHelper(30);
                     self.array[i].add(aa);
-
-
                 }
             }
 
@@ -724,33 +782,27 @@ export class BVPlus {
         this.hron.init();
 
 
-       /* let dCont=new DCont(main.contentHTML)
-        dCont.x=400;
-        dCont.y=200;
-        this.slid=new DSliderBig(dCont, 2,2, function(s){ 
-            self.array[0].position.y=this.value;
-
-            self.par.fun("visi3d");  
-        }, "z0", 0, 58);
-        this.slid.value=z0
-        this.slid.width=200*/
+ 
     }
 
-    set indexW(v) {
-        if(this._indexW!=v){
-            this._indexW = v;  
-            this.drag();                
-        }           
-    }   
-    get indexW() { return  this._indexW;} 
-
-    set indexH(v) {
-        if(this._indexH!=v){
-            this._indexH = v;  
+    set width(v) {
+        if(this._width!=v){            
+            this._width = v;  
             this.drag();            
         }           
     }   
-    get indexH() { return  this._indexH;} 
+    get width() { return  this._width;}
+
+    set depth(v) {
+        if(this._depth!=v){            
+            this._depth = v;  
+            this.drag();            
+        }           
+    }   
+    get depth() { return  this._depth;}
+
+
+
 }
 
 

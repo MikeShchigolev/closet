@@ -192,7 +192,7 @@ export class Blok{
         this.byZdvig=true
         this.prosZ=1    
         this.dragObjNWD=function(){  
-            console.warn(this.type+"  "+this.byZdvig+": "+this.idArr+":"+this.prosZ+"   ",this.rect)
+       
             this.dragObjHA(self.boxHelper, this.rect);
 
             this.box.scale.set(this.rect[3],this.rect[5],this.rect[4]/this.prosZ);
@@ -520,7 +520,7 @@ export class Blok{
         if(this._avAct!=v){
             this._avAct = v;
             this.c3dNa.visible=v; 
-            console.warn(this.type+":::====="+v)           
+                  
             if(this._activTime==false)this.boxHelper.visible=!v;            
             for (var i = 0; i < this.children.length; i++) {
                 this.children[i].avAct=this._avAct
