@@ -10,7 +10,7 @@
 
 import { Blok } from './Blok.js';
 import { Doska3D } from './doska/Doska3D.js';
-
+import { XZImage } from './XZImage.js';
 import { BoxTumba3D } from './doska/BoxTumba3D.js';
 
 export class BTBoxDin extends Blok {
@@ -109,6 +109,8 @@ export class BTBoxDin extends Blok {
         }
 
 
+
+        ////////////////////////////////////////////////////////////////
         this.drahShadow=function(_x,_y){ 
             if(this.parent!=undefined){
                 if(_x==undefined){
@@ -122,10 +124,86 @@ export class BTBoxDin extends Blok {
                     this.content.funRender();
                 }
             }
-            trace("#########")
+            trace("#########");
         }
 
-        this.dragImeag = function(){self.drahShadow()}
+        this.dragImeag = function(){
+            self.drahShadow();
+        }
+
+
+        this.image
+        this.canvas
+        this.ctx
+        var wSS=-1;
+        var hSS=-1;
+        var ww,hh
+
+        this._glowSah=4
+
+        this.dragIWH = function(){
+            if(wSS!=this._width||hSS!=this._height){
+
+            }else {
+                return
+            }
+
+            if(this.image==undefined){
+                var l="resources/image/boxw_100.png"; 
+                this.image=new XZImage(this.content,0,0,null,function(){                    
+                    
+                });
+                this.canvas = document.createElement('canvas');
+                this.ctx = this.canvas.getContext('2d');
+            }
+            this.image.width=this._width+this._glowSah*4;
+            this.image.height=this._height+this._glowSah*4;
+
+            this.image.x=-this._width/2-this._glowSah*2;
+            this.image.y=-this._height/2-this._glowSah*2;
+
+            ww=this.image.width;
+            hh=this.image.height;
+
+
+
+            wSS=this._width;
+            hSS=this._height;
+            
+
+            this.canvas.width = ww;
+            this.canvas.height = hh;   
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.filter = 'blur('+Math.round(this._glowSah/2)+'px)';
+            this.ctx.fillStyle ="#000000"; 
+
+            let rr=0
+            roundRect(this.ctx, this._glowSah*2, this._glowSah*2, this._width, this._height,rr);
+            this.ctx.fillStyle = "#000000"; 
+            this.ctx.fill();
+            this.image.link=this.canvas.toDataURL("image/png");
+
+            this.drahShadow();
+        }
+
+        function roundRect(_ctx,x, y, width, height, radius) {              
+            if (width < 2 * radius) radius = width / 2;
+            if (height < 2 * radius) radius = height / 2;
+            _ctx.beginPath();
+            _ctx.moveTo(x + radius, y);
+            _ctx.arcTo(x + width, y, x + width, y + height, radius);
+            _ctx.arcTo(x + width, y + height, x, y + height, radius);
+            _ctx.arcTo(x, y + height, x, y, radius);
+            _ctx.arcTo(x, y, x + width, y, radius);
+            _ctx.closePath();
+        }
+
+
+        /////////////////////////////////////////////////
+
+        
+
+
 
         this.dddddd=function(a,_x){
             var r= false;
@@ -193,7 +271,7 @@ export class BTBoxDin extends Blok {
             
             if(this.dragBool==false)this.setXY(this.content.position.x, 0)
 
-
+            this.dragIWH()
             //self.mO.par.par.visiActiv.setObject(self) 
             this.redregMarker()
 
@@ -257,7 +335,7 @@ export class BTBoxDin extends Blok {
             let sah=0;
             for (var i = 0; i < 200; i++) {                
                 let hh=this._height/2-i*this._ot-this._ot1;
-                //if(i==0)trace(this._height+" ::0 "+i+"  "+hh+"  "+this._ot1)
+             
                 if(hh>-this._height/2+this._thickness+this._niz){
                    /* let aa=new THREE.AxesHelper(1)
                     this.content3d.add(aa)
@@ -347,7 +425,7 @@ export class BTBoxDin extends Blok {
             
 
             let a =[];
-            trace(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",collision) 
+       
             if(collision){
                 arrRR=collision.getKriu(0,this.boxColizi.rectCollisMeshdy.height,this._depth);
                 
@@ -370,7 +448,7 @@ export class BTBoxDin extends Blok {
                 );
             }
 
-            trace(a)
+        
 
 
 
@@ -436,7 +514,7 @@ export class BTBoxDin extends Blok {
             let max = 9999999999999;
             let ind = -1;
             let dd;
-            trace(aaa)
+       
             for (i = 0; i < aaa.length; i++) {
                 dd=aaa[i]-_xx;
                 if(Math.abs(dd)<max){
@@ -750,9 +828,9 @@ export class BTBoxDin extends Blok {
 
             var ad=[]
             var aa=null
-            //trace(">>>>>>>>>>>>>>>>>>>>>",this.parent) 
+    
             if(this.parent==undefined)return []
-            //if(this.parent.parent==undefined)return []    
+       
            
             
             return [];
@@ -1006,8 +1084,7 @@ export class BTBoxDin extends Blok {
                 this.drahShadow() 
 
                 this.avAct=this._parent.avAct;
-                trace("::::>>>>>>>>>",this._parent.avAct);
-                //this.avAct=true
+             
             }                
         }       
     }   

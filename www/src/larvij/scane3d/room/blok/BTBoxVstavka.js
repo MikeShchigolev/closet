@@ -272,8 +272,7 @@ export class BTBoxVstavka extends Blok {
 
         //проверяем с остольными полками
         var rcm1,r1
-        this.testBlok2=function(_py,_py1, _blok){
-            
+        this.testBlok2=function(_py,_py1, _blok){            
             for (var i = 0; i < _blok.children.length; i++) {
                 if(_blok.children[i].idArr!=this.idArr){
                     rcm1=_blok.children[i].boxColizi.rectCollisMeshdy;                    
@@ -383,9 +382,8 @@ export class BTBoxVstavka extends Blok {
             }
         }
 
-        this.tsSet=function(){
-            
-            self.mO.activBTBDV(true)
+        this.tsSet=function(){            
+            self.mO.activBTBDV(true);
         }
         this.stopSet=function(){
       
