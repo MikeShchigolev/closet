@@ -74,7 +74,7 @@ export class BTBoxDin extends Blok {
         this.setXY=function(_x,_y){           
 
             if(this.parent!=undefined){   
-               /* let b=true;   
+                let b=true;   
                 if(!this._static && this.dragBool==true) {
                     this.isMOWH(_x);// 
                     if(this.minObjWH.w != -1){
@@ -93,11 +93,11 @@ export class BTBoxDin extends Blok {
                 }     
                   
                 if(b==true){                    
-                    let xx=this.isWA(this.parent.collision.arrRect,_x,this.boxColizi.width,this.boxColizi,this.parent.collision.colozi.bigBox.width)
+                    let xx=this.isWA(this.parent.collision.arrRect,_x,this.boxColizi.width,this.boxColizi,this.parent.collision.colozi.bigBox.width,this.parent.collision)
                     if(xx!=false){
                         _x=xx;
                     }
-                }*/
+                }
 
                 this.boxColizi.position._x = _x;
                 this.boxColizi.position.y = _y;
@@ -122,6 +122,7 @@ export class BTBoxDin extends Blok {
                     this.content.funRender();
                 }
             }
+            trace("#########")
         }
 
         this.dragImeag = function(){self.drahShadow()}
@@ -178,6 +179,8 @@ export class BTBoxDin extends Blok {
             this.boxColizi.rectCollisMeshdy.width=t;
             this.boxColizi.sx=-t/2;
             this.boxColizi.x=-t/2;
+
+            
 
             this.boxColizi.height=this._height;
             this.boxColizi.rectCollisMeshdy.height=this._height;
@@ -329,31 +332,45 @@ export class BTBoxDin extends Blok {
         
 
         this.isOver=function(sten,_xx,_yy){
-
-            if(this.isWA(sten.collision.arrRect,_xx,this.boxColizi.width,this.boxColizi,sten.collision.colozi.bigBox.width)!=false){
+            if(this.isWA(sten.collision.arrRect,_xx,this.boxColizi.width,this.boxColizi,sten.collision.colozi.bigBox.width,sten.collision)!=false){
                 return true
             }
-
             return false
         }
 
 
         this.minObjWH={x:0, xL:0, xR:0, w:0 }
-        this.isWA = function(arrRect,_xx, _ww, _not, _wBig){
+        this.isWA = function(arrRect,_xx, _ww, _not, _wBig, collision){
             if(_xx<_ww/2)_xx=_ww/2
             if(_xx>_wBig-_ww/2)_xx=_wBig-_ww/2
               
             
 
             let a =[];
+            trace(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",collision) 
+            if(collision){
+                arrRR=collision.getKriu(0,this.boxColizi.rectCollisMeshdy.height,this._depth);
+                
+                for (var i = 0; i < arrRR.length; i++) {
+                    a.push(arrRR[i]);
+                }
+            }
+            
+
+
             for (var i = 0; i < arrRect.length; i++) {
                 if(_not){
                     if(_not.idRandom==arrRect[i].idRandom)continue;                    
                     let yy=arrRect[i].rectCollisMeshdy._y-arrRect[i].rectCollisMeshdy.height                    
                     if(arrRect[i].rectCollisMeshdy._y>_not.rectCollisMeshdy.height)continue; 
                 }                        
-                a.push(arrRect[i].rectCollisMeshdy.x,arrRect[i].rectCollisMeshdy.x+arrRect[i].rectCollisMeshdy.width);
+                a.push(
+                    arrRect[i].rectCollisMeshdy.x, 
+                    arrRect[i].rectCollisMeshdy.x+arrRect[i].rectCollisMeshdy.width
+                );
             }
+
+            trace(a)
 
 
 
@@ -419,7 +436,7 @@ export class BTBoxDin extends Blok {
             let max = 9999999999999;
             let ind = -1;
             let dd;
-            
+            trace(aaa)
             for (i = 0; i < aaa.length; i++) {
                 dd=aaa[i]-_xx;
                 if(Math.abs(dd)<max){
@@ -438,7 +455,7 @@ export class BTBoxDin extends Blok {
 
 
         this.minObjWH={x:0, xL:0, xR:0, w:0 }
-        var aRect,wB
+        var aRect,wB,arrRR
         this.isMOWH = function(_x, _p){
 
            // 
@@ -449,14 +466,21 @@ export class BTBoxDin extends Blok {
             aRect = _p.collision.arrRect;
             wB = _p.collision.colozi.bigBox.width;
 
+
+
+
             //МИНИМАЛЬНЫЕ ГРАНИЦЫ    
             this.minObjWH.w=-1;//доступная ширина  если -1 хрен поставиш
             this.minObjWH.xL=0;//ближайшая с лева
             this.minObjWH.xR=wB;//ближайшая с права
             this.minObjWH.x=wB/2;
 
-
+            arrRR=_p.collision.getKriu(0,this.boxColizi.rectCollisMeshdy.height,this._depth);            
             let a =[];
+            for (var i = 0; i < arrRR.length; i++) {
+                a.push(arrRR[i]);
+            }
+
             for (var i = 0; i < aRect.length; i++) {                
                 if(this.boxColizi.idRandom==aRect[i].idRandom)continue; 
                 let yy=aRect[i].rectCollisMeshdy._y-aRect[i].rectCollisMeshdy.height                    
@@ -839,7 +863,8 @@ export class BTBoxDin extends Blok {
                             xxxx,
                             self.wN[p],
                             this.boxColizi,
-                            this.parent.collision.colozi.bigBox.width
+                            this.parent.collision.colozi.bigBox.width,
+                            this.parent.collision
                         )
                         
                         if(xx==false){
@@ -942,8 +967,10 @@ export class BTBoxDin extends Blok {
             this.setXYPosit(obj.x,obj.y); 
             
             this.width=obj.width;
+            this.boxColizi.rectCollisMeshdy.x=obj.x-this.width/2
             this.indexH=obj.indexH;
             if(this._static==true)if(obj.indexW)this.indexW=obj.indexW;
+            this.dragWHD()
 
 
             if(obj.children)          

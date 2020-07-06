@@ -89,6 +89,8 @@ export class BTBoxVstavka extends Blok {
             }      
         }
 
+
+
       
         this.boolLoad = false 
         this.funInitMod = function(){
@@ -381,8 +383,18 @@ export class BTBoxVstavka extends Blok {
             }
         }
 
-        this.dragStart=function(){ 
+        this.tsSet=function(){
+            
             self.mO.activBTBDV(true)
+        }
+        this.stopSet=function(){
+      
+            
+        }
+
+
+        this.dragStart=function(){ 
+            
         }
 
         this.stopDrag=function(){   

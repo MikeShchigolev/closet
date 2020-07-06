@@ -137,15 +137,18 @@ export class Menedsher  {
         }
 
 
-        this.start=function(obj){            
+        this.start=function(obj){  
+                    
             this.stop();
+            trace("start")  
             this.visi3D.position3d.pause=true;
             this.par.name3d='xzPoisk';            
             this.object=obj;
             this.objectOld=obj;
             this.object.activObject=true;            
             this.menedsherObject.activIndex=this.object.idArr
-            if(this.object.tsSet)this.object.tsSet()                
+            if(this.object.tsSet)this.object.tsSet();           
+            trace(this.object)     
             this.visi3D.addEvent("move", this.move);
             if (dcmParam.mobile==false)document.addEventListener("mouseup", self.mouseup);
             else document.addEventListener("touchend", self.mouseup);
@@ -153,7 +156,8 @@ export class Menedsher  {
         }
 
         
-        this.stop=function(){             
+        this.stop=function(){  
+            trace("stop")            
             this.par.pozZdvigAll(0)
             this.pointZdvig.set(0,0,0)
             if(self.mPanel.parent!=undefined) self.mPanel.parent.remove(self.mPanel) 
@@ -879,6 +883,7 @@ export class MenedsherObject  {
             }
         }
 
+
         this.matBTBDV= new THREE.MeshPhongMaterial({
             /*color:0xf28044,
             transparent:true,
@@ -888,13 +893,24 @@ export class MenedsherObject  {
             transparent:true,
             opacity:0.3
         });
-        this.activBTBDV=function(b){
-            trace(" this.activBTBDV  ",b)
+        this.activBTBDV=function(b){            
             for (var i = 0; i < this.array.length; i++) {
                 if(this.array[i].activBTBDV)this.array[i].activBTBDV(b)
             }
+        }
+
+        if(tStyle.glaf.debug==true){
+            var ccc=new DCont(document.body)
+            new DColor(ccc,350,120,"#ff0000",function(){
+                self.matBTBDV.color=new THREE.Color(this.value)
+            })
+            new DSliderBig(ccc,350,150,function(){
+                self.matBTBDV.opacity=this.value
+            },"opacity",0,1).value=this.matBTBDV.opacity;
+
 
         }
+
 
 
 

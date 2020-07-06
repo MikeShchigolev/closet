@@ -22,10 +22,10 @@ export function ColiPlus(par, collision, storona, storona1) {
 
 
 	this.testR=function(r,r1){			
-		trace("----",r,r1)
+		
 
 		if(this.testLine(r.x, r.x+r.width, r1.x, r1.x+r1.width)){
-			//trace("--")
+			
 			if(this.testLine(r.y, r.y+r.height, r1.y, r1.y+r1.height)){
 				return true;					
 			}				
@@ -46,7 +46,35 @@ export function ColiPlus(par, collision, storona, storona1) {
 
 
 
+	this.getKriu=function(y,y1,d,a){ 
+		
+		for (var i = 0; i < this.collision.colozi.arrBox.length; i++) {
+			box=this.collision.colozi.arrBox[i];
+			
+			if(box.boolZ==true){
+			
+				if(this.storona==0){
+                    zzz=this.collision.colozi.bigBox.width -( box.x+box.width);                        
+                    this.rect.x=0;  
+                    this.rect.width=box.depth; 
+                }                              
+                if(this.storona==1){
+                    zzz=box.x;
 
+                    this.rect.x=this.par.colozi.bigBox.width-(box.depth);  
+                    this.rect.width=box.depth;  
+                }
+
+                
+                if(d>zzz){
+                	a.push(this.rect.x,this.rect.x+this.rect.width)
+                }
+
+
+            }
+        }
+
+	}
 
 
 
@@ -63,7 +91,7 @@ export function ColiPlus(par, collision, storona, storona1) {
 			for (var i = 0; i < this.collision.colozi.arrBox.length; i++) {
 				box=this.collision.colozi.arrBox[i];
 				if(box.boolZ==true){
-					trace(i+"::::::::::"+rectCM.rectCollisMeshdy.depth+ " "+zzz)
+				
 					if(this.storona==0){
                         zzz=this.collision.colozi.bigBox.width -( box.x+box.width);                        
                         this.rect.x=0;  
@@ -95,7 +123,7 @@ export function ColiPlus(par, collision, storona, storona1) {
 
 
                     	if(this.testR(this.rectG, this.rect)==true){
-							//trace(i+"  box   ",this.storona," ",zzz,"  ",this.rect)
+						
 							if(this.storona==1){
 								rectCM.rectCollisMeshdy.x=this.rect.x-rectCM.rectCollisMeshdy.width
 							}

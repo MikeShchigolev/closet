@@ -84,10 +84,7 @@ export class BTBoxDV extends Blok {
                 this.cont3dLoad.scale.x=xx/this.object.mod.r[3]
             }
             this.cont3dLoad.position.z=this._depth/2;
-            trace("::::::::::",this.cont3dLoad.position)
-            for (var i = 0; i < this.cont3dLoad.children.length; i++) {
-                trace(i+"::",this.cont3dLoad.children[i].position)
-            }
+            
 
 
 
@@ -100,7 +97,6 @@ export class BTBoxDV extends Blok {
             self.rect[2]=-self.rect[5]/2;
 
             if(this.doska3D==undefined){
-
                 self.rect[4]=this._height;
                 self.rect[1]=this._depth/2;
             }

@@ -47,22 +47,7 @@ export function CollisionRect(id) {
     var arrRect=[];
     this.arrRect = arrRect
 
-   /* this.isRect=function(r){
-        
-        this.colozi.activBox= r.rectCollisMeshdy;
-        let b = this.colozi.correct();
-        
-        trace("bbb====",b)
 
-        if (!b) {
-            return false
-        }  
-        //let a=this.colozi.getCollisionBox(r.rectCollisMeshdy)  
-
-        return true
-
-        
-    }*/
 
     var p;
     this.addRect=function(r, isNotRemove){
@@ -154,9 +139,9 @@ export function CollisionRect(id) {
     this.testRect=function(r){  
           
 
-        trace(this.apc, r)
+        
         for (var i = 0; i < this.apc.length; i++) {
-            trace(i+"++",this.apc[i])
+            
             this.apc[i].redactBox(r);
         }
 
@@ -165,6 +150,18 @@ export function CollisionRect(id) {
         drawDegug()
         return rr;
     }
+
+    var aR=[]
+    this.getKriu=function(y,y1,d){  
+        aR.length=0;
+        for (var i = 0; i < this.apc.length; i++) {            
+            this.apc[i].getKriu(y,y1,d,aR);
+        }
+        return aR;
+    }
+
+
+
     this.isCollisionBigBox = function (r) {
         
         return this.colozi.isCollisionBigBox(r.rectCollisMeshdy);
