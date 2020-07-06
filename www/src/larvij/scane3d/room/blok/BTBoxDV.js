@@ -84,6 +84,11 @@ export class BTBoxDV extends Blok {
                 this.cont3dLoad.scale.x=xx/this.object.mod.r[3]
             }
             this.cont3dLoad.position.z=this._depth/2;
+            trace("::::::::::",this.cont3dLoad.position)
+            for (var i = 0; i < this.cont3dLoad.children.length; i++) {
+                trace(i+"::",this.cont3dLoad.children[i].position)
+            }
+
 
 
             self.rect[3]=this._width;
@@ -150,8 +155,16 @@ export class BTBoxDV extends Blok {
                 this.dragWHD(); 
             }else{
 
+                /*mO.getModel(this.linkMod, this.object.mod.key, function(o){
+                    self.cont3dLoad.add(o)
+
+                })*/
+
                 mO.getModel(this.linkMod, this.object.mod.key, function(o){
                     self.cont3dLoad.add(o)
+                    let aa=new THREE.AxesHelper(100);
+                    self.cont3dLoad.add(aa)
+
                     self.testMaterial();                    
                     self.markers.setO3D(self.cont3dLoad) 
                     self.c3dNa.add(self.cont3dLoad);
@@ -164,7 +177,7 @@ export class BTBoxDV extends Blok {
                     self.init2();                
                     self.okPrice=true;
                     self.mO.dragPriceScane();
-                    self.testDver(o,true)
+                    self.testDver(o,true)                   
                            
                 });
             }
@@ -745,12 +758,14 @@ export class BVPlus {
                 self.array[0].rotation.y=Math.PI/2
                 self.array[0].position.x=-this._width/2+this.par._thickness;
                 self.array[0].position.z=this._depth/2;
+                self.array[0].position.y=0
 
 
                 self.array[1].rotation.y=-Math.PI/2
                 self.array[1].position.x=this._width/2-this.par._thickness;
                 self.array[1].position.z=this._depth/2;
-                trace("drag212212212212212212212")
+                self.array[1].position.y=0;
+                
                              
             }
         }
