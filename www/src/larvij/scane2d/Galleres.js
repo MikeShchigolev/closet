@@ -595,11 +595,15 @@ export class GalleryXZ extends DGallery {
     set bLink(value) {      
         if (this._bLink == value) return;      
         this._bLink = value;
+      
         this.but=new DButton(this.content1,0,0," ",this.bf,this._bLink)
         this.but.funLoadImag=this.loadPPP;
         this.but.width=this.width-this.otstup*2;
         this.but.idArr=0
-        this.but.object.style.opacity = 0;            
+     
+        this.but.boolFond=false;
+
+
     }
     get bLink() { return  this._bLink;}  
 
@@ -611,7 +615,8 @@ export class GalleryXZ extends DGallery {
         this.but1.funLoadImag=this.loadPPP;
         this.but1.width=this.width-this.otstup*2;
         this.but1.idArr=1
-        this.but1.object.style.opacity = 0;            
+        this.but1.boolFond=false;
+
     }
     get bLink1() { return  this._bLink1;}  
 

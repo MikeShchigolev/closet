@@ -730,8 +730,8 @@ export class BVPlus {
         this._width=-1;
         this._depth=-1;
         this.array=[]
-        var mesh
-
+        var mesh;
+        
         if(this.par.object.str[2]=="212"){
             this.activeId=212
         }
@@ -743,14 +743,14 @@ export class BVPlus {
 
             if(this.activeId==212){
                 self.array[0].rotation.y=Math.PI/2
-                self.array[0].position.x=-this._width/2+1;
+                self.array[0].position.x=-this._width/2+this.par._thickness;
                 self.array[0].position.z=this._depth/2;
 
 
                 self.array[1].rotation.y=-Math.PI/2
-                self.array[1].position.x=this._width/2-1;
+                self.array[1].position.x=this._width/2-this.par._thickness;
                 self.array[1].position.z=this._depth/2;
-
+                trace("drag212212212212212212212")
                              
             }
         }
@@ -771,7 +771,8 @@ export class BVPlus {
             if(self.activeId==212){
                 for (var i = 0; i < 2; i++) {
                     self.array[i]=self.hron.get();
-                    self.array[i].position.y=self.hron.object.obj.mod.r[2]
+                    self.array[i].position.y=self.hron.object.obj.mod.r[2];
+                    trace("212212212212212212212")
                     /*let aa=new THREE.AxesHelper(30);
                     self.array[i].add(aa);*/
                 }

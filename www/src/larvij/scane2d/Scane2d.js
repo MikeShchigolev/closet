@@ -58,7 +58,8 @@ export class Scane2d  {
         });   
         this.button.height=32
         //this.button.object.style.borderRadius=this.button.height/2+"px";
-        this.button.object.style.fontFamily="SFUIDisplay-Light";
+        //this.button.object.style.fontFamily="SFUIDisplay-Light";
+        this.button.fontFamily="SFUIDisplay-Light";
         this.button.borderRadius=32
         this.button.fontSize=20;
         this.button.colorText="#000000";
