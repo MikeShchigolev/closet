@@ -1,5 +1,5 @@
 
-
+var s3d
 
 function S3D(main) { 
 	
@@ -7,7 +7,7 @@ function S3D(main) {
 	var self=this;
     this.par=main
     this.object=undefined
-
+    s3d=this;
 
     this.content3d = new THREE.Object3D();
     main.content3d.add(this.content3d);

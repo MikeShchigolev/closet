@@ -52,7 +52,7 @@ function MenuObject(menu, fun) {
 
 
 
-    this.mBPic=new MBPic(this.content, this.otstup, this.otstup, function(s, p, p1){        
+    this.mBPic = new MBPic(this.content, this.otstup, this.otstup, function(s, p, p1){        
         if(s=="baseOrig"){
             var ll = '../'+aGlaf.resursData+"" + self.object.id + '/'+p1;            
             php.savePhoto(ll, p, function () {                
@@ -77,10 +77,9 @@ function MenuObject(menu, fun) {
 
 
 
-    this.mBas=new MBas(this.content, this.otstup, this.mBPic.y+this.mBPic.height+this.otstup, function(s){   
-
+    this.mBas=new MBas(this.content, this.otstup, this.mBPic.y+this.mBPic.height+this.otstup, function(s){
         if(s=="dragColorGal"){
-            trace(menuBig.matBD)
+        
             menuBig.menuBD.dragColorGal()
         }
 
@@ -152,6 +151,10 @@ function MenuObject(menu, fun) {
         self.saveTime();   
     })
 
+    this.mShadow=new MShadow(this.content, this.otstup, 220, function(s, p){      
+        self.saveTime();   
+    },this)
+
    /* this.mPRS=new MPRS(this,this.content, this.otstup, 220, function(s, p){    
         if(s=="dragPozition"){
             fun(s,p);
@@ -164,10 +167,13 @@ function MenuObject(menu, fun) {
         self.saveTime();   
     })*/
 
-    this.mIndex.plus(this.mBLOt.dCont,"src/admin/icon/info.png")
-    this.mIndex.plus(this.mBasLLL.dCont,"src/admin/icon/info.png")
-    this.mIndex.plus(this.mBase.dCont,"src/admin/icon/xz1.png")
-    this.mIndex.plus(this.mResurs.dCont,"src/admin/icon/i1.png")
+    this.mIndex.plus(this.mBLOt,"src/admin/icon/info.png")
+    this.mIndex.plus(this.mBasLLL,"src/admin/icon/info.png")
+    this.mIndex.plus(this.mBase,"src/admin/icon/xz1.png")
+    this.mIndex.plus(this.mResurs,"src/admin/icon/i1.png")
+    this.mIndex.plus(this.mShadow, this.mShadow.linkNot)
+
+
     //this.mIndex.plus(this.mFilt.dCont,"src/admin/icon/xz2.png")
     //this.mIndex.plus(this.mPRS.dCont,"src/admin/icon/xz3.png")
     //this.mIndex.plus(this.mText.dCont,"src/admin/icon/xz4.png")
@@ -200,7 +206,8 @@ function MenuObject(menu, fun) {
        // this.mFilt.setObj(this.object);
         this.mBase.setObj(this.object);
         this.mBLOt.setObj(this.object);
-       // this.mPRS.setObj(this.object);
+
+        this.mShadow.setObj(this.object);
 
         //this.mText.setObj(this.object);
         
@@ -333,9 +340,12 @@ function MIndex(c,x,y,f) {
                 for (var i = 0; i < this.array.length; i++) {
                     if(i==value){
                         this.array[i].alpha=0.5
+                        this.array[i].c.dCont.visible=true
                         this.array[i].c.visible=true
+                        
                     }else{
                         this.array[i].alpha=1
+                        this.array[i].c.dCont.visible=false
                         this.array[i].c.visible=false
                     }
                 }
@@ -1408,3 +1418,297 @@ function MBasPlus(c,x,y,f) {
 }
 
 
+
+
+
+function MShadow(dCont, _x,_y,fun, par) {  
+    var self=this   
+    this.type="MShadow";
+    this.fun=fun;
+    this.par=par
+
+    this.otstup=1//aGlaf.otstup;
+    this.wh=28;
+    this.whv=aGlaf.whv;
+    this.widthBig=aGlaf.widthBig-8;
+   
+    this.dCont=new DCont(dCont);
+    this.dCont.x=_x;
+    this.dCont.y=_y;
+
+    this._visible=true
+    this.linkNot =  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADQElEQVRYR8WWXUgUURTH/3d2nd3Zza9U6EtDMjZndtzNiMrQtFIki4h8CKmewqIofAqCIiiC3iQKPx6isBJfKkkiskAS0l6s2WZn1Ye0ol3roUDzo7LdG7u4Uqs7MzuGnqdl9vzP+d1zLvccgiU2YiS/yym0ebzKISPaWI0qgEvkj5snfrT1DQ2NRoUukW8mILWSrBiCTwjALQo0LPg7WfQbpoO50sDA+4VWQfUU0WQh8jObhCwNhGBfNCEBLr6RlUuLAhAnSY8kK9uXDoDSMcnrS106gJi7YRQk7h3Y6HCsoqzZrxY4iNAOWe7vNpo8rIsL4BaFZgC1GsGnJVlh/yuAWxROAfQcQFbrCUxBT3hkXxjWkM2pQEFB/lYmxLSAYL3eiDSEGx5FOa3X/2+/eVvgFoQaMLiXYMBJSVbsCWpU70DkFUzYaKhC8vY/06tTu4QTAGx6A8X4PZJkZb8ebVwAlyhcJsB5PUHm96EvJNlXqqVXmwWMWxSCWgFU/9fRDl3DaCEQWmNbYx9YaBsASukRj9d3N94hNJeK2flvvAyqr+ViAPyz0MSeQwcA/xgge4wX4N+NKmEAl5M/QQhpNApw2f0d++58JG3VGUd/jZnvH+38En5fZk27Ak5nEQh9aRSgqWgS61akwMaa0aUEbu5tHTmWEECBw5HLsOYhIwDWJBMaKuzItkzBP2kC+3s8xNcPmhIC4Hk+hzWRD3oBklgWdvsyEEKQx47iyrUm+G+fQVb1JSx/fgFdXn97VevIgWg8zRZExjNletUALBYLOJs9kjTW2nePo2fwM3ZWiQgOfwVbmodAhxfdg4Hsww++fdIEcAtCHRjUxwa2WjlwNu1ZdTIngKr8tIicLLfBWpkf+T3V2oeHfUOV2gBOoRME5WERx9lg5Ti93Zj166iYADNTHa5mU+T79NsAPvcOx98HoupCt3g2JTVtMwEpA5CRcHYALUXfkJFsjUiZdA5mYSUCT3zI2rhGG0AtYXFxcaGZoaUUpGwGcM5GtJb9jqtbgsiszMet669RmBlCut2CFVnJeMcyU5otMHLiGQ0pKSnZlsr8KrMwwTLBPr6reywLjQd/Y335Bgw89U3zda8sfwCotfxzr1MzGQAAAABJRU5ErkJggg=='
+   
+    this.array=[];
+
+    this.w=new DWindow(this.dCont, this.otstup, this.otstup,"MShadow");
+
+    this.w.dragBool=false;
+    this.w.hasMinimizeButton=false;
+    this.w.width=this.widthBig;   
+
+    this._otKrai=10;
+
+    this.bitmap= new DBitmapData(2,2)
+    this.canvas= document.createElement('canvas');
+    this.ctx = this.canvas.getContext('2d');
+
+    this.smc=undefined;//visi3D.utility.smc
+    //this.smc.clear();
+    //this.smc.addObj(this._obj3d);
+
+    this._alpha=1;
+
+    this.get2=function(n){
+        var r=2;
+        for (var i = 0; i < 12; i++) {
+            r*=2;            
+            if(r>n) return r 
+        }
+        return r 
+    }
+
+    this.button=new DButton(this.w.content,this.otstup,this.otstup*2,"",function(){
+        var o={};
+        o.wh=Math.round(wh);
+        o.wh2=self.get2(o.wh);
+        o.otKrai=self.otKrai;
+        o.alpha=self.alpha;
+
+        
+
+
+        self.bitmap.width = o.wh2;
+        self.bitmap.height = o.wh2;
+        self.bitmap.clear()
+
+
+        var bitmap=self.bitmap
+        bitmap.ctx.clearRect(0, 0, bitmap.width, bitmap.height);
+        bitmap.ctx.drawImage(self.smc.canvas, 0, 0, self.bitmap.canvas.width, self.bitmap.canvas.height); 
+        bitmap.imgData = bitmap.ctx.getImageData(0, 0, bitmap.width, bitmap.height); 
+        let a;
+        let b=[0,1,222,255];
+        for (var i = 0; i < bitmap.width; i++) {
+            for (var j = 0; j < bitmap.width; j++) {               
+                a=self.bitmap.getPixel(i,j)              
+
+                b[0]=a[0]
+                b[1]=a[1]
+                b[2]=a[2]
+                b[3]=Math.round(a[3]*self._alpha)
+                bitmap.setPixel(i, j, b);
+            }
+        }
+        bitmap.upDate();
+
+        let ss=self.bitmap.canvas.toDataURL("image/png");
+        let dir='../' + aGlaf.resursData + self.object.id+"/shadow";
+        php.load({ tip: 'mkdir', dir: dir }, function (e) {
+            bitmap.canvas.toBlob((blob) => {                
+                let f=new File([blob], "shadow.png")                
+                uploadFile(f,dir+"/shadow.png")
+                self.object.shadow=o;
+                self.fun();
+            }, 'png');
+        })
+
+        this._link="sdfasfasdfasdf"      
+        this.loadImeg(ss);
+
+    },this.linkNot)
+    this.button.width=this.button.height=64;
+
+    this.bClose=new DButton(this.w, 0, this.otstup,"x", function(b){
+        self.object.shadow=undefined;
+        delete self.object.shadow
+        self.setObj(self.object)
+        self.fun()       
+    });
+    this.bClose.width=this.bClose.height=30;
+    this.bClose.x=this.w.width-this.otstup-this.bClose.width
+   
+
+
+    
+    this.button1=new DButton(this.w.content,this.otstup+66,this.otstup*2,"подогнать",function(){       
+        self.redragMod();
+    })
+    this.button1.width=this.w.width-this.otstup*2-68;
+
+    /*this.chek=new DCheckBox(this.w.content,this.otstup,this.otstup*2+34*3,"вставить",function(){
+        
+    })*/
+
+    this.slid=new DSliderBig(this.w.content,this.otstup,this.otstup*2+34*2,function(){
+        self.otKrai=this.value
+    },"otKrai",0,200);
+    this.slid.value=  this._otKrai  
+    this.slid.okrug=1;
+    this.slid.width=this.w.width-this.otstup*2;
+
+    this.slid1=new DSliderBig(this.w.content,this.otstup,this.otstup*2+15+34*3,function(){
+        self.alpha=this.value;
+    },"alpha",0,1);
+    this.slid1.value =  this._alpha;
+    this.slid1.width=this.w.width-this.otstup*2;
+
+
+
+
+    this.w.height=32+this.slid1.y+50;
+
+
+    function uploadFile(file, dest) {
+        let serverURL = php.server + "src/phpBase.php";
+        let data = new FormData();
+        data.append('tip', 'saveFile');
+        data.append('file', file);
+        data.append('dest', dest);  
+
+        return $.ajax({
+            url: serverURL,
+            dataType: 'text',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: data,
+            type: 'post'
+        });
+    }
+
+
+    var xywh,wh,rect;
+    this.redragMod=function(){
+        if(!aGlaf)return
+        if(!aGlaf.s3d)return 
+        if(!aGlaf.s3d.sMod)return    
+        rect=aGlaf.s3d.sMod.getRect(); 
+        wh= rect[3];
+        if(rect[3]<rect[5]) wh= rect[5];
+        wh+= this._otKrai*2; 
+        wh=Math.round(wh);  
+        xywh=-wh/2;    
+
+        self.smc.clear();
+        self.smc.addObj(s3d.c3d);
+        
+        self.smc.fotoPosition.x=xywh;
+        self.smc.fotoPosition.y=xywh;
+        self.smc.fotoWH=wh;
+        self.smc.opacityMat=self._alpha;
+
+
+
+    }
+
+
+
+
+
+
+    this.dragSadow=function(){
+        visi3D.utility.smc.active=this._visible;
+        if(this._visible==true){
+            if(this.smc==undefined){
+                this.smc=visi3D.utility.smc.smc;
+                let pObject=new DParamObject(this.w.content,200,-280,function(){                 
+                    visi3D.intRend=1;
+                });
+
+                setTimeout(function() {
+                    pObject.addObject(self.smc);
+                    pObject.w.minimize=true
+                    pObject.w.title="Доп. тени"
+                    trace("wwwwwwwww",pObject.w)
+                }, 10);
+            }
+        }
+    } 
+
+
+    self.object;
+    this.setObj= function(o){         
+        this.object=o; 
+
+
+
+        if(this._visible==true){
+            this.dragSadow()
+            this.redragMod()
+
+        } else{         
+            
+            return;
+        }
+
+
+        if(this.object.shadow!=undefined){
+            this.alpha=this.object.shadow.alpha;
+            this.otKrai=this.object.shadow.otKrai;
+            let dir='../' + aGlaf.resursData + self.object.id+"/shadow/shadow.png";
+            this.button._link="sdfasfasdfasdf"; 
+
+            this.button.loadImeg(dir);
+        }else{
+            if(this.button._link!=this.linkNot)this.button.loadImeg(this.linkNot);
+        }
+
+        
+    }
+
+
+    Object.defineProperty(this, "alpha", {
+        set: function (value) {            
+            if(this._alpha!=value){
+                this._alpha=value; 
+                this.slid1.value=value; 
+                this.redragMod();
+                
+            }           
+        },
+        get: function () {
+            return this._alpha;
+        }
+    });
+
+    Object.defineProperty(this, "otKrai", {
+        set: function (value) {            
+            if(this._otKrai!=value){
+                this._otKrai=value; 
+                this.slid.value=value; 
+                this.redragMod();
+                
+            }           
+        },
+        get: function () {
+            return this._otKrai;
+        }
+    });
+
+
+    Object.defineProperty(this, "visible", {
+        set: function (value) {            
+            if(this._visible!=value){
+                this._visible=value; 
+                //this.dCont.visible=value;
+
+                this.dragSadow()
+                this.redragMod()
+                if(value){
+                    if(this.object&&this.object.shadow!=undefined){
+                        this.alpha=this.object.shadow.alpha;
+                        this.otKrai=this.object.shadow.otKrai;
+                        let dir='../' + aGlaf.resursData + self.object.id+"/shadow/shadow.png";
+                        this.button._link="sdfasfasdfasdf" 
+                        this.button.loadImeg(dir);
+                    }
+                }
+            }           
+        },
+        get: function () {
+            return this._visible;
+        }
+    });
+
+}

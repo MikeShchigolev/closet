@@ -144,7 +144,7 @@ export class BPieceObject extends Blok {
                         this.parent.parent.upDateRect()                       
                     }                    
                 }
-                this.drahShadow()
+                this.drahShadow();
                 return;
             }
             this.boxColizi.position._x = _x;
@@ -159,7 +159,7 @@ export class BPieceObject extends Blok {
         this.drahShadow=function(_x,_y){             
             if(this._parent!=undefined){
                 this.content.position.x = this.boxColizi.rectCollisMeshdy.x+this.boxColizi.rectCollisMeshdy.width/2;
-                this.content.position.y = -(this.boxColizi.rectCollisMeshdy.y);
+                this.content.position.y = -(this.boxColizi.rectCollisMeshdy.y)-this.object.mod.r[2];
                 if(this._parent.content.funRender!=undefined){
                     this._parent.content.funRender()
                 }

@@ -63,43 +63,71 @@ export class Blok{
        
         
         
-        
+        if(o.shadow){
+            var l="resources/data/"+this.id+"/shadow/shadow.png";                              
+            this.image=new XZImage(this.content,0,0,l,function(){                    
+                
+                this.x=-o.shadow.wh/2;
+                this.y=-o.shadow.wh/2;
+                this.width=o.shadow.wh;
+                this.height=o.shadow.wh;
 
-
-
-        if(o.resurs!=undefined){
-            if(o.resurs.array[0]!=undefined){
-                var p=-1;
-                for (var i = 0; i < o.resurs.array.length; i++) {
-                    if(o.resurs.array[i].b==undefined){
-                        p=i;
-                        i=999;
-                        break;
-                    }else{
-                        if(o.resurs.array[i].i=="x"){
+                
+                if(self.content.funRender!=undefined){
+                    self.content.funRender();
+                }
+                if(self.dragImeag)self.dragImeag()
+            });
+            
+        }else{
+            if(o.resurs!=undefined){
+                if(o.resurs.array[0]!=undefined){
+                    var p=-1;
+                    for (var i = 0; i < o.resurs.array.length; i++) {
+                        if(o.resurs.array[i].b==undefined){
                             p=i;
                             i=999;
                             break;
+                        }else{
+                            if(o.resurs.array[i].i=="x"){
+                                p=i;
+                                i=999;
+                                break;
+                            }
                         }
                     }
-                }
-                
-                if(p!=-1){
-                    var l="resources/data/"+this.id+"/resources/"+o.resurs.array[p].name;                              
-                    this.image=new XZImage(this.content,0,0,l,function(){                    
-                        this.x=-this.picWidth/4;
-                        this.y=-this.picHeight/4;
-                        this.width=this.picWidth/2;
-                        this.height=this.picHeight/2;
-                        if(self.content.funRender!=undefined){
-                            self.content.funRender();
-                        }
-                        if(self.dragImeag)self.dragImeag()
-                    });
-                    this.content.addChild(this.graphics);
+                    
+
+
+                    if(p!=-1){
+                        
+
+                        var l="resources/data/"+this.id+"/resources/"+o.resurs.array[p].name;                              
+                        this.image=new XZImage(this.content,0,0,l,function(){                    
+                            this.x=-this.picWidth/4;
+                            this.y=-this.picHeight/4;
+                            this.width=this.picWidth/2;
+                            this.height=this.picHeight/2;
+                            if(self.content.funRender!=undefined){
+                                self.content.funRender();
+                            }
+                            if(self.dragImeag)self.dragImeag()
+
+                        });
+
+
+                        this.content.addChild(this.graphics);
+                    }
                 }
             }
+
+
+
         }
+
+
+
+        
 
 
         this.dCol = function () {           

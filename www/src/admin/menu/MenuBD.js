@@ -149,7 +149,8 @@ function MenuBD(menu, fun) {
 
     var aZZ=[]
     this.reDrag=function(){       
-        var b=true
+        var b=true;
+        trace("@@@",this._sort);
         if(this._sort==-1){
             this.gallery.start(self.objectBase.bd);
             b=false; 
@@ -161,7 +162,7 @@ function MenuBD(menu, fun) {
                 if(self.objectBase.bd[i].sort==-1){
                     aZZ.push(self.objectBase.bd[i])
                 }
-            }
+            }            
             this.gallery.start(aZZ);            
             b=false; 
         }
@@ -183,22 +184,7 @@ function MenuBD(menu, fun) {
 
 
     this.down=function(){
-        if(this.idArr==0){//создание
-           /*self.par.mInfo.setFun("Удаление обьекта","Обьект будет удален из бд, не вычещаеться из дерева, и может привести к падениям, короче окуратно!!!",
-                    function(){ 
-                        var id=self.grtMaxPlus()
-                        php.load({tip: 'mkdir', dir: '../'+aGlaf.resursData + id}, function (e) {                        
-                            php.load({tip: 'copyDir', dirWith: '../'+aGlaf.resurs+'base/', dir: '../'+aGlaf.resursData + id + '/'}, function (e) {    
-                                var o={id:id, title:id, name:"xz",key:"o_"+id}
-                                self.objectBase.bd.unshift(o);                    
-                                aGlaf.save();
-                                self.reDrag();               
-                            });
-                        })
-                    }
-                ); */  
-
-                  
+        if(this.idArr==0){//создание                           
 
             var id=self.grtMaxPlus()
 
@@ -265,25 +251,58 @@ function MenuBD(menu, fun) {
         }
         if(this.idArr == 2){//<<<<<<
             if(self.objDin!=undefined){
+
+                let aaa=[];
+                var pp=-2;                
+                for (var i = 0; i < self.objectBase.bd.length; i++) {                   
+                    if(self.objDin.id==self.objectBase.bd[i].id){
+                        pp=i; 
+                        break;
+                    }                   
+                }                
+                var sah=0
+                for (var i = pp-1; i >= 0; i--) {
+                    sah++
+                    if(self.objDin.sort==self.objectBase.bd[i].sort){
+                        break;
+                    }
+                }
+
                 var a=self.index;
-                if(a>0) {
-                   var b=self.objectBase.bd.splice(a,1);
-                    self.objectBase.bd.splice(a-1,0,b[0])
+                if(sah!=0) {                
+                    var b=self.objectBase.bd.splice(pp,1);
+                    self.objectBase.bd.splice(pp-sah,0,b[0]);
                     aGlaf.save();
-                    self.reDrag()                   
+                    self.reDrag();                                
                     self.index=a-1; 
                 }
             }           
         }
 
-        if(this.idArr == 3){//>>>>>>
+        if(this.idArr == 3){
             if(self.objDin!=undefined){
+                let aaa=[];
+                var pp=-2;                
+                for (var i = 0; i < self.objectBase.bd.length; i++) {                   
+                    if(self.objDin.id==self.objectBase.bd[i].id){
+                        pp=i; 
+                        break;
+                    }                   
+                }                
+                var sah=0
+                for (var i = pp+1; i < self.objectBase.bd.length; i++) {
+                    sah++
+                    if(self.objDin.sort==self.objectBase.bd[i].sort){
+                        break;
+                    }
+                }
+
                 var a=self.index;
-                if(a<self.objectBase.bd.length-1&&a!=-1) {
-                    var b=self.objectBase.bd.splice(a,1);
-                    self.objectBase.bd.splice(a+1,0,b[0])
+                if(sah!=0) {
+                    var b=self.objectBase.bd.splice(pp,1);
+                    self.objectBase.bd.splice(pp+sah,0,b[0])
                     aGlaf.save();                    
-                    self.reDrag();                 
+                    self.reDrag();                                     
                     self.index=a+1; 
                 }
             }           
@@ -363,6 +382,7 @@ function MenuBD(menu, fun) {
             this._index=value;
             this.objDin=undefined;           
             this.gallery.index=value;
+            trace(">>>>>>>>>>>>>>"+value)
             if(this.gallery.array[value]!=undefined){                
                 this.objDin=this.gallery.array[value].object;
                 this.par.menuObject.setObj(this.objDin);                

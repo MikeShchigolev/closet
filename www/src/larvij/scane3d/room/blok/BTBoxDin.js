@@ -124,7 +124,7 @@ export class BTBoxDin extends Blok {
                     this.content.funRender();
                 }
             }
-            trace("#########");
+            
         }
 
         this.dragImeag = function(){
@@ -151,7 +151,7 @@ export class BTBoxDin extends Blok {
             if(this.image==undefined){
                 var l="resources/image/boxw_100.png"; 
                 this.image=new XZImage(this.content,0,0,null,function(){                    
-                    
+                    self.drahShadow()
                 });
                 this.canvas = document.createElement('canvas');
                 this.ctx = this.canvas.getContext('2d');

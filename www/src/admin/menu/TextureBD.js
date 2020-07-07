@@ -195,10 +195,31 @@ class TextureBD  {
         }
         if (butId == 2) {//<<<<<<
             if (this.objDin != undefined) {
+
+
+                let aaa=[];
+                var pp=-2;                
+                for (var i = 0; i < this.objectBase.textures.length; i++) {                   
+                    if(this.objDin.id==this.objectBase.textures[i].id){
+                        pp=i; 
+                        break;
+                    }                   
+                }                
+                var sah=0
+                for (var i = pp-1; i >= 0; i--) {
+                    sah++
+                    if(this.objDin.sort==this.objectBase.textures[i].sort){
+                        break;
+                    }
+                }
+
+
+
+
                 var a = this.index;
-                if (a > 0) {
-                    var b = this.objectBase.textures.splice(a, 1);
-                    this.objectBase.textures.splice(a - 1, 0, b[0])
+                if (sah!=0) {
+                    var b = this.objectBase.textures.splice(pp, 1);
+                    this.objectBase.textures.splice(pp - sah, 0, b[0])
                     aGlaf.save();
                     this.reDrag()
                     this.index = a - 1;
@@ -208,10 +229,30 @@ class TextureBD  {
 
         if (butId == 3) {//>>>>>>
             if (this.objDin != undefined) {
+
+                let aaa=[];
+                var pp=-2;                
+                for (var i = 0; i < this.objectBase.textures.length; i++) {                   
+                    if(this.objDin.id==this.objectBase.textures[i].id){
+                        pp=i; 
+                        break;
+                    }                   
+                }                
+                var sah=0
+                for (var i = pp+1; i < this.objectBase.textures.length; i++) {
+                    sah++
+                    if(this.objDin.sort==this.objectBase.textures[i].sort){
+                        break;
+                    }
+                }
+
+
+
+
                 var a = this.index;
-                if (a < this.objectBase.textures.length - 1 && a != -1) {
-                    var b = this.objectBase.textures.splice(a, 1);
-                    this.objectBase.textures.splice(a + 1, 0, b[0])
+                if (sah!=0) {
+                    var b = this.objectBase.textures.splice(pp, 1);
+                    this.objectBase.textures.splice(pp + sah, 0, b[0])
                     aGlaf.save();
                     this.reDrag();
                     this.index = a + 1;

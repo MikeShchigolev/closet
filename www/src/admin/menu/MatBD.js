@@ -199,10 +199,28 @@ function MatBD(menu, fun) {
 
         if(this.idArr == 2){//<<<<<<
             if(self.objDin!=undefined){
+
+                let aaa=[];
+                var pp=-2;                
+                for (var i = 0; i < self.objectBase.materials.length; i++) {                   
+                    if(self.objDin.id==self.objectBase.materials[i].id){
+                        pp=i; 
+                        break;
+                    }                   
+                }                
+                var sah=0
+                for (var i = pp-1; i >= 0; i--) {
+                    sah++
+                    if(self.objDin.sort==self.objectBase.materials[i].sort){
+                        break;
+                    }
+                }
+
+
                 var a=self.index;
-                if(a>0) {
-                   var b=self.objectBase.materials.splice(a,1);
-                    self.objectBase.materials.splice(a-1,0,b[0])
+                if(sah!=0) {       
+                    var b=self.objectBase.materials.splice(pp,1);
+                    self.objectBase.materials.splice(pp-sah,0,b[0])
                     aGlaf.save();
                     self.reDrag()                   
                     self.index=a-1; 
@@ -212,10 +230,27 @@ function MatBD(menu, fun) {
 
         if(this.idArr == 3){//>>>>>>
             if(self.objDin!=undefined){
+
+                let aaa=[];
+                var pp=-2;                
+                for (var i = 0; i < self.objectBase.materials.length; i++) {                   
+                    if(self.objDin.id==self.objectBase.materials[i].id){
+                        pp=i; 
+                        break;
+                    }                   
+                }                
+                var sah=0
+                for (var i = pp+1; i < self.objectBase.materials.length; i++) {
+                    sah++
+                    if(self.objDin.sort==self.objectBase.materials[i].sort){
+                        break;
+                    }
+                }
+                
                 var a=self.index;
-                if(a<self.objectBase.materials.length-1&&a!=-1) {
-                    var b=self.objectBase.materials.splice(a,1);
-                    self.objectBase.materials.splice(a+1,0,b[0])
+                if(sah!=0) {
+                    var b=self.objectBase.materials.splice(pp,1);
+                    self.objectBase.materials.splice(pp+sah,0,b[0])
                     aGlaf.save();                    
                     self.reDrag();                 
                     self.index=a+1; 
