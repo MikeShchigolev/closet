@@ -59,7 +59,7 @@ export class BTBoxDin extends Blok {
         this.boolDinColor=true;//Не отрабатываает общий цвет
 
 
-       
+        this.bvPlus=new BVPlus(this);
 
         this.dragBool=false;
         this.startWidth=this._width;
@@ -69,12 +69,13 @@ export class BTBoxDin extends Blok {
         this._thickness=1.6;
         this._niz=4;
 
-
+        this.content.alpha=0.25
 
         this.setXY=function(_x,_y){           
 
             if(this.parent!=undefined){   
-                let b=true;   
+                let b=true; 
+             
                 if(!this._static && this.dragBool==true) {
                     this.isMOWH(_x);// 
                     if(this.minObjWH.w != -1){
@@ -208,7 +209,7 @@ export class BTBoxDin extends Blok {
         this.dddddd=function(a,_x){
             var r= false;
             for (var i = 0; i < this.collision.arrRect.length; i++) {
-                if(this.collision.arrRect[i].parent.type == "BTBox" || this.collision.arrRect[i].parent.type == "BTumba" )
+                if(this.collision.arrRect[i].parent.type == "BTBox" ||this.collision.arrRect[i].parent.type == "BTBoxDin" || this.collision.arrRect[i].parent.type == "BTumba" )
                 if(this.collision.arrRect[i].idRandom!=this.boxColizi.idRandom){
                     col=this.collision.arrRect[i]; 
                     if(_x>col.rectCollisMeshdy.x){
@@ -300,9 +301,9 @@ export class BTBoxDin extends Blok {
             this.boxTumba3D._niz=this._niz;
             this.boxTumba3D.drag();
 
-  
+            this.boxColizi.rectCollisMeshdy.x=1;
 
-            this.cont3dLoad.add(this.boxTumba3D.c3d)
+            this.cont3dLoad.add(this.boxTumba3D.c3d);
             for (var i = 0; i < this.boxTumba3D.array.length; i++) {
                 this.arrayMat.push(this.boxTumba3D.array[i].c3d);
                 visi3D.objShadow(this.boxTumba3D.array[i].c3d, true)
@@ -435,7 +436,7 @@ export class BTBoxDin extends Blok {
             }
             
 
-
+            //trace("=arrRect.length=",arrRect.length)
             for (var i = 0; i < arrRect.length; i++) {
                 if(_not){
                     if(_not.idRandom==arrRect[i].idRandom)continue;                    
@@ -711,13 +712,13 @@ export class BTBoxDin extends Blok {
             arcIdBool=[];
             sah=0;
             for (var i = 0; i < arc.length; i++) {//сравниваем
-                if(arc[i].parent!=undefined&&arc[i].parent.type=="BTBox"){
+                if(arc[i].parent!=undefined&&(arc[i].parent.type=="BTBox"||arc[i].parent.type=="BTBoxDin")){
                     arcIdArr[sah]=i;
                     arcIdBool[sah]=-1;
                     point.x=arc[i].position.x
                     point.y=arc[i].rectCollisMeshdy.y
                     for (var j = 0; j < arc.length; j++) {//сравниваем
-                        if(arc[j].parent!=undefined&&arc[j].parent.type=="BTBox"){
+                        if(arc[j].parent!=undefined&&(arc[j].parent.type=="BTBox"||arc[j].parent.type=="BTBoxDin")){
                             if(arcIdBool[sah]==-1)arcIdBool[sah]=false
                             if(i!=j){
                                 if(Math.round(arc[i].position.x)==Math.round(arc[j].position.x)){
@@ -747,7 +748,7 @@ export class BTBoxDin extends Blok {
             var b
             sah=0;
             for (var i = 0; i < arc.length; i++) {//сравниваем               
-                if(arc[i].parent!=undefined&&arc[i].parent.type=="BTBox"){
+                if(arc[i].parent!=undefined&&(arc[i].parent.type=="BTBox"||arc[i].parent.type=="BTBoxDin")){
                     b=true
                     if(blok)   if(blok.idArr==arc[i].parent.idArr)b=false;                    
                     if(b)arrAll.push(arc[i]);
@@ -760,7 +761,7 @@ export class BTBoxDin extends Blok {
         this.dragTumb=function(sten){
             bbb=false;
             for (var i = 0; i < sten.children.length; i++) {
-                if(sten.children[i].type=="BTBox"){
+                if(sten.children[i].type=="BTBox"||sten.children[i].type=="BTBoxDin"){
                     rrr=this.downTumb(sten.children[i])
                     if(rrr){
                         bbb=true
@@ -771,7 +772,7 @@ export class BTBoxDin extends Blok {
             if(bbb==true)this.dragTumb(sten)
             else{
                 for (var i = 0; i < sten.children.length; i++) {
-                    if(sten.children[i].type=="BTBox"){
+                    if(sten.children[i].type=="BTBox"||sten.children[i].type=="BTBoxDin"){
                         sten.children[i].testPodBig()
                         sten.children[i].drahShadow()
                     }
@@ -788,7 +789,7 @@ export class BTBoxDin extends Blok {
             if(tumb.boxColizi.rectCollisMeshdy.y!=0){
                 var sten=tumb.parent;
                 for (var i = 0; i < sten.children.length; i++) {
-                    if(sten.children[i].type=="BTBox"){
+                    if(sten.children[i].type=="BTBox"||sten.children[i].type=="BTBoxDin"){
                         if(tumb.idArr!=sten.children[i].idArr){
                             if(Math.round(sten.children[i].boxColizi.position.x)==Math.round(tumb.boxColizi.position.x)){
                                 sy=sten.children[i].boxColizi.rectCollisMeshdy.y+sten.children[i].boxColizi.height
@@ -822,38 +823,10 @@ export class BTBoxDin extends Blok {
         }
 
 
-        var aaa,aa,ad
+        
         this.getPrice=function(intColor,idMat){
-            
-
-            var ad=[]
-            var aa=null
-    
             if(this.parent==undefined)return []
-       
-           
-            
-            return [];
-              
-
-            let ooo= this.arrObj[this._indexW][this._indexH].obj;
-            ooo.priority= this.object.priority;
-            aa=menedsherMaterial.getArrOtObj(ooo.obj,idMat,intColor); 
-            
-            if(aa!=null){
-                ad=[];                         
-                for (var j = 0; j < aa.length; j++) {
-                    ad[j]=aa[j];                                
-                }
-                ad[6]="BTBox";
-                ad[8]=ooo;
-                ad[9]=ooo.id;
-                ad[10]=1;
-                ad[11]=aa[3]*1;                
-            }  
-                        
-            return [ad]
-
+            return this.bvPlus.getPrice(intColor,idMat);            
         }
 
 
@@ -1074,18 +1047,23 @@ export class BTBoxDin extends Blok {
 
     set parent(v) {
         if(this._parent!=v){
-            this._parent= v;             
+            this._parent = v;
+       
             if(this._parent==undefined){
                 this.collision=undefined
                 this.mO.visi3D.event3DArr.removeChild(this.c3dNa);
             } else{
                 this.collision=this._parent.collision;
                 this.mO.visi3D.event3DArr.addChild(this.c3dNa);                
-                this.drahShadow() 
-
+                this.drahShadow(); 
                 this.avAct=this._parent.avAct;
-             
-            }                
+
+
+                
+
+
+            }   
+
         }       
     }   
     get parent() { return  this._parent;}
@@ -1107,7 +1085,7 @@ export class BTBoxDin extends Blok {
             this._indexW = v;
             this.width= this.wN[v];   
             //this.dragIndex();     
-             
+            this.bvPlus.indexW = v;  
             for (var i = 0; i < this.children.length; i++) {
                 if(this.children[i].indexW!=undefined)this.children[i].indexW=this._indexW
             }
@@ -1129,11 +1107,14 @@ export class BTBoxDin extends Blok {
     set indexH(v) {
         if(this._indexH!=v){            
             this._indexH = v;            
-            this.depth= this.hN[v];  
+            this.depth= this.hN[v];
+            this.bvPlus.indexH = v;  
             for (var i = 0; i < this.children.length; i++) {
                 if(this.children[i].indexH!=undefined)this.children[i].indexH=this._indexH
             }
-            this.fun("visi3d");              
+
+            this.fun("visi3d");
+
         }           
     }   
     get indexH() { return  this._indexH;} 
@@ -1142,6 +1123,7 @@ export class BTBoxDin extends Blok {
         if(this._width!=v){            
             this._width = v;  
             this.dragWHD();
+             
             for (var i = 0; i < this.children.length; i++) {
                 if(this.children[i].type=="BTBoxDV")this.children[i].width=this._width
             }             
@@ -1187,4 +1169,98 @@ export class BHronTumba {
         this.z=0;
         this.bool=false;
     }
+}
+
+
+
+
+//хреновинки с боков
+export class BVPlus {
+    constructor(par) {    
+        var self=this;    
+        this.type = "HrenNiz";        
+        this.par=par;
+        this.activeId=-1;
+        this.boolLad=false;
+
+        this._indexW = par._indexW;
+        this._indexH = par._indexH;
+
+        this._ot2=3.1;
+        this._ot3=3.7;
+
+        this.array=[]
+        var mesh
+
+
+
+        this.objObj={};   
+
+
+        this.getPrice=function(intColor,idMat){
+            let s=this.par.wN[this._indexW]+"_"+this.par.hN[this._indexH];
+            
+            if(this.objObj[s]!=undefined){
+                let aa=menedsherMaterial.getArrOtObj(this.objObj[s].obj,idMat,intColor); 
+               
+                if(aa!=null){
+                    let ad=[];                         
+                    for (var j = 0; j < aa.length; j++) {
+                        ad[j]=aa[j];                                
+                    }
+                    ad[6]="BTboxDin_BVPlus";
+                    ad[8]=this.objObj[s].obj;
+                    ad[9]=this.objObj[s].obj.id;
+                    ad[10]=1;
+                    ad[11]=aa[3]*1; 
+                    
+                    return [ad]                 
+                }  
+
+            }
+
+            
+
+            return []             
+        }
+
+
+
+
+        if(this.par.object.str[1].length>2){
+            let a=this.par.object.str[1].split(",");
+            for (var i = 0; i < a.length; i++) {
+                let ooo=this.par.mO.getIdObj(a[i])
+                this.objObj[ooo.title]=ooo            
+            } 
+
+        }
+
+        
+        
+       
+
+        var z0=32
+        var ooo
+        this.drag=function(){ 
+
+        }
+        
+    }
+
+    set indexW(v) {
+        if(this._indexW!=v){
+            this._indexW = v;  
+            this.drag();                
+        }           
+    }   
+    get indexW() { return  this._indexW;} 
+
+    set indexH(v) {
+        if(this._indexH!=v){
+            this._indexH = v;  
+            this.drag();            
+        }           
+    }   
+    get indexH() { return  this._indexH;} 
 }

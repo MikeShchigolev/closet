@@ -51,5 +51,7 @@
     ],
     "resurs": {
         "array": []
-    }
+    },
+    "priority": 0,
+    "bagY": 0
 }

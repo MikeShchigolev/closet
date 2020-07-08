@@ -70,10 +70,11 @@ export function CollisionRect(id) {
             
             if (isNotRemove) {
                 var b = this.colozi.correct();
-                if (!b) {
-                    
+                trace(">>bbbbbbbbb=="+b,this.colozi.activBox)
+                if (!b) {                    
                     self.removeRect(r);
                     drawDegug()
+                    trace("###")
                     return b; 
                 }
             }

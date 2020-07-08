@@ -499,7 +499,11 @@ export class BTBoxDV extends Blok {
 
 
         this.stopDrag=function(){ 
-            if(this.parent ==undefined)return      
+            if(this.parent ==undefined){
+                self.mO.dragPriceScane() 
+                return 
+            }   
+
             if(this.parent.idRandom==mO.btBoxDin.idRandom){                
                 this.parent.remove(this);
                 var cop=mO.getBlok(mO.btBoxDin.object)
@@ -524,9 +528,10 @@ export class BTBoxDV extends Blok {
                     cop.add(this);
                     cop.drahShadow();
 
-                    this.mO.dragPriceScane() 
+                    
                 }
             }
+            this.mO.dragPriceScane() 
         }
 
  
@@ -591,7 +596,9 @@ export class BTBoxDV extends Blok {
 
 
         this.getPrice=function(intColor,idMat){  
-            return []
+            if(this.parent==undefined)return []
+            return this.bvPlus.getPrice(intColor,idMat); 
+            
            /* var ad=[]
             var aa=null
             
@@ -766,6 +773,73 @@ export class BVPlus {
             }
         }
 
+        this.objObj={};  
+
+        if(this.par.object.str[1].length>2){
+            let a=this.par.object.str[1].split(",");
+            for (var i = 0; i < a.length; i++) {
+                let ooo=this.par.mO.getIdObj(a[i])
+                this.objObj[ooo.title]=ooo            
+            } 
+        }
+
+        this.getPrice=function(intColor,idMat){
+
+            //let s=this.par.wN[this._indexW]+"_"+this.par.hN[this._indexH];
+            let s=this.par._width+"_"+this.par._depth;
+            trace(s,"   ",this.objObj)
+            
+            if(this.objObj[s]!=undefined){
+
+                let aa=menedsherMaterial.getArrOtObj(this.objObj[s].obj,idMat,intColor); 
+               
+                if(aa!=null){
+                    let ad=[];                         
+                    for (var j = 0; j < aa.length; j++) {
+                        ad[j]=aa[j];                                
+                    }
+                    ad[6]="BTboxDin_BVPlus";
+                    ad[8]=this.objObj[s].obj;
+                    ad[9]=this.objObj[s].obj.id;
+                    ad[10]=1;
+                    ad[11]=aa[3]*1; 
+                    trace(ad)
+                    return [ad]                 
+                }  
+
+            }
+
+            if(this.activeId==212){
+                let aa=menedsherMaterial.getArrOtObj(self.hron.object.obj,idMat,intColor); 
+                
+                if(aa!=null){
+                    let aaaa=[]
+                   
+                    for (var ii = 0; ii < 2; ii++) {
+                        let ad=[];                         
+                        for (var j = 0; j < aa.length; j++) {
+                            ad[j]=aa[j];                                
+                        }
+                        ad[6]="BTboxDin_BVPlus";
+                        ad[8]=self.hron.object.obj;
+                        ad[9]=self.hron.object.obj.id;
+                        ad[10]=1;
+                        ad[11]=aa[3]*1;
+                        aaaa.push(ad); 
+                    }
+
+                    return aaaa;               
+                }
+                
+
+
+
+            };
+
+
+            return []            
+        }
+
 
 
 
@@ -783,9 +857,7 @@ export class BVPlus {
                 for (var i = 0; i < 2; i++) {
                     self.array[i]=self.hron.get();
                     self.array[i].position.y=self.hron.object.obj.mod.r[2];
-                    trace("212212212212212212212")
-                    /*let aa=new THREE.AxesHelper(30);
-                    self.array[i].add(aa);*/
+                   
                 }
             }
 

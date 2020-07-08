@@ -123,7 +123,7 @@ export class BPieceObject extends Blok {
         var b;//приходит позиции от колайдера        
         this.setXY=function(_x,_y){            
             b=this.testObject(_x,_y);  
-            trace(b)          
+                    
             if(b==false){
                 if(this.parent!=undefined){
                     if(this.bSort==true){

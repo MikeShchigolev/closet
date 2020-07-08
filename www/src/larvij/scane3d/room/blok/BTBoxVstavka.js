@@ -57,10 +57,13 @@ export class BTBoxVstavka extends Blok {
 
         
         let aaa=this.object.str[1].split(",")
+        trace("aaa==",aaa)
+        trace("this.objObj==",this.objObj)
         for (var i = 0; i < aaa.length; i++) {
             let ooo=mO.getIdObj(aaa[i])
-            if(ooo && ooo.title){
-                this.objObj[ooo.title].obj=ooo;                
+            if(ooo && ooo.title){ 
+                trace(ooo.title)               
+                if(this.objObj[ooo.title])this.objObj[ooo.title].obj=ooo;                
             }            
         }
 
@@ -95,9 +98,8 @@ export class BTBoxVstavka extends Blok {
         this.boolLoad = false 
         this.funInitMod = function(){
             this.creadDebag(self.cont3dLoad.children[0]);
-
-
             visi3D.objShadow(self.cont3dLoad, true)
+
             //self.cont3dLoad.children[0].position.z=self.object.mod.r[1]
             self.boolLoad=true;
             this.dragIndex();
@@ -119,11 +121,7 @@ export class BTBoxVstavka extends Blok {
 
                 self.rect[3]=this.wN[this._indexW];
                 self.rect[0]=-this.wN[this._indexW]/2;
-                self.rect[4]=this.hN[this._indexH];
-
-
-  
-       
+                self.rect[4]=this.hN[this._indexH];      
 
                 let t=this.wN[this._indexW]+0.00002
                 this.boxColizi.width=t;
@@ -146,12 +144,17 @@ export class BTBoxVstavka extends Blok {
 
 
         this.creadDebag=function(o){            
+            for (var ii = o.children.length-1; ii >=0; ii--) {   
+                o.children[ii].visible=false 
+            }
+
             for (var i = 0; i < this.arrObj.length; i++){ 
                 for (var j = 0; j < this.arrObj[i].length; j++) {    
                     let p=-1;
                     for (var ii = o.children.length-1; ii >=0; ii--) {                        
                         if(o.children[ii].name=="mod_"+this.wN[i]+"_"+this.hN[j]){
                             p=ii;
+                            o.children[ii].visible=true 
                         }
                     }
 
@@ -396,7 +399,10 @@ export class BTBoxVstavka extends Blok {
         }
 
         this.stopDrag=function(){   
-            if(this.parent ==undefined)return   
+            if(this.parent ==undefined){
+                this.mO.dragPriceScane()   
+                return   
+            }
             self.mO.activBTBDV(false)          
             if(this.parent.idRandom==mO.btBoxDin.idRandom){                
                 this.parent.remove(this);
@@ -431,10 +437,11 @@ export class BTBoxVstavka extends Blok {
                     cop.add(this);
                     cop.drahShadow();
 
-                    this.mO.dragPriceScane() 
+                    
                 }
 
             }
+            this.mO.dragPriceScane() 
         }
 
         var oKrai={y:0,h:0,z:0,_y:0,_h:0}
@@ -505,7 +512,7 @@ export class BTBoxVstavka extends Blok {
             if(this.parent.parent==undefined)return []    
            
             
-
+            let aaa=this.bvPlus.getPrice(intColor,idMat)  
             
            
             let ooo= this.arrObj[this._indexW][this._indexH].obj;
@@ -516,6 +523,8 @@ export class BTBoxVstavka extends Blok {
             else{
                 return []
             }
+
+
 
             aa=menedsherMaterial.getArrOtObj(ooo.obj,idMat,intColor); 
 
@@ -528,23 +537,18 @@ export class BTBoxVstavka extends Blok {
                 ad[8]=ooo;
                 ad[9]=ooo.id;
                 ad[10]=1;
-                ad[11]=aa[3]*1;                
-            }                         
-            return [ad];
+                ad[11]=aa[3]*1; 
+
+                aaa.push(ad)               
+            } 
+
+            
+
+
+            return aaa;
         }
 
-       /* this.setColorId = function(v){
-            if(this.boolDinColor == false)return;            
-            if(this._idColor == v)return; 
-            this._idColor=v;
-            this._material = roomBig[this.matBas]//menedsherMaterial.geterMat.getIDReturn(this._idColor,true); 
-            this.dragColor();
-            this.mO.dragPriceScane();
-            this.fun("visi3d");
-        }*/
-
-
-
+      
 
     }
 
@@ -701,7 +705,53 @@ export class BVPlus {
             }
         }
 
+        this.getPrice=function(intColor,idMat){ 
 
+            if(self.activeId==187){
+                let aa=menedsherMaterial.getArrOtObj(self.hron.object.obj,idMat,intColor);                 
+                if(aa!=null){
+                    let aaaa=[]                   
+                    for (var ii = 0; ii < 6; ii++) {
+                        let ad=[];                         
+                        for (var j = 0; j < aa.length; j++) {
+                            ad[j]=aa[j];                                
+                        }
+                        ad[6]="BTboxDin_BVPlus";
+                        ad[8]=self.hron.object.obj;
+                        ad[9]=self.hron.object.obj.id;
+                        ad[10]=1;
+                        ad[11]=aa[3]*1;
+                        aaaa.push(ad); 
+                    }
+                    return aaaa;               
+                }
+                
+            }
+
+
+            if(self.activeId==204){
+                let aa=menedsherMaterial.getArrOtObj(self.hron.object.obj,idMat,intColor);                 
+                if(aa!=null){
+                    let aaaa=[]                   
+                    for (var ii = 0; ii < 2; ii++) {
+                        let ad=[];                         
+                        for (var j = 0; j < aa.length; j++) {
+                            ad[j]=aa[j];                                
+                        }
+                        ad[6]="BTboxDin_BVPlus";
+                        ad[8]=self.hron.object.obj;
+                        ad[9]=self.hron.object.obj.id;
+                        ad[10]=1;
+                        ad[11]=aa[3]*1;
+                        aaaa.push(ad); 
+                    }
+                    return aaaa;               
+                }
+                
+            }
+
+            return [];
+        }
 
 
         if(this.activeId==-1)return;

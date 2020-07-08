@@ -1263,11 +1263,16 @@ export class VNB {
         
         self.dragCont();
         
-        this.hron=new BKHron(this, 166, 1,this.par.par.mO )
+        this.hron=new BKHron(this, 166, 1,this.par.par.mO)
         this.hron.initHron=function(){
+            console.warn("@@@===========");
             self.dragCont();
-            self.draw();
-            self.par.par.mO.dragPriceScane();
+            self.draw();            
+            //self.par.par.mO.dragPriceScane(); 
+           /* setTimeout(function() {
+                self.par.par.mO.dragPriceScane(); 
+            }, 1000);*/
+            /*self.par.par.mO.dragPriceScane();*/
             
         }
         

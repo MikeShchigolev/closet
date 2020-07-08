@@ -2,7 +2,7 @@
     "id": 197,
     "title": "50_58",
     "key": "o_197",
-    "orig": "0.png",
+    "orig": "xz.png",
     "mod": {
         "key": "n",
         "name": "n",
@@ -51,5 +51,7 @@
     ],
     "resurs": {
         "array": []
-    }
+    },
+    "priority": 22,
+    "bagY": 0
 }

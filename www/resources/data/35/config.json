@@ -79,5 +79,11 @@
         "kesh": false,
         "sG": false,
         "clone": true
+    },
+    "shadow": {
+        "wh": 140,
+        "wh2": 256,
+        "otKrai": 10,
+        "alpha": 0.25
     }
 }

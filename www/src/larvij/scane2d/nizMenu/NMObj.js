@@ -363,13 +363,7 @@ export class ButArAr  {
             }
 
             let sah=0;
-           /* if(this.object.indexW!=undefined){
-                this.vuborW.visible=true;
-                this.vuborW.index = self.object.indexW; 
-                sah+=this.vuborW.width;
-            }else{
-                this.vuborW.visible=false;                
-            }*/
+           
 
             if(o.static==false){
                 let oo1=self.object.getMOWH(); 
@@ -394,13 +388,19 @@ export class ButArAr  {
             }
 
 
-
-
+            let b2=false;
             if(this.object.indexH!=undefined){
+                if(this.object.hN.length>1){
+                    b2=true
+                }
+            }
+
+            if(b2==true){
                 this.vuborH.visible = true;
                 this.vuborH.index = self.object.indexH; 
                 this.vuborH.dCont.x=sah
                 sah+=this.vuborH.width;
+
             }else{
                 this.vuborH.visible = false;
                 

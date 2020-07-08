@@ -71,5 +71,19 @@
             }
         ]
     },
-    "bagY": 0
+    "bagY": 0,
+    "param": {
+        "tOt": false,
+        "tNa": false,
+        "rO": -1,
+        "kesh": false,
+        "sG": false,
+        "clone": true
+    },
+    "shadow": {
+        "wh": 79,
+        "wh2": 128,
+        "otKrai": 10,
+        "alpha": 0.25
+    }
 }

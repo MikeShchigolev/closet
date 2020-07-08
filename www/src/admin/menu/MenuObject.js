@@ -167,11 +167,11 @@ function MenuObject(menu, fun) {
         self.saveTime();   
     })*/
 
-    this.mIndex.plus(this.mBLOt,"src/admin/icon/info.png")
-    this.mIndex.plus(this.mBasLLL,"src/admin/icon/info.png")
-    this.mIndex.plus(this.mBase,"src/admin/icon/xz1.png")
-    this.mIndex.plus(this.mResurs,"src/admin/icon/i1.png")
-    this.mIndex.plus(this.mShadow, this.mShadow.linkNot)
+    this.mIndex.plus(this.mBLOt,"src/admin/icon/info.png");
+    this.mIndex.plus(this.mBasLLL,"src/admin/icon/info.png");
+    this.mIndex.plus(this.mBase,"src/admin/icon/xz1.png");
+    this.mIndex.plus(this.mResurs,"src/admin/icon/i1.png");
+    this.mIndex.plus(this.mShadow, this.mShadow.linkNot);
 
 
     //this.mIndex.plus(this.mFilt.dCont,"src/admin/icon/xz2.png")
@@ -1457,7 +1457,7 @@ function MShadow(dCont, _x,_y,fun, par) {
     //this.smc.clear();
     //this.smc.addObj(this._obj3d);
 
-    this._alpha=1;
+    this._alpha=0.5;
 
     this.get2=function(n){
         var r=2;
@@ -1597,9 +1597,6 @@ function MShadow(dCont, _x,_y,fun, par) {
         self.smc.fotoPosition.y=xywh;
         self.smc.fotoWH=wh;
         self.smc.opacityMat=self._alpha;
-
-
-
     }
 
 

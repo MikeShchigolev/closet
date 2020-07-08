@@ -52,5 +52,7 @@
     "resurs": {
         "array": []
     },
-    "c": "#a001c3"
+    "c": "#a001c3",
+    "priority": 0,
+    "bagY": 0
 }
