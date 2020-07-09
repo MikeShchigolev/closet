@@ -199,7 +199,7 @@ export class Galleres  {
             self.boolFinDrag=true;
         }
 
-
+        this.arrayBD=[]
         this.array1Bat=[]
         //this.wh0=60 
         this.init=function(){
@@ -212,7 +212,16 @@ export class Galleres  {
                 this.array[i].idArr=i;
             }
             //0 главная ветка            
-            var a=this.objectBase.three[0].array;           
+            var aa=this.objectBase.three[0].array; 
+            var a=[]
+            for (var i = 0; i < aa.length; i++) {
+                if(aa[i].bool==true){
+                    a.push(aa[i]);
+                }
+            }
+            this.arrayBD=a
+
+
             this.array[0].kolII=1;
             this.array[0].widthPic=75+2;
             this.array[0].heightPic=75+2;
@@ -385,9 +394,10 @@ export class Galleres  {
         if(this._index!=value){
             this._index = value;
             this.object=null;
-            for (var i = 0; i < this.objectBase.three[0].array.length; i++) {
+            trace(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",this.arrayBD)
+            for (var i = 0; i < this.arrayBD.length; i++) {
                 if(i==this._index){
-                    this.object=this.objectBase.three[0].array[i];
+                    this.object=this.arrayBD[i];
                     break;
                 }
             }

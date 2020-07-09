@@ -32,19 +32,33 @@ function MenuThree(menu, fun) {
     this.w.hasMinimizeButton=false;
 
 
-
-    this.input=new DInput(this.w, this.otstup*2 ,34,"null",function(){
+    this.panel=new DPanel(this.w, this.otstup ,34,"null",function(){
         self.gallery.array[self._index].object.keyName=this.text;
         aGlaf.save();
     })
-    this.input.width=this.widthBig-this.otstup*2;
-    this.input.visible=false
+    this.panel.width=this.widthBig-this.otstup*2;
+    this.panel.visible=false
 
-    this.gallery=new GalleryXZ(this.w, this.otstup ,66,function(){
+
+    this.chek=new DCheckBox(this.panel, this.otstup ,6,"",function(){
+        self.gallery.array[self._index].object.bool=this.value;
+        aGlaf.save();
+    })
+
+    this.input=new DInput(this.panel, 24 ,this.otstup,"null",function(){
+        self.gallery.array[self._index].object.keyName=this.text;
+        aGlaf.save();
+    })
+    this.input.width=this.panel.width-this.otstup*4-this.input.x;
+
+    
+    
+
+    this.gallery=new GalleryXZ(this.w, this.otstup ,70,function(){
 
         self.index=this.index;
     })
-    this.gallery.width=this.widthBig;
+    this.gallery.width=this.widthBig-this.otstup*2;
     this.gallery.kolII=4;
     this.gallery.widthPic=46;
     this.gallery.heightPic=46;
@@ -100,6 +114,7 @@ function MenuThree(menu, fun) {
     var a=[];
     this.down=function(){
         if(this.idArr==0){//nazad
+            self.panel.visible=false
 
             self.nazad()                                
         }
@@ -229,15 +244,26 @@ function MenuThree(menu, fun) {
                     this._iArr = this.gallery.array[value].object.array;                                        
                     this.gallery.start(this._iArr);
                     this._index=-1
+                    this.panel.visible=false
                 } 
 
 
             } 
 
             if(this.gallery.array[this._index]!=undefined){
-                if(this.gallery.array[this._index].object.keyName==undefined)this.gallery.array[this._index].object.keyName="null"
+                let s=false
+                if(this.gallery.array[this._index].object.keyName==undefined){
+                    this.gallery.array[this._index].object.keyName="null"
+                    s=true
+                }
+                if(this.gallery.array[this._index].object.bool==undefined){
+                    this.gallery.array[this._index].object.bool=false
+                    s=true
+                }
                 this.input.text=this.gallery.array[this._index].object.keyName
-                this.input.visible=true
+                this.chek.value=this.gallery.array[this._index].object.bool
+                this.panel.visible=true;
+                if(s==true)aGlaf.save(); 
             }          
         },
         get: function () {

@@ -357,9 +357,7 @@ export class ButArAr  {
                 })
                 this.label1.width=30;
                 this.label1.fontSize=20;
-                this.label1.fontFamily="SFUIDisplay-Light";    
-
-
+                this.label1.fontFamily="SFUIDisplay-Light";
             }
 
             let sah=0;
