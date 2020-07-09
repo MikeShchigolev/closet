@@ -220,6 +220,7 @@ export class Galleres  {
                 }
             }
             this.arrayBD=a
+            trace(this.arrayBD)
 
 
             this.array[0].kolII=1;
@@ -393,8 +394,7 @@ export class Galleres  {
     set index(value) {
         if(this._index!=value){
             this._index = value;
-            this.object=null;
-            trace(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",this.arrayBD)
+            this.object=null;            
             for (var i = 0; i < this.arrayBD.length; i++) {
                 if(i==this._index){
                     this.object=this.arrayBD[i];
@@ -712,13 +712,12 @@ export function BoxXZ(_cont, _x, _y, _fun,_intText, par) {
 
     this.aLabel=[]
     for (var i = 0; i < this.intText; i++) {
-        this.aLabel[i]= new DLabel(this.content, 0, 2+12*i, '||||');
+        this.aLabel[i]= new DLabel(this.content, 0, 2+12*i, '');
         //this.aLabel[i].width=200;
         this.aLabel[i].div.style.pointerEvents="none"; 
         this.aLabel[i].fontSize=11; 
         this.aLabel[i].fontFamily="SFUIDisplay-Light";
         this.aLabel[i].textAlign="center";
-
     }
 
     var ww, oo

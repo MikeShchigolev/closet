@@ -158,8 +158,8 @@ export class BTBoxDV extends Blok {
 
                 mO.getModel(this.linkMod, this.object.mod.key, function(o){
                     self.cont3dLoad.add(o)
-                    let aa=new THREE.AxesHelper(100);
-                    self.cont3dLoad.add(aa)
+                   /* let aa=new THREE.AxesHelper(100);
+                    self.cont3dLoad.add(aa)*/
 
                     self.testMaterial();                    
                     self.markers.setO3D(self.cont3dLoad) 
@@ -635,7 +635,17 @@ export class BTBoxDV extends Blok {
         }
 
 
-
+        this.dCol = function () {           
+            self.x=0//self.boxColizi.__x;
+            self.y=self.boxColizi.__y;            
+            self.content3d.position.x=0//self.x;
+            self.content3d.position.y=self.y;
+         
+           
+            self.content.x=self.x;
+            if(self.durXY)self.durXY(self.x,self.y)
+            self.dCol2();           
+        }
 
 
 
@@ -652,6 +662,9 @@ export class BTBoxDV extends Blok {
                             this._parent.content.funRender(1)
                         }                    
                     }
+                }
+                if(v!=undefined){
+                    this._parent.remove(this)
                 }
             }
             this._parent= v;           
@@ -787,7 +800,7 @@ export class BVPlus {
 
             //let s=this.par.wN[this._indexW]+"_"+this.par.hN[this._indexH];
             let s=this.par._width+"_"+this.par._depth;
-            trace(s,"   ",this.objObj)
+       
             
             if(this.objObj[s]!=undefined){
 
@@ -803,7 +816,7 @@ export class BVPlus {
                     ad[9]=this.objObj[s].obj.id;
                     ad[10]=1;
                     ad[11]=aa[3]*1; 
-                    trace(ad)
+        
                     return [ad]                 
                 }  
 

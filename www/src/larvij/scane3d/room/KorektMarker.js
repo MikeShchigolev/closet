@@ -27,7 +27,7 @@ export class KorektMarker  {
 
         if(this.debag==true){
             this.deb=new DebbugPixi()          
-            this.w=new DWindow(par.par.par.dCont, 1400, 450,"тест маркеров1");           
+            this.w=new DWindow(par.par.par.dCont, 20, 450,"тест маркеров1");           
             this.w.content.div.appendChild(this.deb.div)
         }
 
@@ -58,10 +58,14 @@ export class KorektMarker  {
         var b
         var kmb
         this.poiskBox=function(child){
-            b=true;            
-            if(child.type=="Sten")b=false;//стенки нафиг
-            if(child.type=="Boki")b=false;//колизии стеложей тоже нафиг
-            if(child.type=="BPieceTop")b=false;//сами стеложи тоже нафиг     
+            b=1;            
+            if(child.type=="Sten")b=0;//стенки нафиг
+            if(child.type=="Boki")b=0;//колизии стеложей тоже нафиг
+            if(child.type=="BPieceTop")b=0;//сами стеложи тоже нафиг   
+
+            if(child.type=="BTBoxVstavka")b=2;//сами стеложи тоже нафиг 
+            //if(child.type=="BTBoxDV")b=2;//сами стеложи тоже нафиг 
+
             if(child.type=="BPieceObject"){
                 if(child.parent == undefined)return
                 if(child.parent.boxColizi == undefined)return  
@@ -80,10 +84,10 @@ export class KorektMarker  {
                 for (var i = 0; i < child.markers.array.length; i++) {
                     this.poiskMarkers(child.markers.array[i])
                 }
-                b=false;
+                b=0;
             }
 
-            if( b==true){
+            if( b==1){
                 kmb=this.getKMB(child)                
                 kmb.setXYWH(
                         child.boxColizi.rectCollisMeshdy.x,
@@ -92,6 +96,18 @@ export class KorektMarker  {
                         child.boxColizi.rectCollisMeshdy.height
                     )
                 kmb.color=0xff0000;
+            }
+
+            if( b==2){
+                kmb=this.getKMB(child)                
+                kmb.setXYWH(
+                        child.boxColizi.rectCollisMeshdy.x+child.parent.x,
+                        -child.boxColizi.rectCollisMeshdy.y+child.parent.height/2,
+                        child.boxColizi.rectCollisMeshdy.width,
+                        child.boxColizi.rectCollisMeshdy.height
+                    )
+                kmb.color=0x0000ff;
+                
             }
 
             if(child.children){

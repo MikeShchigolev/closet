@@ -397,7 +397,7 @@ export class Sten  {
             if(blok.parent!=undefined)blok.parent.remove(blok); 
 
             var isAddedBlok = this.collision.addRect(blok.boxColizi, isNotRemove);
-            trace(isAddedBlok+">>>>>>isAddedBlok>>>>>>>",isNotRemove)
+            
             if (!isAddedBlok) {
                 if(blok.isAddBlokFalse){
                     if(blok.isAddBlokFalse()){

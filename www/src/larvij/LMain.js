@@ -344,8 +344,7 @@ export class KlassCSVObj  {
 	    this.objectBase
 	    var arrxz=[]
 	    this.nz1=function(arr,ddd){ 
-	       	trace(arr);
-	       	trace(ddd);
+	       	
 	        arrxz=[];
 	        var array=[];
 	        for (var i = 0; i < arr.length; i++) {	        	
@@ -357,8 +356,7 @@ export class KlassCSVObj  {
 	        			}
 	        		}	        		
 	        		ddd=ddddd
-	        	}
-	        	trace(i+"   "+ddd)
+	        	}	        	
 
 	            let o={};  
 	            o.id=arr[i][0];          

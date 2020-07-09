@@ -599,6 +599,12 @@ function MBLOt(p,c,x,y,f) {
         for (var i = 0; i < kolObj; i++) {
             this.o.str[i]=this.aStr[i].value;          
         }
+        for (var i = 0; i < 5; i++) {            
+            this.o.plus[i]=this.ap[i].value           
+        }
+        for (var i = 0; i < 5; i++) {            
+            this.o.plus1[i]=this.ap1[i].value           
+        }
         self.fun();
     }    
 
@@ -611,14 +617,7 @@ function MBLOt(p,c,x,y,f) {
         if(this.o[this.keyName]!=undefined)if(this.o[this.keyName].active==false){
             delete this.o[this.keyName]
         }
-        /*if(this.o[this.keyName]==undefined){
-            self.batACreat.text="создать инфу" 
-            self.panel.visible=false;   
-            return
-        }else{
-            self.batACreat.text="удалить инфу";
-            self.panel.visible=true 
-        }*/
+        
 
         for (var i = 0; i < kolObj; i++) {
             if(this.o.bool[i]==0) this.aBool[i].value=false;
@@ -637,6 +636,17 @@ function MBLOt(p,c,x,y,f) {
             if(this.o.str[i]==undefined)this.o.str[i]="0"
             this.aStr[i].value=this.o.str[i];           
         }
+
+        for (var i = 0; i < 5; i++) {
+            if(this.o.plus[i]==undefined)this.o.plus[i]="0"
+            this.ap[i].value=this.o.plus[i];           
+        }
+        for (var i = 0; i < 5; i++) {
+            if(this.o.plus1[i]==undefined)this.o.plus1[i]="0"
+            this.ap1[i].value=this.o.plus1[i];           
+        }
+
+       
 
 
         this.sPriority.value=self.o.priority
@@ -794,6 +804,28 @@ function MBLOt(p,c,x,y,f) {
 
     sah+=50
 
+    this.ap=[];
+    let kp=5
+    ss=0
+    w=(this.panel.width-20)/kp
+    for (var i = 0; i < kp; i++) {
+        this.ap[i]=new DInput(this.panel,this.otstup+i*(w+this.otstup), sah,i+" ",this.drag);
+        this.ap[i].idArr=i
+        this.ap[i].width=w;
+        this.ap[i].height=sahPlus-2;        
+    } 
+    sah+=26
+
+    this.ap1=[];
+
+    for (var i = 0; i < kp; i++) {
+        this.ap1[i]=new DInput(this.panel,this.otstup+i*(w+this.otstup), sah,i+" ",this.drag);
+        this.ap1[i].idArr=i
+        this.ap1[i].width=w;
+        this.ap1[i].height=sahPlus-2;        
+    } 
+    sah+=26
+
     this.height=this.panel.height=sah+this.otstup;
 
 
@@ -857,7 +889,29 @@ function MBLOt(p,c,x,y,f) {
             this.o.mod.r=[0,0,0,0,0,0];
             this.o.mod.r1=[0,0,0,0,0,0];
         }
+
+        //self.o.priority
+
+        if(self.o.priority==undefined){
+            self.o.priority=100
+            b=true
+        }
+        if(self.o.bagY==undefined){
+            self.o.bagY=0
+            b=true
+        }
+
+        trace(self.o)
+        if(self.o.plus==undefined){
+            self.o.plus=["0","0","0","0","0"]
+            self.o.plus1=["0","0","0","0","0"]
+            b=true
+        }
+
         if(b==true)self.fun("saveTime"); 
+
+
+        
 
         /*if(this.o[this.keyName]==undefined){
             this.o[this.keyName]={active:false} 

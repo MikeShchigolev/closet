@@ -134,7 +134,8 @@ export class Blok{
             self.x=self.boxColizi.__x;
             self.y=self.boxColizi.__y;            
             self.content3d.position.x=self.x;
-            self.content3d.position.y=self.y; 
+            self.content3d.position.y=self.y;
+
            
             self.content.x=self.x;
             if(self.durXY)self.durXY(self.x,self.y)
@@ -209,6 +210,7 @@ export class Blok{
 
 
         this.setXYPosit=function(_x,_y){
+           
             self.x=_x;
             self.y=_y;
             self.content3d.position.x=self.x;
@@ -346,7 +348,7 @@ export class Blok{
         this.modelObj
         this.init=function(_obj){
             
-            this.creatBC()
+            this.creatBC();
             this.modelObj=_obj;
             if(self.funInit!=undefined)self.funInit();
 

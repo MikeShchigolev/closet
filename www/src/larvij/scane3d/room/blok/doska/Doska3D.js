@@ -194,7 +194,7 @@ export class Doska3D  {
     		if(!k)k=this._krai;
     		if(!sw)sw=this._sahWidth;
     		if(!srw)srw=this._sahRandomWidth;
-            trace(w,h,d,o,o1,k,sw,srw)
+           
     		this.geometry.restart(w,h,d,o,o1,k,sw,srw);
             this.geometry.update();
     		this.korectBondi();
