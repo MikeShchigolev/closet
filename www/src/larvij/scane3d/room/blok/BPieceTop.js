@@ -293,6 +293,7 @@ export class BPieceTop extends Blok {
         }         
 
         this.dVertic = function(){ 
+            
             this.zz=0
             this.testWWWW();
             this.visiNisu.clearHH();           
@@ -300,9 +301,14 @@ export class BPieceTop extends Blok {
             for (var i = 0; i < this.children.length; i++) {
                 this.visiNisu.testStoik(this.children[i])
             }
+  
 
-            this.heightStart=this.visiNisu.array[0].height;
-            this.heightFinal=this.visiNisu.array[this.visiNisu.maxSah].height;            
+            if(this.visiNisu.array[0]!=undefined){
+                this.heightStart=this.visiNisu.array[0].height;
+                this.heightFinal=this.visiNisu.array[this.visiNisu.maxSah].height; 
+            }
+            
+
             var ww=this.visiNisu.xMax-this.visiNisu.xMin; 
             this.visiBPT.zdvigX(0); 
             this.testWWWW();
@@ -359,7 +365,7 @@ export class BPieceTop extends Blok {
 
         var point=new Position()  
         var _bObj      
-        this.testPosition= function(_x, _y, _obj,grY){
+        this.testPosition= function(_x, _y, _obj,grY, _bSort){
             var gy=0
             if(grY!=undefined)gy=grY
             if(_x!=null){
@@ -374,7 +380,7 @@ export class BPieceTop extends Blok {
                 if(point.y>0)point.y=0 
             }
             
-            _bObj=this.visiNisu.testPosition(point, _obj)
+            _bObj=this.visiNisu.testPosition(point, _obj,_bSort)
 
             if(_x==null&&_bObj!=null){
                 _obj.boxColizi.rectCollisMeshdy.x=_bObj.x-_bObj.z/2;
@@ -743,22 +749,48 @@ export class VisiNisu {
             }
         }
 
+        
+        function compareNumbers(a, b) {
+            return a.x - b.x;
+        }
+
+
+        var ppp=0
+        var oneSort=false
+        this.testSortingPosit = function(point, _obj){
+            ppp=-1;
+            for (var i = 0; i < this.array.length-1; i++) { 
+                if(this.array[i].x>this.array[i+1].x){                     
+                    ppp++
+                    break
+                }
+            }
+            if(ppp==-1)return true
+
+            if(oneSort==true) return true 
+
+            this.sort()
+            //this.array.sort(compareNumbers) 
+            return false     
+        }
+
+
         //пигаем ночальную точку///////////////////////////////////////////
         this.position=new Position()
         this.position=new Position()
-        this.testPosition = function(point, _obj){                               
-            if(point.y>10)return null;
+        this.testPosition = function(point, _obj, _bSort){ 
+                                        
+            if(point.y>30)return null;
             if(point.y>0)point.y=0;           
             //тест на не сортировку
+
+            if(_bSort!=undefined){
+                
+                let r=this.testSortingPosit();                
+            }
+           
             
-            
-            /*for (var i = 0; i < this.array.length-1; i++) { 
-                if(this.array[i].x>this.array[i+1].x){  
-                    trace("------::----------------------------");                  
-                    this.sort();
-                    break
-                }
-            }*/
+           
 
 
             for (var i = 0; i < this.array.length-1; i++) {                
@@ -1265,22 +1297,19 @@ export class VNB {
         
         this.hron=new BKHron(this, 166, 1,this.par.par.mO)
         this.hron.initHron=function(){
-            console.warn("@@@===========");
+            
             self.dragCont();
             self.draw();            
-            //self.par.par.mO.dragPriceScane(); 
-           /* setTimeout(function() {
-                self.par.par.mO.dragPriceScane(); 
-            }, 1000);*/
-            /*self.par.par.mO.dragPriceScane();*/
-            
+            self.par.par.mO.dragPriceScane(); 
+          
         }
         
         
 
         var hhh
         this.testHH=function(blok){
-            hhh=-blok.boxColizi.rectCollisMeshdy.y-blok.yF-blok.boxColizi.rectCollisMeshdy.height/2+this.par.oPod            
+            hhh=-blok.boxColizi.rectCollisMeshdy.y-blok.yF-blok.boxColizi.rectCollisMeshdy.height/2+this.par.oPod  
+                  
             if(hhh>this.height){                
                 this.height=hhh;
             } 
@@ -1343,7 +1372,7 @@ export class VNB {
             this.testHHHH(); 
             if(this.marker==undefined)return;
             if(this.hron.obj3d==undefined)return;
-
+            console.warn(">>>"+this._height+":::"+this._height1) 
             for (var i = 0; i < this.array.length; i++) {
                 this.array[i].visible=false
             }            
@@ -1363,8 +1392,8 @@ export class VNB {
             if(this.kolSahArr.array.length>1){
                 vv1=0
                 for (i = 0; i < this.kolSahArr.array.length-1; i++) {
-                    vv1+=this.kolSahArr.arrayParam[this.kolSahArr.array[i]];                   
-                    mesh=this.hron.get();
+                    vv1+=this.kolSahArr.arrayParam[this.kolSahArr.array[i]];                                     
+                    mesh=this.hron.get();                    
                     mesh.position.y=-vv1;
                 }
             }            
@@ -1400,6 +1429,7 @@ export class VNB {
         var mxP
         this.testHHHH=function(){
             this.kolSahArr.set(this._height);
+            
             this._height1=this.kolSahArr.value;
             this.testWord()
         } 
@@ -1416,8 +1446,9 @@ export class VNB {
             point.x=this.par.par.boxColizi.position._x+this.x
             point.y=this.par.par.boxColizi.position._y;
             yy=point.y+this._height1            
-            if(point.y-this._height1-this.par.minusPanel <0){
-                this._height1=point.y-0.1 -this.par.minusPanel             
+            if(point.y-this._height1-this.par.minusPanel <0){                
+                this._height1=point.y-0.1 -this.par.minusPanel  
+                
             }
 
             for (var i = 0; i < sten.collision.arrRect.length; i++) {     
@@ -1447,8 +1478,9 @@ export class VNB {
                         if(this._height1>point2.y)  this._height1=point2.y;                        
                     }                       
                 } 
-                this._height1=Math.round(this._height1)
-            }            
+                this._height1=Math.round(this._height1)   
+            }
+                     
         }
 
 
@@ -1477,20 +1509,7 @@ export class VNB {
                 aaa[8]=info.obj;
                 aaa[9]=info.obj.id;
                 a.push(aaa)
-                /*trace(j,info)
-                aaa=[]; 
-                pp=this.kolSahArr.array[j];
-                trace("===",pp)
-                trace("===",menedsherMaterial.getArrOtObj(this.aInfo[pp].obj,idMat,intColor))
-                let aa=menedsherMaterial.getArrOtObj(this.aInfo[pp].obj,idMat,intColor)  
-                for (var i = 0; i < this.aInfo[pp].obj[pn].length; i++) {
-                    trace(i+"  ",this.aInfo[pp].obj[pn])
-                    aaa[i]=this.aInfo[pp].obj[pn][i];
-                }
-                aaa[8]=this.aInfo[pp].obj;
-                aaa[9]=this.aInfo[pp].obj.id;*/
-
-               // a.push(aaa)
+              
             }
 
 
@@ -1510,8 +1529,9 @@ export class VNB {
                 }
             }
 
-            this.hron.init();
+            
         }
+        this.hron.init();
     }
 
     set visible(v) {  
@@ -1559,47 +1579,34 @@ export class KolSahArr {
         this.set=function(num){
             this.array=[];
             this.value=0
+
             this.num=num; 
             let nnn=num+this.dopHH
 
             kk=nnn/this.arrayParam[this.arrayParam.length-1];
             kk2=Math.floor(kk);
+
+            
+
             for (var i = 0; i < kk2; i++) {                
                 this.array.push(this.arrayParam.length-1)
                 this.value+=this.arrayParam[this.arrayParam.length-1];
             }
+
             if(kk==kk2){//идеально длинными
                 return;
             }            
             vm=0;
             for (var i = this.arrayParam.length-1; i >=0; i--) {                
-                if(this.value+this.arrayParam[i]>nnn)vm=i
+                let pp=   (this.value+this.arrayParam[i]+this.dopHH)                           
+                if(pp>=nnn)vm=i
             }            
             this.array.push(vm)
-            this.value+=this.arrayParam[vm];
+            this.value+=this.arrayParam[vm];            
         }
 
 
-        /*this.set=function(num){
-            this.array=[];
-            this.value=0
-            this.num =num;            
-            kk=num/this.arrayParam[this.arrayParam.length-1];
-            kk2=Math.floor(kk);
-            for (var i = 0; i < kk2; i++) {                
-                this.array.push(this.arrayParam.length-1)
-                this.value+=this.arrayParam[this.arrayParam.length-1];
-            }
-            if(kk==kk2){//идеально длинными
-                return;
-            }            
-            vm=0;
-            for (var i = this.arrayParam.length-1; i >=0; i--) {                
-                if(this.value+this.arrayParam[i]>num)vm=i
-            }            
-            this.array.push(vm)
-            this.value+=this.arrayParam[vm];
-        }*/
+
 
         var o
         this.toString=function(){

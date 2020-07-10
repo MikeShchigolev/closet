@@ -123,7 +123,7 @@ export class BPieceObject extends Blok {
         var b;//приходит позиции от колайдера        
         this.setXY=function(_x,_y){            
             b=this.testObject(_x,_y);  
-                    
+                  
             if(b==false){
                 if(this.parent!=undefined){
                     if(this.bSort==true){
@@ -229,7 +229,8 @@ export class BPieceObject extends Blok {
         this.dragStart=function(){
             this.bds=true; 
             this.arrDerag=[]
-            this.parent.sWidth= this.parent._W          
+            this.parent.sWidth= this.parent._W  
+            console.warn("bds  dragStart true")        
         }
 
 
@@ -257,6 +258,7 @@ export class BPieceObject extends Blok {
             }
             mO.dragPriceScane()
             this.bds=false;
+            console.warn("bds  stopDrag false")
         }
 
 
@@ -284,6 +286,7 @@ export class BPieceObject extends Blok {
                     p.parent.remove(p)
             }
             this.bds=true
+            console.warn("bds  vuruvaemVcovlaem true")
             pt.add(this);
         }
 
@@ -292,13 +295,15 @@ export class BPieceObject extends Blok {
         var bxx,popo, vb, xz,xz1;
         this.testObject=function(_x,_y){           
             aS=mO.par.sten;
+            trace(this.bds)
             if(this.bds==true){                
                 if(this.parent!=undefined){                 
                     popo=this.testObject2(_x,_y)
-                    
+                    trace("popo::",popo)
                     vb=false;    
                     if(popo==null){
-                        this.bds=false;                        
+                        this.bds=false; 
+                        console.warn("bds  @@@@@@@@@@@@ false")                       
                         return true; 
                     }else{
                         if(popo.idRandom!=this.parent.idRandom){                            
@@ -345,6 +350,7 @@ export class BPieceObject extends Blok {
                 if(this.parent!=undefined){                    
                     if(mO.pieceTop.idRandom==this.parent.idRandom){
                         if(this.parent.boolDragLip==true){
+                            trace("-1--")
                             popo=this.testObject2(_x,_y)
                             if(popo==null){
                                 return true
@@ -368,6 +374,7 @@ export class BPieceObject extends Blok {
                 if(aS.children[i].type=="BPieceTop"){
                     if(aS.children[i].idRandom!=mO.pieceTop.idRandom)                  
                     if(aS.children[i].idRandom!=this.parent.idRandom){
+                        
                         bxx=aS.children[i].testPosition(_x, _y, this);
                         if(bxx!=null){                            
                             this.vuruvaemVcovlaem(bxx, aS.children[i]);
@@ -384,7 +391,8 @@ export class BPieceObject extends Blok {
             if(this.parent!=undefined)
             for (var i = 0; i < aS.children.length; i++) {                
                 if(aS.children[i].type=="BPieceTop"){                    
-                    bxx=aS.children[i].testPosition(_x, _y, this)                        
+                    bxx=aS.children[i].testPosition(_x, _y, this,undefined,true) 
+                    trace(i+"bxx",bxx)                       
                     if(bxx!=null){                           
                         if(aS.children[i].bxx==undefined)aS.children[i].bxx=new Position()
                         aS.children[i].bxx.x=bxx.x;
@@ -710,7 +718,9 @@ export class BPieceObject extends Blok {
 
     set parent(v) {
         if(this._parent!=v){
+
             this.parOld=this._parent
+            console.warn("=====",this._parent,v)
             if(this.dragParentDo) this.dragParentDo(this._parent, v)   
             this._parent= v; 
             if(this._parent==undefined){
@@ -872,19 +882,12 @@ export class BKrai {
 
             if(this._intSah!=-1){
                 aaa = menedsherMaterial.getArrOtObj(this.arrHron[this._intSah].object.obj,idMat,intColor)
-                //trace(">>",this.arrHron[this._intSah].object.obj)
-               // trace(">",aaa)
-                //if(this.arrHron[this._intSah].object.obj[strXZ]!=undefined){
-                    /*aaa=[] 
-                   
-                    for (var i = 0; i < this.arrHron[this._intSah].object.obj[strXZ].length; i++) {
-                        aaa[i]=this.arrHron[this._intSah].object.obj[strXZ][i]
-                    }*/
+              
                    
                     aaa[9]=this.arrHron[this._intSah].object.obj.id;
                     aaa[8]=this.arrHron[this._intSah].object.obj;
                     a.push(aaa)                   
-                //}
+               
                 
 
 
@@ -892,10 +895,7 @@ export class BKrai {
                 if(this.par._polka==false)                    
                 if(this._intSah==0){
                     aaa = menedsherMaterial.getArrOtObj(this.hronPlus.object.obj,idMat,intColor)
-                    /*aaa=[] 
-                    for (var i = 0; i < this.hronPlus.object.obj[strXZ].length; i++) {
-                        aaa[i]=this.hronPlus.object.obj[strXZ][i]
-                    }*/
+                   
 
                     aaa[5]=0
                     aaa[6]=1
@@ -1672,7 +1672,7 @@ export class PPPObj {
         this.up1=new UP1(this);      
         
 
-        trace(this.par.object.num)
+       
         if(this.par.object.num[3]+""!="0"){ 
             this.bool=true;            
         }else{
@@ -1690,7 +1690,7 @@ export class PPPObj {
 
         if(this.par.object.num[3]=="55"){
             //this.bool=false;
-            trace("##",main.glaf.up1)
+           
             if(main.glaf.up1==true){//Включена смена 55 up1
                 this.up1.init();
             }
@@ -1713,7 +1713,7 @@ export class PPPObj {
             
             if(c3d.material){                
                 c3d.material=m;
-                trace(c3d)
+                
             }
             if(c3d.children){
                 for (var i = 0; i < c3d.children.length; i++) {

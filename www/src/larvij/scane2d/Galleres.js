@@ -215,8 +215,12 @@ export class Galleres  {
             var aa=this.objectBase.three[0].array; 
             var a=[]
             for (var i = 0; i < aa.length; i++) {
-                if(aa[i].bool==true){
-                    a.push(aa[i]);
+                if(aa[i].bool==undefined){  
+                    a.push(aa[i]);  
+                }else{
+                    if(aa[i].bool==true){ 
+                        a.push(aa[i]);
+                    }
                 }
             }
             this.arrayBD=a

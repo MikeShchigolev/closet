@@ -60,6 +60,10 @@ export class Menedsher  {
         this.mPanel = new THREE.Mesh(new THREE.BoxBufferGeometry(this.whDrag,this.whDrag,0.001),this.matNull);
         this.mPanel.layers.set(31);
 
+        //this.mPNa = new THREE.Mesh(new THREE.BoxBufferGeometry(this.whDrag,this.whDrag,0.001),this.matNull1);
+        //this.mPanel.layers.set(31);
+
+
         this.mPanel1 = new THREE.Mesh(new THREE.BoxBufferGeometry(this.whDrag,this.whDrag,0.001),this.matNull1);
         this.mPanel1.layers.set(31);
 
@@ -139,8 +143,7 @@ export class Menedsher  {
 
         this.start=function(obj){  
                     
-            this.stop();
-            trace("start")  
+            this.stop();             
             this.visi3D.position3d.pause=true;
             this.par.name3d='xzPoisk';            
             this.object=obj;
@@ -148,7 +151,7 @@ export class Menedsher  {
             this.object.activObject=true;            
             this.menedsherObject.activIndex=this.object.idArr
             if(this.object.tsSet)this.object.tsSet();           
-            trace(this.object)     
+                 
             this.visi3D.addEvent("move", this.move);
             if (dcmParam.mobile==false)document.addEventListener("mouseup", self.mouseup);
             else document.addEventListener("touchend", self.mouseup);
@@ -157,10 +160,17 @@ export class Menedsher  {
 
         
         this.stop=function(){  
-            trace("stop")            
+                    
             this.par.pozZdvigAll(0)
             this.pointZdvig.set(0,0,0)
-            if(self.mPanel.parent!=undefined) self.mPanel.parent.remove(self.mPanel) 
+            if(self.mPanel.parent!=undefined) {
+                self.mPanel.parent.remove(self.mPanel)                 
+            }
+            /*if(self.mPNa.parent!=undefined) {
+                self.mPNa.parent.remove(self.mPNa)                 
+            }*/
+
+
             if(this.object)if(this.object.stopDrag!=undefined)this.object.stopDrag()
             this.visi3D.position3d.pause=false;
             if(this.object)if(this.object.parent==undefined)this.object.clear();
@@ -242,7 +252,8 @@ export class Menedsher  {
 
             if(e)if(e.target){
                 if(e.target.sten){  
-                    if(self.mPanel1.parent!=undefined) self.mPanel1.parent.remove(self.mPanel1)            
+                    if(self.mPanel1.parent!=undefined) self.mPanel1.parent.remove(self.mPanel1)
+
                     self.sten=undefined
                     if(self.object!=undefined){//разруливаем тоскаемый элемент                    
                         if(self.object.parent!=undefined){  
@@ -424,9 +435,28 @@ export class Menedsher  {
                     this.mPanel.position.z=this.par.niz.ww/2-e.point.x
                 }
 
-                b.parent.content3d.add(this.mPanel);
+                b.parent.content3d.add(this.mPanel);                
                 this.pointZdvig.x=b.content3d.position.x
                 this.pointZdvig.y=b.content3d.position.y
+
+                //нижний уровень что бы снизу как бы по полу
+                //this.whDrag
+                /*let ott=200;
+                if(b.parent){
+                    if(b.parent.type=="Sten"){
+                        
+                    }
+                }
+                b.parent.content3d.add(this.mPNa);
+                this.mPNa.position.x=this.mPanel.position.x
+                this.mPNa.rotation.x=Math.PI/2
+                this.mPNa.position.z=ott/2
+                this.mPNa.scale.y=ott/this.whDrag
+                trace("@@@@@@@@@",this.pointZdvig,b.parent)*/
+
+
+                /////////////////////
+
             }else{
                 if(b.parent.parent.pozZdvig!=undefined){
                     stenDown=b.parent.parent;
@@ -475,6 +505,9 @@ export class Menedsher  {
                     b.parent.parent.content3d.add(this.mPanel);
                     this.pointZdvig.x=b.content3d.position.x+b.parent.content3d.position.x
                     this.pointZdvig.y=b.content3d.position.y+b.parent.content3d.position.y
+
+
+                    //b.parent.content3d.add(this.mPNa);
 
                 }
             }
