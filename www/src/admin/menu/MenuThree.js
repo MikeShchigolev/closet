@@ -257,7 +257,7 @@ function MenuThree(menu, fun) {
                     s=true
                 }
                 if(this.gallery.array[this._index].object.bool==undefined){
-                    this.gallery.array[this._index].object.bool=false
+                    this.gallery.array[this._index].object.bool=true
                     s=true
                 }
                 this.input.text=this.gallery.array[this._index].object.keyName

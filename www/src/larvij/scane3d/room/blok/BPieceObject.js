@@ -720,7 +720,7 @@ export class BPieceObject extends Blok {
         if(this._parent!=v){
 
             this.parOld=this._parent
-            console.warn("=====",this._parent,v)
+           
             if(this.dragParentDo) this.dragParentDo(this._parent, v)   
             this._parent= v; 
             if(this._parent==undefined){

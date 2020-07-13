@@ -527,6 +527,7 @@ export class SaveModel  {
         this.json ='{"color":"#ffffff","children":[{"type":"Sten","width":300,"height":275,"active":false,"children":[]},{"type":"Sten","width":300,"height":275,"active":true,"children":[{"type":"BPieceTop","id":14,"x":72.94569430772117,"y":186.2014636180158,"children":[{"type":"BPieceObject","id":39,"x":0,"y":1.4255789905515641,"intSah":0,"intSah1":0,"polka":false,"children":[],"idColor":"m_8"}]}]},{"type":"Sten","width":300,"height":275,"active":false,"children":[]}]}'
         
         this.setModel=function(strObj){
+            trace(">>>>>>=@>>>>",this.par.par.par)
             var o = JSON.parse(strObj);
             self.textArae.text=strObj;             
             self.setObj(o);                

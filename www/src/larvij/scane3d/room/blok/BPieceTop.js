@@ -112,6 +112,23 @@ export class BPieceTop extends Blok {
                 this.namaNama(rr.idArr)
             }            
         }
+
+        this.clear = function (b) { 
+            if(this._parent&&b==undefined){                
+                this._parent.remove(this);              
+            } 
+            if(this.children.length!=0) {
+                for (var i = this.children.length - 1; i >= 0; i--) {
+                    this.remove(this.children[i])
+                }
+            }  
+            this.bptColiz.clearBig(); 
+            this.visiNisu.clearHH() 
+
+            this.mO.dragPriceScane() 
+            
+            trace("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")                 
+        };
         
 
         this.objts=undefined;
@@ -456,11 +473,34 @@ export class BPieceTop extends Blok {
         }
         //////////////////////////////////////////////////////////////
 
+
+        this.getObj = function(){
+            var obj={}
+            obj.type=this.type;
+            obj.id=this.id;
+            obj.x=self.content3d.position.x;
+            obj.y=self.content3d.position.y;
+            
+            obj.children=[];
+            for (var i = 0; i < this.children.length; i++) {
+                obj.children[i]=this.children[i].getObj();
+            }
+
+            obj.visiNisu=this.visiNisu.getObj()
+
+            return obj;            
+        }
+
+
         this.boolY=true;
         var ob,ooo
         this.setObj = function(obj){
             this.boolY=false;                  
-            this.setXYPosit(obj.x,obj.y);           
+            this.setXYPosit(obj.x,obj.y);
+
+            
+
+
 
             for (var i = 0; i < obj.children.length; i++) {               
                 ooo= mO.getIdObj(obj.children[i].id)                               
@@ -468,20 +508,24 @@ export class BPieceTop extends Blok {
                 ob.setObj(obj.children[i])                
                 this.add(ob, true);
             }
+            if(obj.visiNisu!=undefined){
+                this.visiNisu.setObj(obj.visiNisu)
+            }
+
             this.boolY=true;
             self.testWWWW();
            /* self.dVertic();  
             self.visiNisu.sort()
             this.dtagTime()*/
 
-            this.drahShadow(obj.x,obj.y) 
+            this.drahShadow(obj.x,obj.y); 
            
 
 
         }
 
         this.dtagTime = function(t){  
-            if(t==0){
+           /* if(t==0){
                 this.visiNisu.sort()                    
                 this.dVertic()
                 this.dragCildren() 
@@ -495,7 +539,7 @@ export class BPieceTop extends Blok {
                         tStyle.glaf.visi3D.intRend=1;
                     }
                 }, t);
-            }            
+            } */           
         }
     }
 
@@ -784,8 +828,7 @@ export class VisiNisu {
             if(point.y>0)point.y=0;           
             //тест на не сортировку
 
-            if(_bSort!=undefined){
-                
+            if(_bSort!=undefined){                
                 let r=this.testSortingPosit();                
             }
            
@@ -1232,6 +1275,34 @@ export class VisiNisu {
                 }
             }
         }
+
+
+        this.getObj = function(){
+            var obj={}
+            obj.array=[]
+            for (var i = 0; i < this.array.length; i++) {
+                if(this.array[i].visible!=false)obj.array.push({x:this.array[i].x,h:this.array[i].height,h1:this.array[i].height1})
+            }
+
+            return obj;            
+        }
+
+
+        this.boolY=true;
+        var ob,ooo
+        this.setObj = function(obj){
+            
+            this.clearHH()
+            for (var i = 0; i < obj.array.length; i++) {
+                let vb=this.creat(obj.array[i].x)
+                vb.x=obj.array[i].x
+                vb.height=obj.array[i].h
+                vb.height1=obj.array[i].h1
+                vb.visible=true
+            }
+            trace(obj)
+
+        }
     }
 }
 
@@ -1308,8 +1379,7 @@ export class VNB {
 
         var hhh
         this.testHH=function(blok){
-            hhh=-blok.boxColizi.rectCollisMeshdy.y-blok.yF-blok.boxColizi.rectCollisMeshdy.height/2+this.par.oPod  
-                  
+            hhh=-blok.boxColizi.rectCollisMeshdy.y-blok.yF-blok.boxColizi.rectCollisMeshdy.height/2+this.par.oPod                  
             if(hhh>this.height){                
                 this.height=hhh;
             } 
@@ -1361,6 +1431,7 @@ export class VNB {
             for (var i = 0; i < this.array.length; i++) {
                 this.array[i].visible=false;                 
             }
+
         }
 
 
@@ -1372,7 +1443,7 @@ export class VNB {
             this.testHHHH(); 
             if(this.marker==undefined)return;
             if(this.hron.obj3d==undefined)return;
-            console.warn(">>>"+this._height+":::"+this._height1) 
+            
             for (var i = 0; i < this.array.length; i++) {
                 this.array[i].visible=false
             }            
@@ -1486,7 +1557,7 @@ export class VNB {
 
 
         this.getPrice=function(a, intColor,idMat){            
-            var pn="plus"
+            var pn="plus";
             if(intColor==1)pn="plus1";
            /* for (var j = 0; j < this.kolSahArr.array.length; j++) {
                 //aaa=[]; 
@@ -1537,6 +1608,7 @@ export class VNB {
     set visible(v) {  
         if(this._visible!=v) {
             this._visible=v;
+            console.warn(v)
             this.content3d.visible=this._visible;
             this.content.visible=this._visible;
         }                

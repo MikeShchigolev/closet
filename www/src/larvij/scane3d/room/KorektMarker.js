@@ -99,14 +99,17 @@ export class KorektMarker  {
             }
 
             if( b==2){
-                kmb=this.getKMB(child)                
-                kmb.setXYWH(
-                        child.boxColizi.rectCollisMeshdy.x+child.parent.x,
-                        -child.boxColizi.rectCollisMeshdy.y+child.parent.height/2,
-                        child.boxColizi.rectCollisMeshdy.width,
-                        child.boxColizi.rectCollisMeshdy.height
-                    )
-                kmb.color=0x0000ff;
+                if(child.parent){
+                    kmb=this.getKMB(child)                
+                    kmb.setXYWH(
+                            child.boxColizi.rectCollisMeshdy.x+child.parent.x,
+                            -child.boxColizi.rectCollisMeshdy.y+child.parent.height/2,
+                            child.boxColizi.rectCollisMeshdy.width,
+                            child.boxColizi.rectCollisMeshdy.height
+                        )
+                    kmb.color=0x0000ff;
+                }
+                
                 
             }
 

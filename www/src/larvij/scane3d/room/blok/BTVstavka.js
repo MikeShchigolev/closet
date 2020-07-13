@@ -203,7 +203,11 @@ export class BTVstavka extends Blok {
         }
 
 
-        this.stopDrag=function(){             
+        this.stopDrag=function(){  
+            if(this.parent ==undefined){
+                this.mO.dragPriceScane()   
+                return   
+            }           
             if(this.parent.idRandom==mO.blokTumba.idRandom){                
                 this.parent.remove(this);
                 var cop=mO.getBlok(mO.blokTumba.object)
@@ -296,13 +300,27 @@ export class BTVstavka extends Blok {
                 
             return [ad]
         }
+
+
+        this.dCol = function () {           
+            self.x=0//self.boxColizi.__x;
+            self.y=self.boxColizi.__y;            
+            self.content3d.position.x=0//self.x;
+            self.content3d.position.y=self.y;
+           
+           
+            self.content.x=self.x;
+            if(self.durXY)self.durXY(self.x,self.y)
+            self.dCol2();           
+        }
+
     }
 
 
 
     set parent(v) {
         if(this._parent!=v){ 
-            trace("p",v)                   
+            trace("::@==",this.idArr,v)                   
             if(this._parent!=undefined){
                 if(this._parent.type=="BTumba"){
                     if(this._parent.content){                        
@@ -313,7 +331,11 @@ export class BTVstavka extends Blok {
                 }
             }
 
-            this._parent= v;             
+            if(this._parent!=undefined && v!=undefined){
+                this._parent.remove(this)
+            }
+
+            this._parent = v;             
             if(this._parent==undefined){
                 this.collision=undefined
                 this.mO.visi3D.event3DArr.removeChild(this.c3dNa);

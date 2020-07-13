@@ -127,8 +127,7 @@ export class Galleres  {
         }
 
 
-        this.down=function(){ 
-                    
+        this.down=function(){                     
             if(this.idArr==0){
                 self.index=this.index;
                 self.array[3].visible=false;
@@ -199,45 +198,71 @@ export class Galleres  {
             self.boolFinDrag=true;
         }
 
+       
+        this.otrezatBool=function(ooo){
+            if(ooo.array!=undefined && ooo.array.length){
+
+                for (var i = ooo.array.length-1; i >=0 ; i--) {
+                    let bbtb=false    
+                    if(ooo.array[i].bool==undefined)ooo.array[i].bool=true 
+                    if(ooo.array[i].bool==false)bbtb=true
+                    if(bbtb==true){
+                        ooo.array.splice(i,1)
+                    }else{
+                        this.otrezatBool(ooo.array[i])
+                    }
+
+                      
+                }
+
+            }
+        }
+
+
         this.arrayBD=[]
         this.array1Bat=[]
         //this.wh0=60 
         this.init=function(){
             if(this.array!=undefined)return;
             this.array=[]
-            var b=true
+
+
+            //0 главная ветка 
+            this.otrezatBool(this.objectBase.three[0])
+            this.arrayBD=this.objectBase.three[0].array; 
+
+           /* var a=[]
+            for (var i = 0; i < aa.length; i++) {
+                if(aa[i].bool==undefined)aa[i].bool=true                
+                if(aa[i].bool==true){ 
+                    a.push(aa[i]);
+                }                
+            }
+            this.arrayBD=a */          
+            if(this.arrayBD.length==0)return
+
+
+
+            var b=true            
             for (var i = 0; i < 4; i++) {
                 b=true
                 this.array[i]=new GalleryXZ(this.dCont,0,0,this.down)
                 this.array[i].idArr=i;
             }
-            //0 главная ветка            
-            var aa=this.objectBase.three[0].array; 
-            var a=[]
-            for (var i = 0; i < aa.length; i++) {
-                if(aa[i].bool==undefined){  
-                    a.push(aa[i]);  
-                }else{
-                    if(aa[i].bool==true){ 
-                        a.push(aa[i]);
-                    }
-                }
-            }
-            this.arrayBD=a
-            trace(this.arrayBD)
+            
 
 
             this.array[0].kolII=1;
             this.array[0].widthPic=75+2;
             this.array[0].heightPic=75+2;
             this.array[0].width=this.otstup*2+77;
-            this.array[0].height=this.otstup+(77+this.otstup)*a.length;
+            this.array[0].height=this.otstup+(77+this.otstup)*this.arrayBD.length;
             this.array[0].x=this.widthBig;
             this.array[0].y=-this.otstup;
             this.array[0].otstup=this.otstup; 
             this.array[0].finalLink=this.linkF
             this.array[0].boolScale=this.boolScale;
-            this.array[0].start(a); 
+            this.array[0].start(this.arrayBD); 
             this.array[0].panel.visible=false
 
             //1 подветка            
@@ -303,7 +328,8 @@ export class Galleres  {
 
         
 
-        this.reDrag = function(){  
+        this.reDrag = function(){
+            if(this.array.length==0) return 
             if(this._colorBool==true){
                 this.array[1].y=-this.otstup;
             }else{               
@@ -407,6 +433,10 @@ export class Galleres  {
             }
             this._colorBool = true;
             this.array[0].index=this._index;
+
+            trace(this.object.array)
+
+
             this.array[1].start(this.object.array);
             this.reDrag();
         }

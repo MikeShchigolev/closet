@@ -566,12 +566,12 @@ export class Menedsher  {
             if(this.testLoad()==true){
                 this.setObjPostLoad(); 
             } 
-            
+            self.dragPriceScane();
             for (var i = 0; i < 10; i++) {
                 setTimeout(function() {
                     self.dragPriceScane()
                 }, i*750);
-            }          
+            }         
         }
 
         this.testLoad=function(f){ 
