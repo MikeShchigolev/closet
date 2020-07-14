@@ -55,5 +55,17 @@
         "N",
         "N"
     ],
-    "priority": 0
+    "priority": 0,
+    "param": {
+        "tOt": false,
+        "tNa": false,
+        "rO": -1,
+        "kesh": false,
+        "sG": false,
+        "clone": true
+    },
+    "bagY": 0,
+    "resurs": {
+        "array": []
+    }
 }

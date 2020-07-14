@@ -271,13 +271,21 @@ function FotoDrag(fun) {
     }
 
     this.na=function( num, tip){   
+        
+        if(typeof num =="string"){
+            
+            canvas.width = image1.naturalWidth;
+            canvas.height = image1.naturalHeight;
+        }else{
+            canvas.width = num;
+            canvas.height = num;
+        }
+        
 
-        canvas.width = num;
-        canvas.height = num;
-        ctx.clearRect(0, 0, num, num);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         //ctx.drawImage(image, 0, 0, num, num);
-        if(self.bool)ctx.drawImage(image1, 0, 0, num, num);
-        ctx.drawImage(image, 0, 0, num, num);
+        if(self.bool)ctx.drawImage(image1, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
      
        // ctx.drawImage(image, 0, 0, num, num);

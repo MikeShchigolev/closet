@@ -30,6 +30,23 @@ export class DrahHelp3D  {
             for (var i = 0; i < this.array.length; i++) {
                 this.array[i].testBlok(blok);
             }
+            let b=undefined
+            for (var i = 0; i < this.array.length; i++) {
+                if(this.array[i].active==false){
+                    b=this.array[i]
+                    break
+                }
+            }
+
+
+            if(b==undefined){
+                b=new BoxDH3D(this)
+                this.array.push(b)
+            }
+
+            b.set(blok)
+
+            
 
         }
 
@@ -37,7 +54,6 @@ export class DrahHelp3D  {
 
         this.upDate=function() {
             if(this.active==false)return;
-
 
             trace("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
         }
@@ -54,8 +70,37 @@ export class BoxDH3D  {
         this.par=par;
         this.fun=fun;
 
+        this.blok=undefined
 
         this.testBlok=function(blok) {
+
+        }
+
+
+        this.set=function(blok) {
+            this.blok=blok
+
+           /* trace(blok);
+            for (var i = 0; i < this.array.length; i++) {
+                this.array[i].testBlok(blok);
+            }
+            let b=undefined
+            for (var i = 0; i < this.array.length; i++) {
+                if(this.array[i].active==false){
+                    b=this.array[i]
+                    break
+                }
+            }
+
+
+            if(b==undefined){
+                b=new BoxDH3D(this)
+                this.array.push(b)
+            }
+
+            b.set(blok)*/
+
+            
 
         }
     }
