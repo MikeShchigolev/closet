@@ -39,8 +39,11 @@ export class Galleres  {
         this.indexOld2=0
         var oo;
         this.boolScale=true
-        this.linkF="original.png"//"256.png"//
 
+        this.linkF="original.png"//"256.png"//
+        if(tStyle.glaf.debug==true){
+            this.linkF="256.png"//
+        }
 
 
         this.clik111=function(){
