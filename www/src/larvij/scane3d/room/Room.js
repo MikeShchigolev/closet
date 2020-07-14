@@ -15,6 +15,8 @@ import { GeometrySten } from './GeometrySten.js';
 
 import {VisiActiv } from './VisiActiv.js';
 
+import { DrahHelp3D } from './DrahHelp3D.js';
+
 export class Room  {
     constructor(scane3d, fun) {         
         this.type="Room";
@@ -87,6 +89,8 @@ export class Room  {
         this.visiActiv=new VisiActiv(this);
 
 
+        this.drahHelp3D=new DrahHelp3D(this);
+
         var dd=0.5
         this.visiActiv.vaBox.rect3d.x=-dd
         this.visiActiv.vaBox.rect3d.y=-dd
@@ -96,7 +100,9 @@ export class Room  {
         this.visiActiv.vaBox.rect3d.h=dd*2
         this.visiActiv.vaBox.rect3d.d=dd*2
 
-
+        this.upDate=function(){
+            this.drahHelp3D.upDate()
+        }
 
         this.clearScane = function(){
             this.menedsher.menedsherObject.clear()
@@ -145,13 +151,7 @@ export class Room  {
             if(o.visiMark!=undefined) this.visiMark=  o.visiMark;            
             this.menedsher.setObj(o); 
             this.niz.setObj(o.niz);        
-            this.par.par.scane2d.stens.setOt();
-
-           /* setTimeout(function() {
-                self.menedsher.dragPriceScane();
-            }, 1000);*/
-
-                      
+            this.par.par.scane2d.stens.setOt();       
         }
 
         this.vect=new THREE.Vector2()

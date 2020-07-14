@@ -52,7 +52,7 @@ export class Scane3d  {
 
         this.unDate=function(){
             if(glaf.scane2d.boolMenuActiv==false)tStyle.obj3dGron.drag()
-            
+            this.room.upDate();
         }
 
         this.ss=1

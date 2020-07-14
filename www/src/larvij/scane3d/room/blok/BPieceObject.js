@@ -546,6 +546,7 @@ export class BPieceObject extends Blok {
         this.getPrice=function(intColor, idMat){
             aaa=[];
             aa=null;
+            if(this.bvColor==false)return aaa
             
             aa=menedsherMaterial.getArrOtObj(this.object,idMat,intColor)     
 

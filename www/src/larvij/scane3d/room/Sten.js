@@ -27,6 +27,7 @@ export class Sten  {
         this.idArr=idArr;
         this.par=room;
         this.pointOld=new Position()
+        
         this._width=200;
         this._height=20;
 

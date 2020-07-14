@@ -60,8 +60,9 @@ export class Blok{
         this.content.addChild(this.graphics);
 
         
+        this.textError="null";
+        this.bvColor=true;
        
-        
         
         if(o.shadow){
             var l="resources/data/"+this.id+"/shadow/shadow.png";                              
@@ -70,9 +71,7 @@ export class Blok{
                 this.x=-o.shadow.wh/2//+33;
                 this.y=-o.shadow.wh/2;
                 this.width=o.shadow.wh;
-                this.height=o.shadow.wh;
-
-                
+                this.height=o.shadow.wh;                
                 if(self.content.funRender!=undefined){
                     self.content.funRender();
                 }
@@ -97,7 +96,6 @@ export class Blok{
                         }
                     }
                     
-
 
                     if(p!=-1){
                         
@@ -287,18 +285,44 @@ export class Blok{
             },true);
         }
 
-        var bb        
+        var mDin      
+        var mDin    
+        var bb 
+
         this.dragColor=function(){ 
-            if(self._material==undefined)return             
-            for (var i = 0; i < self.arrayMat.length; i++) {
-                bb=false
-                if(self.arrayMat[i].material==undefined){
-                }else{
-                    if(self.arrayMat[i].material.uuid!=self._material.uuid){
-                        bb=true
+            if(self._material==undefined)return
+            mDin=self._material 
+            trace("##",this.idArr,this.object.id) 
+            this.bvColor=true
+            bb=null; 
+            if(this._material.idObj){
+                if(this.object){
+                    
+                    
+                    if(this.object.info&&this.object.info.color&&this.object.info.color[this._material.idObj.id]){                        
+                        if(isNaN(this.object.info.color[this._material.idObj.id].pri)==true){                           
+                            bb = this.object.info.color[this._material.idObj.id];
+                            mDin = mO.matBTBDV;
+                            this.bvColor=false;
+                            this.textError=this.object.info.color[this._material.idObj.id].pri; 
+                        }    
+                        
                     }
-                }
-                if(bb)self.arrayMat[i].material=self._material
+                }   
+            }
+
+            
+
+
+            for (var i = 0; i < self.arrayMat.length; i++) {              
+                if(self.arrayMat[i].material.uuid!=mDin.uuid) {
+                    if(bb!=null){                       
+                        bb=null;
+                        drahHelp3D.set(this)
+                    }    
+                    self.arrayMat[i].material=mDin;
+                }   
+                    
             }    
         }
 
@@ -441,8 +465,9 @@ export class Blok{
             }   
             //if(this._idColor == v)return;
 
-            this._idColor=v;
+            this._idColor=v;            
             this._material = roomBig[this.matBas]// menedsherMaterial.geterMat.getIDReturn(this._idColor,true); 
+
             this.dragColor();
             this.mO.dragPriceScane();
             this.fun("visi3d");

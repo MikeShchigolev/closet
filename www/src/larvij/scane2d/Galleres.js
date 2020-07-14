@@ -39,7 +39,7 @@ export class Galleres  {
         this.indexOld2=0
         var oo;
         this.boolScale=true
-        this.linkF="256.png"//"original.png"
+        this.linkF="original.png"//"256.png"//
 
 
 
