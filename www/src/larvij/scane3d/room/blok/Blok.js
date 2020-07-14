@@ -67,7 +67,7 @@ export class Blok{
             var l="resources/data/"+this.id+"/shadow/shadow.png";                              
             this.image=new XZImage(this.content,0,0,l,function(){                    
                 
-                this.x=-o.shadow.wh/2;
+                this.x=-o.shadow.wh/2//+33;
                 this.y=-o.shadow.wh/2;
                 this.width=o.shadow.wh;
                 this.height=o.shadow.wh;

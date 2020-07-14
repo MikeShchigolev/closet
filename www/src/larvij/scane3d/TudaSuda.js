@@ -19,9 +19,11 @@ export class TudaSuda  {
         this.array=[]
         this.sah=0;
         this.www=117;
+        global.tudaSuda=this;
 
         var b
         this.saveMod=function(){
+
             var oo=this.par.room.getObj();
             b=this.tDo(this.array[this.array.length-1],oo);
             if(b==true){

@@ -83,7 +83,7 @@ export class BPieceTop extends Blok {
                 if(this.content.funRender!=undefined){
                     this.content.funRender();
                 }
-            }
+            }            
         }
 
 
@@ -127,7 +127,7 @@ export class BPieceTop extends Blok {
 
             this.mO.dragPriceScane() 
             
-            trace("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")                 
+                           
         };
         
 
@@ -1300,7 +1300,7 @@ export class VisiNisu {
                 vb.height1=obj.array[i].h1
                 vb.visible=true
             }
-            trace(obj)
+          
 
         }
     }
@@ -1608,7 +1608,7 @@ export class VNB {
     set visible(v) {  
         if(this._visible!=v) {
             this._visible=v;
-            console.warn(v)
+          
             this.content3d.visible=this._visible;
             this.content.visible=this._visible;
         }                

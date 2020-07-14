@@ -319,8 +319,7 @@ export class BTVstavka extends Blok {
 
 
     set parent(v) {
-        if(this._parent!=v){ 
-            trace("::@==",this.idArr,v)                   
+        if(this._parent!=v){                               
             if(this._parent!=undefined){
                 if(this._parent.type=="BTumba"){
                     if(this._parent.content){                        

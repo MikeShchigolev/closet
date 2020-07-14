@@ -113,7 +113,7 @@ export class Sten  {
         this.linerMetrik=new LinerMetrik(this);//отсечение коробок маркера
         this.lineVisi=new LineVisi(this, this.content3d);//линии 3д и текст
         this.butDrag=new ButDrag(this,function(t,p){//управление 3д кнопками
-
+            trace("t,p",t,p,self._width)
         });
         this.korektMarker=new KorektMarker(this,function(t,p){
 

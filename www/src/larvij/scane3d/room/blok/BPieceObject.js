@@ -156,14 +156,23 @@ export class BPieceObject extends Blok {
         }
 
 
-        this.drahShadow=function(_x,_y){             
+        this.drahShadow=function(_x,_y){ 
+                  
             if(this._parent!=undefined){
-                this.content.position.x = this.boxColizi.rectCollisMeshdy.x+this.boxColizi.rectCollisMeshdy.width/2;
-                this.content.position.y = -(this.boxColizi.rectCollisMeshdy.y)-this.object.mod.r[2];
+                trace("drahShadow  ",_x)  
+                if(_x==undefined){
+                    this.content.position.x = this.boxColizi.rectCollisMeshdy.x+this.boxColizi.rectCollisMeshdy.width/2;
+                    this.content.position.y = -(this.boxColizi.rectCollisMeshdy.y)-this.object.mod.r[2];
+                }else{
+                    this.content.position.x = _x;
+                    this.content.position.y = _y;   
+                }    
+                
+
                 if(this._parent.content.funRender!=undefined){
                     this._parent.content.funRender()
                 }
-            }            
+            }      
         }
 
         this.dragImeag=function(){self.drahShadow()}
@@ -230,7 +239,7 @@ export class BPieceObject extends Blok {
             this.bds=true; 
             this.arrDerag=[]
             this.parent.sWidth= this.parent._W  
-            console.warn("bds  dragStart true")        
+                 
         }
 
 
@@ -258,7 +267,7 @@ export class BPieceObject extends Blok {
             }
             mO.dragPriceScane()
             this.bds=false;
-            console.warn("bds  stopDrag false")
+            
         }
 
 
@@ -286,7 +295,7 @@ export class BPieceObject extends Blok {
                     p.parent.remove(p)
             }
             this.bds=true
-            console.warn("bds  vuruvaemVcovlaem true")
+            
             pt.add(this);
         }
 
@@ -295,15 +304,15 @@ export class BPieceObject extends Blok {
         var bxx,popo, vb, xz,xz1;
         this.testObject=function(_x,_y){           
             aS=mO.par.sten;
-            trace(this.bds)
+           
             if(this.bds==true){                
                 if(this.parent!=undefined){                 
                     popo=this.testObject2(_x,_y)
-                    trace("popo::",popo)
+                  
                     vb=false;    
                     if(popo==null){
                         this.bds=false; 
-                        console.warn("bds  @@@@@@@@@@@@ false")                       
+                                             
                         return true; 
                     }else{
                         if(popo.idRandom!=this.parent.idRandom){                            
@@ -350,7 +359,7 @@ export class BPieceObject extends Blok {
                 if(this.parent!=undefined){                    
                     if(mO.pieceTop.idRandom==this.parent.idRandom){
                         if(this.parent.boolDragLip==true){
-                            trace("-1--")
+                            
                             popo=this.testObject2(_x,_y)
                             if(popo==null){
                                 return true
@@ -392,7 +401,7 @@ export class BPieceObject extends Blok {
             for (var i = 0; i < aS.children.length; i++) {                
                 if(aS.children[i].type=="BPieceTop"){                    
                     bxx=aS.children[i].testPosition(_x, _y, this,undefined,true) 
-                    trace(i+"bxx",bxx)                       
+                                          
                     if(bxx!=null){                           
                         if(aS.children[i].bxx==undefined)aS.children[i].bxx=new Position()
                         aS.children[i].bxx.x=bxx.x;
@@ -677,7 +686,8 @@ export class BPieceObject extends Blok {
                 setTimeout(function(){
                     self.idColor=obj.idColor                    
                 }, 2000);              
-            }                      
+            }            
+            self.drahShadow(obj.x,obj.y);                       
         }
         this.parOld=undefined
     } 
@@ -718,10 +728,8 @@ export class BPieceObject extends Blok {
 
     set parent(v) {
         if(this._parent!=v){
-
-            this.parOld=this._parent
-           
-            if(this.dragParentDo) this.dragParentDo(this._parent, v)   
+            this.parOld=this._parent;           
+            if(this.dragParentDo) this.dragParentDo(this._parent, v);   
             this._parent= v; 
             if(this._parent==undefined){
                 this.mO.visi3D.event3DArr.removeChild(this.c3dNa);
@@ -733,7 +741,8 @@ export class BPieceObject extends Blok {
                 this.mO.visi3D.event3DArr.addChild(this.c3dNa);
                 if(this._parent.content)this._parent.content.addChild(this.content)
                 this.testKorektActiv();               
-                this.dragToPanel();                           
+                this.dragToPanel();  
+                this.drahShadow();                         
             }  
             if(this.dragParent) this.dragParent(); 
             this.parOld=this._parent           

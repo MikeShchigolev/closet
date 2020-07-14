@@ -108,9 +108,7 @@ export class KorektMarker  {
                             child.boxColizi.rectCollisMeshdy.height
                         )
                     kmb.color=0x0000ff;
-                }
-                
-                
+                } 
             }
 
             if(child.children){

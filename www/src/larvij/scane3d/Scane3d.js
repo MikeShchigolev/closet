@@ -318,7 +318,8 @@ export class AnimatS3D  {
             tStyle.obj3dGron.visi3D.scene.remove(self.mesh);
             tStyle.obj3dGron.visi3D.removeChildMouse(self.mesh);
             tStyle.obj3dGron.drag();
-            if(self.dF)self.dF("up");             
+            if(self.dF)self.dF("up"); 
+            tudaSuda.saveMod()            
         }
 
 

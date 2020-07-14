@@ -568,29 +568,7 @@ export class BTBoxVstavka extends Blok {
         }
 
 
-       /* this.getObj = function(){
-            var obj={}
-            obj.type=this.type;
-            obj.id=this.id;
-            obj.x=self.content3d.position.x;
-            obj.y=self.content3d.position.y;
-            
-            obj.children=[];
-            for (var i = 0; i < this.children.length; i++) {
-                obj.children[i]=this.children[i].getObj();
-            }
-            return obj;            
-        }*/
 
-
-        /*this.setXYPosit=function(_x,_y){
-            self.x=_x;
-            self.y=_y;
-            self.content3d.position.x=self.x;
-            self.content3d.position.y=self.y;
-            this.boxColizi.position._x = _x;
-            this.boxColizi.position.y = _y;            
-        }*/
         this.dCol = function () {           
             self.x=0//self.boxColizi.__x;
             self.y=self.boxColizi.__y;            
@@ -612,8 +590,7 @@ export class BTBoxVstavka extends Blok {
 
     set parent(v) {
         if(this._parent!=v){ 
-            console.warn(">>>",v)
-            if(v) trace(">",v.idArr) 
+          
 
             if(this._parent!=undefined){
                 if(this._parent.type=="BTBoxDin"){
@@ -628,7 +605,7 @@ export class BTBoxVstavka extends Blok {
                     this._parent.remove(this)
                 }
             }
-            this._parent= v;
+            this._parent = v;
            
             if(this._parent==undefined){
                 this.collision=undefined

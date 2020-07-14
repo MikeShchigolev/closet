@@ -56,9 +56,11 @@ export class ButDrag  {
 
         this.input=new BoxLXZ(tStyle.obj3dGron.dCont,function(){            
             if(tStyle.obj3dGron.korektSten){
-                tStyle.obj3dGron.korektSten.chengeLabel("drag",this.value/10, self.idArr)
+                tStyle.obj3dGron.korektSten.chengeLabel("drag",this.value/10, self.idArr)            
             }
-            tStyle.obj3dGron.drag()            
+            tStyle.obj3dGron.drag()
+            self.fun("inputDrag",this.value) 
+            trace("@@@@@@@@@@@@drag@@@@@@@",this.value);            
         })
         this.input.input.timeFun=null;
         this.input.funFocus=function(){
