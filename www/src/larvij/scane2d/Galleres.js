@@ -38,11 +38,13 @@ export class Galleres  {
         this.gallery
         this.indexOld2=0
         var oo;
-        this.boolScale=true
+        this.boolScale=false;
 
         this.linkF="original.png"//"256.png"//
+
         if(tStyle.glaf.debug==true){
             this.linkF="256.png"//
+            this.boolScale=true;
         }
 
 
