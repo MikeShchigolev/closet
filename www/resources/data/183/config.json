@@ -50,7 +50,16 @@
         "0"
     ],
     "resurs": {
-        "array": []
+        "array": [
+            {
+                "name": "31_shkaf.png",
+                "size": 1,
+                "b": false,
+                "i": "icon",
+                "i1": "x",
+                "i2": "x"
+            }
+        ]
     },
     "priority": 100,
     "bagY": 0,
