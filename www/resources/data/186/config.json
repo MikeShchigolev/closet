@@ -2,7 +2,7 @@
     "id": 186,
     "title": "BTBoxDin",
     "key": "o_186",
-    "orig": "xz.png",
+    "orig": "shkaf.png",
     "mod": {
         "key": "n",
         "name": "n",
@@ -53,5 +53,19 @@
         "array": []
     },
     "priority": 13,
-    "bagY": 0
+    "bagY": 0,
+    "plus": [
+        "0",
+        "Шкаф",
+        "",
+        "0",
+        "0"
+    ],
+    "plus1": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+    ]
 }
