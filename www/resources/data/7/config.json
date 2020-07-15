@@ -45,7 +45,8 @@
         "данные",
         "данные",
         "данные",
-        "1000"
+        "1000",
+        "0"
     ],
     "plus1": [
         "данные",
@@ -54,5 +55,17 @@
         "1000",
         "xz"
     ],
-    "priority": 0
+    "priority": 0,
+    "param": {
+        "tOt": false,
+        "tNa": false,
+        "rO": -1,
+        "kesh": false,
+        "sG": false,
+        "clone": true
+    },
+    "bagY": 0,
+    "resurs": {
+        "array": []
+    }
 }
