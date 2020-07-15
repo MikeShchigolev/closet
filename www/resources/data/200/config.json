@@ -2,7 +2,7 @@
     "id": 200,
     "title": 200,
     "key": "o_200",
-    "orig": "xz.png",
+    "orig": "prov_korz.png",
     "mod": {
         "key": "glb",
         "name": "korz_test_2_58_test2.glb",
@@ -56,8 +56,8 @@
     "bagY": 0,
     "plus": [
         "0",
-        "0",
-        "0",
+        "Сеточная корзина",
+        "",
         "0",
         "0"
     ],

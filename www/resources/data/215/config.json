@@ -2,7 +2,7 @@
     "id": 215,
     "title": 215,
     "key": "o_215",
-    "orig": "xz.png",
+    "orig": "melkoset_900.png",
     "mod": {
         "key": "glb",
         "name": "melkaya_setka_900.glb",
@@ -62,8 +62,8 @@
     "bagY": 0,
     "plus": [
         "0",
-        "0",
-        "0",
+        "0Мелкосет. полка",
+        "890×420 мм",
         "0",
         "0"
     ],
