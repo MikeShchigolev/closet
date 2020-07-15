@@ -198,6 +198,10 @@ export class BoxDH3D  {
                 this.dCont.visible=false;
                 return;   
             }
+            if(this.blok.bvColor==true){
+                this.active=false
+                return
+            }
 
             vect = this.par.getPP(this.blok.content3d) 
             z= Math.round((1-vect.z)*1000)/1000
