@@ -126,7 +126,7 @@ export class NMObj  {
             let bvm=false;
 
             if(this.object.object && this.object.object.info && this.object.object.info.array && this.object.object.info.array.length>0)bvm=true;
-            trace(bvm, this.object.object)
+           
             if(bvm==true){
                 this.vuborMat.visible=true
                 this.arrLine[0].visible=true;
