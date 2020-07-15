@@ -58,7 +58,7 @@ export class Scane3d  {
         this.ss=1
   		this.sizeWindow = function(w,h,s){ 
             this.ss =s;		
-  		    this.room.sizeWindow(w,h); 
+  		    this.room.sizeWindow(w,h,s); 
             this.animatS3D.sizeWindow(w,h,s);           				
   		}
   	}
