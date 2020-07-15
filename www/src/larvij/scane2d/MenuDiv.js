@@ -481,6 +481,7 @@ export class Mani  {
             var kolMinus23=0;
             var kol108=0;
             var kol109=0;
+            trace(arrP2)
          
             for (var i = 0; i < arrP2.length; i++) {               
                 if(arrP2[i][9]==40){
@@ -504,16 +505,15 @@ export class Mani  {
                     arrP2[i][11]=arrP2[i][11]
                 }
                 
-                if(arrP2[i][9]==55||arrP2[i][9]==54){
+                /*if(arrP2[i][9]==55||arrP2[i][9]==54){
                     kolMinus23+=arrP2[i][10];
-
-                }
+                }*/
                 
                 
                 if(arrP2[i][9]==108){ kol108++}
             } 
 
-            if(kolMinus23!=0){//перила ид 23 нужно вычесть 2                
+           /* if(kolMinus23!=0){//перила ид 23 нужно вычесть 2                
                 id23=-1;
                 for (var i = 0; i < arrP2.length; i++) {                    
                     if(arrP2[i][9]==23){
@@ -530,7 +530,7 @@ export class Mani  {
                         arrP2.splice(id23,1);
                     }
                 }
-            }
+            }*/
             this.bhp108.set(arrP2)
             this.bhp109.set(arrP2)
         }
