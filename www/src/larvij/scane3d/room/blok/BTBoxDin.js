@@ -889,10 +889,17 @@ export class BTBoxDin extends Blok {
 
         this.aaSob=function(s,p){            
             if(s=="clear"){
+                trace(">>>>>>>>>>"+self.children.length);
                 var p=self.parent;
                 self.mO.par.clear(self);
                 self.clear();
-                self.mO.activIndex=-1;              
+                self.mO.activIndex=-1;
+                
+                if(self.children.length!=0) {
+                    for (var i = self.children.length - 1; i >= 0; i--) {
+                        self.remove(self.children[i])
+                    }
+                }              
                 self.dragTumb(p);
             }
             if(s=="verhTumb"){               
@@ -937,6 +944,8 @@ export class BTBoxDin extends Blok {
                 self.indexH=p  
                 self.mO.par.par.visiActiv.setObject(self)               
             }
+
+
 
             setTimeout(function() {self.fun("visi3d");}, 10);
             self.mO.dragPriceScane()

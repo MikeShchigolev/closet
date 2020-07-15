@@ -163,7 +163,7 @@ export class BoxDH3D  {
         this.dHalp.boolNiz=true;
         this.dHalp.color="#ffda00";
         this.dHalp.borderRadius=10;
-
+        this.dHalp.label.textAlign="center";
 
 
         this.testBlok=function(blok) {
@@ -180,7 +180,7 @@ export class BoxDH3D  {
             this.blok=blok;
             this.active=true;
 
-            this.dHalp.width=this.blok.textError.length*9;
+            this.dHalp.width=this.blok.textError.length*9.5;
             this.dHalp.text=this.blok.textError;
             
         }

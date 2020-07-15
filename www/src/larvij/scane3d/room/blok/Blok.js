@@ -155,7 +155,9 @@ export class Blok{
                 this._parent.remove(this);              
             } 
             if(this.children.length!=0) {
+                
                 for (var i = this.children.length - 1; i >= 0; i--) {
+                    trace(i+"#",this.children[i]);
                     this.remove(this.children[i])
                 }
             }     
@@ -293,7 +295,7 @@ export class Blok{
         this.dragColor=function(){ 
             if(self._material==undefined)return
             mDin=self._material 
-            trace("##",this.idArr,this.object.id) 
+            
             this.bvColor=true
             bb=null; 
             if(this._material.idObj){
@@ -420,7 +422,7 @@ export class Blok{
                 }
                 this.boxColizi.rectCollisMeshdy.funErr = self.clear;
             }
-            if(this.creatBCFun)this.creatBCFun()
+            if(this.creatBCFun)this.creatBCFun();
         }
 
 
@@ -451,7 +453,7 @@ export class Blok{
             if(p!=-1){
                 r = this.children.splice(p,1)[0];
                 this.content3d.remove(blok.content3d);
-                
+                r.parent=undefined;                
             }           
             return r;
         }

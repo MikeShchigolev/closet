@@ -646,15 +646,13 @@ export class BTBoxDV extends Blok {
             if(self.durXY)self.durXY(self.x,self.y)
             self.dCol2();           
         }
-
-
-
     }
 
 
 
     set parent(v) {
-        if(this._parent!=v){                               
+        if(this._parent!=v){  
+            trace("@@@");                             
             if(this._parent!=undefined){
                 if(this._parent.type=="BTBoxDin"){
                     if(this._parent.content){                        
