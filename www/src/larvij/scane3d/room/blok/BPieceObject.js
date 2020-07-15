@@ -451,7 +451,7 @@ export class BPieceObject extends Blok {
                 self.testKorektActiv();  
                 r=true 
             }
-            if(!r&&s.indexOf("mod_55_")!=-1){
+            if(!r/*&&s.indexOf("mod_55_")!=-1*/){
                 let oo=self.pppObj.up1.testBool()
                 if(oo==null){
                     self.pppObj.up1.bool=!self.pppObj.up1.bool;

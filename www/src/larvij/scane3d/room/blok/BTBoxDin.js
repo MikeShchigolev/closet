@@ -1050,6 +1050,7 @@ export class BTBoxDin extends Blok {
             this._parent = v;
        
             if(this._parent==undefined){
+                trace("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 this.collision=undefined
                 this.mO.visi3D.event3DArr.removeChild(this.c3dNa);
             } else{

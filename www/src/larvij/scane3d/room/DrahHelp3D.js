@@ -70,7 +70,7 @@ export class DrahHelp3D  {
         this.scalXZ=1
         this.upDate=function() {
             if(this._active==false)return;            
-            this.scalXZ=0.3+0.7*(1-visi3D.zume/1200)
+            this.scalXZ=0.5+0.6*(1-visi3D.zume/1200)
 
             for (var i = 0; i < this.array.length; i++) {
                 this.array[i].upDate()
@@ -197,6 +197,10 @@ export class BoxDH3D  {
             if(this.blok.c3dNa.visible==false){
                 this.dCont.visible=false;
                 return;   
+            }
+            if(this.blok.bvColor==true){
+                this.active=false
+                return
             }
 
             vect = this.par.getPP(this.blok.content3d) 

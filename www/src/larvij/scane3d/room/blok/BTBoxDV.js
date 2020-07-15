@@ -669,6 +669,7 @@ export class BTBoxDV extends Blok {
             }
             this._parent= v;           
             if(this._parent==undefined){
+                trace("@@@@@@@@@@@@");
                 this.collision=undefined
                 this.mO.visi3D.event3DArr.removeChild(this.c3dNa);
                 if(this.content)if(this.content.parent)this.content.parent.removeChild(this.content)
