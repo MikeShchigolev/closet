@@ -26,8 +26,8 @@ export class BPieceTop extends Blok {
         this.oPod=1.25;//подюм обьекта
         this.aHron=[];
         this.array=[];
-        this.aInfo=[]
-        this.aInfo1=[]
+        this.aInfo=[];
+        this.aInfo1=[];
         this.drapPlus=false
         this.sWidth=0;
         this.heightStart=100;
