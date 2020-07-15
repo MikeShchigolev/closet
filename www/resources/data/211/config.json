@@ -2,7 +2,7 @@
     "id": 211,
     "title": 211,
     "key": "o_211",
-    "orig": "xz.png",
+    "orig": "rod.png",
     "mod": {
         "key": "glb",
         "name": "shtanga.glb",
@@ -51,5 +51,21 @@
     ],
     "resurs": {
         "array": []
-    }
+    },
+    "priority": 100,
+    "bagY": 0,
+    "plus": [
+        "0",
+        "Перекладина",
+        "",
+        "0",
+        "0"
+    ],
+    "plus1": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+    ]
 }

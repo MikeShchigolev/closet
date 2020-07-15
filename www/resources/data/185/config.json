@@ -2,7 +2,7 @@
     "id": 185,
     "title": 185,
     "key": "o_185",
-    "orig": "xz.png",
+    "orig": "provoloka.png",
     "mod": {
         "key": "glb",
         "name": "polka_test.glb",
@@ -56,8 +56,8 @@
     "bagY": 0,
     "plus": [
         "0",
-        "0",
-        "0",
+        "Сеточная полка",
+        "",
         "0",
         "0"
     ],

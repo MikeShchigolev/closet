@@ -2,7 +2,7 @@
     "id": 214,
     "title": 214,
     "key": "o_214",
-    "orig": "xz.png",
+    "orig": "melkoset_600.png",
     "mod": {
         "key": "glb",
         "name": "melkaya_setka_600.glb",
@@ -62,8 +62,8 @@
     "priority": 75,
     "plus": [
         "0",
-        "0",
-        "0",
+        "Мелкосет.полка",
+        "590×420 мм",
         "0",
         "0"
     ],
