@@ -62,6 +62,7 @@ export class Blok{
         
         this.textError="null";
         this.bvColor=true;
+
        
         
         if(o.shadow){
@@ -303,7 +304,7 @@ export class Blok{
                         if(isNaN(this.object.info.color[this._material.idObj.id].pri)==true){                           
                             bb = this.object.info.color[this._material.idObj.id];
                             mDin = mO.matBTBDV;
-                            this.bvColor=false;
+                            this.bvColor=false;                           
                             this.textError=this.object.info.color[this._material.idObj.id].pri; 
                         }    
                         

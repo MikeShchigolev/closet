@@ -89,7 +89,7 @@ export class Room  {
         this.visiActiv=new VisiActiv(this);
 
 
-        this.drahHelp3D=new DrahHelp3D(this);
+        this.drahHelp3D=new DrahHelp3D(this,scane3d.dCont);
 
         var dd=0.5
         this.visiActiv.vaBox.rect3d.x=-dd
@@ -164,8 +164,9 @@ export class Room  {
             this.visiActiv.fun_rotationZ(v,v1)
         }
 
-        this.sizeWindow = function(w,h){                
- 
+        this.sizeWindow = function(w,h,s){                
+            this.drahHelp3D.sizeWindow(w,h,s);
+
         } 
 
 

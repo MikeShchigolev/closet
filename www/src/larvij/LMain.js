@@ -380,7 +380,10 @@ export class KlassCSVObj  {
 	                o.color[ddd[sah]]={}
 	                //o.color[ddd[sah]].id=arr[i][0];
 	                o.color[ddd[sah]].art=arr[i][jj];
+
 	                o.color[ddd[sah]].pri=arr[i][jj+1]*1;
+	                if(isNaN(o.color[ddd[sah]].pri))o.color[ddd[sah]].pri=arr[i][jj+1]
+
 	                o.color[ddd[sah]].niz=arr[i][jj+2];
 	                o.color[ddd[sah]].xz=arr[i][jj+3];
 	                sah++;
