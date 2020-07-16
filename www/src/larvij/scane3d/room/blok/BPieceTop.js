@@ -39,8 +39,8 @@ export class BPieceTop extends Blok {
         this.visiNisu=new VisiNisu(this);//расчет драгеров
         this.bptColiz=new BPTColiz(this); //Дополнителдьные колизии       
 
-        let aa=new THREE.AxesHelper(100);
-        this.content3d.add(aa);
+       /* let aa=new THREE.AxesHelper(100);
+        this.content3d.add(aa);*/
         
         this.funInit=function(){            
             self.boxColizi.rectCollisMeshdy.boolZ=false
@@ -1394,7 +1394,7 @@ export class VNB {
                     this.draw()
                 }
             }
-           // trace("RRRR",this.visible)
+          
         }
 
 
@@ -1534,7 +1534,7 @@ export class VNB {
             
             this._height1=this.kolSahArr.value;
             this.testWord()
-            trace("#########################");
+            
         } 
 
         
