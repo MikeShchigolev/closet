@@ -73,6 +73,7 @@ export class Glaf  {
 
         this.tCInfa=new TCInfa(this.par.confText);
         dcmParam.tCInfa=this.tCInfa;
+        dcmParam.confText=this.par.confText;
 
 
         //основные цвета и настройки текстов

@@ -201,7 +201,15 @@ function DIVsakoe(par) {
 
     yy+=this.panel.height+this.otstup*2
 
-    this.chek1=new DCheckBox(this.dCont, this.otstup, yy, "Уточнения действий, защита от слкучайного удаления 'durak'", function(s){ 
+
+    this.chekGS=new DCheckBox(this.dCont, this.otstup, yy, "grabStoiki Кранштены от полок есть/нет", function(s){ 
+        self.confText.grabStoiki = this.value;        
+        self.par.saveTime();
+    })   
+
+
+
+    this.chek1=new DCheckBox(this.dCont, 600, yy, "Уточнения действий, защита от слкучайного удаления 'durak'", function(s){ 
         self.confText.settings.durak = this.value;
         aGlaf.durak=this.value
         self.par.saveTime();
@@ -475,6 +483,10 @@ function DIVsakoe(par) {
         if(this.confText.settings.durak==undefined)this.confText.settings.durak=true;
         aGlaf.durak=this.confText.settings.durak
         this.chek1.value=this.confText.settings.durak;
+
+
+        if(this.confText.grabStoiki==undefined)this.confText.grabStoiki=false; 
+        this.chekGS.value=this.confText.grabStoiki;    
     }
     
     this.setConf(this.par.confText)

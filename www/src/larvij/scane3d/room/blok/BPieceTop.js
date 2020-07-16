@@ -1390,6 +1390,10 @@ export class VNB {
                 this.height=hhh;                
             } 
             if(this.visible==true){
+                if(this.array[0]==undefined){
+                    this.draw()
+                    return
+                }
                 if(this.array[0].visible==false){
                     this.draw()
                 }

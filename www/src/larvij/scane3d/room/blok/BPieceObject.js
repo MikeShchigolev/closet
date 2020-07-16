@@ -135,7 +135,7 @@ export class BPieceObject extends Blok {
         var b;//приходит позиции от колайдера        
         this.setXY=function(_x,_y){            
             b=this.testObject(_x,_y);  
-            trace("@@",this.idArr,_x,_y);      
+                 
             if(b==false){
                 if(this.parent!=undefined){
                     if(this.bSort==true){
@@ -171,7 +171,7 @@ export class BPieceObject extends Blok {
         this.drahShadow=function(_x,_y){ 
                   
             if(this._parent!=undefined){
-                trace("drahShadow  ",_x)  
+                
                 if(_x==undefined){
                     this.content.position.x = this.boxColizi.rectCollisMeshdy.x+this.boxColizi.rectCollisMeshdy.width/2;
                     this.content.position.y = -(this.boxColizi.rectCollisMeshdy.y)-this.object.mod.r[2];
@@ -652,8 +652,7 @@ export class BPieceObject extends Blok {
             this.setXYPosit(obj.x,obj.y); 
 
 
-            trace(">>",this.idArr,obj.x)
-
+            
 
             if(obj.sahSuper!=undefined){
                 this.sahSuper.setObj(obj.sahSuper)

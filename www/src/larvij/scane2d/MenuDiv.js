@@ -178,6 +178,10 @@ export class Mani  {
         // aM=main.localStorage.object.minMani;
         // this.minMani.active=aM;
 
+        this.grabStoiki=false;
+        trace("dcmParam.confText  ",dcmParam.confText)
+        if(dcmParam.confText.grabStoiki!=undefined)this.grabStoiki=dcmParam.confText.grabStoiki;
+
 
         this.panel = new DPanel(this.dCont,0,0);        
         this.panel.width=this.par.widthBig*this.par.prosentXX+1-this.otstup;
@@ -504,33 +508,36 @@ export class Mani  {
                     arrP2[i][10]=Math.ceil(arrP2[i][10])
                     arrP2[i][11]=arrP2[i][11]
                 }
+                if(this.grabStoiki==true){
+                    if(arrP2[i][9]==55||arrP2[i][9]==54){
+                        kolMinus23+=arrP2[i][10];
+                    }  
+                }
                 
-                /*if(arrP2[i][9]==55||arrP2[i][9]==54){
-                    kolMinus23+=arrP2[i][10];
-                }*/
                 
                 
                 if(arrP2[i][9]==108){ kol108++}
             } 
-
-           /* if(kolMinus23!=0){//перила ид 23 нужно вычесть 2                
-                id23=-1;
-                for (var i = 0; i < arrP2.length; i++) {                    
-                    if(arrP2[i][9]==23){
-                        id23=i
+            if(this.grabStoiki==true){
+                if(kolMinus23!=0){//перила ид 23 нужно вычесть 2                
+                    id23=-1;
+                    for (var i = 0; i < arrP2.length; i++) {                    
+                        if(arrP2[i][9]==23){
+                            id23=i
+                        }
+                    }
+                    if(id23!=-1){
+                        var k=arrP2[id23][10]-kolMinus23*2;
+                        if(k>=1){
+                            var cena=arrP2[id23][11]/arrP2[id23][10]
+                            arrP2[id23][10]=k
+                            arrP2[id23][11]=k*cena                    
+                        }else{
+                            arrP2.splice(id23,1);
+                        }
                     }
                 }
-                if(id23!=-1){
-                    var k=arrP2[id23][10]-kolMinus23*2;
-                    if(k>=1){
-                        var cena=arrP2[id23][11]/arrP2[id23][10]
-                        arrP2[id23][10]=k
-                        arrP2[id23][11]=k*cena                    
-                    }else{
-                        arrP2.splice(id23,1);
-                    }
-                }
-            }*/
+            }
             this.bhp108.set(arrP2)
             this.bhp109.set(arrP2)
         }
