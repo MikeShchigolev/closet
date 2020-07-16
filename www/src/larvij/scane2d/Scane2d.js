@@ -64,7 +64,8 @@ export class Scane2d  {
         this.button.fontSize=20;
         this.button.colorText="#000000";
         this.button.color="#ffffff";  
-        this.button.label.x-=2;  
+        this.button.label.x-=4; 
+        this.button.label.y-=2;  
 
         
         setTimeout(function() {            
