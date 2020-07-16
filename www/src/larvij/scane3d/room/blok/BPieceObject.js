@@ -451,7 +451,7 @@ export class BPieceObject extends Blok {
                 self.testKorektActiv();  
                 r=true 
             }
-            if(!r/*&&s.indexOf("mod_55_")!=-1*/){
+            if(!r&&s.indexOf("mod_55_")!=-1){
                 let oo=self.pppObj.up1.testBool()
                 if(oo==null){
                     self.pppObj.up1.bool=!self.pppObj.up1.bool;
@@ -896,7 +896,7 @@ export class BKrai {
                    
                     aaa[9]=this.arrHron[this._intSah].object.obj.id;
                     aaa[8]=this.arrHron[this._intSah].object.obj;
-                    a.push(aaa)                   
+                    a.push(aaa);                   
                
                 
 

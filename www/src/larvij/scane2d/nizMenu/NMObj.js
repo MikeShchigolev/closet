@@ -19,6 +19,7 @@ import { BatArr } from './BatArr.js';
 export class NMObj  {
     constructor(par) {          
         this.type="NMObj";
+        trace("##########NMObj####################");
         var self=this;
         this.par=par
         this._active=false;

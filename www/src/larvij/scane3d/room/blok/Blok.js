@@ -150,14 +150,14 @@ export class Blok{
         }
 
 
+
         this.clear = function (b) { 
             if(this._parent&&b==undefined){                
                 this._parent.remove(this);              
             } 
             if(this.children.length!=0) {
                 
-                for (var i = this.children.length - 1; i >= 0; i--) {
-                    trace(i+"#",this.children[i]);
+                for (var i = this.children.length - 1; i >= 0; i--) {                    
                     this.remove(this.children[i])
                 }
             }     

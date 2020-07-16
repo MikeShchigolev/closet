@@ -25,6 +25,7 @@ export class BWindow extends Blok {
         this._heightOld=100;
         this._boolLeft=false;
         this._boolTop=false;
+        this.byZdvig=false
 
         this.durRect = {x:-50,y:0,width:100, height:100, idArr:this.idArr};       
         this.creatBC=function(){
