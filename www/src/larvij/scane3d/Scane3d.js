@@ -149,7 +149,15 @@ export class AnimatS3D  {
         tStyle.obj3dGron.dragRoom=this.dragRoom;
 
         this.tween = new TWEEN.Tween(this);
+
+
+
+
         this.tween.onUpdate(function(){
+            dddd()
+        })
+
+        function dddd(){
             tStyle.obj3dGron.visi3D.intRend = 1;
             obj.material.opacity=self.num;
             obj.material1.opacity=self.num;
@@ -166,10 +174,10 @@ export class AnimatS3D  {
             tStyle.obj3dGron.visi3D.rotationZ = (self.posOld.rz*(1-self.num) + self.posNew.rz*(self.num));
             tStyle.obj3dGron.visi3D.zume = (self.posOld.zume*(1-self.num) + self.posNew.zume*(self.num));
 
-            for (var i = 0; i < this.room.array.length; i++) {
-                this.room.array[i].butDrag.fun_rotationZ()
+            for (var i = 0; i < self.room.array.length; i++) {
+                self.room.array[i].butDrag.fun_rotationZ()
             }
-        })
+        }
 
         this.tween.onComplete(function(){
             tStyle.obj3dGron.visi3D.intRend = 1;
@@ -183,6 +191,7 @@ export class AnimatS3D  {
 
 
         this.dragActiv=function(t){
+            console.warn("dragActiv",t)
             if(t==undefined)t=500
             this.vS(true);
             if(this._active==false){              
@@ -209,7 +218,14 @@ export class AnimatS3D  {
                 this.dragRoom(false)//, 500);
             }   
         }
+        /*setTimeout(function() {
+            self.num=1
+            dddd()  
+        }, 10);*/
+        
 
+       // this._active=false
+        //this.dragActiv(0)
 
         var pM=-Math.PI
         var pP=Math.PI 
@@ -286,7 +302,7 @@ export class AnimatS3D  {
             else{
                 document.addEventListener("touchend", self.mouseup);
             } 
-            trace("<<<<<<<<<<<<<<<<<mouseup")  
+            
             tStyle.obj3dGron.visi3D.intRend=1;
             tStyle.obj3dGron.visi3D.addEvent("move", self.move);
         }
@@ -323,6 +339,8 @@ export class AnimatS3D  {
         }
 
 
+
+
         this.sizeWindow = function(w,h,s){ 
             if(this._active==false){
                 tStyle.obj3dGron.drag()
@@ -334,7 +352,9 @@ export class AnimatS3D  {
     set active(value) {
         if(this._active!=value){
             this._active= value;
-            this.dragActiv()        
+            this.dragActiv()  
+            //if(this._active!=true)this.dragActiv(0)  
+           // else this.dragActiv()      
         }
     }    
     get active() { return  this._active;} 

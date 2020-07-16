@@ -1,7 +1,7 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title>larvij</title>	
-<script src='common/AppLoader.js'></script>
+<title>админ</title>	
+<script src='common/AppLoaderV1.js'></script>
 <script src='src/lib/jquery-1.11.3.js'></script>
 
 <script>
@@ -25,14 +25,18 @@
 		{src: path + 'localStorage/LocalStorage.js' + plus},
 
 		
-		{src: path + 'lib/three99.js' + plus},
-		{src: path + 'lib/shader/ShaderAll.js' + plus},
+		//{src: path + 'lib/three99.js' + plus},
+		{src: path + 'lib/three.min.js' + plus},
+		//{src: path + 'lib/shader/ShaderAll.js' + plus},
 		{src: path + 'lib/tween.min.js' + plus},
-		{src: path + 'lib/loaders/TDSLoader.js' + plus},
+		//{src: path + 'lib/loaders/TDSLoader.js' + plus},
 		{src: path + 'lib/loaders/inflate.min.js' + plus},
-		{src: path + 'lib/loaders/FBXLoader.js' + plus},
+	
+
+
 		{src: path + 'lib/loaders/GLTFLoader.js' + plus},
-		{src: path + 'lib/loaders/RGBELoader.js' + plus},
+		//{src: path + 'lib/loaders/GLTFLoaderNew.js' + plus},
+
 
 
 		{src: path + 'php/Php.js' + plus},
@@ -43,12 +47,14 @@
 
 		{src: path + 'admin/menu/GalleryXZ.js' + plus},
 		{src: path + 'libMy/DragPic.js' + plus},
-
+		{src: path + 'admin/menu/MSort.js' + plus},
 
 		{src: path + 'admin/menu/MBPic.js' + plus},
 		{src: path + 'admin/menu/MatBD.js' + plus},
 		{src: path + 'admin/menu/MatObject.js' + plus},
 
+		{src: path + 'admin/menu/filt/MFilt.js' + plus},
+		{src: path + 'admin/menu/filt/MText.js' + plus},
 		{src: path + 'admin/menu/dopInfa/DopInfo.js' + plus},
 
 		{src: path + 'admin/menu/MResurs.js' + plus},
@@ -57,7 +63,6 @@
 		{src: path + 'admin/menu/KorektMaterial.js' + plus},
 		{src: path + 'admin/menu/CubeMap.js' + plus},
 		{src: path + 'admin/menu/DSettings.js' + plus},		
-		{src: path + 'admin/menu/SceneSB.js' + plus},
 		{src: path + 'admin/menu/MenuScene.js' + plus},
 		{src: path + 'admin/menu/MInfo.js' + plus},
 		{src: path + 'admin/menu/MenuBD.js' + plus},
@@ -67,21 +72,38 @@
 		{src: path + 'admin/menu/Menu.js' + plus},
 		{src: path + 'admin/menu/NaObj.js' + plus},
 
+		{ src: path + 'admin/menu/TextureBD.js' + plus },
+
+
+
+		
+		{src: path + 'pm/pm.min.js' + plus},
+		//{src: path + 'pm/PM.js'},
+
+
+		
+
+		
 		
 
 		{src: path + 'admin/S3D.js' + plus},
 
-		{src: path + 'component3d/BoxHelper.js' + plus},
+		{src: path + 'admin/menu/BoxHelper.js' + plus},
 
-		{src: path + 'libMy/MVisi3D/build/MVisi3D.min.js' + plus},
+		{src: path + 'libMy/visi3D/visi3D.min.js' + plus},
+		
 		{src: path + 'admin/AGlaf.js' + plus},
 		{src: path + 'admin/AMain.js' + plus},
+
+
 		
 	];
 	var lMain
 	function sizeWindow () {
 		var w = document.documentElement.clientWidth;
 		var h = document.documentElement.clientHeight;
+		if(window.innerWidth!=undefined)w = window.innerWidth;
+		if(window.innerHeight!=undefined)h = window.innerHeight;
 		if (lMain) lMain.sizeWindow(w, h);		
 		if (appLoader) appLoader.sizeWindow(w,h);
 	}
@@ -128,17 +150,16 @@
 		init2();		
 	}
 
-
-
 	function init2 () {
-		trace("----------------"+plus)
-		window.onresize = sizeWindow;		
+		
+		window.onresize = sizeWindow;
+        trace("drg")		
 		appLoader = new AppLoader(
-			"resources/image/pic3.png",
-			'resources/image/pic4.png',
+			null,
+			'resources/image/pic3.png',
 			manifest,
-			function () {
-				dcmParam = new DCM();	
+			function () {				
+				dcmParam = new DCM();			
 				lMain=new AMain(function(s){
 					if(s=="init"){
 						appLoader.indicator.procent = 100;
@@ -147,7 +168,7 @@
 				})				
 				sizeWindow();				
 			},
-			'resources/image/pic2.png',
+			null,
 			-85		
 		)
 
