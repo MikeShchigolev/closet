@@ -53,6 +53,18 @@ export class BPieceObject extends Blok {
             this.polkaNot=true;//конфликтит с включенной polka
         }
 
+        this.testKorektActiv = function(){         
+            if(this.parent!=undefined){
+                mO.korektActiv(this)             
+            }
+        }
+        this.dragToPanel=function(){
+            if(this.parent==undefined)return;
+            if(this.parent.dragToPanel==undefined)return;
+            this.parent.dragToPanel(this);
+        }
+
+
         this.krai=new BKrai(this);//боковинки снизу
         this.hrenNiz=new HrenNiz(this);//вешалка
         this.sahSuper=new SahSuper(this);//крючки
@@ -88,10 +100,10 @@ export class BPieceObject extends Blok {
             
             if(this.id==42)this.testShadow(self.cont3dLoad)
             this.dragRect()
-            setTimeout(function() {
+           // setTimeout(function() {
                 self.testKorektActiv()                
                 self.dragToPanel()
-            }, 1);
+            //}, 1);
         }
 
         this.creatBC=function(){
@@ -123,7 +135,7 @@ export class BPieceObject extends Blok {
         var b;//приходит позиции от колайдера        
         this.setXY=function(_x,_y){            
             b=this.testObject(_x,_y);  
-                  
+            trace("@@",this.idArr,_x,_y);      
             if(b==false){
                 if(this.parent!=undefined){
                     if(this.bSort==true){
@@ -512,11 +524,7 @@ export class BPieceObject extends Blok {
         };
 
 
-        this.dragToPanel=function(){
-            if(this.parent==undefined)return;
-            if(this.parent.dragToPanel==undefined)return;
-            this.parent.dragToPanel(this);
-        }
+        
 
         //тестим правую сторону
         var bb, aa
@@ -601,11 +609,7 @@ export class BPieceObject extends Blok {
             
         }
 
-        this.testKorektActiv = function(){         
-            if(this.parent!=undefined){
-                mO.korektActiv(this)             
-            }
-        }
+       
 
         this.dragPar = function(){ 
             if(this.parent!=undefined){             
@@ -647,6 +651,10 @@ export class BPieceObject extends Blok {
         this.setObj = function(obj){                      
             this.setXYPosit(obj.x,obj.y); 
 
+
+            trace(">>",this.idArr,obj.x)
+
+
             if(obj.sahSuper!=undefined){
                 this.sahSuper.setObj(obj.sahSuper)
             }            
@@ -684,9 +692,9 @@ export class BPieceObject extends Blok {
             }
 
             if(obj.idColor){
-                setTimeout(function(){
+                //setTimeout(function(){
                     self.idColor=obj.idColor                    
-                }, 2000);              
+              // } , 2000);              
             }            
             self.drahShadow(obj.x,obj.y);                       
         }
@@ -799,10 +807,11 @@ export class BKrai {
             if(b==false)return
 
             this.drag();            
-            setTimeout(function() {
+            //setTimeout(function() {
+
                 self.par.testKorektActiv()                
                 self.par.dragToPanel()
-            }, 1);
+            //}, 1);
         } 
        
 
@@ -1011,14 +1020,15 @@ export class HrenNiz {
         this.ySMin=10;        
         var mesh,mesh1;
         var sah=0;
-        this.initHron=function(){
+        this.initHron = function(){
             sah++            
             if(sah<self.arrHron.length)return;
             mesh=self.arrHron[0].get();            
-            setTimeout(function() {
-                self.par.dragPar()
-                self.drag()
-            }, 1000);            
+            //setTimeout(function() {
+                //console.warn("@@@")
+                if(self.par.dragPar)self.par.dragPar();
+                self.drag();
+            //}, 1000);            
         }
 
         this.object=this.par.mO.getIdObj(this.idSvaz);       
@@ -1037,10 +1047,7 @@ export class HrenNiz {
         this.arrHron.push(new BKHron(this, arr[2], 1))
         this.arrHron.push(new BKHron(this, arr[3], 1))
         
-        for (var i = 0; i < this.arrHron.length; i++) {
-            this.arrHron[i].bbbb=false;
-            this.arrHron[i].init();
-        }
+        
 
         this.par.aa.unshift("polka");
 
@@ -1250,7 +1257,12 @@ export class HrenNiz {
             for (var i = 0; i < a.length; i++) {
                 a1[i]=a[i]
             }
-        }        
+        } 
+
+        for (var i = 0; i < this.arrHron.length; i++) {
+            this.arrHron[i].bbbb=false;
+            this.arrHron[i].init();
+        }       
     }
 
 

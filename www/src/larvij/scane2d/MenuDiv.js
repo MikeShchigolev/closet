@@ -481,7 +481,7 @@ export class Mani  {
             var kolMinus23=0;
             var kol108=0;
             var kol109=0;
-            trace(arrP2)
+            
          
             for (var i = 0; i < arrP2.length; i++) {               
                 if(arrP2[i][9]==40){

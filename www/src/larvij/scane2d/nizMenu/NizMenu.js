@@ -168,9 +168,9 @@ export class PlusMM  {
                 }  
 
                 if(this.array[p].link=="resources/image/w2.png"){//save
-                     //self.par.par.mInfo.setFun("ПИСЬМО ОТПРАВЛЕННО.", "Письмо было отправелнено на Ваш эмеил, но могло попасть в спам!",function(){},true)
+                    //self.par.par.mInfo.setFun("ПИСЬМО ОТПРАВЛЕННО.", "Письмо было отправелнено на Ваш эмеил, но могло попасть в спам!",function(){},true)
                    
-                     //self.par.par.mInfo.setFunSave("str",function(s){})
+                    //self.par.par.mInfo.setFunSave("str",function(s){})
 
                     self.par.par.menuSave.getNewProd(function(str){
                         self.par.par.mInfo.setFunSave(str,

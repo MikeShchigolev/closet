@@ -32,6 +32,7 @@ export class BKHron {
             this.link="resources/data/"+this.object.obj.id+"/mod/"+ this.object.obj.mod.name; 
               
             this.mO.getModel(this.link, this.object.obj.mod.key,function(o){                
+                
                 self.obj3d=o;               
                 if(self.bbbb==true) {          
                     o.position.y=self.object.obj.mod.r[2]

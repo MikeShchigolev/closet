@@ -39,8 +39,8 @@ export class BPieceTop extends Blok {
         this.visiNisu=new VisiNisu(this);//расчет драгеров
         this.bptColiz=new BPTColiz(this); //Дополнителдьные колизии       
 
-       /* let aa=new THREE.AxesHelper(100);
-        this.content3d.add(aa);*/
+        let aa=new THREE.AxesHelper(100);
+        this.content3d.add(aa);
         
         this.funInit=function(){            
             self.boxColizi.rectCollisMeshdy.boolZ=false
@@ -382,7 +382,7 @@ export class BPieceTop extends Blok {
 
         var point=new Position()  
         var _bObj      
-        this.testPosition= function(_x, _y, _obj,grY, _bSort){
+        this.testPosition= function(_x, _y, _obj, grY, _bSort){
             var gy=0
             if(grY!=undefined)gy=grY
             if(_x!=null){
@@ -398,8 +398,9 @@ export class BPieceTop extends Blok {
             }
             
             _bObj=this.visiNisu.testPosition(point, _obj,_bSort)
-
+            
             if(_x==null&&_bObj!=null){
+               
                 _obj.boxColizi.rectCollisMeshdy.x=_bObj.x-_bObj.z/2;
                 _obj.boxColizi.rectCollisMeshdy.y=_bObj.y;                
             }
@@ -514,7 +515,7 @@ export class BPieceTop extends Blok {
 
             this.boolY=true;
             self.testWWWW();
-           /* self.dVertic();  
+            /*self.dVertic();  
             self.visiNisu.sort()
             this.dtagTime()*/
 
@@ -827,6 +828,7 @@ export class VisiNisu {
             if(point.y>30)return null;
             if(point.y>0)point.y=0;           
             //тест на не сортировку
+          
 
             if(_bSort!=undefined){                
                 let r=this.testSortingPosit();                
@@ -840,6 +842,7 @@ export class VisiNisu {
                 if(this.array[i+1].visible==false)return null;
                 if(point.x>this.array[i].x){
                     if(point.x<this.array[i+1].x){
+                        
                         return this.testPosition2(i, point, _obj)                     
                     }
                 }
@@ -849,12 +852,15 @@ export class VisiNisu {
 
         
         this.testPosition2= function(i, point, _obj){
-            this.position.z=this.array[i+1].x-this.array[i].x;
-            this.position.x=this.array[i].x+this.position.z/2;                     
+            
+            //FIXE большая хрень подрезана, хз
+            this.position.z=_obj.rect[3]//this.array[i+1].x-this.array[i].x;            
+            this.position.x=_obj.x;//this.array[i].x+this.position.z/2;                     
             this.position.y=this.corectY(this.position.x, point.y, _obj);
             this.dragKraiii()            
             this.position.x0=this.array[i].x;
-            this.position.bpt=this.par           
+            this.position.bpt=this.par 
+                    
             return this.position;            
         } 
 
@@ -1381,15 +1387,22 @@ export class VNB {
         this.testHH=function(blok){
             hhh=-blok.boxColizi.rectCollisMeshdy.y-blok.yF-blok.boxColizi.rectCollisMeshdy.height/2+this.par.oPod                  
             if(hhh>this.height){                
-                this.height=hhh;
+                this.height=hhh;                
             } 
+            if(this.visible==true){
+                if(this.array[0].visible==false){
+                    this.draw()
+                }
+            }
+           // trace("RRRR",this.visible)
         }
 
 
         this.creatMark=function(){
             if(this.marker!=undefined)return;
             if(this.par.par.visiBPT.arrBlok[1]==undefined)return;
-            
+           
+            //this.marker = new THREE.Mesh(new THREE.BoxBufferGeometry(5,1,1));
             this.marker=this.par.par.visiBPT.arrBlok[1];
             this.marker.position.set(0,0,0)
             this.marker.rotation.x=Math.PI/2
@@ -1407,27 +1420,38 @@ export class VNB {
                 this.meshF.material=self.par.material;
             }
             this._height=this._height+1;
-            this.height=this._height-1;            
+            this.height=this._height-1; /**/           
         }
 
 
         this.creat=function(){
             this.creatMark();
+
             for (var i = 0; i < this.array.length; i++) {
                 if(this.array[i].visible==false){
                     this.array[i].visible=true;                    
                     return this.array[i]
                 }
             }
+            
             this.array.push(this.marker.clone()); 
-            this.content3d.add(this.array[this.array.length-1])           
+            this.content3d.add(this.array[this.array.length-1]) 
+           
+            //this.array.push(new THREE.AxesHelper(100)); 
+            //this.content3d.add(this.array[this.array.length-1]) 
+
+            /*let aa=new THREE.AxesHelper(100);
+            this.array[this.array.length-1].add(aa);*/
+
+
             return this.array[this.array.length-1]
         }
 
 
         this.clear=function(){
             this._height=0
-            this.visible=false;
+            this.visible = false;
+           // console.warn(">>>>>>>>>>")
             for (var i = 0; i < this.array.length; i++) {
                 this.array[i].visible=false;                 
             }
@@ -1453,13 +1477,17 @@ export class VNB {
             vv2=-this.hh/2-this.hh*vv-vv1;
             for (var i = 0; i < 990; i++) {
                 mesh=this.creat()
+                
                 mesh.position.y=vv2
+
                 vv++;
-                vv2=-this.hh/2-this.hh*vv-vv1;                                 
+                vv2=-this.hh/2-this.hh*vv-vv1; 
+                //trace(i+"   "+vv2,mesh)                                
                 if(this._height1<-vv2+this.hh) break;
             }
             this.meshF.position.y=-this.hh*vv-this.meshS.zz/2-vv1
             this.hron.clear();
+
             if(this.kolSahArr.array.length>1){
                 vv1=0
                 for (i = 0; i < this.kolSahArr.array.length-1; i++) {
@@ -1467,7 +1495,10 @@ export class VNB {
                     mesh=this.hron.get();                    
                     mesh.position.y=-vv1;
                 }
-            }            
+            } 
+           // trace(this.hh+"   "+vv1)  
+           // trace(this.par)
+
             self.dragCont()
         }
 
@@ -1503,6 +1534,7 @@ export class VNB {
             
             this._height1=this.kolSahArr.value;
             this.testWord()
+            trace("#########################");
         } 
 
         

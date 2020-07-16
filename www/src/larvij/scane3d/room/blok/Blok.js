@@ -63,6 +63,8 @@ export class Blok{
         this.textError="null";
         this.bvColor=true;
 
+        this._x=0
+
        
         
         if(o.shadow){
@@ -133,9 +135,7 @@ export class Blok{
             self.x=self.boxColizi.__x;
             self.y=self.boxColizi.__y;            
             self.content3d.position.x=self.x;
-            self.content3d.position.y=self.y;
-
-           
+            self.content3d.position.y=self.y;           
             self.content.x=self.x;
             if(self.durXY)self.durXY(self.x,self.y)
             self.dCol2();           
@@ -505,6 +505,17 @@ export class Blok{
             return obj;            
         }
     }
+
+    set x(v) {
+        if(this._x!=v){
+           
+            this._x = v;            
+            console.warn("===",this._x+"  "+this.idArr+"  "+this.type)
+        }       
+    }   
+    get x() { return  this._x;}
+
+   
 
 
     set material(v) {
