@@ -17,7 +17,7 @@ export class MInfo  {
     constructor(dC) {   
         var self=this   
         var key="© Все права на данный планировщик принадлежат ЗАО Ларвидж интернешнел. Любое использование конструктора гардеробных систем Larvij не согласованное с компанией Ларвидж будет преследоваться по закону.";   
-        
+        trace("+++++++++++++++++++++++++++++");
         this.type="MInfo";
         this.fun=undefined;
         this.dC=dC;
@@ -177,7 +177,7 @@ export class MInfo  {
                 p=this.otstup2*2+32
                 this.button1.visible=this.button.visible=true;
             } 
-            this.button1.y=this.button.y=this.label.y+this.label.div.clientHeight+this.otstup2*2;
+            this.button1.y=this.button.y=this.label.y+this.label.getRect().height+this.otstup2*2;
             if(bb!=undefined)this.button1.visible=this.button.visible=false;
             
             this.window.height=this.button1.y+this.button1.height+this.otstup2*3;
@@ -203,11 +203,11 @@ export class MInfo  {
             }  
             this.input.text=text1;
             this.input.visible=true;
-            this.input.y=this.label.y+this.label.div.clientHeight+5;
+            this.input.y=this.label.y+this.label.getRect().height+5;
             
 
-            this.window.height=this.label.y+this.label.div.clientHeight+p+32+5;
-            this.button1.y=this.button.y=this.label.y+this.label.div.clientHeight+this.otstup2+32+5;
+            this.window.height=this.label.y+this.label.getRect().height+p+32+5;
+            this.button1.y=this.button.y=this.label.y+this.label.getRect().height+this.otstup2+32+5;
             this.sizeWindow(this._width*1, this._height*1, this._scale*1)
         }
 
@@ -233,7 +233,7 @@ export class MInfo  {
             }  
             this.input.text=text;
             this.input.visible=true;
-            this.input.y = this.label.y+this.label.div.clientHeight+15;
+            this.input.y = this.label.y+this.label.div.clientHeight+30;
             this.panelMail.y=this.label.y+this.label.div.clientHeight+p+30
             this.panelMail.visible=true;
             this.butCC.y=this.input.y-this.panelMail.y-7

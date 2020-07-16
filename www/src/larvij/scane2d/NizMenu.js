@@ -43,7 +43,7 @@ export class NizMenu  {
         this.plusMM=new PlusMM(this);//выподалка с доп функциами
         this.fotoMenu=new FotoMenu(this);//принскрин сохронялки
 
-
+        trace("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$111$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
         this.object=undefined;
 
@@ -133,7 +133,7 @@ export class PlusMM  {
 
         this.galeri = new GaleriLitel(this,0,0,arrObj,function(s,p){ 
             if(s=="index"){
-                
+                trace(this.array[p].link)
                 if(this.array[p].link=="resources/image/xp0.png"){//csv                    
                     var a=self.par.par.mani.getArr();
                     var str= 'артикул;название;размер;цена;цвет;кол.;общая цена;id БД\n'//"data:text/csv;charset=utf-8,%EF%BB%BF\n";
@@ -165,9 +165,12 @@ export class PlusMM  {
                     })  
                     
                 }  
-
+                trace(this.array[p].link)
                 if(this.array[p].link=="resources/image/w2.png"){//save
-                    self.par.par.menuSave.getNewProd(function(str){
+
+                    self.par.par.mInfo.setFun("ПИСЬМО ОТПРАВЛЕННО.", "Письмо было отправелнено на Ваш эмеил, но могло попасть в спам!",function(){},true)
+                               
+                   /* self.par.par.menuSave.getNewProd(function(str){
                         self.par.par.mInfo.setFunSave(str,
                             function(s){              
                                 self.par.par.menuSave.setMail(this.text, function(){
@@ -175,7 +178,7 @@ export class PlusMM  {
                                 });
                             }
                         );
-                    }) 
+                    })*/ 
                 }  
                
                 if(this.array[p].link=="resources/image/w0.png"){//новый проект
@@ -784,10 +787,8 @@ export class NMGalf  {
 
         var ot=this.otstup;
         var xx=ot
-        var  bb=new DButSim(this.dCont,xx,this.otstup," ",function(){
-            
-            self.room.par.bactive=false
-            trace(self.room.par)
+        var  bb=new DButSim(this.dCont,xx,this.otstup," ",function(){            
+            self.room.par.bactive=false;            
         },"resources/image/www.png",)
         bb.borderRadius=111;
         bb.boolLine=false;
