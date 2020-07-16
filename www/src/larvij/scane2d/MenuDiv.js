@@ -82,6 +82,7 @@ export class MenuDiv  {
         this.boolMenuActiv=false;
         
         this.tween = new TWEEN.Tween(this.dC);
+        this.dC.y=-80
         this.menuActiv=function(bool, time, bb){
            // console.warn("dsfdsf",bool, time, bb) 
             this.par.galleres.menuActiv(bool, time);
@@ -746,6 +747,7 @@ export class MinMani  {
 
 
         this.tween = new TWEEN.Tween(this.dC);
+        //this.dC.x=370
         this.menuActiv=function(bool, time){          
             var xx=0;
             if(bool==true) xx=370
@@ -983,6 +985,7 @@ export class MLogo  {
 
 
         this.tween = new TWEEN.Tween(this.dC);
+        this.dC.x=360
         this.menuActiv=function(bool, time){          
             var xx=0;
             if(bool==true) xx=360

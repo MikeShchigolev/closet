@@ -124,6 +124,7 @@ export class Galleres  {
         }
 
         this.tween = new TWEEN.Tween(this.dC);
+        this.dC.x=-260
         this.menuActiv=function(bool, time){ 
             var xx=0;
             if(bool==true) xx=-260
