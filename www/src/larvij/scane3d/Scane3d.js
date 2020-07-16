@@ -189,10 +189,19 @@ export class AnimatS3D  {
         this.posOld={x:0,y:0,z:0,rx:1,rz:0,zume:1000}
         this.posNew={x:0,y:0,z:0,rx:0,rz:0,zume:1500} 
 
+        var bbbbb=false
 
         this.dragActiv=function(t){
             console.warn("dragActiv",t)
-            if(t==undefined)t=500
+            if(t==undefined){
+                if(bbbbb==false){
+                    t=0
+                    bbbbb=true
+                }else{
+                    t=500
+                }
+                
+            }
             this.vS(true);
             if(this._active==false){              
                 this.testZZ()//округляем до диопозона ПИ
@@ -263,11 +272,11 @@ export class AnimatS3D  {
 
             if(this.boolS)this.vS(this.boolS)
 
-            setTimeout(function() {
+            //setTimeout(function() {
 
                 self.par.bactive=false
 
-            }, 10);
+            /*}, 10);*/
         }
 
 
