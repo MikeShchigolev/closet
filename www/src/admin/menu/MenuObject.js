@@ -97,6 +97,9 @@ function MenuObject(menu, fun) {
         if(s=="reDrahObj"){
             self.setObj(self.obj);
         }
+        aGlaf.save();
+        self.saveTime();
+        trace("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     })
 
 
@@ -381,10 +384,10 @@ function MMod(c,x,y,f) {
 
 
     this.button=new DButton(this.panel, this.otstup, this.otstup,"load fbx", function(b){
-        if(b!=undefined){
-            
+        if(b!=undefined){            
             self.save3d();
         }
+        self.fun()
     });
     this.button.startFile();  
 
