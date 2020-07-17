@@ -179,8 +179,7 @@ export class Mani  {
         // aM=main.localStorage.object.minMani;
         // this.minMani.active=aM;
 
-        this.grabStoiki=false;
-        trace("dcmParam.confText  ",dcmParam.confText)
+        this.grabStoiki=false;        
         if(dcmParam.confText.grabStoiki!=undefined)this.grabStoiki=dcmParam.confText.grabStoiki;
 
 
@@ -188,7 +187,6 @@ export class Mani  {
         this.panel.width=this.par.widthBig*this.par.prosentXX+1-this.otstup;
         if(this.par.par.par.tip==1){
             this.panel.width=this.par.widthBig*2
-
         }
 
         this.panel.height=this.par.verhH+2 

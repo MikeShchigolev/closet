@@ -383,14 +383,15 @@ export class Blok{
             this.creatBC();
             this.modelObj=_obj;
             if(self.funInit!=undefined)self.funInit();
-
+            trace("@@@@>>",self.idArr,self.linkMod);
             mO.getModel(this.linkMod, o.mod.key, function(o){
                 self.cont3dLoad=o;
                 self.testMaterial();
                 
                 self.markers.setO3D(self.cont3dLoad) 
-                self.c3dNa.add(self.cont3dLoad);
+                self.content3d.add(self.cont3dLoad);
                 
+               
 
                 self.recurcChild(self.cont3dLoad)                              
                 self.mO.visi3D.objShadow(self.content3d, true)

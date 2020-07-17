@@ -205,8 +205,9 @@ function DIVsakoe(par) {
     this.chekGS=new DCheckBox(this.dCont, this.otstup, yy, "grabStoiki Кранштены от полок есть/нет", function(s){ 
         self.confText.grabStoiki = this.value;        
         self.par.saveTime();
-    })   
+    }) 
 
+    
 
 
     this.chek1=new DCheckBox(this.dCont, 600, yy, "Уточнения действий, защита от слкучайного удаления 'durak'", function(s){ 
@@ -215,8 +216,16 @@ function DIVsakoe(par) {
         self.par.saveTime();
     })
 
+
+
     yy+=32
 
+    this.chekBuy=new DCheckBox(this.panel, this.otstup, yy, "кноп. Заказ", function(s){ 
+        self.confText.buy = this.value; 
+        self.par.saveTime();        
+    })  
+
+    yy+=32
 
 
 
@@ -313,11 +322,7 @@ function DIVsakoe(par) {
 
     
 
-    this.chekBuy=new DCheckBox(this.panel, this.otstup, yy-15, "кноп. Заказ", function(s){ 
-        self.confText.buy = this.value; 
-        self.par.saveTime();   
-        trace(self.confText)
-    })
+   
     yy+=32
    
     yy+=110
