@@ -807,14 +807,16 @@ export class MinMani  {
         }
 
         var hh
-        this.setADrah = function(){  
-            if(this.galleryMani.hh>this._height){
-                //this.panel.height=hh; 
+        this.setADrah = function(){
+             
+            if(this.galleryMani.hh>this._height){                
+                
                 this.panel.height=this._height;
-                this.galleryMani.height=this._height;                             
+                this.galleryMani.height=this._height/this.ss;                              
             }else{
+                
                 this.panel.height=this.galleryMani.hh;
-                this.galleryMani.height=this._height;             
+                this.galleryMani.height=this._height/this.ss;             
             }           
         }
 

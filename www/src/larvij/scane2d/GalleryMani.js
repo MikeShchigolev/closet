@@ -37,7 +37,132 @@ export class GalleryMani extends DGallery {
             r.simvol = this.simvol  
             return r
         }
+
+            // перерисовка галереи
+        var ii, jj, ww, hh, bat, sahLoad, wM, hM, sliderOtstup;    
+        this.draw = function () {
+            if (this.preDraw) this.preDraw();
+
+            ii = 0;
+            jj = 0;
+            sliderOtstup = this.otstup1 + this.otstup * 2;
+            ww = 1;
+            if (this._kolII > this.array.length)ww = this.array.length * (this._widthPic + this._otstup) + this._otstup;
+            hh = this._heightPic + this._otstup * 2;
+            for (var i = 0; i < this.array.length; i++) {
+                this.array[i].x = ii * (this._widthPic + this._otstup) + this._otstup;
+                this.array[i].y = jj * (this._heightPic + this._otstup) + this._otstup;
+                if (this.array[i].x + this._widthPic + this._otstup > ww)ww = this.array[i].x + this._widthPic + this._otstup;
+                hh = (jj + 1) * (this._heightPic + this._otstup) + this._otstup;
+                ii++;
+                if (ii >= this._kolII) {
+                    ii = 0;
+                    jj++;
+                }
+            }
+
+
+            if (ww > this._width) this.scrollBarH.visible = true;
+            else this.scrollBarH.visible = false;
+
+            if (hh > this._height) this.scrollBarV.visible = true;
+            else this.scrollBarV.visible = false;
+
+
+            this.scrollBarH.widthContent = ww;
+            this.scrollBarV.heightContent = hh;
+
+
+            if (ww > this._width) {
+                wM = this._width;
+            } else {
+                wM = ww;
+            }
+            if (hh > this._height) {
+                hM = this._height;
+            } else {
+                hM = hh;
+            }
+
+            this.ww = ww;
+            this.wM = wM;
+            this.hh = hh;
+            this.hM = hM;
+            // this.scrollBarH     внизу
+            // this.scrollBarV     сбоку
+
+            //  this._boolPositScrol = true;//выворот положений
+            // this._boolPositOtctup= true;//внутурь/наружу
+
+            if (this._boolPositScrol) {
+                if (this._boolPositOtctup) {
+                    this.scrollBarH.y = hM - this.otstup - this._otstup1;
+                    this.scrollBarV.x = wM - this.otstup - this._otstup1;
+                } else {
+                    this.scrollBarH.y = hM + this.otstup;
+                    this.scrollBarV.x = wM + this.otstup;
+                }
+            } else {
+                if (this._boolPositOtctup) {
+                    this.scrollBarH.y = this.otstup;
+                    this.scrollBarV.x = this.otstup;
+                } else {
+                    this.scrollBarH.y = -this.otstup - this._otstup1;
+                    this.scrollBarV.x = -this.otstup - this._otstup1;
+                }
+            }
+
+            if(this.panel!=undefined){          
+                this.panel.width=this._width;
+                if(this.hh<this._height){
+                    this.panel.height=this.hh;
+                }else{
+                    this.panel.height=this._height;
+                }
+            }
+
+            // this.graphicsMask.clear();
+            // this.graphicsMask.beginFill(0xff0000, 0);
+            // this.graphicsMask.drawRect(0, 0, wM, hM);
+            // this.graphicsMask.endFill();
+
+
+            // if (this._boolWheel) {
+            //  this.graphics.clear();
+            //  this.graphics.beginFill(0xff0000, 0);
+            //  this.graphics.drawRect(0, 0, ww, hh);
+            //  this.graphics.endFill();
+
+            // }
+            this.dragIE()
+            if (this.postDraw) this.postDraw();
+        };
     }
+    set height(value) {
+        if(this._height!=value){           
+            this._height = value;
+            this.content1.div.style.clip = "rect(1px "+this._width+"px "+this._height+"px 0px)";
+            this.content1.x=0;
+            this.drawScrol();
+            this.draw();
+        }
+    }
+    get height() { return  this._height;}/**/
+
+    /*height: {// верх холеоеи
+        set: function (value) {
+            if (this._height == value) return;
+            this._height = value;
+            this.content1.div.style.clip = "rect(1px "+this._width+"px "+this._height+"px 0px)";
+            this.content1.x=0;
+            this.drawScrol();
+
+            this.draw();
+        },
+        get: function () {
+            return this._height;
+        }
+    },*/
 }
 
 
