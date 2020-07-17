@@ -21,8 +21,8 @@
         "shininess": 30,
         "textur": [
             {
-                "link": "resources/data/m_39/textur/0.png",
-                "l": "0.png",
+                "link": "resources/data/m_39/textur/256.png",
+                "l": "256.png",
                 "name": "map",
                 "rx": 1,
                 "ry": 1
