@@ -199,8 +199,7 @@ export class AnimatS3D  {
                     bbbbb=true
                 }else{
                     t=500
-                }
-                
+                }               
             }
             this.vS(true);
             if(this._active==false){              

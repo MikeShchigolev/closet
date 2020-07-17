@@ -77,7 +77,8 @@ export class NizMenu  {
 
         this.tween = new TWEEN.Tween(this.dC);
         this.dC.y=110
-        trace("############dC.y############");
+        
+        
         this.menuActiv=function(bool, time){ 
             var yy=0;
             if(bool==true) yy=110

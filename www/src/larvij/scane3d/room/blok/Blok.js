@@ -313,6 +313,12 @@ export class Blok{
                     }
                 }   
             }
+            if(this.idArr==-1){
+                trace("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",this.idArr);
+                mDin=mO.matNull
+                this.bvColor=true
+                bb=null; 
+            }
 
             
 

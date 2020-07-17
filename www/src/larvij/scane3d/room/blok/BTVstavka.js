@@ -43,7 +43,7 @@ export class BTVstavka extends Blok {
         this.drahShadow=function(_x,_y){ 
             if(this._parent!=undefined){
                 this.content.position.x = this.boxColizi.rectCollisMeshdy.x+this.boxColizi.rectCollisMeshdy.width/2;
-                this.content.position.y = -(this.boxColizi.rectCollisMeshdy.y);
+                this.content.position.y = -(this.boxColizi.rectCollisMeshdy.y)-this.boxColizi.rectCollisMeshdy.height/2;
                 if(this._parent.content.funRender!=undefined){
                     this._parent.content.funRender()
                 }
