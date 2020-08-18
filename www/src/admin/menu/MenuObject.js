@@ -73,7 +73,7 @@ function MenuObject(menu, fun) {
         }        
     }) 
 
-     
+
 
 
 
@@ -99,7 +99,7 @@ function MenuObject(menu, fun) {
         }
         aGlaf.save();
         self.saveTime();
-        trace("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        
     })
 
 

@@ -832,17 +832,12 @@ export class VisiNisu {
 
             if(_bSort!=undefined){                
                 let r=this.testSortingPosit();                
-            }
-           
-            
-           
-
+            } 
 
             for (var i = 0; i < this.array.length-1; i++) {                
                 if(this.array[i+1].visible==false)return null;
                 if(point.x>this.array[i].x){
-                    if(point.x<this.array[i+1].x){
-                        
+                    if(point.x<this.array[i+1].x){                        
                         return this.testPosition2(i, point, _obj)                     
                     }
                 }
@@ -1276,8 +1271,7 @@ export class VisiNisu {
         this.getPrice=function(a, intColor,idMat){           
             for (var i = 0; i < this.array.length; i++) { 
                 if(this.array[i].visible!=false){
-                    this.array[i].getPrice(a, intColor,idMat)
-
+                    this.array[i].getPrice(a, intColor,idMat);
                 }
             }
         }
@@ -1287,7 +1281,9 @@ export class VisiNisu {
             var obj={}
             obj.array=[]
             for (var i = 0; i < this.array.length; i++) {
-                if(this.array[i].visible!=false)obj.array.push({x:this.array[i].x,h:this.array[i].height,h1:this.array[i].height1})
+                if(this.array[i].visible!=false)
+                    if(this.array[i].height!=0)
+                        obj.array.push({x:this.array[i].x,h:this.array[i].height,h1:this.array[i].height1})
             }
 
             return obj;            
@@ -1300,11 +1296,13 @@ export class VisiNisu {
             
             this.clearHH()
             for (var i = 0; i < obj.array.length; i++) {
-                let vb=this.creat(obj.array[i].x)
-                vb.x=obj.array[i].x
-                vb.height=obj.array[i].h
-                vb.height1=obj.array[i].h1
-                vb.visible=true
+                if(obj.array[i].h!=0){
+                    let vb=this.creat(obj.array[i].x);
+                    vb.x=obj.array[i].x;
+                    vb.height=obj.array[i].h;
+                    vb.height1=obj.array[i].h1;
+                    vb.visible=true; 
+                }                
             }
           
 

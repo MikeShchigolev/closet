@@ -137,7 +137,8 @@ export class Room  {
             
         }
 
-        this.setObj=function(o){               
+        this.setObj=function(o){ 
+            trace("o",o)             
             if(o==undefined)  return;  
             if(o.color!=undefined)this.color=o.color
             if(o.idMatObject!=undefined)  this.idMatObject=  o.idMatObject;
