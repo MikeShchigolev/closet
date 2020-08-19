@@ -22,7 +22,8 @@ export class BTVstavka extends Blok {
         //перехват основоного события ведения обьекта по стенке
         this.byZdvig=false
         var b
-        this.setXY=function(_x,_y){ 
+        this.setXY=function(_x,_y){
+            trace(_x,_y) 
             b=this.testTumb(_x,_y);
             if(b==true){
                 if(mO.blokTumba.parent!=undefined){                    
@@ -313,6 +314,167 @@ export class BTVstavka extends Blok {
             if(self.durXY)self.durXY(self.x,self.y)
             self.dCol2();           
         }
+
+        this.sobKey = function(tip,e,arrNa){ 
+            //trace(e.keyCode, this.idArr,this,tip,arrNa,e);
+            let b=false;
+            
+            //
+            if(this._parent){
+                let xxx=this._parent.x;
+                let yyy=this._parent.y;
+                if(tip=="down"){
+                    trace(xxx,yyy,this.boxColizi.position._y);
+                      
+
+                    if(e.keyCode==38 || e.keyCode==87)  {
+                        this.plusSah()
+                        this.fun("visi3d");
+
+                        
+                    }
+                    if(e.keyCode==40 || e.keyCode==83)  {
+                        this.plusSah(true)
+                        this.fun("visi3d");                       
+                    }
+/* 
+                    if(b){                   
+                        this.fun("visi3d");                    
+                        this.mO.par.par.visiActiv.setObject(this);  
+                    }*/
+                    
+                }
+            }         
+        }
+
+        this.getPosit = function(bt,y,h,b,r){
+            trace(y,h,b,r);
+            let yy=y+h
+            let ap=[];
+            let ap1=[];
+
+            for (var i = 0; i < bt.arrPositZ.length; i++) { 
+                trace(yy+"  ::  "+bt.arrPositZ[i]);
+                if(b){
+                    if(bt.arrPositZ[i]>yy){
+                        ap.push(bt.arrPositZ[i]);
+                    }
+                }else{
+                    if(bt.arrPositZ[i]<yy){
+                        ap.push(bt.arrPositZ[i]);
+                    }
+                }
+                
+                /*if(Math.round(yy1)==Math.round(bt.arrPositZ[i])){
+                    p=i
+                    break
+                }*/
+            }
+            let step=  bt.arrPositZ[0]-(bt.arrPositZ[0]-bt.arrPositZ[1]) 
+
+            for (var i = 0; i < ap.length; i++) {
+                ap1[i]=null
+
+                let step1= ap[i]-h;
+
+                
+                if(step<step1){ //checking the bottom step   
+                    trace(step,",,,,,",step1)
+
+                }
+            }
+
+
+
+            trace(ap)
+            trace(ap1)
+            return null
+        }
+
+
+        this.plusSah = function(b){
+            if(!this._parent)return; 
+
+
+           /* trace(">>>",this.getPosit(this._parent,this.boxColizi.rectCollisMeshdy.y,this.boxColizi.rectCollisMeshdy.height,b,this.idRandom))
+            
+
+
+            return; */
+
+
+            let yy1=this.boxColizi.rectCollisMeshdy.height+this.boxColizi.rectCollisMeshdy.y; 
+            let p=-1
+            let p1=-1
+            for (var i = 0; i < this._parent.arrPositZ.length; i++) {               
+                if(Math.round(yy1)==Math.round(this._parent.arrPositZ[i])){
+                    p=i
+                    break
+                }
+            }
+            if(p==-1)return
+
+            if(b==true){
+                p1=p-1
+            } else{
+                p1=p+1
+            } 
+            if(this._parent.arrPositZ[p1]==undefined)return
+            let py=this._parent.arrPositZ[p1]-this.boxColizi.rectCollisMeshdy.height;
+            let step=  -(this._parent.arrPositZ[0]-this._parent.arrPositZ[1])  
+            let step1=  this._parent.arrPositZ[0]-step 
+            let step2=  this._parent.arrPositZ[p1]-this.boxColizi.rectCollisMeshdy.height 
+
+            if(step1>step2){ //checking the bottom step           
+                return
+            }
+            //checking for intersections of cells
+            if(this._parent.children.length>1){
+                let pp0=-(py+this.boxColizi.rectCollisMeshdy.height);
+                let pp1=pp0+this.boxColizi.rectCollisMeshdy.height;              
+                for (var i = 0; i < this._parent.children.length; i++) {
+                    if(this._parent.children[i].idArr==this.idArr)continue
+                    let pp2=-(this._parent.children[i].boxColizi.rectCollisMeshdy._y+this._parent.children[i].boxColizi.rectCollisMeshdy.height)
+                    let pp3=pp2+this._parent.children[i].boxColizi.rectCollisMeshdy.height;
+                    if(this.test2d(pp0,pp1,pp2,pp3)==true){//sigment found intersections
+                        return
+                    }
+                }
+            }
+            this.boxColizi.rectCollisMeshdy.y=py;
+        }
+
+        //сверяем две полосы
+        this.test2d=function(ps,pf,ps1,pf1){            
+            if(ps1>=ps &&ps1<=pf)return true;
+            if(ps>=ps1 &&ps<=pf1)return true;
+            return false;
+        }
+
+        //сверяем две полосы
+        this.testLineXZ=function(ps,pf,ps1,pf1){ 
+            if(ps==ps1)return true;
+            if(ps==pf1)return true;
+
+
+            trace(ps,pf,"===",ps1,pf1)         
+            if(ps1>=ps &&pf1<=ps)return true;
+            if(ps1>=pf &&pf1<=pf)return true;          
+            if(ps>=ps1 &&pf<=ps1)return true;
+            if(ps>=pf1 &&pf<=pf1)return true; 
+            return false;
+        }
+
+        /* mO.blokTumba.setXY(_x,_y);
+            if(bbb==true){
+                var mm=-3333
+                for (var i = 0; i < mO.blokTumba.arrPositZ.length; i++) {  
+                    if(-mO.blokTumba.arrPositZ[i]>mm)mm=mO.blokTumba.arrPositZ[i];
+                }
+                this.boxColizi.rectCollisMeshdy.y=mm-this.boxColizi.height;
+                this.boxColizi.rectCollisMeshdy.x=-this.boxColizi.width/2;
+                this.setXY(_x,_y);
+            }*/
 
     }
 

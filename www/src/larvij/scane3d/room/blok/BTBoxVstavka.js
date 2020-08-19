@@ -73,6 +73,7 @@ export class BTBoxVstavka extends Blok {
         
         var b
         this.setXY=function(_x,_y){ 
+            trace("setXY  ",_x,_y)
             b=this.testTumb(_x,_y);
             trace(b)
             if(b==true){
@@ -275,6 +276,7 @@ export class BTBoxVstavka extends Blok {
             var r=null
             max=9999
             pyR=_py
+            trace(_py)
             for (var i = 0; i < _blok.arrPositZ.length; i++) {                
                 ii=Math.abs(pyR-_blok.arrPositZ[i])                
                 if(max>ii){
@@ -580,6 +582,35 @@ export class BTBoxVstavka extends Blok {
             if(self.durXY)self.durXY(self.x,self.y)
             self.dCol2();           
         }
+
+        
+        this.sobKey = function(tip,e,arrNa){
+            trace("===",tip,arrNa)
+
+            let b=false;
+          
+            let xxx= this.boxColizi.rectCollisMeshdy._x;
+            let yyy= this.boxColizi.rectCollisMeshdy._y;             
+
+            if(tip=="down"){
+                let step= Math.abs( mO.btBoxDin.arrPositZ[0] - mO.btBoxDin.arrPositZ[1])
+                if(e.keyCode==38 || e.keyCode==87)  {                  
+                    yyy+=step; 
+                    b=true
+                }
+                if(e.keyCode==40 || e.keyCode==83)  {                 
+                    yyy-=step;                    
+                    b=true;
+                }               
+                if(b){                     
+                    yyy=this.testBlokSvobod(yyy, this._parent)
+                    this.boxColizi.rectCollisMeshdy.y=yyy;
+                    this.fun("visi3d");                    
+                    this.mO.par.par.visiActiv.setObject(this);  
+                }                
+            }
+        }
+
 
        
       

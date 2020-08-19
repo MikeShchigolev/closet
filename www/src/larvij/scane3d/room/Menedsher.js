@@ -615,6 +615,12 @@ export class Menedsher  {
                 self.dragPriceScane(); 
             }, 1000);
         }
+
+
+        this.sobKey = function(tip,e,arrNa){ 
+            
+            this.menedsherObject.sobKey(tip,e,arrNa);
+        } 
     }
 
     set materialBase(v) {
@@ -643,7 +649,9 @@ export class MenedsherObject  {
         this.wN=[50,75,100];
         this.hN=[58]; 
 
+        this.stepKey=2    
 
+        this.activObject = undefined; 
         this._visiMark = false; 
 
         this.loaderFBX// = new THREE.FBXLoader();
@@ -1037,6 +1045,11 @@ export class MenedsherObject  {
                 
             }
         }
+
+        this.sobKey = function(tip,e,arrNa){            
+            if(this.activObject)this.activObject.sobKey(tip,e,arrNa);
+        } 
+
         this._activTime=-1;
     }
 
@@ -1064,8 +1077,8 @@ export class MenedsherObject  {
 
     set activIndex(v) {
         if(this._activIndex!=v){
-        
-            this._activIndex= v;
+            trace("==_activIndex===",v);
+            this._activIndex = v;
             for (var i = 0; i < this.array.length; i++) {
                 if(i==this._activIndex)this.array[i].activTime=true;
                 else this.array[i].activTime=false;                              
@@ -1073,9 +1086,12 @@ export class MenedsherObject  {
             if(this.array[v]!=undefined) {                
                 this.par.visi3D.arrOut=this.array[v].c3dNa;
                 this.par.par.visiActiv.setObject(this.array[v])
+                this.activObject=this.array[v]
             } else{
+
                 this.par.visi3D.arrOut=null;
                 this.par.par.visiActiv.setObject(null)
+                this.activObject=undefined
             }
             this.par.fun("visi3d");
         }       

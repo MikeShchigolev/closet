@@ -759,7 +759,8 @@ export class Sten  {
     set width(v) {
         if(this._width!=v){
             this._width = v; 
-           // this.setka.width = v;          
+           // this.setka.width = v;  
+           console.warn("w",v)        
             this.butDrag.width = v;
             this.redrag();
             this.gMGm.width = this._width;

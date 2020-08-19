@@ -97,7 +97,8 @@ export class BPieceTop extends Blok {
         }
 
 
-        this.stopDrag = function(){          
+        this.stopDrag = function(){ 
+              
             if(this.parent==undefined){
                 if(this.boolOTS==true)if(this.objts)if(this.objts.parent){
                     this.objts.parent.add(this)                   
@@ -142,6 +143,7 @@ export class BPieceTop extends Blok {
 
         var ggg,zd,arr, xx,yy, arP;
         this.namaNama = function(bpt){ 
+            console.warn("namaNama")
             arr=[]
             arP=[]
             zd=bpt.x-this.x;            
@@ -310,7 +312,7 @@ export class BPieceTop extends Blok {
         }         
 
         this.dVertic = function(){ 
-            
+      
             this.zz=0
             this.testWWWW();
             this.visiNisu.clearHH();           
@@ -542,6 +544,55 @@ export class BPieceTop extends Blok {
                 }, t);
             } */           
         }
+
+
+        this.sobKey = function(tip,e,arrNa){ 
+            trace(e.keyCode, this.idArr,this,tip,arrNa,e);
+            let b=false;
+            let b1=false;
+            //
+            
+            if(tip=="down"){
+                if(e.keyCode==37 || e.keyCode==65)  {
+                    this.setXY(this.boxColizi.position._x-this.mO.stepKey,this.boxColizi.position._y);
+                    b=true
+                }
+                if(e.keyCode==39 || e.keyCode==68)  {
+                    this.setXY(this.boxColizi.position._x+this.mO.stepKey,this.boxColizi.position._y);
+                    b=true
+                }
+                if(e.keyCode==38 || e.keyCode==87)  {
+                    this.setXY(this.boxColizi.position._x,this.boxColizi.position._y+this.mO.stepKey);
+                    b=true;
+                    b1=true;
+                }
+                if(e.keyCode==40 || e.keyCode==83)  {
+                    this.setXY(this.boxColizi.position._x,this.boxColizi.position._y-this.mO.stepKey);
+                    b=true;
+                    b1=true;
+                }
+
+                if(b){
+                    if(b1){
+                        this.visiNisu.drawTestUp();
+                    }
+                    this.fun("visi3d");                    
+                    this.mO.par.par.visiActiv.setObject(this);  
+                }
+                
+            }
+
+
+            if(tip=="up"){                
+                if( e.keyCode==37 || e.keyCode==65 || e.keyCode==39 || e.keyCode==68 ||
+                    e.keyCode==38 || e.keyCode==87 || e.keyCode==40 || e.keyCode==83 )  {
+                    b=true;
+                }
+                if(b){                    
+                    this.stopDrag();
+                }
+            }           
+        } 
     }
 
     set parent(v) {
@@ -592,6 +643,7 @@ export class VisiNisu {
 
         var b,b1, p, p1, vnb, xxx;
         this.testStoik=function(blok){
+
             this.maxSah=0
             b=false;
             b1=false;
@@ -1282,8 +1334,9 @@ export class VisiNisu {
             obj.array=[]
             for (var i = 0; i < this.array.length; i++) {
                 if(this.array[i].visible!=false)
-                    if(this.array[i].height!=0)
+                    if(this.array[i].height!=0){
                         obj.array.push({x:this.array[i].x,h:this.array[i].height,h1:this.array[i].height1})
+                    }
             }
 
             return obj;            
@@ -1294,13 +1347,14 @@ export class VisiNisu {
         var ob,ooo
         this.setObj = function(obj){
             
-            this.clearHH()
+            this.clearHH();
             for (var i = 0; i < obj.array.length; i++) {
                 if(obj.array[i].h!=0){
                     let vb=this.creat(obj.array[i].x);
                     vb.x=obj.array[i].x;
                     vb.height=obj.array[i].h;
-                    vb.height1=obj.array[i].h1;
+                    vb.height1=obj.array[i].h1;                    
+                    
                     vb.visible=true; 
                 }                
             }
@@ -1332,6 +1386,7 @@ export class VNB {
         this.meshS=undefined;
         this.meshF=undefined;
         this.hh=undefined; 
+        this.idArr=-1
         this.arrImage=[]
         this.content=new PIXI.Container();
         par.par.content.addChild(this.content);
@@ -1383,6 +1438,7 @@ export class VNB {
 
         var hhh
         this.testHH=function(blok){
+
             hhh=-blok.boxColizi.rectCollisMeshdy.y-blok.yF-blok.boxColizi.rectCollisMeshdy.height/2+this.par.oPod                  
             if(hhh>this.height){                
                 this.height=hhh;                
@@ -1439,12 +1495,7 @@ export class VNB {
             this.array.push(this.marker.clone()); 
             this.content3d.add(this.array[this.array.length-1]) 
            
-            //this.array.push(new THREE.AxesHelper(100)); 
-            //this.content3d.add(this.array[this.array.length-1]) 
-
-            /*let aa=new THREE.AxesHelper(100);
-            this.array[this.array.length-1].add(aa);*/
-
+          
 
             return this.array[this.array.length-1]
         }
@@ -1453,7 +1504,7 @@ export class VNB {
         this.clear=function(){
             this._height=0
             this.visible = false;
-           // console.warn(">>>>>>>>>>")
+           
             for (var i = 0; i < this.array.length; i++) {
                 this.array[i].visible=false;                 
             }
@@ -1464,11 +1515,16 @@ export class VNB {
         var dragH=-100
         var vv=0;
         var mesh,vv1,vv2,s;
-        this.draw=function(){
-            this.creatMark();
-            this.testHHHH(); 
+        this.draw=function(boolHHH){
+            
+         
+            this.creatMark();           
+            if(this.par.par.parent!=undefined){
+                this.testHHHH(); 
+            }            
             if(this.marker==undefined)return;
             if(this.hron.obj3d==undefined)return;
+            
             
             for (var i = 0; i < this.array.length; i++) {
                 this.array[i].visible=false
@@ -1484,7 +1540,7 @@ export class VNB {
 
                 vv++;
                 vv2=-this.hh/2-this.hh*vv-vv1; 
-                //trace(i+"   "+vv2,mesh)                                
+                                              
                 if(this._height1<-vv2+this.hh) break;
             }
             this.meshF.position.y=-this.hh*vv-this.meshS.zz/2-vv1
@@ -1498,8 +1554,7 @@ export class VNB {
                     mesh.position.y=-vv1;
                 }
             } 
-           // trace(this.hh+"   "+vv1)  
-           // trace(this.par)
+           
 
             self.dragCont()
         }
@@ -1535,8 +1590,7 @@ export class VNB {
             this.kolSahArr.set(this._height);
             
             this._height1=this.kolSahArr.value;
-            this.testWord()
-            
+            this.testWord()            
         } 
 
         
@@ -1546,7 +1600,9 @@ export class VNB {
         var point1=new THREE.Vector2()
         var point2=new THREE.Vector2()
         this.testWord=function(){
+       
             if(this.par.par.parent==undefined)return 
+
             sten=this.par.par.parent;
             point.x=this.par.par.boxColizi.position._x+this.x
             point.y=this.par.par.boxColizi.position._y;
@@ -1662,7 +1718,14 @@ export class VNB {
         this._height=v       
         this.draw();              
     }   
-    get height() { return  this._height;}  
+    get height() { return  this._height;} 
+
+    set height1(v) { 
+        this._height1=v 
+             
+        this.draw();              
+    }   
+    get height1() { return  this._height1;}      
 }
 
 
@@ -1674,7 +1737,7 @@ export class KolSahArr {
         var self=this;
         this.arrayParam=[];
         this.arrInfo=arrInfo
-        this.value= 0;
+        this.value=0;
         this.array=[];
         var vm=0      
         var kk, kk2 

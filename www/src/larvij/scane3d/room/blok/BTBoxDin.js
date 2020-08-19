@@ -1001,7 +1001,40 @@ export class BTBoxDin extends Blok {
             this.fun("visi3d");
         }*/
 
-
+        this.sobKey = function(tip,e,arrNa){
+            let b=false;
+          
+            let xxx= this.boxColizi.position._x;
+            let yyy= this.boxColizi.position._y;   
+            
+            if(tip=="down"){
+                if(e.keyCode==37 || e.keyCode==65)  {                   
+                    xxx=this.boxColizi.position._x-this.mO.stepKey;
+                    
+                    if((yyy-this.boxColizi.height/2)>2){
+                        xxx-=this.boxColizi.width/2+this.mO.stepKey;;                        
+                    }
+                    b=true
+                }
+                if(e.keyCode==39 || e.keyCode==68)  {                  
+                    xxx=this.boxColizi.position._x+this.mO.stepKey;;
+                    if((yyy-this.boxColizi.height/2)>2){
+                        xxx+=this.boxColizi.width/2-this.mO.stepKey;;                        
+                    }
+                    b=true
+                }
+               
+                if(xxx<this.boxColizi.width/2)xxx=this.boxColizi.width/2;
+                if(this._parent){
+                    if(xxx>this._parent.width-this.boxColizi.width/2)xxx=this._parent.width-this.boxColizi.width/2;                    
+                } 
+                this.setXY(xxx,yyy);
+                if(b){                    
+                    this.fun("visi3d");                    
+                    this.mO.par.par.visiActiv.setObject(this);  
+                }                
+            }  
+        }
 
         this.getObj = function(){
             var obj={}

@@ -61,6 +61,11 @@ export class Scane3d  {
   		    this.room.sizeWindow(w,h,s); 
             this.animatS3D.sizeWindow(w,h,s);           				
   		}
+
+        this.sobKey = function(tip,e,arrNa){ 
+            this.dubag.sobKey(tip,e,arrNa);
+            this.room.sobKey(tip,e,arrNa);
+        }
   	}
 
     set bactive(value) {
@@ -514,9 +519,22 @@ export class Dubag  {
             this.saveModel.textArae.text=self.saveModel.textArae.text=ss;//JSON.stringify(o); 
         }
 
-        this.keydown=function(e){
-            if(event.keyCode==17)self.boolCTRL=true
+        this.sobKey = function(tip,e,arrNa){ 
+            
 
+            if(tip=="up" && arrNa.indexOf(17)!=-1 && arrNa.indexOf(81)!=-1 ){
+                self.active =  !self.active
+                self.localStorage.object.dubag=self.active;
+                self.localStorage.save();
+            }
+            
+
+
+        }
+
+
+       /* this.keydown=function(e){
+            if(event.keyCode==17)self.boolCTRL=true;
             if(event.keyCode==81&&self.boolCTRL)  {
                 self.active =  !self.active
                 self.localStorage.object.dubag=self.active;
@@ -527,7 +545,7 @@ export class Dubag  {
             if(event.keyCode==17)self.boolCTRL=false
         }
         window.addEventListener( 'keydown', this.keydown );    
-        window.addEventListener( 'keyup', this.keyup );  
+        window.addEventListener( 'keyup', this.keyup ); */ 
     }
 
     set active(value) {

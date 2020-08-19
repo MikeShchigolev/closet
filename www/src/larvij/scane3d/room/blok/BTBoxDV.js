@@ -73,8 +73,6 @@ export class BTBoxDV extends Blok {
 
         this.dragWHD=function(){
 
-
-
             if(this.doska3D!=undefined){
                 this.doska3D.width=this._width-this._thickness*2;
                 this.doska3D.height=this._depth;
@@ -185,15 +183,6 @@ export class BTBoxDV extends Blok {
 
         }
 
-/*
-        this.stopDrag=function(){  
-            self.mO.activBTBDV(true)
-        }
-
-
-        this.dragStart=function(){ 
-            self.mO.activBTBDV(false)
-        }*/
 
 
 
@@ -365,19 +354,7 @@ export class BTBoxDV extends Blok {
         }
 
 
-       /* //проверяем с остольными полками
-        var rcm1
-        this.testBlok2=function(_py,_py1, _blok){
-            for (var i = 0; i < _blok.children.length; i++) {
-                if(_blok.children[i].idArr!=this.idArr){
-                    rcm1=_blok.children[i].boxColizi.rectCollisMeshdy;                    
-                    if(this.testLineXZ(_py,_py1, rcm1.y+rcm1.height, rcm1.y)==true){
-                        return false
-                    } 
-                }
-            }
-            return true
-        }*/
+
 
         //проверяем с остольными полками
         var rcm1,r1
@@ -427,23 +404,14 @@ export class BTBoxDV extends Blok {
         this.setXY2Tumba=function(_x,_y){            
             aS=mO.par.sten;
             
-            //проверяем возможность но постоновку дебага
-           // if(this.parent==undefined){
+
                 p=mO.par.getPNa();
                 if(p==null)return
                 else{
                     mO.btBoxDin.isMOWH(p.x, aS);
                     if(mO.btBoxDin.minObjWH.w<50)return 
                 }
-           // }
-            /////////////////////////
-
-
-        
-        /*this.setXY2Tumba=function(_x,_y){            
-            aS=mO.par.sten*/
-
-
+ 
 
 
             mO.btBoxDin.nitColor() 
@@ -598,40 +566,6 @@ export class BTBoxDV extends Blok {
         this.getPrice=function(intColor,idMat){  
             if(this.parent==undefined)return []
             return this.bvPlus.getPrice(intColor,idMat); 
-            
-           /* var ad=[]
-            var aa=null
-            
-            if(this.parent==undefined)return []
-            if(this.parent.parent==undefined)return []    
-           
-            
-
-            
-           
-            let ooo= this.arrObj[this._indexW][this._indexH].obj;
-            if(ooo){
-                if(this.object.priority!=undefined)ooo.priority= this.object.priority;
-                else ooo.priority= 0;
-            }
-            else{
-                return []
-            }
-
-            aa=menedsherMaterial.getArrOtObj(ooo.obj,idMat,intColor); 
-
-            if(aa!=null){
-                ad=[];                         
-                for (var j = 0; j < aa.length; j++) {
-                    ad[j]=aa[j];                                
-                }
-                ad[6]="BTVstavka";
-                ad[8]=ooo;
-                ad[9]=ooo.id;
-                ad[10]=1;
-                ad[11]=aa[3]*1;                
-            }                         
-            return [ad];*/
         }
 
 
@@ -646,13 +580,38 @@ export class BTBoxDV extends Blok {
             if(self.durXY)self.durXY(self.x,self.y)
             self.dCol2();           
         }
+
+        this.sobKey = function(tip,e,arrNa){           
+
+            let b=false;
+          
+            let xxx= this.boxColizi.rectCollisMeshdy._x;
+            let yyy= this.boxColizi.rectCollisMeshdy._y;             
+
+            if(tip=="down"){
+                let step= Math.abs( mO.btBoxDin.arrPositZ[0] - mO.btBoxDin.arrPositZ[1])
+                if(e.keyCode==38 || e.keyCode==87)  {                  
+                    yyy+=step; 
+                    b=true
+                }
+                if(e.keyCode==40 || e.keyCode==83)  {                 
+                    yyy-=step;                    
+                    b=true;
+                }               
+                if(b){                     
+                    yyy=this.testBlokSvobod(yyy, this._parent)
+                    this.boxColizi.rectCollisMeshdy.y=yyy;
+                    this.fun("visi3d");                    
+                    this.mO.par.par.visiActiv.setObject(this);  
+                }                
+            }
+        }
     }
 
 
 
     set parent(v) {
-        if(this._parent!=v){  
-            trace("@@@");                             
+        if(this._parent!=v){                                        
             if(this._parent!=undefined){
                 if(this._parent.type=="BTBoxDin"){
                     if(this._parent.content){                        
@@ -667,7 +626,7 @@ export class BTBoxDV extends Blok {
             }
             this._parent= v;           
             if(this._parent==undefined){
-                trace("@@@@@@@@@@@@");
+                
                 this.collision=undefined
                 this.mO.visi3D.event3DArr.removeChild(this.c3dNa);
                 if(this.content)if(this.content.parent)this.content.parent.removeChild(this.content)

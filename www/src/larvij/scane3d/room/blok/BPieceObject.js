@@ -133,7 +133,8 @@ export class BPieceObject extends Blok {
 
         this.bSort=false;
         var b;//приходит позиции от колайдера        
-        this.setXY=function(_x,_y){            
+        this.setXY=function(_x,_y){ 
+            trace(_x,_y)           
             b=this.testObject(_x,_y);  
                  
             if(b==false){
@@ -316,7 +317,7 @@ export class BPieceObject extends Blok {
         var bxx,popo, vb, xz,xz1;
         this.testObject=function(_x,_y){           
             aS=mO.par.sten;
-           
+            trace("testObject  ",_x,_y,this.bds)
             if(this.bds==true){                
                 if(this.parent!=undefined){                 
                     popo=this.testObject2(_x,_y)
@@ -580,10 +581,7 @@ export class BPieceObject extends Blok {
                 var strXZ="plus"
                 if(intColor==1)strXZ="plus1" 
                 aaaWW=menedsherMaterial.getArrOtObj(po.obj,idMat,intColor)    
-                /*aaaWW=[] 
-                for (var i = 0; i < po.obj[strXZ].length; i++) {                    
-                    aaaWW[i]=po.obj[strXZ][i]
-                }*/
+                
                 aaaWW[9]=po.obj.id;
                 aaaWW[8]=po.obj;
                 aaa.push(aaaWW)
@@ -697,6 +695,51 @@ export class BPieceObject extends Blok {
             }            
             self.drahShadow(obj.x,obj.y);                       
         }
+
+        //this function working with key event
+        this.sobKey = function(tip,e,arrNa){ 
+            trace(e.keyCode, this.idArr, this,tip,arrNa,e);            
+            if(this.parent){
+                let b=false;         
+                let xxx=this.parent.boxColizi.rectCollisMeshdy.x+this.boxColizi.rectCollisMeshdy.x+this.boxColizi.rectCollisMeshdy.width/2;
+                let yyy=this.parent.boxColizi.rectCollisMeshdy.y+this.boxColizi.rectCollisMeshdy.y+this.boxColizi.rectCollisMeshdy.height;               
+                if(tip=="down"){  
+                    this.fun("visi3d");                    
+                    if(e.keyCode==40 || e.keyCode==83)  {
+                        yyy+=3.2;    
+                        b=true;                    
+                    }
+
+                    if(e.keyCode==38 || e.keyCode==87)  { 
+                        yyy-=3.2;    
+                        b=true;
+                    }
+                    /*if(e.keyCode==37 || e.keyCode==65)  {
+                        xxx-=15;    
+                        b=true;
+                    }
+
+                    if(e.keyCode==39 || e.keyCode==68)  {
+                        xxx+=10;    
+                        b=true;
+                    }*/
+                    //trace(xxx+"!!2222222222222222222!!"+yyy)
+                    //trace(this.x+"!!==!!"+this.y)
+                    //trace(this.parent.x+"!!=66=!!"+this.parent.y)
+                    this.bds=true;
+                    //trace(this.testObject(xxx+5,yyy))
+
+                    this.setXY(xxx,yyy)
+                    this.bds=false;
+                    if(b){
+                        this.fun("visi3d"); 
+                        this.mO.par.par.visiActiv.setObject(this); 
+                    }                    
+                }
+            }          
+        } 
+
+
         this.parOld=undefined
     } 
 

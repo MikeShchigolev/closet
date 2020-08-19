@@ -336,5 +336,41 @@ export class Glaf  {
             self.visi3D.utility.focus.active=false;           
         }
         this.scane3d.animatS3D.setRoom(this.scane3d.room, this.scane2d)
+
+
+        var arrNa=[]
+        this.keydown=function(e){
+            if(arrNa.indexOf(e.keyCode)==-1){
+                arrNa.push(e.keyCode);
+            }
+            self.scane3d.sobKey("down", e, arrNa);
+            
+
+            /*if(event.keyCode==17)self.boolCTRL=true;
+            if(event.keyCode==81&&self.boolCTRL)  {
+                self.active =  !self.active
+                self.localStorage.object.dubag=self.active;
+                self.localStorage.save();
+            }*/
+
+        }
+        this.keyup=function(e){
+            
+
+            self.scane3d.sobKey("up", e, arrNa);
+            
+            for (var i = 0; i < arrNa.length; i++) {
+                if(arrNa[i]==e.keyCode){
+                    arrNa.splice(i,1)
+                    i=0
+                }
+            }
+
+            //if(event.keyCode==17)self.boolCTRL=false
+            
+
+        }
+        window.addEventListener( 'keydown', this.keydown );    
+        window.addEventListener( 'keyup', this.keyup );
   	}
 }

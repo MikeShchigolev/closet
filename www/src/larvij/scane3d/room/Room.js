@@ -167,7 +167,10 @@ export class Room  {
 
         this.sizeWindow = function(w,h,s){                
             this.drahHelp3D.sizeWindow(w,h,s);
+        }
 
+        this.sobKey = function(tip,e,arrNa){ 
+            this.menedsher.sobKey(tip,e,arrNa);
         } 
 
 

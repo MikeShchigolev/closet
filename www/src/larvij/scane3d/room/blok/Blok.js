@@ -383,7 +383,7 @@ export class Blok{
             this.creatBC();
             this.modelObj=_obj;
             if(self.funInit!=undefined)self.funInit();
-            trace("@@@@>>",self.idArr,self.linkMod);
+            
             mO.getModel(this.linkMod, o.mod.key, function(o){
                 self.cont3dLoad=o;
                 self.testMaterial();
@@ -510,6 +510,12 @@ export class Blok{
             }            
             return obj;            
         }
+
+        this.sobKey = function(tip,e,arrNa){ 
+            trace("Blok  !! ",this.idArr,tip,arrNa,e,this);
+            
+        } 
+
     }
 
     set x(v) {
