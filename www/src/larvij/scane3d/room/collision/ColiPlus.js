@@ -21,11 +21,8 @@ export function ColiPlus(par, collision, storona, storona1) {
 
 
 
-	this.testR=function(r,r1){			
-		
-
-		if(this.testLine(r.x, r.x+r.width, r1.x, r1.x+r1.width)){
-			
+	this.testR=function(r,r1){
+		if(this.testLine(r.x, r.x+r.width, r1.x, r1.x+r1.width)){			
 			if(this.testLine(r.y, r.y+r.height, r1.y, r1.y+r1.height)){
 				return true;					
 			}				
@@ -69,12 +66,11 @@ export function ColiPlus(par, collision, storona, storona1) {
                 if(d>zzz){
                 	a.push(this.rect.x,this.rect.x+this.rect.width)
                 }
-
-
             }
         }
-
 	}
+
+
 
 
 
@@ -141,7 +137,7 @@ export function ColiPlus(par, collision, storona, storona1) {
 		}
 
 
-
+		
 
 	}
 

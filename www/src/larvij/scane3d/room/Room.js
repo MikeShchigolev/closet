@@ -174,10 +174,21 @@ export class Room  {
         } 
 
 
-        this.dragMin=function(a){
-            a[0]=self.array[0].maxWidth;
-            a[1]=self.array[1].maxWidth;
-            a[2]=self.array[2].maxWidth;                
+        this.dragMin=function(a, b){
+            
+            if(!b){
+                a[0]=self.array[0].maxWidth;
+                a[1]=self.array[1].maxWidth;
+                a[2]=self.array[2].maxWidth;
+            }else{
+                a[0]=self.array[0].mWFun();
+                a[1]=self.array[1].mWFun();
+                a[2]=self.array[2].mWFun();
+            }
+            
+
+
+
         } 
 
 

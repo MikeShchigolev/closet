@@ -677,6 +677,133 @@ export class Sten  {
             }
             this.meshPort.visible=!this.boolNafig
         }
+
+
+
+
+
+        /*this.getb3=function(sten){
+            let a=[]
+            for (var i = 0; i < this.children.length; i++) {
+                
+                this.children[i]
+            }
+        }*/
+
+
+        //сверяем две полосы
+        this.test2d=function(ps,pf,ps1,pf1){  
+           // trace(ps,pf,ps1,pf1)          
+            if(ps1>=ps &&ps1<=pf)return true;
+            if(ps>=ps1 &&ps<=pf1)return true;
+            return false;
+        }
+
+
+        this.mWFun=function(){
+            trace("mWFun!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",this.idArr)
+            //trace(this.content3d.position, this.c3Glaf.position)
+            if(this.idArr==0){//крайня первая
+                let ww =this._maxWidth;
+                let ww1 =this._width-this._maxWidth;
+                let ee=0
+                let eee=0
+                let r={x:0,w:0, y:0, h:0,z:0,d:0};
+                let r1={x:0,w:0, y:0, h:0,z:0,d:0};
+                let ot=0;
+                let col= this.collision.arrRect; 
+                let col1= this.collision.apc[0].collision.arrRect;  
+                for (var i = 0; i < col.length; i++) {                
+                    
+                    r.x=0
+                    r.w=col[i].rectCollisMeshdy.depth
+
+                    r.y=-(this.c3Glaf.position.y-col[i].rectCollisMeshdy.x-col[i].rectCollisMeshdy.width);
+                    r.h=col[i].rectCollisMeshdy.width
+
+                    r.z=col[i].rectCollisMeshdy.y;  
+                    r.d=col[i].rectCollisMeshdy.height;
+                    
+                    for (var j = 0; j < col1.length; j++) {
+                        r1.x=col1[j].rectCollisMeshdy.x;
+                        r1.w=col1[j].rectCollisMeshdy.width
+
+                        r1.y=-ww1;
+                        r1.h=col1[j].rectCollisMeshdy.depth;
+
+                        r1.z=col1[j].rectCollisMeshdy.y;
+                        r1.d=col1[j].rectCollisMeshdy.height;
+                        
+                        if(this.test2d(r.x, r.x+r.w, r1.x, r1.x+r1.w)){
+                            if(this.test2d(r.y, r.y+r.h, r1.y, r1.y+r1.h)){
+                                if(this.test2d(r.z, r.z+r.d, r1.z, r1.z+r1.d)){
+                                    ee=r1.h
+                                    if(ee>eee)eee=ee;
+                                }                                
+                            }                         
+                        }                 
+                    }                    
+                }                
+                ww+=eee
+                return ww    
+               // 
+            }
+
+            if(this.idArr==1){//центральная
+                let ww =this._maxWidth;
+                let ww1 =this._width-this._maxWidth;
+                let ee=0
+                let eee=0
+                let r={x:0,w:0, y:0, h:0,z:0,d:0};
+                let r1={x:0,w:0, y:0, h:0,z:0,d:0};
+                let ot=0;
+                let col= this.collision.arrRect; 
+                let col1= this.collision.apc[1].collision.arrRect; 
+               
+                for (var i = 0; i < col.length; i++) {                
+                    
+                    r.x=col[i].rectCollisMeshdy.x;
+                    r.w=col[i].rectCollisMeshdy.width
+
+                    r.y=0//-ww1;
+                    r.h=col[i].rectCollisMeshdy.depth;
+
+                    r.z=col[i].rectCollisMeshdy.y;
+                    r.d=col[i].rectCollisMeshdy.height;
+                    
+                    for (var j = 0; j < col1.length; j++) {
+                        r1.x=this.width-col1[j].rectCollisMeshdy.depth;
+                        r1.x=ww-col1[j].rectCollisMeshdy.depth;
+                        r1.w=col1[j].rectCollisMeshdy.depth
+                        r1.y=col1[i].rectCollisMeshdy.x//-col1[j].rectCollisMeshdy.width;
+                        r1.h=col1[j].rectCollisMeshdy.width;
+
+                        r1.z=col1[j].rectCollisMeshdy.y;
+                        r1.d=col1[j].rectCollisMeshdy.height;
+                        
+                        if(this.test2d(r.x, r.x+r.w, r1.x, r1.x+r1.w)){
+                            if(this.test2d(r.y, r.y+r.h, r1.y, r1.y+r1.h)){
+                                if(this.test2d(r.z, r.z+r.d, r1.z, r1.z+r1.d)){
+                                    
+                                    ee=r1.w
+                                    if(ee>eee)eee=ee;
+                                }                                
+                            }                         
+                        }                 
+                    }                    
+                }   
+                           
+                ww+=eee
+                return ww  
+            }
+
+            if(this.idArr==2){//крайня дальняя
+                return this._maxWidth
+            }
+
+
+            return this._maxWidth
+        }
     }
 
 
@@ -760,7 +887,7 @@ export class Sten  {
         if(this._width!=v){
             this._width = v; 
            // this.setka.width = v;  
-           console.warn("w",v)        
+           //console.warn("w",v)        
             this.butDrag.width = v;
             this.redrag();
             this.gMGm.width = this._width;
@@ -950,9 +1077,9 @@ export class LineVisi  {
                 if(this.par.children[i].type=="BDoor"||this.par.children[i].type=="BWindow") {
                     x=this.par.children[i].x+this.par.children[i].rect[0]-this.par.children[i].rect[3]/2;
                     x1=this.par.children[i].x+this.par.children[i].rect[3]/2+this.par.children[i].rect[0];                    
-                    aP.push(Math.round(x))
-                    aP.push(Math.round(x1))
-                    if( maxWidth<x1)maxWidth=x1                   
+                    aP.push(Math.round(x));
+                    aP.push(Math.round(x1));
+                    if( maxWidth<x1)maxWidth=x1;                   
                     bb=false
                 }                
 
@@ -963,7 +1090,7 @@ export class LineVisi  {
                         aP.push(Math.round(x));
                         aP.push(Math.round(x1)); 
                     }
-                    if( maxWidth<x1)maxWidth=x1
+                    if( maxWidth<x1)maxWidth=x1;
                     bb=false;
                 }
 

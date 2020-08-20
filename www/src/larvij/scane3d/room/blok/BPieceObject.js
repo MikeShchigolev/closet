@@ -852,7 +852,7 @@ export class BKrai {
             this.boolLoadHron=true; 
             this.par.yMax=this.yMax=this.arrHron[0].object.obj.mod.r[5]*1;
             this.ySMin=this.arrHron[0].object.obj.mod.r[5]*1
-            if(this.par.ySMin<this.ySMin)this.par.ySMin=this.ySMin
+            if(this.par.ySMin<this.ySMin)this.par.ySMin=this.ySMin;
             //this.ySMin
             this.par.testYF()
 

@@ -62,9 +62,10 @@ export class KorektSten  {
 
         this.dragMin=undefined        
         this.chengPoint=function(tip,xx,yy){ 
-            trace(tip,xx,yy)         
+           // trace(tip,xx,yy)         
             if(tip=="start"){                
-                if(this.dragMin!=undefined)this.dragMin(this.arrMin);
+                if(this.dragMin!=undefined)this.dragMin(this.arrMin, true);
+                
                 for (var i = 0; i < this.array.length; i++) { 
                     this.array[i].xx=this.array[i].x*1
                     this.array[i].yy=this.array[i].y*1
@@ -133,13 +134,13 @@ export class KorektSten  {
                 this.array[0].x=this.array[1].x= this.array[2].x-dist
             }
 
-            trace("this.arrMin[1]  ",this.arrMin[1])
+            //trace("this.arrMin[1]  ",this.arrMin[1]);
             //p2
             dist=this.array[2].x-this.array[1].x;            
             if(dist<this._min)dist=this._min;
             if(dist<this.arrMin[1])dist=this.arrMin[1];
             if(dist>this._max)dist=this._max;
-            this.array[2].x=this.array[3].x= this.array[1].x+dist
+            this.array[2].x=this.array[3].x= this.array[1].x+dist;
              
             //p3            
             dist=-(this.array[2].y-this.array[3].y);

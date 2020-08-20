@@ -22,7 +22,7 @@ export function CollisionRect(id) {
 
 
 
-    this.apc=[]
+    this.apc=[];
     this.plusColizi=function(c, storona, storona1){
         this.apc.push(new ColiPlus(this,c, storona, storona1))
     }
