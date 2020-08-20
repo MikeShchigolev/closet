@@ -547,7 +547,7 @@ export class BPieceTop extends Blok {
 
 
         this.sobKey = function(tip,e,arrNa){ 
-            trace(e.keyCode, this.idArr,this,tip,arrNa,e);
+            
             let b=false;
             let b1=false;
             //
@@ -1001,6 +1001,8 @@ export class VisiNisu {
             yh=y+(-_obj.ySMin)+_obj.yPol;
             pL=-1;
 
+            trace(_obj.ySMin)
+
             //проверка точных пересечений
             for (var i = 0; i < this.aAr.length; i++) {
                 yy1=this.aAr[i].boxColizi.rectCollisMeshdy.y+(this.aAr[i].yPol+this.aAr[i].yS+_obj.ySRR);
@@ -1091,11 +1093,13 @@ export class VisiNisu {
 
 
         //сверяем две полосы
-        this.testLineXZ=function(ps,pf,ps1,pf1){           
+        this.testLineXZ=function(ps,pf,ps1,pf1){  
+            console.warn("--",ps,pf,ps1,pf1)         
             if(ps1>=ps &&pf1<=ps)return true;
             if(ps1>=pf &&pf1<=pf)return true;          
             if(ps>=ps1 &&pf<=ps1)return true;
-            if(ps>=pf1 &&pf<=pf1)return true; 
+            if(ps>=pf1 &&pf<=pf1)return true;
+            //return this.testLineXZ2(ps,pf,ps1,pf1)
             return false;
         }
 
