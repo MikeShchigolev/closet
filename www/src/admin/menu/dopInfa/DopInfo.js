@@ -618,6 +618,7 @@ function DopSamovuvoz(dCont,x,y, fun) {
                 this.array[i].dCont.y=yy+2+(40)*i
                 if(i==0){                    
                     this.array[i].button.activMouse=false
+                    this.array[i].button.alpha=0.25
                 }
             }
             this.array[i].input.value=self.object.array[i][0]
