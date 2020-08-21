@@ -58,14 +58,14 @@ export class Menedsher  {
         });
 
         this.mPanel = new THREE.Mesh(new THREE.BoxBufferGeometry(this.whDrag,this.whDrag,0.001),this.matNull);
-        this.mPanel.layers.set(31);
+       // this.mPanel.layers.set(31);
 
         //this.mPNa = new THREE.Mesh(new THREE.BoxBufferGeometry(this.whDrag,this.whDrag,0.001),this.matNull1);
         //this.mPanel.layers.set(31);
 
 
         this.mPanel1 = new THREE.Mesh(new THREE.BoxBufferGeometry(this.whDrag,this.whDrag,0.001),this.matNull1);
-        this.mPanel1.layers.set(31);
+       // this.mPanel1.layers.set(31);
 
 
         //var axesHelper = new THREE.AxesHelper( 15 );
@@ -164,7 +164,10 @@ export class Menedsher  {
             this.par.pozZdvigAll(0)
             this.pointZdvig.set(0,0,0)
             if(self.mPanel.parent!=undefined) {
-                self.mPanel.parent.remove(self.mPanel)                 
+                self.mPanel.parent.remove(self.mPanel)                                 
+            }
+            if(self.mPanel1.parent!=undefined) {
+                self.mPanel1.parent.remove(self.mPanel1)                                 
             }
             /*if(self.mPNa.parent!=undefined) {
                 self.mPNa.parent.remove(self.mPNa)                 
@@ -254,6 +257,7 @@ export class Menedsher  {
                 if(e.target.sten){  
                     if(self.mPanel1.parent!=undefined) self.mPanel1.parent.remove(self.mPanel1)
 
+
                     self.sten=undefined
                     if(self.object!=undefined){//разруливаем тоскаемый элемент                    
                         if(self.object.parent!=undefined){  
@@ -280,21 +284,37 @@ export class Menedsher  {
             if(self.par.par.bactive==false)return
             if(e)if(e.target){
                 if(e.target.sten){
-                    if(self.mPanel1.parent==undefined) e.target.sten.content3d.add(self.mPanel1)   
+                    if(self.mPanel1.parent==undefined) e.target.sten.content3d.add(self.mPanel1)
+                     
                     self.sten=e.target.sten
                     if(self.object!=undefined){//разруливаем тоскаемый элемент                    
                         if(self.object.parent==undefined){
+
                             let b=true;
-                            intersects=self.par.par.par.visi3D.event3DArr.raycaster.intersectObjects([self.mPanel], true);
+                            trace()
+                            //if(self.mPanel.parent==undefined) 
+                                e.target.sten.content3d.add(self.mPanel) 
+
+                            intersects = self.par.par.par.visi3D.event3DArr.raycaster.intersectObjects([self.mPanel], true);
                             
+                            trace(intersects)
+                            _xx=0;
+                            _yy=0;
+                            if(intersects.length>=1){
+                                _xx=self.pointZdvig.x + (intersects[0].uv.x-0.5)*self.whDrag;
+                                _yy=self.pointZdvig.y + (intersects[0].uv.y-0.5)*self.whDrag;  
+                            }
                             
-                            _xx=self.pointZdvig.x + (intersects[0].uv.x-0.5)*self.whDrag;
-                            _yy=self.pointZdvig.y + (intersects[0].uv.y-0.5)*self.whDrag;
 
 
                             intersects=self.par.par.par.visi3D.event3DArr.raycaster.intersectObjects([self.mPanel1], true);
-                            _xx1 = (intersects[0].uv.x-0.5)*self.whDrag;
-                            _yy1 = (intersects[0].uv.y-0.5)*self.whDrag;
+                            trace("!",intersects)
+                            _xx1=0;
+                            _yy1=0;
+                            if(intersects.length>=1){
+                                _xx1 = (intersects[0].uv.x-0.5)*self.whDrag;
+                                _yy1 = (intersects[0].uv.y-0.5)*self.whDrag;
+                            }
 
                             if(self.object.isOver!=undefined){
                                 trace(intersects[0].uv)

@@ -137,15 +137,10 @@ export function CollisionRect(id) {
         drawDegug()
     }
     var rr
-    this.testRect=function(r){  
-          
-
-        
-        for (var i = 0; i < this.apc.length; i++) {
-            
+    this.testRect=function(r){        
+        for (var i = 0; i < this.apc.length; i++) {            
             this.apc[i].redactBox(r);
         }
-
         rr=this.colozi.redactBox(r.rectCollisMeshdy); 
 
         drawDegug()
@@ -242,7 +237,11 @@ export function CollisionRect(id) {
         if (r.coliziStop) {
             g.lineStyle(1, 0xf0ff0f, 0.7);
             g.drawRect(r.coliziStop.x, r.coliziStop.y, r.coliziStop.width, r.coliziStop.height);
-        }*/
+        }
+
+
+
+        */
         
     }
 

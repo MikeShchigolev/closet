@@ -529,7 +529,7 @@ function DopSamovuvoz(dCont,x,y, fun) {
     this._index=-1
 
     this.w=new DWindow(this.dCont, 0, 0,"Настройки самовывоза");
-    this.w.width=250;
+    this.w.width=280;
 
 
     this.chek=new DCheckBox(this.w.content, this.otstup, this.otstup, "active", function(s){ 
@@ -593,14 +593,32 @@ function DopSamovuvoz(dCont,x,y, fun) {
         }
         for (var i = 0; i < this.object.array.length; i++) {
             if(this.array[i]==undefined){
-                this.array[i]=new DSBox(this.w.content,  this.w.width, function(){                    
+                this.array[i]=new DSBox(this.w.content,  this.w.width, function(s){ 
+
+
+                    if(s=="up"){
+                        if(this.idArr==0)return;
+                        let a=self.object.array.splice(this.idArr,1)[0];
+                        self.object.array.splice(this.idArr-1,0,a)
+                        self.drag()
+                        self._index=-1
+                        self.fun();
+                        trace(this.idArr,self.object.array)
+                        return;
+                    }                   
+                    
                     self.object.array[this.idArr][0]=this.input.value
                     self.object.array[this.idArr][1]=this.input1.value
                     self.fun();
                     self.index=this.idArr
+
+
                 } )
                 this.array[i].idArr=i;
                 this.array[i].dCont.y=yy+2+(40)*i
+                if(i==0){                    
+                    this.array[i].button.activMouse=false
+                }
             }
             this.array[i].input.value=self.object.array[i][0]
             this.array[i].input1.value=self.object.array[i][1]
@@ -680,7 +698,7 @@ function DSBox(dCont, w, fun) {
     this.panel.width=w-4
     this.panel.height=38
 
-    var ww=(w-12)/2
+    var ww=(w-12-34)/2
     this.input=new DInput(this.panel, 2, 2,"null", function(s){ 
         self.fun()
     });
@@ -695,6 +713,12 @@ function DSBox(dCont, w, fun) {
     this.input1.width=ww;
 
     this.ccc=this.panel.color1
+
+    this.button=new DButton(this.panel, 10+ww*2, 2,"", function(s){ 
+        self.fun("up");
+    },'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAE10lEQVRYR62XW0wcVRzGvzlnZrGA9oE2xkswrYkmrTExJjYx1Rhf2pcmNZoYialZ8UUDjRkv8RIMTawPXpOqVO7SImCFtlyKpBoKFUrp4opYpYRiuWkjtAUWkO2yM8ecy8wuslx3d5n9n53ZPd/v+/5nzgYN8TwOYTP2YwJAeL3TaOv9InKRWvB88XRzbyur2nNkA4Cb65lrfQC50PNfKJo/4+sA0xim9evzjU/VpgIIrRViPQDaF1e+tFt9PiHOCBN1jI1Mtz3dkgZgfi0QawXQPrr8sX3e3yNEbQ5AJQAjwPDspau/PudPX8uaWBNATu974d8vDlJbs2ETWwLwBMCEaf56ear7Uv++vgcAWKtJYtUA2f7s2dGByWRLs2ATJgGENANjttTSNBBNw2/XOtv/yhx+HIC6sDTKqgAy2jPG//2bbLK4qHJuMQscQT5kAtD4nwadUHSNth4ff2XsmcjF2BArAuz+cffAhsnNW8OaBYtYkLLSPZibgQqAE2ggAJKoB619TXkzrweyloNYFmBHw46uO4P3PSyEiY2wci3kmcJgTDh3WyA6wVtBkGIk4/vO6ndDB0IfLNWEJQG21Wxr2q49siuEeYSVcxG7gGCwhXsnAWFcCPMnITwFXik2em5FddORF/EZSmNBxARIr0gveyxl175Za84VD7OwDJ7Z4CBy+alWyPUnXnilGhEJ8EoJxaZb0lBeVbgHhWj4P8QigLTitIN778h4ZyI4JcW1MMKOKLPAMSw7jPHgdQRCAQTtoBQjBIQfQlyT7zWi2qHh7pS70FLR+Cgq0RENsQAgOT/55cytWXlXp8cQplzcEm65+8HAMIZmRqU7wgWoK+yI8eqMOQwViUgg3p4tqffg1OGa7ajFHw6EC0A/p3vfeDDnxOCNEcyTsHA/PncNF/7xi2j5ZGJScVBZVcSR8+qa+qxIQyQh9wf+vDd1C6rfrkiHDyPqzgVwELc/cf+T9YGpaV3sbmCYuDkpIDN2PvvQp2dLlDAXVeIcgFIJwasAirpGCEJDMwOU0YDGpE/CtwsGBGZm2NCBP3cCmItuQVKsVWr2mMG8tsqIa0KhOylQIjYdnoh7zkmHEPiLz2WiDhVL7AP8R8tecSMye0z2Vfu30iGNCHFhXTiPqiQCxD/fmX/Wi3p8vdxvwsoA3SYr6DymXDqCUkinuqrREAqSUrQdavaiMV6AX0xW5Kt2nTrO3SpS0WHwKsZUJUVx5pPTXjTFC+A3WcnPNe6kUiQiaPAUhLgOw0lFgZz+sDEBAF0mK+0+4bqTTh0AXheOOYyAIhSn3q/z4od4E/CZrKznpHLpTK7D0OV40aHLRPj5kznHvWiOF+CCyY5erJULTk3MU3CF9SgI3YCHQ6lz3711zIuWeAHOm6y8t86NPZawRzcEkEcIG6rqqHyzMgEAHSb7pq8+KmrlPkrUQw3hmoNEQxx9rTwBAOdMVtHfsKjXUsgRlcISIDIufbUsAQBtJqscOCXucxH/AufRoo64gSQOYRgo2l+SAICfTFZ1hQNEFpvoOXcclYAQVcJy7EFBdlECAFpNVjXU6CYQWXALY3cAeE0yPCKFw1mFCQBoMVl3oN/dB8QuyPcAUaNvQZ5I5A7goDkv5cYPAOA2ABtX819OjM/MArix3Hf/AyoV8jBkIaaEAAAAAElFTkSuQmCC');
+    this.button.width=31;
+    this.button.height=31;
 
     Object.defineProperty(this, "active", {
         set: function (value) {            
