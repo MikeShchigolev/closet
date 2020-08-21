@@ -108,7 +108,7 @@ export class LinerMetrik  {
                 if(blok.type=="BDoor"||blok.type=="BWindow") { 
                     x=blok.x+blok.rect[0]-blok.rect[3]/2;
                     x1=blok.x+blok.rect[3]/2+blok.rect[0]; 
-                    aP.push(x,x1)
+                    aP.push(x,x1);
                     trace(blok.rect)
                     x=blok.y-blok.rect[5]/2;
                     x1=blok.y+blok.rect[5]/2;
@@ -116,7 +116,9 @@ export class LinerMetrik  {
                     continue;
                 }
 
-                if(blok.type=="BTumba") {
+
+
+                if(blok.type=="BTumba" || blok.type=="BTBoxDin") {
                     x=blok.x+blok.rect[0]
                     x1=blok.x+blok.rect[3]+blok.rect[0]; 
                     aP.push(x,x1)

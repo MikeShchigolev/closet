@@ -522,7 +522,7 @@ export class Blok{
         if(this._x!=v){
            
             this._x = v;            
-            console.warn("===",this._x+"  "+this.idArr+"  "+this.type)
+            
         }       
     }   
     get x() { return  this._x;}
@@ -601,7 +601,7 @@ export class Blok{
         if(this._avAct!=v){
             this._avAct = v;
             this.c3dNa.visible=v; 
-                  
+            trace("avAct==",v,this)      
             if(this._activTime==false)this.boxHelper.visible=!v;            
             for (var i = 0; i < this.children.length; i++) {
                 this.children[i].avAct=this._avAct

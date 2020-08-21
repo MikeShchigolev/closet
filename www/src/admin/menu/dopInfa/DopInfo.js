@@ -583,7 +583,7 @@ function DopSamovuvoz(dCont,x,y, fun) {
 
     })
     this.button1.width=this.w.width/2;
-    this.button1.alpha=0.5
+    this.button1.alpha=0.5;
 
     yy+=32;
 

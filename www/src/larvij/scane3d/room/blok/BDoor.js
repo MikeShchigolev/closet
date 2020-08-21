@@ -62,7 +62,7 @@ export class BDoor extends Blok {
         this.aaSob=function(s,p){           
             if(s=="clear"){
                 self.mO.par.clear(self);
-                self.clear()
+                self.clear();
                 self.mO.activIndex=-1;  
             }                
             if(s=="copy")self.mO.par.copy(self);
@@ -70,9 +70,13 @@ export class BDoor extends Blok {
             if(s=="mirrorX")self.boolLeft=p;
             if(s=="width"){
                 self.width=self._widthOld+p.y;
+                self.mO.par.par.par.tudaSuda.saveMod()
+                trace("@@@@@@@width@@@@@@@");
             }
             if(s=="height"){
                 self.height=self._heightOld+p.y;
+                self.mO.par.par.par.tudaSuda.saveMod()
+                trace("@@@@@@@height@@@@@@@");
             }    
             setTimeout(function() {self.fun("visi3d");}, 10);        
         }
@@ -87,7 +91,8 @@ export class BDoor extends Blok {
        
 
         this.durXY=function(x,y){            
-            if(this.parent!=undefined){                
+            if(this.parent!=undefined){ 
+                trace("@@@@@@durXY@@@@@@@");               
                 this.durRect.x=this.x-this.width/2;
                 this.durRect.width=this.width;
                 this.durRect.y=0;
@@ -205,6 +210,7 @@ export class BDoor extends Blok {
             this.arrayMesh[14].position.set(ott,-2,-(this._height-ott-ott))//низ петля/*  */
 
             this.draw2d();
+
             self.durXY();          
         }  
 
@@ -339,6 +345,11 @@ export class BDoor extends Blok {
             this.rect[5]=this._height;
             this.boxColizi.rectCollisMeshdy.x=obj.x-this._width/2
             this.boxColizi.rectCollisMeshdy.y=obj.y-this._height/2
+
+            this.x=obj.x;
+            this.y=obj.y;
+            trace("@@@@@@@@@@@@setObj@@@@@@@@@@@@@@");
+            this.funDrag();
             return obj;            
         }
 
@@ -354,7 +365,7 @@ export class BDoor extends Blok {
             }
         }
 
-
+        this.iAp=0
         this.sobKey = function(tip,e,arrNa){
             let b=false;
           
@@ -380,6 +391,16 @@ export class BDoor extends Blok {
                     this.fun("visi3d");                    
                     this.mO.par.par.visiActiv.setObject(this);  
                 }                
+            } 
+            if(e.keyCode==37 || e.keyCode==65||e.keyCode==39 || e.keyCode==68)
+            if(tip=="up"){
+                var iAp=Math.random()
+                this.iAp=iAp;
+                setTimeout(function() {
+                    if(self.iAp==iAp){                       
+                        self.mO.par.par.par.tudaSuda.saveMod()
+                    }
+                }, 100);
             }  
         }
 

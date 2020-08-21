@@ -445,7 +445,7 @@ export class BTumba extends Blok {
             return true;
         }
 
-
+        this.iAp=0
         this.sobKey = function(tip,e,arrNa){
             let b=false;
           
@@ -478,6 +478,16 @@ export class BTumba extends Blok {
                     this.fun("visi3d");                    
                     this.mO.par.par.visiActiv.setObject(this);  
                 }                
+            }
+            if(e.keyCode==37 || e.keyCode==65||e.keyCode==39 || e.keyCode==68)
+            if(tip=="up"){
+                var iAp=Math.random()
+                this.iAp=iAp;
+                setTimeout(function() {
+                    if(self.iAp==iAp){                       
+                        self.mO.par.par.par.tudaSuda.saveMod()
+                    }
+                }, 100);
             }  
         }
 

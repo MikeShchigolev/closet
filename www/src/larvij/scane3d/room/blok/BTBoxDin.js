@@ -1001,9 +1001,10 @@ export class BTBoxDin extends Blok {
             this.fun("visi3d");
         }*/
 
+        this.iAp=0
         this.sobKey = function(tip,e,arrNa){
             let b=false;
-          
+            this.iAp=-1
             let xxx= this.boxColizi.position._x;
             let yyy= this.boxColizi.position._y;   
             
@@ -1033,6 +1034,18 @@ export class BTBoxDin extends Blok {
                     this.fun("visi3d");                    
                     this.mO.par.par.visiActiv.setObject(this);  
                 }                
+            }            
+            if(tip=="up"){
+                if(e.keyCode==37 || e.keyCode==65 || e.keyCode==39 || e.keyCode==68) {
+                    var iAp=Math.random();
+                    this.iAp=iAp;
+                    setTimeout(function() {
+                        if(self.iAp==iAp){
+                            trace("===========iAp================");
+                            
+                        }
+                    }, 500);
+                }               
             }  
         }
 
@@ -1092,7 +1105,7 @@ export class BTBoxDin extends Blok {
             this._parent = v;
        
             if(this._parent==undefined){
-                trace("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+               
                 this.collision=undefined
                 this.mO.visi3D.event3DArr.removeChild(this.c3dNa);
             } else{

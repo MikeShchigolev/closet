@@ -315,6 +315,7 @@ export class BTVstavka extends Blok {
             self.dCol2();           
         }
 
+        this.iAp=0
         this.sobKey = function(tip,e,arrNa){ 
             //trace(e.keyCode, this.idArr,this,tip,arrNa,e);
             let b=false;
@@ -344,7 +345,19 @@ export class BTVstavka extends Blok {
                     }*/
                     
                 }
-            }         
+                if(e.keyCode==38 || e.keyCode==87||e.keyCode==40 || e.keyCode==83)
+                if(tip=="up"){
+                    var iAp=Math.random()
+                    this.iAp=iAp;
+                    setTimeout(function() {
+                        if(self.iAp==iAp){                            
+                            self.mO.par.par.par.tudaSuda.saveMod()
+                        }
+                    }, 400);
+                }
+            } 
+
+
         }
 
         this.getPosit = function(bt,y,h,b,r){

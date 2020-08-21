@@ -545,7 +545,7 @@ export class BPieceTop extends Blok {
             } */           
         }
 
-
+        this.iAp=0
         this.sobKey = function(tip,e,arrNa){ 
             
             let b=false;
@@ -590,7 +590,22 @@ export class BPieceTop extends Blok {
                 }
                 if(b){                    
                     this.stopDrag();
+
+
                 }
+
+
+            } 
+
+            if(e.keyCode==38 || e.keyCode==87||e.keyCode==40 || e.keyCode==83||e.keyCode==37 || e.keyCode==65||e.keyCode==39 || e.keyCode==68)
+            if(tip=="up"){
+                var iAp=Math.random()
+                this.iAp=iAp;
+                setTimeout(function() {
+                    if(self.iAp==iAp){                            
+                        self.mO.par.par.par.tudaSuda.saveMod()
+                    }
+                }, 400);
             }           
         } 
     }
@@ -1001,8 +1016,7 @@ export class VisiNisu {
             yh=y+(-_obj.ySMin)+_obj.yPol;
             pL=-1;
 
-            trace(_obj.ySMin)
-
+           
             //проверка точных пересечений
             for (var i = 0; i < this.aAr.length; i++) {
                 yy1=this.aAr[i].boxColizi.rectCollisMeshdy.y+(this.aAr[i].yPol+this.aAr[i].yS+_obj.ySRR);

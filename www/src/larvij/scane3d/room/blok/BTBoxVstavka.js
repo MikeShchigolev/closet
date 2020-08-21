@@ -73,9 +73,9 @@ export class BTBoxVstavka extends Blok {
         
         var b
         this.setXY=function(_x,_y){ 
-            trace("setXY  ",_x,_y)
+            
             b=this.testTumb(_x,_y);
-            trace(b)
+            
             if(b==true){
                 if(mO.btBoxDin.parent!=undefined){                    
                     if(mO.btBoxDin.idRandom!=this.parent.idRandom){
@@ -682,6 +682,19 @@ export class BTBoxVstavka extends Blok {
         }           
     }   
     get indexH() { return  this._indexH;} 
+
+    set avAct(v) {
+        if(this._avAct!=v){
+            this._avAct = v;
+            this.c3dNa.visible=v; 
+            this.cont3dLoad.visible=v;
+            this.boxHelper.visible=!v;    
+                 
+             
+        }       
+    }   
+    get avAct() { return  this._avAct;}
+
 }
 
 

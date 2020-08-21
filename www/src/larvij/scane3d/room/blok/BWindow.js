@@ -340,7 +340,7 @@ export class BWindow extends Blok {
                 bH.position.y=-a[2]-a[5];                 
             }
         }
-
+        this.iAp=0
         this.sobKey = function(tip,e,arrNa){
             let b=false;
           
@@ -384,7 +384,17 @@ export class BWindow extends Blok {
                     this.fun("visi3d");                    
                     this.mO.par.par.visiActiv.setObject(this);  
                 }                
-            }  
+            } 
+            if(e.keyCode==38 || e.keyCode==87||e.keyCode==40 || e.keyCode==83||e.keyCode==37 || e.keyCode==65||e.keyCode==39 || e.keyCode==68)
+            if(tip=="up"){
+                var iAp=Math.random()
+                this.iAp=iAp;
+                setTimeout(function() {
+                    if(self.iAp==iAp){                            
+                        self.mO.par.par.par.tudaSuda.saveMod()
+                    }
+                }, 400);
+            } 
         }
 
 
