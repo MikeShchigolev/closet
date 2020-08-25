@@ -346,10 +346,20 @@ export class BDoor extends Blok {
             this.boxColizi.rectCollisMeshdy.x=obj.x-this._width/2
             this.boxColizi.rectCollisMeshdy.y=obj.y-this._height/2
 
+            trace(this.boxColizi.rectCollisMeshdy.x+" !!! ",this.boxColizi)
             this.x=obj.x;
-            this.y=obj.y;
-            trace("@@@@@@@@@@@@setObj@@@@@@@@@@@@@@");
+            this.y=obj.y; 
+
+            this.durRect.x=this.x-this.width/2;
+            this.durRect.width=this._width;
+            this.durRect.y=0;
+            this.durRect.height=this._height;
+
+
+            
+            this.setXYPosit(obj.x,obj.y);           
             this.funDrag();
+
             return obj;            
         }
 

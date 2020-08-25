@@ -111,9 +111,11 @@ export class BPieceObject extends Blok {
             
             this.testYF();    
             if(this.id==42)this.testShadow(self.cont3dLoad)
-            this.dragRect()           
-            self.testKorektActiv()                
-            self.dragToPanel()            
+            this.dragRect();         
+            self.testKorektActiv();                
+            self.dragToPanel(); 
+
+            this.cont3dLoad.visible=this._avAct;           
         }
 
 
@@ -829,6 +831,21 @@ export class BPieceObject extends Blok {
         }       
     }   
     get parent() { return  this._parent;}
+
+
+    set avAct(v) {
+        if(this._avAct!=v){
+            this._avAct = v;
+            // this.c3dNa.visible=v; 
+            this.c3dNa.visible=v;
+            if(this.cont3dLoad)this.cont3dLoad.visible=v;
+
+            this.boxHelper.visible=!v;    
+                 
+             
+        }       
+    }   
+    get avAct() { return  this._avAct;}
 }
 
 

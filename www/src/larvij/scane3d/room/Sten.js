@@ -235,6 +235,10 @@ export class Sten  {
             this.geometry2.setRect(0, 0, this._width, this._height);
             this.mesh2.position.set(0, 0, 0.1);
 
+            if(this.idArr==1){
+                trace(">>>",this.geometry2.arrBox)
+            }
+
             this.geometry3._textureWidth=this._width;
             this.geometry3._textureHeight=this._height;
             this.geometry3.setRect(0, 0, this._width, this._height);
@@ -255,7 +259,6 @@ export class Sten  {
 
                 this.deb.width=this._width+20;
                 this.deb.height=this._height+20;
-
             }
         }
 
@@ -479,6 +482,7 @@ export class Sten  {
                 this.c3Glaf.position.x=this.par.array[1].width;
             }
 
+
             setTimeout(function() {
                 for (var i = 0; i < self.children.length; i++) {
              
@@ -487,6 +491,7 @@ export class Sten  {
                     }
                     //if(this.array[i]!=undefined)this.array[i].setObj(o.children[i])
                 }
+                //self.redrag()
             }, 500); 
 
         } 

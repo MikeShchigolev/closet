@@ -1340,7 +1340,7 @@ export class VisiNisu {
 
         this.getPrice=function(a, intColor,idMat){           
             for (var i = 0; i < this.array.length; i++) { 
-                if(this.array[i].visible!=false){
+                if(this.array[i].visible!=false && this.array[i].height!=0){
                     this.array[i].getPrice(a, intColor,idMat);
                 }
             }

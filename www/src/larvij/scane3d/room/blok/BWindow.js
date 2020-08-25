@@ -326,6 +326,11 @@ export class BWindow extends Blok {
             this.rect[5]=this._height;
             this.boxColizi.rectCollisMeshdy.x=obj.x-this._width/2
             this.boxColizi.rectCollisMeshdy.y=obj.y-this._height/2
+
+            this.durRect.x=this.x-this.width/2;
+            this.durRect.width=this.width;
+            this.durRect.y=this.y-this.height/2;
+            this.durRect.height=this.height;
             return obj;            
         }
 
