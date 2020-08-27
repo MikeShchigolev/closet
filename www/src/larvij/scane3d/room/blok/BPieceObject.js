@@ -75,7 +75,7 @@ export class BPieceObject extends Blok {
                 else this.yF=-this.yMax;
             }
 
-           // trace(this.yMax+"  #####  "+this.rect[5]);
+           
         }
 
 
@@ -149,7 +149,11 @@ export class BPieceObject extends Blok {
         this.bSort=false;
         var b;//приходит позиции от колайдера        
         this.setXY=function(_x,_y){ 
-                       
+            
+            aS=mO.par.sten;
+            if(this.isOver(aS,_x,_y)==false)return;
+            
+
             b=this.testObject(_x,_y);  
                  
             if(b==false){
@@ -177,7 +181,7 @@ export class BPieceObject extends Blok {
             }
             this.boxColizi.position._x = _x;
             this.boxColizi.position.y = _y;            
-            if(this.parent!=undefined){
+            if(this.bundefined){
                 this.drahShadow()
                 this.parent.collision.testRect(this.boxColizi);
             }          
@@ -205,6 +209,15 @@ export class BPieceObject extends Blok {
 
         this.dragImeag=function(){self.drahShadow()}
 
+        this.isOver=function(s,x,y){
+            if(s){
+                if(s.width<this.boxColizi.width){
+                    return false;
+                } 
+            }
+            return true;
+        }
+
 
         //емулируем хрень прилепалку
         this.blokTumba;
@@ -213,13 +226,17 @@ export class BPieceObject extends Blok {
         //создаюм новый обьект для драга
         this.dragXZ=function( _x,_y){            
            
+
             aS=mO.par.sten;
-           
+
+
             if(aS==undefined)return
             mO.pieceTop.nitColor();
             if(mO.pieceTop.parent==undefined){
+                
                 aS.add(mO.pieceTop);
-                mO.pieceTop.setXY(_x,_y);                
+                mO.pieceTop.setXY(_x,_y); 
+
             }else{
                 if(aS.idArr != mO.pieceTop.parent.idArr){
                     mO.pieceTop.parent.remove(mO.pieceTop);
@@ -286,7 +303,6 @@ export class BPieceObject extends Blok {
                         aS.add(blok, false); 
                         blok.stopDrag();
                         blok.dragCildren()
-
                         blok.visiNisu.sort();
                     }    
                 }else{
@@ -333,7 +349,8 @@ export class BPieceObject extends Blok {
         var bxx,popo, vb, xz,xz1;
         this.testObject=function(_x,_y){           
             aS=mO.par.sten;
-            trace("testObject  ",_x,_y,this.bds)
+            //return true
+            
             if(this.bds==true){                
                 if(this.parent!=undefined){                 
                     popo=this.testObject2(_x,_y)
@@ -744,9 +761,7 @@ export class BPieceObject extends Blok {
                         b=true;
                     }*/
 
-                    //trace(xxx+"!!2222222222222222222!!"+yyy)
-                    //trace(this.x+"!!==!!"+this.y)
-                    //trace(this.parent.x+"!!=66=!!"+this.parent.y)
+                    
                     this.bds=true;
                     this.setXY(xxx,yyy)
                     this.bds=false;
@@ -761,7 +776,7 @@ export class BPieceObject extends Blok {
                     this.iAp=iAp;
                     setTimeout(function() {
                         if(self.iAp==iAp){
-                            trace("===========iAp================");
+                            
                             self.mO.par.par.par.tudaSuda.saveMod()
                         }
 

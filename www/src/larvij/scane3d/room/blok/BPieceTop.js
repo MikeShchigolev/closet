@@ -39,6 +39,8 @@ export class BPieceTop extends Blok {
         this.visiNisu=new VisiNisu(this);//расчет драгеров
         this.bptColiz=new BPTColiz(this); //Дополнителдьные колизии       
 
+
+
        /* let aa=new THREE.AxesHelper(100);
         this.content3d.add(aa);*/
         
@@ -50,8 +52,10 @@ export class BPieceTop extends Blok {
         var kk
         var rr;
         this.setXY=function(_x,_y){
-            if(Math.abs(_y-220)<5)_y=220            
-            kk=this.bptColiz.array.length
+            if(this.isOver(this._parent,_x,_y)==false)return;
+
+            if(Math.abs(_y-220)<5)_y=220;            
+            kk=this.bptColiz.array.length;
             if(kk<2)kk=2
             for (var i = 0; i < kk; i++) {
                 rr=this.bptColiz.dragPos(_x, _y, true)
@@ -61,6 +65,10 @@ export class BPieceTop extends Blok {
                     this.bptColiz.dragPos(_x, _y, false)
                 }
             }
+            
+
+            if(_x<this.visiBPT._width/2+1.5)_x=this.visiBPT._width/2+1.5
+            if(this._parent)if(_x>this._parent.width-this.visiBPT._width/2-1.5)_x=this._parent.width-this.visiBPT._width/2-1.5
 
             this.boxColizi.position._x = _x;
             this.boxColizi.position.y = _y;
@@ -69,6 +77,36 @@ export class BPieceTop extends Blok {
                 this.parent.collision.drawDegug()
             } 
         } 
+        this.isOver=function(s,x,y){
+            if(s){
+                trace(s.width+"<<<<"  ,this.visiBPT._width)
+                if(s.width<this.visiBPT._width){
+                    return false;
+                }
+                else{
+                    if(this.bptColiz.array[0]){
+                        /*let box=this.bptColiz.array[0].boxColizi.rectCollisMeshdy
+                        
+
+                        this.bptColiz.rCM.x=22//s.width/2//-box.width/2;
+                        this.bptColiz.rCM.y=s.height/2//-box.height/2;
+
+                        this.bptColiz.rCM.width=box.width;
+                        this.bptColiz.rCM.height=box.height;
+
+
+                        s.collision.colozi.activBox=box//this.bptColiz.rCM; 
+
+                        var b = s.collision.colozi.correct();
+                        trace("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",b); 
+                        return b;*/
+                          
+                    }
+                    
+                } 
+            }
+            return true;
+        }
 
         this.drahShadow=function(_x,_y){ 
             if(this.parent!=undefined){
@@ -143,7 +181,7 @@ export class BPieceTop extends Blok {
 
         var ggg,zd,arr, xx,yy, arP;
         this.namaNama = function(bpt){ 
-            console.warn("namaNama")
+            
             arr=[]
             arP=[]
             zd=bpt.x-this.x;            
@@ -633,11 +671,7 @@ export class BPieceTop extends Blok {
     get parent() { return  this._parent;}
 
 
-    set width(v) {    
-        this._width=v;
-        this.visiBPT.width=this._width;       
-    }   
-    get width() { return  this._width;}    
+   
 }
 
 
@@ -1108,7 +1142,7 @@ export class VisiNisu {
 
         //сверяем две полосы
         this.testLineXZ=function(ps,pf,ps1,pf1){  
-            console.warn("--",ps,pf,ps1,pf1)         
+                   
             if(ps1>=ps &&pf1<=ps)return true;
             if(ps1>=pf &&pf1<=pf)return true;          
             if(ps>=ps1 &&pf<=ps1)return true;
@@ -1743,7 +1777,12 @@ export class VNB {
              
         this.draw();              
     }   
-    get height1() { return  this._height1;}      
+    get height1() { return  this._height1;}    
+
+
+    
+    get width() { return  this.visiNisu._width;} 
+     
 }
 
 
@@ -1968,7 +2007,9 @@ export class VisiBPT {
             this.par.boxColizi.sy=-ww/2;
 
             this.content.position.x = this.content3d.position.x;
-            this.dragCont();            
+            this.dragCont(); 
+
+            trace("wwwwwwwwwwwwwww",this._width);           
         } 
 
 

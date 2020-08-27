@@ -10,7 +10,7 @@
 дополнительные колизии
 */
 
-import { RectCollis } from '../collision/CollisionRect.js';
+import {RectCollisMeshdy, RectCollis } from '../collision/CollisionRect.js';
 
 
 
@@ -28,6 +28,9 @@ export class BPTColiz{
         this.array=[];
         var sah
         var arr,p,p1
+
+        this.rCM=new RectCollisMeshdy(0,0,1,1);
+
         this.redrag=function(){
             sah=0;    
             arr=this.par.visiNisu.array

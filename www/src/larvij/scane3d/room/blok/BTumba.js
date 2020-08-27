@@ -26,6 +26,8 @@ export class BTumba extends Blok {
         this.aa.push("verhTumb");
         this.byZdvig=false
 
+        this.boolClone=false;
+
         this.plusObj=new PlusObj(this);
 
         this.setXY=function(_x,_y){           
@@ -97,8 +99,8 @@ export class BTumba extends Blok {
             if(r===false && aa.length==0){                
                 this.boxColizi.position.y = 0;
             } 
-            this.drahShadow() 
-            this.testPodBig()           
+            this.drahShadow(); 
+            this.testPodBig();           
             return r;
         }
 
@@ -445,23 +447,60 @@ export class BTumba extends Blok {
             return true;
         }
 
+
+
         this.iAp=0
         this.sobKey = function(tip,e,arrNa){
             let b=false;
           
             let xxx= this.boxColizi.position._x;
-            let yyy= this.boxColizi.position._y;   
+            let yyy= this.boxColizi.position._y; 
+
             
             if(tip=="down"){
+              
+
                 if(e.keyCode==37 || e.keyCode==65)  {                   
-                    xxx=this.boxColizi.position._x-this.mO.stepKey;
-                    
+                    if(this.mO.boolClone){
+                        let o=this.getObj();
+                        o.x-=this.boxColizi.width; 
+                        if(o.x<this.boxColizi.width/2) return
+
+                        let blok=this.mO.getBlok(this.object)                        
+                        blok.setObj(o);
+                        this.parent.add(blok, false); 
+                        this.mO.activIndex=blok.idArr;                  
+
+                        blok.setXY(o.x,o.y)
+                        this.mO.par.par.visiActiv.setObject(blok);
+
+                        return
+                    }
+
+
+                    xxx = this.boxColizi.position._x-this.mO.stepKey;                    
                     if((yyy-this.boxColizi.height/2)>2){
                         xxx-=this.boxColizi.width/2+this.mO.stepKey;;                        
                     }
                     b=true
                 }
-                if(e.keyCode==39 || e.keyCode==68)  {                  
+                if(e.keyCode==39 || e.keyCode==68)  {    
+                    if(this.mO.boolClone){
+                        let o=this.getObj();
+                        o.x+=this.boxColizi.width; 
+                        if(o.x>this.parent.width-this.boxColizi.width/2) return
+                                              
+                        let blok=this.mO.getBlok(this.object)                        
+                        blok.setObj(o);
+                        this.parent.add(blok, false); 
+                        this.mO.activIndex=blok.idArr;
+                        this.mO.par.par.visiActiv.setObject(blok);
+                        return
+                    }
+
+
+
+
                     xxx=this.boxColizi.position._x+this.mO.stepKey;;
                     if((yyy-this.boxColizi.height/2)>2){
                         xxx+=this.boxColizi.width/2-this.mO.stepKey;;                        
@@ -479,6 +518,10 @@ export class BTumba extends Blok {
                     this.mO.par.par.visiActiv.setObject(this);  
                 }                
             }
+
+           
+
+
             if(e.keyCode==37 || e.keyCode==65||e.keyCode==39 || e.keyCode==68)
             if(tip=="up"){
                 var iAp=Math.random()

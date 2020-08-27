@@ -73,6 +73,21 @@ export class BWindow extends Blok {
             aa.setParam("mirrorX", self.boolLeft);
         }       
 
+        this.isOver=function(s,x,y){
+            if(s){
+                if(s.width<this.boxColizi.width){
+                    return false;
+                }
+                else{
+                    s.collision.colozi.activBox=this.boxColizi.rectCollisMeshdy;
+                    let b = s.collision.colozi.correct();
+                    if(b==false) return false;                    
+                }
+            }           
+
+            return true;
+        }
+
         this.durXY=function(x,y){            
             this.durRect.x=this.x-this.width/2;
             this.durRect.width=this.width;

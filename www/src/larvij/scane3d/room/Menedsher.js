@@ -288,7 +288,7 @@ export class Menedsher  {
                             let b=true;
 
                             intersects=self.par.par.par.visi3D.event3DArr.raycaster.intersectObjects([self.mPanel], true);                            
-                            trace(intersects)
+                            
                             if(intersects.length!=0){
                                 _xx=self.pointZdvig.x + (intersects[0].uv.x-0.5)*self.whDrag;
                                 _yy=self.pointZdvig.y + (intersects[0].uv.y-0.5)*self.whDrag;
@@ -300,27 +300,20 @@ export class Menedsher  {
                                 _yy1 = (intersects[0].uv.y-0.5)*self.whDrag;
 
                                 if(self.object.isOver!=undefined){
-                                    trace(intersects[0].uv)
-
-
-                                    b=self.object.isOver(e.target.sten,_xx1,_yy1)
-                                    trace(b)
+                                    b=self.object.isOver(e.target.sten,_xx1,_yy1)                                    
                                 }
-                                
+                               
 
                                 if(b){//если можно пихнуть
                                     e.target.sten.add(self.object);
                                     //self.move(e)
                                     self.glaf.dragPic.stop();
-                                    self.dragPriceScane()   
+                                    self.dragPriceScane();   
                                 }else{
                                     //mHelp.setHelp("Данный обьект не может быть размещен, не хватает пространства","resources/image/mhelp.png",mHelp.dCNM,{x:13,y:-13});
                                 }
                             }
-                            
-
-                        }
-                        
+                        }                        
                         if(self.object.overDrag)self.object.overDrag()                   
                     }
                 } 
@@ -662,6 +655,8 @@ export class MenedsherObject  {
         this.loaderTDS// = new THREE.TDSLoader();
         this.loaderGLTF = new THREE.GLTFLoader();
         this.material = new THREE.MeshPhongMaterial({color:0xff0000});
+
+        this.boolClone=false
 
         this.gBox=new THREE.BoxBufferGeometry( 1, 1, 1 )
         this.matNull = new THREE.MeshPhongMaterial({
@@ -1050,8 +1045,19 @@ export class MenedsherObject  {
             }
         }
 
-        this.sobKey = function(tip,e,arrNa){            
+        this.sobKey = function(tip,e,arrNa){
+         
+            if(e.keyCode==17 && tip=="down")  {
+                this.boolClone=true;
+            }
+            if(e.keyCode==17 && tip=="up")  {
+                this.boolClone=false;
+            }
+
+
             if(this.activObject)this.activObject.sobKey(tip,e,arrNa);
+
+            
         } 
 
         this._activTime=-1;

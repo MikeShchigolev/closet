@@ -27,7 +27,7 @@ export class BDoor extends Blok {
         this._heightOld=100;
         this._boolLeft=false;
         this._boolTop=false;
-        this.byZdvig=false
+        this.byZdvig=false;
         this.durRect = {x:-50,y:0,width:100, height:100, idArr:this.idArr};
        
         this.creatBC=function(){
@@ -70,13 +70,11 @@ export class BDoor extends Blok {
             if(s=="mirrorX")self.boolLeft=p;
             if(s=="width"){
                 self.width=self._widthOld+p.y;
-                self.mO.par.par.par.tudaSuda.saveMod()
-                trace("@@@@@@@width@@@@@@@");
+                self.mO.par.par.par.tudaSuda.saveMod()                
             }
             if(s=="height"){
                 self.height=self._heightOld+p.y;
-                self.mO.par.par.par.tudaSuda.saveMod()
-                trace("@@@@@@@height@@@@@@@");
+                self.mO.par.par.par.tudaSuda.saveMod()                
             }    
             setTimeout(function() {self.fun("visi3d");}, 10);        
         }
@@ -88,11 +86,24 @@ export class BDoor extends Blok {
             aa.setParam("mirrorY", self.boolTop);
             aa.setParam("mirrorX", self.boolLeft);
         }
+
+        this.isOver=function(s,x,y){
+            if(s){
+                if(s.width<this.boxColizi.width){
+                    return false;
+                } 
+                else{
+                    s.collision.colozi.activBox=this.boxColizi.rectCollisMeshdy;
+                    let b = s.collision.colozi.correct();
+                    if(b==false) return false;                    
+                }
+            }
+            return true;
+        }
        
 
         this.durXY=function(x,y){            
-            if(this.parent!=undefined){ 
-                trace("@@@@@@durXY@@@@@@@");               
+            if(this.parent!=undefined){                               
                 this.durRect.x=this.x-this.width/2;
                 this.durRect.width=this.width;
                 this.durRect.y=0;

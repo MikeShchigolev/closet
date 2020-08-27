@@ -30,7 +30,7 @@ export function CollisionDetection() {
 	this.correct = function (b) {
 		isCorrect = true;
 		this.checkArrPoint();
-		//trace(this.activBox)
+		
 		
 		if (this.isStick)this.stick();// прилипалка
 		// console.clear()
