@@ -119,7 +119,7 @@ export class Sten  {
         this.korektMarker=new KorektMarker(this,function(t,p){
 
         });
-        this.gMGm=new GMG(this)
+        this.gMGm=new GMG(this)//стнека 2д
 
 
         this.dragBlok=function(b){
@@ -996,11 +996,15 @@ export class Sten  {
             var m=this.par.menedsher.mMaterial.geterMat.getIDReturn(v);              
             if(m!=null)  {                                     
                 this._idMat= v;
-                this.matDinamik=m;                                 
+                this.matDinamik=m; 
+                                               
                 this.drahAct(); 
                 if(this.idArr==0){
+                    this.par.matShpaler.matSten=m;                    
                     if(this.par.par.par.menuDiv!=undefined)this.par.par.par.menuDiv.nizMenu.setIdMat(this._idMat)
-                    else this.setTidMat();                  
+                    else this.setTidMat();
+
+                                     
                 }
             } 
         }       

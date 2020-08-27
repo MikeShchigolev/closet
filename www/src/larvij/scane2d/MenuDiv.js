@@ -43,15 +43,15 @@ export class MenuDiv  {
         var w=this.widthBig-this.otstup*2
         this.www=w;
 
-        this.mVersion = new MVersion(this);//Выводит версии
-        this.mLogo=new MLogo(this.par.dContPod);//логотип
-        this.mani=new Mani(this);//Бабло
-        this.menuSave=new MenuSave(this);//Сохроняшка пхп
-        this.nizMenu=new NizMenu(this);//Менюха с низу 
-        this.mPrint=new MPrint(this);//pdf
+        this.mVersion = new MVersion(this);//Выводит версии//this class shows the version of the program
+        this.mLogo=new MLogo(this.par.dContPod);//логотип//in this logo management location
+        this.mani=new Mani(this);//Бабло//There many management
+        this.menuSave=new MenuSave(this);//Сохроняшка пхп//Here is the server connection
+        this.nizMenu=new NizMenu(this);//Менюха с низу //Menu at the bottom of the program
+        this.mPrint=new MPrint(this);//pdf//Place of creation pdf
         this.mHelp = new MHelp(this);//Выподалка подсказок на 2 сцене
         
-        this.mInfo = new MInfo(this.dCont);//окно поверх с инпутами
+        this.mInfo = new MInfo(this.dCont);//окно поверх с инпутами//this is the place  for more informaion
 
 
         this.mHelp.dCNM=this.nizMenu.nmObj.dCont;
@@ -83,7 +83,7 @@ export class MenuDiv  {
         
         this.tween = new TWEEN.Tween(this.dC);
         this.dC.y=-80
-        this.menuActiv=function(bool, time, bb){
+        this.menuActiv=function(bool, time, bb){//switching scane behavior
            // console.warn("dsfdsf",bool, time, bb) 
             this.par.galleres.menuActiv(bool, time);
             this.boolMenuActiv=bool
@@ -108,7 +108,7 @@ export class MenuDiv  {
         } 
 
 
-  		this.sizeWindow = function(w,h,s){   
+  		this.sizeWindow = function(w,h,s){ //size change here
             this.menuSave.sizeWindow(w,h,s);		
             if(this.buttonMani)this.buttonMani.x=w/s-this.buttonMani.width+this.otstup;
             this.mani.sizeWindow(w,h,s);
@@ -119,7 +119,7 @@ export class MenuDiv  {
             this.mVersion.sizeWindow(w,h,s) 
   		}  
 
-        this.upDate = function () {
+        this.upDate = function () {//works continuosly 60 tiomes per second
             this.menuSave.upDate()    
              
         }	
@@ -129,6 +129,7 @@ export class MenuDiv  {
 
 
 //Выводит версии
+//this block is responsible for the program version
 export class MVersion  {
     constructor(par) {         
         this.type="MVersion";

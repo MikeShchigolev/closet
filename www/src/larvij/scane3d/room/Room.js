@@ -44,15 +44,18 @@ export class Room  {
         this.par.content3d.add(this.content3d);
         this.content3d.position.z=this._height/2;
 
-        var loader = new THREE.TextureLoader();
-        var textur=loader.load("resources/image/nizXZ.png",function(){
+        this.matShpaler=new MatShpaler(this)    
+
+        /*var loader = new THREE.TextureLoader();
+        var textur=loader.load("resources/image/nizXZ1.png",function(){
                 
         });
         
         this.materialPort = new THREE.MeshPhongMaterial({ 
             side:THREE.BackSide,
             map:textur 
-        });        
+        }); */
+        this.materialPort =this.matShpaler.material
 
         this._idMatObject = null;
         this._idMatObject1 = null;
@@ -585,6 +588,101 @@ export class Niz  {
         }    
     }   
     get bPtioriti() { return  this._bPtioriti;}   
+}
+
+
+export class MatShpaler  {
+    constructor(par, fun) {  
+        var self=this       
+        this.type="MatShpaler";
+        this.par=par;
+        this._color=null
+        this._matSten=undefined;
+
+        var loader = new THREE.TextureLoader();
+        var textur=loader.load("resources/image/nizXZ.png",function(){
+                
+        });
+
+
+
+      /*  var canvas = document.createElement('canvas');
+        canvas.width = 64;
+        canvas.height = 64;
+        var ctx = canvas.getContext('2d');
+        
+        var image = new Image();
+        var textur=THREE.CanvasTexture(canvas);
+
+
+        this.draw=function(){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(image, 0, 0);
+
+            //textur.needsUpdate=true
+            self.material.needsUpdate=true
+            trace("EEEEEEEEEEEEEEEEEEE");
+        }
+
+
+        image.onload = function() {  
+            self.draw()
+        }
+        image.src="resources/image/nizXZ.png"*/
+        
+
+
+        
+        this.material = new THREE.MeshPhongMaterial({ 
+            //color:0xff0000,
+            side:THREE.BackSide,
+            map:textur 
+        });
+
+        this.getCol=function(o){   
+            //return "#"+Math.round(o.r*255)+""
+            return "#" + ((1 << 24) + (o.r*255 << 16) + (o.g*255 << 8) + o.b*255).toString(16).slice(1);
+            return "#"+parseInt(Math.round(o.r*255)+"",16)
+        }
+
+
+        this.dragColor=function(){ 
+            this.color=this.getCol(this._matSten.color)
+            setTimeout(function() { self.color=self.getCol(self._matSten.color)}, 100);
+            //setTimeout(function() { self.color=self.getCol(self._matSten.color)}, 50);
+            setTimeout(function() { self.color=self.getCol(self._matSten.color)}, 1000);
+            setTimeout(function() { self.color=self.getCol(self._matSten.color)}, 2000);
+        }  
+        
+    }
+
+    set color(v) {
+        if(v=="#ffffff")return
+        if(this._color!=v){            
+            this._color = v;
+            let c=new THREE.Color()
+            let p=1.2;
+            c.r=this._matSten.color.r*p;
+            c.g=this._matSten.color.g*p;
+            c.b=this._matSten.color.b*p;
+
+
+            this.material.color=c
+            this.par.fun("visi3d"); 
+
+            trace(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>",v);
+
+        }       
+    }   
+    get color() { return  this._color;}
+
+    set matSten(v) {
+        if(this._matSten!=v){
+            this._matSten = v;            
+            this.dragColor();
+        }       
+    }   
+    get matSten() { return  this._matSten;}
 }
 
 

@@ -31,15 +31,16 @@ export class MHelp  {
         	this.height=this.picHeight;
         	self.sizeWindow()
         }
-
+        //create a container for the scane
         this.dCont=new DCont(this.par.dCont);
 
 
-        
+        //I made two objects for color
         var oC=undefined       
         var oC1 = new THREE.Color(this.colorS);       
         var oC2 = new THREE.Color(this.colorF);
 
+        //this method if for animathin 
         this.md=function(e){
             self.tween1 = new TWEEN.Tween(self.dCont);
             self.tween1.onComplete(function(){          
@@ -69,6 +70,7 @@ export class MHelp  {
         }
 
 
+        //initilizing our class
         var ppll=0
         var tw
         this.init=function(){
@@ -94,6 +96,7 @@ export class MHelp  {
   			}	           
         }
 
+        //the scene resizad here
         this.w=100
         this.h=100
         this.s=1
@@ -147,8 +150,9 @@ export class MHelp  {
         	if(self.dHalp.parent)self.dHalp.parent.remove(self.dHalp)
         })
         
-        this.mouseup=function(e) {
-            
+        //thie is a mouse release event
+        //это событие отпуска мышки
+        this.mouseup=function(e) {     
          
             
             self.dHalp.visible=false;
@@ -198,7 +202,7 @@ export class MHelp  {
 
 
         this.setHelp=function(text,link,cont,poz) {
-            trace(this.dHalp.alpha,text,this.dHalp.text  )
+            
             if(this.dHalp.visible==true && text==this.dHalp.text )return
             this.mouseup()   
 

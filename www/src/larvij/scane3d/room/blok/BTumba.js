@@ -419,7 +419,28 @@ export class BTumba extends Blok {
         }
 
 
+        /*
+           [ 
+                {id:2134, date:[{id:234, color:"sdgfhf",}]},
+
+           ]
+        */
+
+
         this.dragStart=function(){ 
+            if(this.mO.boolClone){                
+                let o=this.getObj();
+                let blok=this.mO.getBlok(this.object)                        
+                blok.setObj(o);
+                this.parent.add(blok, false); 
+                this.mO.activIndex=blok.idArr;                  
+
+                blok.setXY(o.x,o.y);
+                this.mO.par.par.visiActiv.setObject(blok);
+
+                this.mO.par.setBlokActiv(blok)
+                this.mO.par.start(blok)
+            }
         }
 
 
@@ -471,9 +492,9 @@ export class BTumba extends Blok {
                         this.parent.add(blok, false); 
                         this.mO.activIndex=blok.idArr;                  
 
-                        blok.setXY(o.x,o.y)
+                        blok.setXY(o.x,o.y);
                         this.mO.par.par.visiActiv.setObject(blok);
-
+                        
                         return
                     }
 
@@ -494,8 +515,12 @@ export class BTumba extends Blok {
                         blok.setObj(o);
                         this.parent.add(blok, false); 
                         this.mO.activIndex=blok.idArr;
+                        blok.setXY(o.x,o.y);
                         this.mO.par.par.visiActiv.setObject(blok);
-                        return
+
+                        
+
+                        return;
                     }
 
 

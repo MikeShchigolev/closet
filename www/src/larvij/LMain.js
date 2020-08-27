@@ -176,11 +176,8 @@ export class LMain  {
 	            }
 	        });
   		}
-
-
-
-
-  		var ll="resources/config.json"+this.plus
+  		
+  		var ll="resources/config.json"+this.plus;
   		
   		//грузим базовый фаил
   		$.ajax({

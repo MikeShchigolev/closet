@@ -29,7 +29,7 @@ export class BDoor extends Blok {
         this._boolTop=false;
         this.byZdvig=false;
         this.durRect = {x:-50,y:0,width:100, height:100, idArr:this.idArr};
-       
+               
         this.creatBC=function(){
             this.boxColizi = new RectCollis(
                 -this.width/2,

@@ -384,6 +384,10 @@ export class Menedsher  {
             self.fun("visi3d");
         }
 
+        this.setBlokActiv = function (b) {  
+            blok=b
+        }
+
 
 
         this.pointOld=new THREE.Vector3();

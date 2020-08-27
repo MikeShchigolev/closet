@@ -22,6 +22,8 @@ export class GMG  {
         this._color=sten._color;
         this._width=sten._width
         this._height=sten._height
+
+        this._matSten=undefined
         
         this.sahY=2048;
         this.sahX=2048;
@@ -73,13 +75,16 @@ export class GMG  {
 
         this.render=function(){           
             self.renderer.render(this.cont);
-            this.material.map.needsUpdate=true;
-            
+            this.material.map.needsUpdate=true;            
         }
 
         setTimeout(function() {
             self.draw()
         }, 1550);
+
+
+        
+
     }
     set width(v) {
         if(this._width!=v){
@@ -88,4 +93,6 @@ export class GMG  {
         }       
     }   
     get width() { return  this._width;}
+
+
 }

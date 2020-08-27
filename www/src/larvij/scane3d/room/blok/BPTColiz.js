@@ -46,8 +46,7 @@ export class BPTColiz{
                         p=arr[i];
                     }
                 }
-            }
-            
+            }            
             if(sah<this.array.length){
                 for (var i = this.array.length-1; i >= sah; i--) {                    
                     if(this.array[i]._parent!=undefined){
