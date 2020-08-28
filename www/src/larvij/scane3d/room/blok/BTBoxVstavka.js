@@ -34,7 +34,7 @@ export class BTBoxVstavka extends Blok {
         
         this.bvPlus=new BVPlus(this);
 
-      /*  let aa=new THREE.AxesHelper(5); 
+       /* let aa=new THREE.AxesHelper(5); 
         aa.position.z=56;
         aa.position.x=-50/2+1.8;          
         this.content3d.add(aa);*/
@@ -72,10 +72,8 @@ export class BTBoxVstavka extends Blok {
 
         
         var b
-        this.setXY=function(_x,_y){ 
-            
-            b=this.testTumb(_x,_y);
-            
+        this.setXY=function(_x,_y){             
+            b=this.testTumb(_x,_y);            
             if(b==true){
                 if(mO.btBoxDin.parent!=undefined){                    
                     if(mO.btBoxDin.idRandom!=this.parent.idRandom){
@@ -85,37 +83,63 @@ export class BTBoxVstavka extends Blok {
                     }                   
                 }
                 this.drahShadow()
+                if(this._parent)this._parent.changeMarkers();  
                 return
             }else{
                 //Эмулируем тумбочку
                 this.setXY2Tumba(_x,_y);
-            }      
+            }  
+            if(this._parent)this._parent.changeMarkers();      
         }
         this.boxHelper.visible=false
 
 
-        this.object.mod.r[0]=-25
-        this.object.mod.r[3]=50
+        this.object.mod.r[0]=-25;
+        this.object.mod.r[3]=50;
         this.rect[0]=-25;
         this.rect[3]=50;
-        /*
-        let t=this.rect[3]
-        this.boxColizi.width=t;
-        this.boxColizi.rectCollisMeshdy.width=t;
-        this.boxColizi.rectCollisMeshdy.x=-t;
-        this.boxColizi.sx=-t/2;
-        this.boxColizi.x=-t/2;*/
 
 
-      
+        this.arrMark=[];
         this.boolLoad = false 
+        this.yMP=0
+        this.yMP1=0
+        this.omb=undefined
         this.funInitMod = function(){
             this.creadDebag(self.cont3dLoad.children[0]);
             visi3D.objShadow(self.cont3dLoad, true)            
             self.boolLoad=true;
             this.dragIndex();
 
+            
+            trace(">>>",self.cont3dLoad.position)
+            let o=this.mO.getRendomID("tit2");
+            let omb=this.markers.getO3D(o);            
+            /*
+            if(omb.rect[3]>35){
+                let s=35/omb.rect[3];
+                for (var i = 0; i < omb.rect.length; i++) {
+                    omb.rect[i]*=s
+                }
+                omb.content3d.scale.set(s,s,s)
+            }*/
+            this.yMP =-(this.rect[5]-2);
+            this.yMP1 = this.yMP+ omb.rect[4]; 
+                     
+            omb.setPRS({
+                x:0,
+                y:this.rect[4]/2+(Math.random()*20-10),
+                z:-this.yMP
+            });
+            this.omb=omb;
+
+            this.arrMark.push(omb);
+
+            
+            if(this._parent)this._parent.changeMarkers();
+
         }
+
 
         //--------------------------------------
 
@@ -202,6 +226,10 @@ export class BTBoxVstavka extends Blok {
 
 
 
+
+
+
+
         //--------------------------------------
 
 
@@ -276,7 +304,7 @@ export class BTBoxVstavka extends Blok {
             var r=null
             max=9999
             pyR=_py
-            trace(_py)
+            
             for (var i = 0; i < _blok.arrPositZ.length; i++) {                
                 ii=Math.abs(pyR-_blok.arrPositZ[i])                
                 if(max>ii){
@@ -683,7 +711,7 @@ export class BTBoxVstavka extends Blok {
     }   
     get indexH() { return  this._indexH;} 
 
-    set avAct(v) {
+   /* set avAct(v) {
         if(this._avAct!=v){
             this._avAct = v;
             this.c3dNa.visible=v; 
@@ -693,7 +721,20 @@ export class BTBoxVstavka extends Blok {
              
         }       
     }   
-    get avAct() { return  this._avAct;}
+    get avAct() { return  this._avAct;}*/
+
+        //this veriable extends the class
+    //she changes his behavior 
+    set visiMark(v) {
+        if(this._visiMark!=v){//if it is equal then skip the cycle
+            this._visiMark= v;            
+            this.markers.visible=v;  
+            if(v && this._parent!=undefined){
+                this._parent.changeMarkers()//I am calling the parent method
+            }
+        }       
+    }   
+    get visiMark() { return  this._visiMark;}
 
 }
 

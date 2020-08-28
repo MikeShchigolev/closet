@@ -556,7 +556,8 @@ export class Blok{
     set visiMark(v) {
         if(this._visiMark!=v){
             this._visiMark= v;            
-            this.markers.visible=v;   
+            this.markers.visible=v;  
+            
         }       
     }   
     get visiMark() { return  this._visiMark;}
@@ -600,8 +601,10 @@ export class Blok{
     set avAct(v) {
         if(this._avAct!=v){
             this._avAct = v;
-            this.c3dNa.visible=v; 
-            trace("avAct==",v,this)      
+            this.c3dNa.visible=v;
+            if(this.cont3dLoad)this.cont3dLoad.visible=v;
+            if(this.markers)this.markers.c3dAV.visible=v;
+                 
             if(this._activTime==false)this.boxHelper.visible=!v;            
             for (var i = 0; i < this.children.length; i++) {
                 this.children[i].avAct=this._avAct
@@ -618,9 +621,16 @@ export class Markers{
         var self=this;
         this.type="Markers";
         this._visible=par._visiMark;
+
+        this.c3dAV= new THREE.Object3D();
+        par.content3d.add(this.c3dAV);
+        
         this.content3d = new THREE.Object3D();
-        par.content3d.add(this.content3d)
+        this.c3dAV.add(this.content3d);
         this.content3d.visible=this._visible;
+
+
+
         this.array=[]
         this.par=par;
         if(tStyle.glaf.debug==true){
@@ -639,10 +649,12 @@ export class Markers{
                 aa= o3d.name.split("_");  
 
                 if(aa[1]){
+                    trace("@@",aa[1])   
                     var o=par.mO.getRendomID(aa[1])                  
-                    if(o!=null){                       
-                        var omb=this.getO3D(o)                        
-                        var pp=new THREE.Vector3(o3d.position.x,o3d.position.y,o3d.position.z-self.par.rect[2])
+                    if(o!=null){ 
+                        //trace("@@",o)                      
+                        var omb = this.getO3D(o)                        
+                        var pp = new THREE.Vector3(o3d.position.x,o3d.position.y,o3d.position.z-self.par.rect[2])
                         omb.setPRS(pp, o3d.rotation, o3d.scale); 
                         this.arrayOwan.push(omb)                    
                     } 
@@ -653,6 +665,8 @@ export class Markers{
                 this.setO3D(o3d.children[i], true)
             }
         }
+
+
 
         this.compliteMod=function(){           
             self.par.mO.par.par.dragTimeVM()
@@ -687,6 +701,10 @@ export class OMB{
         this.idArr=idArr;
         this.obj=obj;
         this.par=par;
+
+
+        this.rect=[]
+        for (var i = 0; i < this.obj.obj.mod.r.length; i++) this.rect[i]=this.obj.obj.mod.r[i]*1
         this.content3d = new THREE.Object3D();
         par.content3d.add(this.content3d);
         this.c1 = new THREE.Object3D();
@@ -701,8 +719,9 @@ export class OMB{
             this.content3d.add(this.axisHelper);*/
         }
        
-
+        this.position={x:0,y:0,z:0}
         this.setPRS=function(p,r,s){
+            this.position=p;
             this.content3d.position.set(p.x, -p.z, p.y);
             this.content3d.rotation.x=-Math.PI/2
         }

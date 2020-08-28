@@ -124,8 +124,62 @@ export class BTBoxDin extends Blok {
                 if(this.content.funRender!=undefined){
                     this.content.funRender();
                 }
+            }            
+        }
+
+
+        //these variables for the function below
+        var yy,yy1,yy2,yy3,yy4,bY,bb;
+        this.changeMarkers=function(){//shows or hiders markers
+            if(!this._visiMark) return;  //if the method is disabled 
+
+            yy4=this._height/2-3;//nalf the height of the box
+            for (var i = 0; i < this.children.length; i++) {//we sort out the children of the parent 
+                if(this.children[i].omb)this.children[i].omb.visible=true;
             }
-            
+
+            for (var i = 0; i < this.children.length; i++) {//we sort out the children of the parent 
+                bY=true;//we assign the value to the varieble correctly
+                if(this.children[i].omb){ // I see if there a value                  
+                    yy = this.children[i].boxColizi.rectCollisMeshdy.y+this.children[i].yMP;
+                    yy1 =  this.children[i].boxColizi.rectCollisMeshdy.y+this.children[i].yMP1;
+                           
+                    if(yy1>yy4)bY=false;
+                    if(yy<-yy4) bY=false;                  
+
+                    if(bY)
+                    for (var j = 0; j < this.children.length; j++) {
+                        if(i!==j){
+                            yy2 = this.children[j].boxColizi.rectCollisMeshdy.y;
+                            yy3 = yy2+this.children[j].boxColizi.rectCollisMeshdy.height;
+                            bb=calc.test2d(yy2,yy3,yy,yy1);
+                            if(bb==true)bY=false;
+                            else{
+                                if(this.children[i].omb.visible && this.children[j].omb && this.children[j].omb.visible){
+                                    yy2 = this.children[j].boxColizi.rectCollisMeshdy.y+this.children[j].yMP;
+                                    yy3 = this.children[j].boxColizi.rectCollisMeshdy.y+this.children[j].yMP1;
+                                    bb=calc.test2d(yy2,yy3,yy,yy1);
+                                    if(bb==true){
+                                        bY=false;
+                                        this.children[i].omb.visible=bY;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                    
+
+                    if(bY==false)this.children[i].omb.visible=bY;
+                    
+                   /* if(this.children[i].arrMark)                
+                    for (var j = 0; j < this.children[i].arrMark.length; j++) {
+                        this.children[i].arrMark[j].visible=bY;
+                    }*/
+                    
+                }                
+            }
         }
 
         this.dragImeag = function(){

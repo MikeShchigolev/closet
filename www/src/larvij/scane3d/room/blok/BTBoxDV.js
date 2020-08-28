@@ -52,7 +52,9 @@ export class BTBoxDV extends Blok {
         
         var b
         this.setXY=function(_x,_y){ 
+           
             b=this.testTumb(_x,_y);
+           
             if(b==true){
                 if(mO.btBoxDin.parent!=undefined){                    
                     if(mO.btBoxDin.idRandom!=this.parent.idRandom){
@@ -62,12 +64,16 @@ export class BTBoxDV extends Blok {
                     }                   
                 }
                 this.drahShadow()
+                if(this._parent)this._parent.changeMarkers();  
                 return
             }else{
                 //Эмулируем тумбочку
                 this.setXY2Tumba(_x,_y)
-            }      
+            } 
+            if(this._parent)this._parent.changeMarkers();      
         }
+
+
 
 
 
@@ -120,6 +126,10 @@ export class BTBoxDV extends Blok {
 
 
 
+        this.omb=undefined
+        this.arrMark=[]
+        this.yMP=0
+        this.yMP1=0
 
         this.init=function(_obj){           
             this.creatBC()
@@ -177,6 +187,41 @@ export class BTBoxDV extends Blok {
             }
 
 
+            let tip="tit2";
+            if(this.id==211)tip="tit3";
+            
+            let o=this.mO.getRendomID(tip);
+            let omb=this.markers.getO3D(o);
+
+            this.yMP=1.5;
+
+            if(this.id==211)this.yMP=-omb.rect[4]+2
+
+            this.yMP1= this.yMP+omb.rect[4]   
+            omb.setPRS({
+                x:0,
+                y:30,
+                z:-this.yMP
+            });
+
+
+            /*
+            if(omb.rect[3]>35){
+                let s=35/omb.rect[3];
+                for (var i = 0; i < omb.rect.length; i++) {
+                    omb.rect[i]*=s
+                }
+                omb.content3d.scale.set(s,s,s)
+            }
+            this.yMP =-(this.rect[5]-2);
+            this.yMP1 = this.yMP+ omb.rect[4]; 
+            */         
+            
+            this.omb=omb;
+            this.arrMark.push(omb);            
+            if(this._parent)this._parent.changeMarkers();
+
+
 
 
             
@@ -186,11 +231,14 @@ export class BTBoxDV extends Blok {
 
 
 
+
+       
         this.boolLoad = false 
         this.funInitMod = function(){
             this.creadDebag(self.cont3dLoad.children[0]);            
             self.boolLoad=true;
             this.dragIndex();
+
         }
 
         //--------------------------------------
@@ -712,6 +760,17 @@ export class BTBoxDV extends Blok {
     }   
     get depth() { return  this._depth;}
 
+    set visiMark(v) {
+        if(this._visiMark!=v){//if it is equal then skip the cycle
+            this._visiMark= v;            
+            this.markers.visible=v;  
+            if(v && this._parent!=undefined){
+                this._parent.changeMarkers()//I am calling the parent method
+            }
+        }       
+    }   
+    get visiMark() { return  this._visiMark;}
+
 }
 
 
@@ -815,13 +874,7 @@ export class BVPlus {
 
                     return aaaa;               
                 }
-                
-
-
-
             };
-
-
             return []            
         }
 
@@ -831,7 +884,7 @@ export class BVPlus {
         if(this.activeId==-1)return;
 
         this.content3d = new THREE.Object3D();
-        this.par.content3d.add(this.content3d);
+        this.par.c3dNa.add(this.content3d);
 
         this.hron=new BKHron(this, this.activeId, 1)
         this.hron.initHron=function(){ 

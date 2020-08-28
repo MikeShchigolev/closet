@@ -827,8 +827,9 @@ export class Sten  {
     set avAct(v) {
         if(this._avAct!=v){
             this._avAct = v;           
-            this.drahAct()  
+            this.drahAct();  
             for (var i = 0; i < this.children.length; i++) {
+               // trace(this.idArr,i,"@@@@@@@@@",this.children[i])
                 this.children[i].avAct=this._avAct
             }            
         }       

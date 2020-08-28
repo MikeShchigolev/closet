@@ -20,10 +20,9 @@ export class BTVstavka extends Blok {
         
         this.collision//выдераем из стенки
         //перехват основоного события ведения обьекта по стенке
-        this.byZdvig=false
+        this.byZdvig=false;
         var b
-        this.setXY=function(_x,_y){
-            trace(_x,_y) 
+        this.setXY = function(_x,_y){             
             b=this.testTumb(_x,_y);
             if(b==true){
                 if(mO.blokTumba.parent!=undefined){                    
@@ -34,12 +33,39 @@ export class BTVstavka extends Blok {
                     }                   
                 }
                 this.drahShadow()
+                if(this._parent)this._parent.changeMarkers();
                 return
             }else{
                 //Эмулируем тумбочку
-                this.setXY2Tumba(_x,_y)
-            }      
+                this.setXY2Tumba(_x,_y);
+            }  
+            if(this._parent)this._parent.changeMarkers();    
         }
+
+
+        this.omb=undefined
+        this.funInitMod=function(){           
+            let o=this.mO.getRendomID("tit2");
+            let omb=this.markers.getO3D(o);            
+            
+            if(omb.rect[3]>35){
+                let s=35/omb.rect[3];
+                for (var i = 0; i < omb.rect.length; i++) {
+                    omb.rect[i]*=s
+                }
+                omb.content3d.scale.set(s,s,s)
+            }
+
+            omb.setPRS({
+                x:0,
+                y:this.rect[4]/2+(Math.random()*20-10),
+                z:this.rect[5]/2-0.5
+            });
+            this.omb=omb;     
+            
+            if(this._parent)this._parent.changeMarkers();
+        }
+
 
         this.drahShadow=function(_x,_y){ 
             if(this._parent!=undefined){
@@ -54,7 +80,7 @@ export class BTVstavka extends Blok {
         this.dragImeag=function(){self.drahShadow()}
         //есть ли возможность вписаться в тумбочку
         //если есть то вписываем возврат да
-        var rcm, b
+        var rcm, b;
         this.testTumb = function(_x,_y){
             if(mO.par.sten)this.collision=mO.par.sten.collision
             else this.collision= undefined 
@@ -155,6 +181,7 @@ export class BTVstavka extends Blok {
         var bbb
         this.setXY2Tumba=function(_x,_y){            
             aS=mO.par.sten//mO.par.par.array[mO.par.par.indexAct]
+            if(!aS)return
             mO.blokTumba.nitColor() 
             if(mO.blokTumba.parent==undefined){
                 aS.add(mO.blokTumba)
@@ -202,7 +229,21 @@ export class BTVstavka extends Blok {
                 this.parent.remove(this);
             }
         }
+        this.dragStart=function(){ 
+            if(this.mO.boolClone){                
+                let o=this.getObj();
+                let blok=this.mO.getBlok(this.object)                        
+                blok.setObj(o);
+                this.parent.add(blok, false); 
+                this.mO.activIndex=blok.idArr;                  
 
+                blok.setXY(o.x,o.y);
+                this.mO.par.par.visiActiv.setObject(blok);
+
+                this.mO.par.setBlokActiv(blok);
+                this.mO.par.start(blok);
+            }
+        }
 
         this.stopDrag=function(){  
             if(this.parent ==undefined){
@@ -270,23 +311,14 @@ export class BTVstavka extends Blok {
         this.getPrice=function(intColor,idMat){  
             var ad=[]
             var aa=null
-            //trace("------------------")
+           
             if(this.parent==undefined)return []
             if(this.parent.parent==undefined)return []    
            
 
-            aa=menedsherMaterial.getArrOtObj(this.object,idMat,intColor)     
+            aa=menedsherMaterial.getArrOtObj(this.object,idMat,intColor);     
 
-           /* if(intColor==0){
-                if(this.object.plus!=undefined){
-                    aa=this.object.plus;
-                }
-            }
-            if(intColor==1){
-                if(this.object.plus1!=undefined){
-                    aa=this.object.plus1;
-                }
-            }*/
+           
             if(aa!=null){
                 ad=[];                         
                 for (var j = 0; j < aa.length; j++) {
@@ -317,7 +349,7 @@ export class BTVstavka extends Blok {
 
         this.iAp=0
         this.sobKey = function(tip,e,arrNa){ 
-            //trace(e.keyCode, this.idArr,this,tip,arrNa,e);
+           
             let b=false;
             
             //
@@ -325,7 +357,7 @@ export class BTVstavka extends Blok {
                 let xxx=this._parent.x;
                 let yyy=this._parent.y;
                 if(tip=="down"){
-                    trace(xxx,yyy,this.boxColizi.position._y);
+            
                       
 
                     if(e.keyCode==38 || e.keyCode==87)  {
@@ -361,13 +393,13 @@ export class BTVstavka extends Blok {
         }
 
         this.getPosit = function(bt,y,h,b,r){
-            trace(y,h,b,r);
+           
             let yy=y+h
             let ap=[];
             let ap1=[];
 
             for (var i = 0; i < bt.arrPositZ.length; i++) { 
-                trace(yy+"  ::  "+bt.arrPositZ[i]);
+              
                 if(b){
                     if(bt.arrPositZ[i]>yy){
                         ap.push(bt.arrPositZ[i]);
@@ -391,16 +423,12 @@ export class BTVstavka extends Blok {
                 let step1= ap[i]-h;
 
                 
-                if(step<step1){ //checking the bottom step   
-                    trace(step,",,,,,",step1)
-
-                }
+               
             }
 
 
 
-            trace(ap)
-            trace(ap1)
+            
             return null
         }
 
@@ -408,12 +436,6 @@ export class BTVstavka extends Blok {
         this.plusSah = function(b){
             if(!this._parent)return; 
 
-
-           /* trace(">>>",this.getPosit(this._parent,this.boxColizi.rectCollisMeshdy.y,this.boxColizi.rectCollisMeshdy.height,b,this.idRandom))
-            
-
-
-            return; */
 
 
             let yy1=this.boxColizi.rectCollisMeshdy.height+this.boxColizi.rectCollisMeshdy.y; 
@@ -470,7 +492,7 @@ export class BTVstavka extends Blok {
             if(ps==pf1)return true;
 
 
-            trace(ps,pf,"===",ps1,pf1)         
+           
             if(ps1>=ps &&pf1<=ps)return true;
             if(ps1>=pf &&pf1<=pf)return true;          
             if(ps>=ps1 &&pf<=ps1)return true;
@@ -522,5 +544,19 @@ export class BTVstavka extends Blok {
         }       
     }   
     get parent() { return  this._parent;}
+
+
+    //this veriable extends the class
+    //she changes his behavior 
+    set visiMark(v) {
+        if(this._visiMark!=v){//if it is equal then skip the cycle
+            this._visiMark= v;            
+            this.markers.visible=v;  
+            if(v && this._parent!=undefined){
+                this._parent.changeMarkers()//I am calling the parent method
+            }
+        }       
+    }   
+    get visiMark() { return  this._visiMark;}
 }
 

@@ -365,13 +365,15 @@ export class Menedsher  {
                 if(e.target){
                     blok=self.poiscParam(e.target,"blok");
                     self.testActSten(e.target)
-                    if(blok!=null){                                          
+                    if(blok!=null){ 
+                        
+
                         p.x=e.originalEvent.clientX;
                         p.y=e.originalEvent.clientY;
                         self.par.par.dubag.setBlok(blok); 
                         self.start(blok);                                           
                         self.downZdig(e,blok)
-                        if(blok.dragStart)  blok.dragStart()
+                        if(blok.dragStart)  if(blok.dragStart()!=true)return 
                     }else{
                         
                         self.glaf.dragPic.testDrag(1, self.clik1, null);  

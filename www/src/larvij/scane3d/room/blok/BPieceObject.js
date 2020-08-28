@@ -848,7 +848,7 @@ export class BPieceObject extends Blok {
     get parent() { return  this._parent;}
 
 
-    set avAct(v) {
+  /*  set avAct(v) {
         if(this._avAct!=v){
             this._avAct = v;
             // this.c3dNa.visible=v; 
@@ -860,7 +860,7 @@ export class BPieceObject extends Blok {
              
         }       
     }   
-    get avAct() { return  this._avAct;}
+    get avAct() { return  this._avAct;}*/
 }
 
 
@@ -1241,7 +1241,6 @@ export class HrenNiz {
 
         this.dragMark=function(){
             if(this.arrMark==undefined)return; 
-
             for (var i = 0; i < this.arrMark.length; i++) {
                 this.arrMark[i].c2.visible=this._polka
             }
@@ -1262,7 +1261,6 @@ export class HrenNiz {
                 if(o!=null){ 
                     omb=mark.getO3D(o)
                     this.arrMark.push(omb)                   
-                    
                     omb.setPRS({
                         x:otSah-o.obj.mod.r[0],
                         y:this.object.obj.mod.r[2]+this.arrHron[0].object.obj.mod.r[5]/2+ o.obj.mod.r[5]/2+o.obj.mod.r[2],

@@ -16,8 +16,14 @@
         "wireframe": false,
         "reflectivity": 1,
         "refractionRatio": 0.98,
-        "textur": []
+        "textur": [],
+        "emissive": "#000000",
+        "specular": "#111111",
+        "shininess": 30
     },
     "mirro": false,
-    "orig": "Screenshot_6.png"
+    "orig": "Screenshot_6.png",
+    "resurs": {
+        "array": []
+    }
 }

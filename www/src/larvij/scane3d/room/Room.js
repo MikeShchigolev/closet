@@ -434,13 +434,13 @@ export class Niz  {
         this.material=new THREE.MeshPhongMaterial({
             color: 0x999999,           
             side: THREE.DoubleSide,
-        })
+        });
         this._dS=10
         this.ddd=0.5
         this.hh=100
         this.ww= 100   
         this.geometry = new GeometrySten();
-        this.geometry.depth = this.ddd//this._depth//*0.5;
+        this.geometry.depth = this.ddd;
         this.geometry.rect.width=this._height
         this.geometry.textureWidth=this._height
         this.geometry.rect.height=this._height
@@ -605,51 +605,20 @@ export class MatShpaler  {
         });
 
 
-
-      /*  var canvas = document.createElement('canvas');
-        canvas.width = 64;
-        canvas.height = 64;
-        var ctx = canvas.getContext('2d');
         
-        var image = new Image();
-        var textur=THREE.CanvasTexture(canvas);
-
-
-        this.draw=function(){
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(image, 0, 0);
-
-            //textur.needsUpdate=true
-            self.material.needsUpdate=true
-            trace("EEEEEEEEEEEEEEEEEEE");
-        }
-
-
-        image.onload = function() {  
-            self.draw()
-        }
-        image.src="resources/image/nizXZ.png"*/
-        
-
-
-        
-        this.material = new THREE.MeshPhongMaterial({ 
-            //color:0xff0000,
+        this.material = new THREE.MeshPhongMaterial({            
             side:THREE.BackSide,
             map:textur 
         });
 
-        this.getCol=function(o){   
-            //return "#"+Math.round(o.r*255)+""
+        this.getCol=function(o){
             return "#" + ((1 << 24) + (o.r*255 << 16) + (o.g*255 << 8) + o.b*255).toString(16).slice(1);
-            return "#"+parseInt(Math.round(o.r*255)+"",16)
         }
 
 
         this.dragColor=function(){ 
             this.color=this.getCol(this._matSten.color)
             setTimeout(function() { self.color=self.getCol(self._matSten.color)}, 100);
-            //setTimeout(function() { self.color=self.getCol(self._matSten.color)}, 50);
             setTimeout(function() { self.color=self.getCol(self._matSten.color)}, 1000);
             setTimeout(function() { self.color=self.getCol(self._matSten.color)}, 2000);
         }  
@@ -668,10 +637,7 @@ export class MatShpaler  {
 
 
             this.material.color=c
-            this.par.fun("visi3d"); 
-
-            trace(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>",v);
-
+            this.par.fun("visi3d");
         }       
     }   
     get color() { return  this._color;}

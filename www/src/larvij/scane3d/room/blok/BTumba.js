@@ -105,6 +105,8 @@ export class BTumba extends Blok {
         }
 
 
+
+
          
 
         this.funInitMod = function(){
@@ -262,7 +264,35 @@ export class BTumba extends Blok {
                         sten.children[i].drahShadow()
                     }
                 }
-                this.mO.dragPriceScane() 
+                this.mO.dragPriceScane(); 
+            }
+        }
+
+        //these variables for the function below
+        var yy,yy1,yy2,yy3,yy4,bY,bb;
+        this.changeMarkers=function(){//shows or hiders markers
+            if(!this._visiMark) return;  //if the method is disabled         
+            yy4=this.rect[5]/2;//nalf the height of the box
+            for (var i = 0; i < this.children.length; i++) {//we sort out the children of the parent 
+                bY=true;//we assign the value to the varieble correctly
+                if(this.children[i].omb){ // I see if there a value                  
+                    yy = this.children[i].boxColizi.rectCollisMeshdy.y;
+                    yy1 =  yy+this.children[i].omb.rect[4]; 
+                           
+                    if(yy1>yy4)bY=false; 
+
+                    if(bY)
+                    for (var j = 0; j < this.children.length; j++) {
+                        if(i!==j){
+                            yy2 = this.children[j].boxColizi.rectCollisMeshdy.y;
+                            yy3 = yy2+this.children[j].boxColizi.rectCollisMeshdy.height;
+                            bb=this.children[j].test2d(yy2,yy3,yy,yy1)
+                            if(bb==true)bY=false
+                        }
+                    }                  
+
+                    this.children[i].omb.visible=bY;
+                }                
             }
         }
 
@@ -628,7 +658,10 @@ export class BTumba extends Blok {
             this.fun("visi3d");      
         }           
     }   
-    get pod() { return  this._pod;}  
+    get pod() { return  this._pod;} 
+
+
+
 }
 
 
