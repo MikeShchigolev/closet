@@ -10,7 +10,7 @@
 */
 
 import { Vuvoz } from './Vuvoz.js';
-
+import { Php } from '../../php/PhpE6.js';
 
 export function MenuSave (par) {
     this.type = 'MenuSave';
@@ -30,6 +30,9 @@ export function MenuSave (par) {
     this.otstup2=50
     this.php=new Php();
 
+    this.link='../save/';
+    if(this.php.key!=null) this.link="../users/"+this.php.key+"/save/";
+
     var aGlaf=this.par.par;    
     this.email=dcmParam.tCInfa.config.email;
 
@@ -43,9 +46,11 @@ export function MenuSave (par) {
 
     this.poiskId=function(){
 
-        this.php.load({tip: 'getDiractFiles', dir: '../save/'}, function (e) {              
+        
+
+        this.php.load({tip: 'getDiractFiles', dir: this.link}, function (e) {              
             var a = e.split(",");
-            self.poiskId1(a)
+            self.poiskId1(a);
         })
     }
     this.idSave=1;
@@ -60,19 +65,18 @@ export function MenuSave (par) {
                 }
             }
         }
-        this.idSave+=1;
-        
-        this.php.load({tip: 'mkdir', dir: '../save/'+this.idSave}, function (e) {              
-            self.php.load({tip: 'copyDir', dirWith: '../save/base/', dir: '../save/'+self.idSave +'/'}, function (e) { 
+        this.idSave+=1;        
+        this.php.load({tip: 'mkdir', dir: this.link+this.idSave}, function (e) {              
+            self.php.load({tip: 'copyDir', dirWith: '../save/base/', dir: self.link+self.idSave +'/'}, function (e) { 
                 self.poiskId2();
             })
         });        
     }
 
     this.poiskId2=function(){                
-        var l='../save/'+this.idSave+"/config.json";         
+        var l=this.link+this.idSave+"/config.json";         
         this.php.load({tip:"saveJSON", link:l, text:this.string},function(e){
-            var ll = '../save/'+self.idSave +'/icon.png'            
+            var ll = self.link+self.idSave +'/icon.png'            
             self.php.savePhoto(ll, self.base, function () {                
                 self.poiskId3()
             }); 
@@ -797,6 +801,14 @@ export function Otprovlashka (par, cont) {
 
 
     this.creatText=function(){
+
+        let link2=this.par.php.server2;
+        if(this.par.php.url!=null)link2=this.par.php.url;
+
+        let link=this.par.php.server;
+        if(this.par.php.url!=null)link=this.par.php.url;
+
+
         var r="Здравствуйте, "+this.par.arrComp[0].text+"!\n";
         r+="Телефон: "+this.par.arrComp[1].text+"\n";
         r+=this.par.arrComp[2].text+"\n";
@@ -809,8 +821,8 @@ export function Otprovlashka (par, cont) {
         r+="В ближайшее время наш менеджер свяжется с Вами для его подтверждения.\n";
         r+="Общая стоимость вашего заказа составляет: "+aMani.price+" "+dcmParam.tCInfa.getText(1)+"\n\n";
 
-        r+="Проект: "+this.par.php.server+"index.html?id="+this.par.idSave+"\n";                
-        r+="Спецификация: "+this.par.php.server+'/save/'+this.par.idSave+'/infoTime/info.csv'+"\n\n"; 
+        r+="Проект: "+link2+"?id="+this.par.idSave+"\n";                
+        //r+="Спецификация: "+this.par.php.server+'/save/'+this.par.idSave+'/infoTime/info.csv'+"\n\n"; 
 
         
         if(dcmParam.tCInfa.getText(7)!="null") r+=dcmParam.tCInfa.getText(7)+"\n";        

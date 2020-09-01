@@ -259,25 +259,18 @@ export class Glaf  {
 
 
 
-       /* let r = navigator.userAgent.match(/iPhone|iPad|iPod/i);
-        if(r==null ){
-            if(navigator.userAgent.match(/Mac OS/i)!=null){
-                if(window.matchMedia("(any-pointer:coarse)").matches==true){
-                    trace("@@"+navigator.userAgent.match(/Mac OS/i))
-                }
-            }
-        }
 
-
-        trace("!",r)
-        trace(navigator.userAgent)
-        trace(navigator.userAgent.match(/iPhone|iPad|iPod/i)+"!!!!")*/
-        /////////////////////////////////////////////
 
         //открываем новый продукт по ид
-        this.openId = function (id) {         
+        this.openId = function (id) {   
+            console.warn("id-------------------",id,this.par.php.key)
+
+            let link = "save/"+id+"/config.json";
+            if(this.par.php.key != null) link="users/"+this.par.php.key+"/save/"+id+"/config.json"; 
+            console.warn("id-----@@@@@@@@@@@@@@--------------",link)
+
             $.ajax({
-                url: "save/"+id+"/config.json",
+                url: link,
                 success: function function_name(data) {                         
                     var oo;
                     if(typeof data === "string") {

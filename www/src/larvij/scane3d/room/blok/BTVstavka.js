@@ -198,7 +198,7 @@ export class BTVstavka extends Blok {
             }else{
                 if(this.parent.idRandom!=mO.blokTumba.idRandom){
                     bbb=true;
-                    this.parent.remove(this)
+                    this.parent.remove(this);
                     mO.blokTumba.add(this);
                 }
             }

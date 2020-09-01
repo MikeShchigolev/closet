@@ -1,17 +1,19 @@
 
 
 
-  	function Php() { 
- 
+  	
+
+	export function Php (par) {
   		this.ser = window.location.href;
   		this.server = undefined;//"http://uptask3d/";
-  		this.server2=""
 
-  		this.id=null
+
+  		this.id=null;
+  		this.key=null;
+  		this.url=null;
   		this.aS
   		this.init=function(){
   			var arrParams = this.ser.split("?"); 
-  			this.server2=arrParams[0];
   			//this.server =arrParams[0];
   			
   			var arrParams2 = this.ser.split("/");
@@ -21,11 +23,9 @@
   				this.server+=arrParams2[i]+"/"
   				
   			}
-  			//this.server ="http://larvij/";
-			//this.server = "http://larvij/"
-			this.id = getURLParameters("id")
-			
-
+			this.id = getURLParameters("id");
+			this.key = getURLParameters("key");
+			this.url=getURLParameters("url");
   		}
 
   		//customDepth+trasparent
@@ -72,9 +72,7 @@
 			$.post(s, obj, function(data){			
 				if (fun) fun(data);
 			});
-
 		}
-
 		
 		this.savePhoto = function(_file, _image, fun){
 			var s=this.server+"src/forModel.php";
@@ -82,7 +80,6 @@
 				if (fun) fun();			
 			});
 		};
-
 		this.init()
   	}
 

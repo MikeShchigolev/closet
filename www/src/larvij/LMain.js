@@ -13,12 +13,16 @@
 import { Glaf } from './Glaf.js';
 import { AGlaf } from '../admin/AGlaf.js';
 import { LocalStorage } from '../localStorage/LocalStorageE6.js';
+import { Php } from '../php/PhpE6.js';
+
 
 /*
 fun на индекс, хз может апи, вырубает пердзагрущик
 plus окнчание для большинства загрузок, и хронитель версии
 tip =0 если 1 то обрезаеться функции с php для локальной версии
 */
+
+
 export class LMain  {
   	constructor(fun,plus,tip) {  		
   		this.type="LMain";
@@ -37,7 +41,7 @@ export class LMain  {
 		window.main=this
         this.localStorage=undefined;
 
-       
+        this.php=new Php()
         
 
         dcmParam.mobile=false;
@@ -137,8 +141,10 @@ export class LMain  {
 
   		this.startText = function(){  
   			//грузим текстовый фаил
+  			let link="resources/configText.json"+this.plus;
+  			if(this.php.key!=null)link="users/"+this.php.key+"/configText.json"+this.plus;
 	  		$.ajax({
-	            url: "resources/configText.json"+this.plus,
+	            url: link,
 	            success: function function_name(data) {                         
 	                if(typeof data === "string") {
 						var conf = JSON.parse(data)
@@ -147,8 +153,6 @@ export class LMain  {
 					
 					self.tip=0
 					if(self.confText.buy!=undefined)if(self.confText.buy==false)self.tip=1
-
-
 					self.start();	                                
 	            },
 	            error:function function_name(data) {
@@ -160,14 +164,15 @@ export class LMain  {
 
   		this.startCSV = function(){  
   			//грузим текстовый фаил
-	  		$.ajax({
-	  			//url: "resources/csvConfigOld.csv"+this.plus,
-	            url: "resources/csvConfig.csv"+this.plus,
-	            success: function function_name(data) {                         
-	                 
+  			let link="resources/csvConfig.csv"+this.plus;
+  			if(this.php.key!=null)link="users/"+this.php.key+"/csvConfig.csv"+this.plus;
+  			trace("$$$$$$$$$$$$",link);
+  			//return
+	  		$.ajax({	  			
+	            url:link,
+	            success: function function_name(data) {
 					self.csvConfig = data;
-					self.redactorCSVObj();	
-
+					self.redactorCSVObj();
 					self.startText();		                                
 	            },
 	            error:function function_name(data) {
@@ -406,7 +411,7 @@ export class KlassCSVObj  {
 	            }            
 	        }
 	        this.csvConfigArray=array;
-	        trace(this.csvConfigArray)
+	        //trace(this.csvConfigArray)
 	    }
 	    this.bigZamena(csvConfig)	   
   	}

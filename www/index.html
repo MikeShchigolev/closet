@@ -80,7 +80,7 @@
 			//{src: path + 'larvij/scane3d/room/blok/doska/GeometryDoska.js' + plus},
 			/*{src: path + 'larvij/scane3d/room/blok/doska/Doska3D.js' + plus},*/	
 			
-			{src: path + '/php/Php.js' + plus},
+			//{src: path + '/php/Php.js' + plus},
 			{src: path + 'libMy/utility/Calc.js' + plus},
 			{src: path + 'libMy/utility/Rectangle.js' + plus},	
 			{src: path + 'SceneSB.js' + plus},
@@ -118,7 +118,9 @@
         		//или https://github.com/vorodis2/T3Comp/
 				dcmParam = new DCM();
 				
-				
+				window.parent.postMessage("ready", "*");
+				window.parent.postMessage({"setBlockId": "xz1"}, "*");
+				//trace("############$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$################",window.parent);	
 				//либа для помогания в 3д, если что к vorodis2@gmail.com
         		//или https://github.com/vorodis2/divLib/
 				tStyle=new TStyle();
@@ -186,16 +188,28 @@
 
 		btn.style.position = 'fixed';
 		btn.style.top = (410+hhhh)+'px';
-		btn.style.left = '0px';/**/
-
-
-
+		btn.style.left = '0px';
 	}
+
+
+
+	window.addEventListener('message', function(event) {
+      	trace("#################################",event.data)
+    });
+/*
+		
+	function receiveMessage(event){
+	  	trace("#################################",event)
+	}
+	
+
+	window.addEventListener("eventLarvij", receiveMessage, false);
+	*/
 
 	
 	function startInfo () {
 
-		(function (d, w, c) {
+		/*(function (d, w, c) {
 	    (w[c] = w[c] || []).push(function() {
 	    	
 	        try {
@@ -224,8 +238,11 @@
 	    if (w.opera == "[object Opera]") {
 	        d.addEventListener("DOMContentLoaded", f, false);
 	    } else { f(); }
-		})(document, window, "yandex_metrika_callbacks");
-		
+		})(document, window, "yandex_metrika_callbacks");*/
+	
+
+
+
 /*
 		document.write("<a href='http://www.liveinternet.ru/click' "+
 		"target=_blank><img src='http://counter.yadro.ru/hit?t44.1;r"+
