@@ -263,8 +263,7 @@ export class DHAction  {
                     }
                 }
             }
-            
-
+           
 
             if(b==true){
 
@@ -284,9 +283,15 @@ export class DHAction  {
         }
 
         this.init2=function(){
+            let link=aGlaf.par.confText.action.link;
+            if(aGlaf.par.php.key!=null){
+                link="users/"+aGlaf.par.php.key+"/"+aGlaf.par.confText.action.link;
+            }
            
+            //http://closet/users/xz/0.png
+            //http://closet/user/xz/0.png
 
-            this.image=new DImage(this.dCont,0,0,aGlaf.par.confText.action.link,function(){
+            this.image=new DImage(this.dCont,0,0,link,function(){
                 this.width=this.picWidth;
                 this.height=this.picHeight;
                 self.init3()
