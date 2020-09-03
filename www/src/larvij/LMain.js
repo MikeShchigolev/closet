@@ -86,7 +86,7 @@ export class LMain  {
 
 		//стартуем дальше
         this.fina = function () {            	
-			self.glaf=new Glaf(self)
+			self.glaf=new Glaf(self);
 	
 			if(this.localStorage.object.dubag!=undefined){
                 if(this.localStorage.object.dubag==true){                      
@@ -101,6 +101,10 @@ export class LMain  {
 				}
 			}			
 			fun("init");
+
+			setTimeout(function() {
+				self.glaf.menuDiv.menuSave.testId()
+			}, 100);
 		}
 
 		//тик размит надва
@@ -184,14 +188,31 @@ export class LMain  {
   		}
 
   		this.сhangesSave= function(object){  
-  			trace("##>сhangesSave>",object);
-  			//self.glaf.urlSave=object;
+  			trace("##>сhangesSave>",object);  			
   			self.glaf.menuDiv.menuSave.сhangesSave=true;
   		}
   		this.setObj = function (object) {
   			trace("##>setObj>",object);
   			self.glaf.setObj(object);            
         } 
+        this.setObjectsJSON = function (object) {
+        	let b
+        	trace(">>>>>",this.csvConfigArray.length)
+        	for (var i = 0; i < object.array.length; i++) {
+        		
+        		b=this.csvConfigArray.length;
+        		for (var j = 0; j < this.csvConfigArray.length; j++) {
+        			if(object.array[i].id == this.csvConfigArray[j].id){
+        				if(object.array[i].id==46)trace(i+"   ",object.array[i])
+        				b=j;
+        			}
+        		}
+        		this.csvConfigArray[b]=object.array[i];
+        	}
+        	trace("FIXE не обновлябться в менеджере<<<<<",this.csvConfigArray.length)
+
+        	//this.csvConfigArray
+        }
         
 
   		
@@ -370,7 +391,7 @@ export class KlassCSVObj  {
 	        				ddddd.push(arr[i][j])
 	        			}
 	        		}	        		
-	        		ddd=ddddd
+	        		ddd=ddddd;
 	        	}	        	
 
 	            let o={};  
@@ -387,10 +408,10 @@ export class KlassCSVObj  {
 	            
 	            	
 	            o.color={};
-	            o.array=[]
+	            //o.array=[]
 	            let sah=0;
 	            for (var j = 0; j < ddd.length; j++) {       
-	                o.array[j]={id:ddd[j]}
+	                //o.array[j]={id:ddd[j]}
 	                let jj=5+j*4
 	                o.color[ddd[sah]]={}
 	                //o.color[ddd[sah]].id=arr[i][0];
@@ -400,7 +421,7 @@ export class KlassCSVObj  {
 	                if(isNaN(o.color[ddd[sah]].pri))o.color[ddd[sah]].pri=arr[i][jj+1]
 
 	                o.color[ddd[sah]].niz=arr[i][jj+2];
-	                o.color[ddd[sah]].xz=arr[i][jj+3];
+	                //o.color[ddd[sah]].xz=arr[i][jj+3];
 	                sah++;
 	            }
 	            array.push(o);
@@ -424,7 +445,12 @@ export class KlassCSVObj  {
 	            }            
 	        }
 	        this.csvConfigArray=array;
-	        //trace(this.csvConfigArray)
+	        var o={
+	        	info:"возможно что то будет, но пока не важно",
+	        	array:this.csvConfigArray
+	        }
+
+	       // trace(JSON.stringify(o, null,4))
 	    }
 	    this.bigZamena(csvConfig)	   
   	}

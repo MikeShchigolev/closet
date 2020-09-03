@@ -41,11 +41,7 @@ export function MenuSave (par) {
 
 
 
-    if(this.php.id!=undefined){
-        setTimeout(function() {
-            aGlaf.openId(self.php.id);
-        }, 1);
-    }
+    
 
     this.poiskId=function(){
         this.php.load({tip: 'getDiractFiles', dir: this.link}, function (e) {              
@@ -99,6 +95,14 @@ export function MenuSave (par) {
     this.dragScane=function(){
         this.creatResurs();
         this.poiskId();
+    }
+
+    this.testId=function(){
+        if(this.php.id!=undefined){
+            setTimeout(function() {
+                aGlaf.openId(self.php.id);
+            }, 1);
+        }
     }
 
 
