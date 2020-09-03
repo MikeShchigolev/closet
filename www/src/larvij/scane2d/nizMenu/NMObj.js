@@ -45,6 +45,7 @@ export class NMObj  {
         setTimeout(function() {
            if(main.glaf.up1 == true){//Включена смена 55 up1
                 self.up1Menu=new Up1Menu(self)
+                trace("##################################################%%");
             } 
         }, 10);
         
@@ -177,7 +178,7 @@ export class NMObj  {
             this.batArr.dCont.x=xx;
             xx+= this.batArr.width;
             this.width=xx+this.otstup;
-
+            trace("%%",this.up1Menu)
             if(this.up1Menu!=undefined)this.up1Menu.setObject(o);
 
             //--------------
@@ -429,28 +430,41 @@ export class Up1Menu  {
         this.type="Up1Menu";
         this.object=undefined;
         this.par=par
+
         this.setObject=function(o){
+            trace("%%%%",o)
             if(o.pppObj)
             if(o.pppObj.up1.active==true){
-                this.object=o;                 
+                if(this.object &&this.object.idArr==o.idArr)return
+                this.object=o;  
+                trace("%%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",main.localStorage.object.up1.sahTime)               
                 if(main.localStorage.object.up1==undefined){
                     main.localStorage.object.up1={}
-                    main.localStorage.object.up1.sahTime=main.glaf.up1Obj.sahTime
+                    main.localStorage.object.up1.sahTime=5
                 }
                 if(main.localStorage.object.up1.sahTime<=0)return
 
 
                 main.localStorage.object.up1.sahTime--;
                 main.localStorage.save();
-
-                self.par.par.par.mHelp.setIframe(
+                
+                trace("%%%%!!!",o)
+                self.par.par.par.mHelp.setHelp(
+                    "Выберите нужный вариант установки корзины: на раму или на телескопические направляющие.",
+                    "resources/image/mhelp.png",
+                    this.par.dCont,
+                    {x:150,y:-3}
+                );
+               /* self.par.par.par.mHelp.setIframe(
                     main.glaf.up1Obj.link,
                     main.glaf.up1Obj.width,
                     main.glaf.up1Obj.height,
                     self.par.dCont,
                     {x:135-(main.glaf.up1Obj.width/2),y:-13-(main.glaf.up1Obj.height)}
-                );
-            }            
+                );*/
+
+
+            }             
         }
 
     }

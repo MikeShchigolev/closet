@@ -42,9 +42,24 @@ export class Glaf  {
 
         this.urlSave = null;
         
-        if(main.confText.up1 && main.confText.up1.active){
-            this.up1 = true
-            this.up1Obj = main.confText.up1;
+        if(main.confText.up1){ 
+            if(main.confText.up1.active){
+                this.up1 = true
+                this.up1Obj = main.confText.up1;
+            }else{
+                this.up1 = false;
+                this.up1Obj = main.confText.up1;
+                if(main.localStorage.object.up1!=undefined&&main.localStorage.object.up1.sahTime!=15){
+                    
+
+                    main.localStorage.object.up1.sahTime=15
+                    main.localStorage.save();
+                }            
+
+
+                
+                
+            }
         }
 
 

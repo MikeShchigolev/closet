@@ -159,15 +159,15 @@ function DIVsakoe(par) {
     this.panel.width=1000;
     this.panel.height=70;
 
-    let l=new DLabel(this.panel, this.otstup,this.otstup,"u1 Включена замена полок апдейт up1_10_06_2020  ").width=600
-    l.width = this.panel.width;
+   /* let l=new DLabel(this.panel, this.otstup,this.otstup,"u1 Включена замена полок апдейт up1_10_06_2020  ").width=600
+    l.width = this.panel.width;*/
 
-    this.chekU1=new DCheckBox(this.panel, this.otstup, this.otstup+20, "active", function(s){ 
+    this.chekU1=new DCheckBox(this.dCont, this.otstup, this.otstup+yy, "Включена замена полок апдейт up1_10_06_2020", function(s){ 
         self.confText.up1.active = this.value; 
         self.par.saveTime();       
     })  
 
-    this.slidU1W=new DSliderBig(this.panel, 100, this.otstup+20, function(s){ 
+  /*  this.slidU1W=new DSliderBig(this.panel, 100, this.otstup+20, function(s){ 
         self.confText.up1.width = this.value; 
         self.par.saveTime(); 
     }, "width", 100, 1000);
@@ -193,13 +193,13 @@ function DIVsakoe(par) {
         self.par.saveTime(); 
     });
     this.inputU1.timeFun=1;
-    this.inputU1.width=this.panel.width-this.inputU1.x-this.otstup*2;
+    this.inputU1.width=this.panel.width-this.inputU1.x-this.otstup*2;*/
 
 
 
 
 
-    yy+=this.panel.height+this.otstup*2
+    yy+=32//this.panel.height+this.otstup*2
 
 
     this.chekGS=new DCheckBox(this.dCont, this.otstup, yy, "grabStoiki Кранштены от полок есть/нет", function(s){ 
@@ -472,17 +472,17 @@ function DIVsakoe(par) {
         if(this.confText.up1==undefined){
             this.confText.up1={};
             this.confText.up1.active=false;
-            this.confText.up1.width=200;
+           /* this.confText.up1.width=200;
             this.confText.up1.height=200;
-            this.confText.up1.link="up1.html";
+            this.confText.up1.link="up1.html";*/
         }
         this.chekU1.value=this.confText.up1.active;
-        this.slidU1W.value=this.confText.up1.width;
+       /* this.slidU1W.value=this.confText.up1.width;
         this.slidU1H.value=this.confText.up1.height;
-        this.inputU1.value=this.confText.up1.link;
+        this.inputU1.value=this.confText.up1.link;*/
 
         if(this.confText.up1.sahTime==undefined)this.confText.up1.sahTime=10
-        this.slidU1S.value=this.confText.up1.sahTime;
+        //this.slidU1S.value=this.confText.up1.sahTime;
 
         if(this.confText.settings==undefined)this.confText.settings={};
         if(this.confText.settings.durak==undefined)this.confText.settings.durak=true;

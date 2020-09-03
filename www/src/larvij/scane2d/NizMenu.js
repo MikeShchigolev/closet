@@ -43,7 +43,7 @@ export class NizMenu  {
         this.plusMM=new PlusMM(this);//выподалка с доп функциами
         this.fotoMenu=new FotoMenu(this);//принскрин сохронялки
 
-        trace("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$111$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        
 
         this.object=undefined;
 
@@ -384,6 +384,7 @@ export class NMObj  {
         this.up1Menu=undefined;
         
         setTimeout(function() {
+           trace("%%%%%%%%%%%%%%%%%%%",main.glaf.up1) 
            if(main.glaf.up1 == true){//Включена смена 55 up1
                 self.up1Menu=new Up1Menu(self)
             } 
@@ -463,7 +464,7 @@ export class NMObj  {
             this.batArr.dCont.x=xx;
             xx+= this.batArr.width;
             this.width=xx+this.otstup;
-
+            trace("%%",this.up1Menu);
             if(this.up1Menu!=undefined)this.up1Menu.setObject(o);
         }
 
@@ -557,10 +558,11 @@ export class Up1Menu  {
         this.object=undefined;
         this.par=par
         this.setObject=function(o){
+            trace("%%",o)    
             if(o.pppObj)
             if(o.pppObj.up1.active==true){
                 this.object=o; 
-                trace("!!!!!!!!!!!!!!!!",main.glaf.up1Obj);
+                trace("%%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!",o)
                 if(main.localStorage.object.up1==undefined){
                     main.localStorage.object.up1={}
                     main.localStorage.object.up1.sahTime=main.glaf.up1Obj.sahTime
@@ -570,20 +572,30 @@ export class Up1Menu  {
 
                 main.localStorage.object.up1.sahTime--;
                 main.localStorage.save();
-                trace(self.par.par)
-
-                //self.par.par.par.mHelp.setHelp("В данном положении полки, установка перекладины невозможна","resources/image/mhelp.png",this.par.dCont,{x:24,y:-13});
                 
-                self.par.par.par.mHelp.setIframe(
+
+                self.par.par.par.mHelp.setHelp(
+                    "В данном положении полки, установка перекладины невозможна",
+                    "resources/image/mhelp.png",
+                    this.par.dCont,
+                    {x:335,y:-13-(main.glaf.up1Obj.height)}
+                );
+                
+                /*self.par.par.par.mHelp.setIframe(
                     main.glaf.up1Obj.link,
                     main.glaf.up1Obj.width,
                     main.glaf.up1Obj.height,
                     self.par.dCont,
                     {x:135-(main.glaf.up1Obj.width/2),y:-13-(main.glaf.up1Obj.height)}
-                );
+                );*/
                 
-                trace("!!!!!!!!!!!!!!!!",main.localStorage.object.up1.sahTime);
+                trace("###################33333333333!!!!!!!!!!!!!!!!",main.localStorage.object.up1.sahTime);
 
+            }else{
+                if(main.localStorage.object.up1==undefined){
+                    main.localStorage.object.up1={}
+                    main.localStorage.object.up1.sahTime=0
+                }
             }            
         }
 
