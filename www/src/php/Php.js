@@ -8,6 +8,7 @@
   		this.server2=""
 
   		this.id=null
+  		
   		this.aS
   		this.init=function(){
   			var arrParams = this.ser.split("?"); 

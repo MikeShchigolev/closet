@@ -61,10 +61,18 @@ export class MenuDiv  {
         if(this.par.par.tip==0){
 
             
-            this.buttonMani=new DButSim(this.dCont, 0,0,dcmParam.tCInfa.getText(2),function(){
-                
-                self.menuSave.active=true;
-                
+            this.buttonMani=new DButSim(this.dCont, 0,0,dcmParam.tCInfa.getText(2),function(){                
+                if(!self.menuSave.сhangesSave){
+                   self.menuSave.active=true;  
+                }else{
+                    var o={}
+                    o.type="save";
+                    o.model=self.par.scane3d.room.getObj(); 
+                    o.pic=self.par.scane3d.foto3dLarvij.get("base",512,512);
+                    o.list=self.mani.getMani();
+                    self.par.par.fun("save",o);                   
+                }  
+                          
             })
             this.buttonMani.width=w*1/this.prosentXX+this.otstup;
             this.buttonMani.height=this.verhH;
@@ -219,7 +227,7 @@ export class Mani  {
         }    
 
         this.price=0;
-        this.arrPrice=[]
+        this.arrPrice=[];
         this.objPrice={};
         this.aColor=[]
         this.objMat={}
@@ -240,6 +248,18 @@ export class Mani  {
                 if(r==false)return false                  
             }
             return true
+        }
+
+        this.getMani=function(){
+            var o={}
+            o.mani=this.value;
+            o.mass=this.mass;
+            o.volume=this.volume;
+            o.array=[]
+            for (var i = 0; i < arrP2.length; i++) {                
+                o.array[i]=[arrP2[i][0],arrP2[i][7],arrP2[i][10],arrP2[i][11]];
+            }
+            return o
         }
 
 

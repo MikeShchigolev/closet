@@ -11,6 +11,7 @@
   		this.id=null;
   		this.key=null;
   		this.url=null;
+  		this.urlSave=null;
   		this.aS
   		this.init=function(){
   			var arrParams = this.ser.split("?"); 
@@ -26,6 +27,7 @@
 			this.id = getURLParameters("id");
 			this.key = getURLParameters("key");
 			this.url=getURLParameters("url");
+			this.urlSave=getURLParameters("urlSave");
   		}
 
   		//customDepth+trasparent

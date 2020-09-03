@@ -34,6 +34,7 @@ export class LMain  {
 		this.glaf=null;
 		this._width=100;
 		this._height=100;
+		this.fun=fun
 		self.resolution=1
 		self.objectBase=null
 		self.confText=null 
@@ -86,7 +87,7 @@ export class LMain  {
 		//стартуем дальше
         this.fina = function () {            	
 			self.glaf=new Glaf(self)
-			
+	
 			if(this.localStorage.object.dubag!=undefined){
                 if(this.localStorage.object.dubag==true){                      
                     self.glaf.scane3d.dubag.active=true;                                         
@@ -98,7 +99,7 @@ export class LMain  {
 						self.glaf.scane3d.dubag.saveModel.setModel(self.localStorage.object.model)
 					}
 				}
-			}
+			}			
 			fun("init");
 		}
 
@@ -166,7 +167,7 @@ export class LMain  {
   			//грузим текстовый фаил
   			let link="resources/csvConfig.csv"+this.plus;
   			if(this.php.key!=null)link="users/"+this.php.key+"/csvConfig.csv"+this.plus;
-  			trace("$$$$$$$$$$$$",link);
+  			
   			//return
 	  		$.ajax({	  			
 	            url:link,
@@ -181,6 +182,18 @@ export class LMain  {
 	            }
 	        });
   		}
+
+  		this.сhangesSave= function(object){  
+  			trace("##>сhangesSave>",object);
+  			//self.glaf.urlSave=object;
+  			self.glaf.menuDiv.menuSave.сhangesSave=true;
+  		}
+  		this.setObj = function (object) {
+  			trace("##>setObj>",object);
+  			self.glaf.setObj(object);            
+        } 
+        
+
   		
   		var ll="resources/config.json"+this.plus;
   		

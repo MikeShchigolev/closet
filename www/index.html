@@ -31,6 +31,7 @@
 		if (appLoader) appLoader.sizeWindow(w,h);
 	}
 
+
 	function init () {
 		var sss
 		$.ajax({
@@ -107,7 +108,9 @@
 		video.style.top = '9354px';
 
 			
-			
+		
+
+
 		appLoader = new AppLoader(
 			"resources/image/pic3.png",
 			'resources/image/pic4.png',
@@ -118,8 +121,8 @@
         		//или https://github.com/vorodis2/T3Comp/
 				dcmParam = new DCM();
 				
-				window.parent.postMessage("ready", "*");
-				window.parent.postMessage({"setBlockId": "xz1"}, "*");
+				
+				//window.parent.postMessage({"setBlockId": "xz1"}, "*");
 				//trace("############$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$################",window.parent);	
 				//либа для помогания в 3д, если что к vorodis2@gmail.com
         		//или https://github.com/vorodis2/divLib/
@@ -128,18 +131,16 @@
 				Это, я не вижу тасков и обьемки задачь. Предлогаю переходить на почасовку. Давай звониться обсудим данный вопрос
 				*/
 				
-				lMain=new LMain(function(s){
+				lMain=new LMain(function(s,p){
 					if(s=="init"){
 
-						appLoader.indicator.procent = 100;
-
+						appLoader.indicator.procent = 100;				
 						
-						/*trace("v: 1.0")*/
 						
 						sizeWindow();
 						startInfo();
-						//korektTrace();
-					}
+						
+					}					
 				},plus)				
 				sizeWindow();
 				//trace("sah5!!!!"+dcmParam.mobile)
@@ -161,6 +162,7 @@
 		window.onresize = sizeWindow;
 		sizeWindow();
 	}
+
 	var textarea
 	function korektTrace () {
 		var ww=150
@@ -193,23 +195,11 @@
 
 
 
-	window.addEventListener('message', function(event) {
-      	trace("#################################",event.data)
-    });
-/*
-		
-	function receiveMessage(event){
-	  	trace("#################################",event)
-	}
-	
-
-	window.addEventListener("eventLarvij", receiveMessage, false);
-	*/
 
 	
 	function startInfo () {
 
-		/*(function (d, w, c) {
+		(function (d, w, c) {
 	    (w[c] = w[c] || []).push(function() {
 	    	
 	        try {
@@ -238,7 +228,7 @@
 	    if (w.opera == "[object Opera]") {
 	        d.addEventListener("DOMContentLoaded", f, false);
 	    } else { f(); }
-		})(document, window, "yandex_metrika_callbacks");*/
+		})(document, window, "yandex_metrika_callbacks");
 	
 
 
@@ -257,6 +247,44 @@
 		//document.body.firstChild.style.position = 'fixed';
 		//document.body.firstChild.style.top = '2000px';
 	}
+
+
+	//customDepth+trasparent
+	function getURLParameters(paramName){
+        var sURL = window.document.URL.toString();
+		var arrParams = sURL.split("/");  			    		
+        if (sURL.indexOf("?") > 0) {
+			var arrParams = sURL.split("?");
+        	var arrURLParams = arrParams[1].split("&");
+       	 	var arrParamNames = new Array(arrURLParams.length);
+        	var arrParamValues = new Array(arrURLParams.length);
+
+            arrParams = sURL.split("?");
+            arrURLParams = arrParams[1].split("&");
+            arrParamNames = new Array(arrURLParams.length);
+            arrParamValues = new Array(arrURLParams.length);
+
+
+            var i = 0;
+            for (i = 0; i < arrURLParams.length; i++) {
+
+                var sParam =  arrURLParams[i].split("=");
+                arrParamNames[i] = sParam[0];
+                if (sParam[1] != "")
+                    arrParamValues[i] = unescape(sParam[1]);
+                else
+                    arrParamValues[i] = null;
+            }
+
+            for (i=0; i<arrURLParams.length; i++) {
+                if (arrParamNames[i] == paramName) {
+
+                    return arrParamValues[i];
+                }
+            }
+            return null;
+        }
+    }
 
 	
 </script>

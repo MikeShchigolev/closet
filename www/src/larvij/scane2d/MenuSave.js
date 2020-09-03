@@ -30,6 +30,9 @@ export function MenuSave (par) {
     this.otstup2=50
     this.php=new Php();
 
+    this.сhangesSave=false;
+
+
     this.link='../save/';
     if(this.php.key!=null) this.link="../users/"+this.php.key+"/save/";
 
@@ -45,9 +48,6 @@ export function MenuSave (par) {
     }
 
     this.poiskId=function(){
-
-        
-
         this.php.load({tip: 'getDiractFiles', dir: this.link}, function (e) {              
             var a = e.split(",");
             self.poiskId1(a);
@@ -65,8 +65,10 @@ export function MenuSave (par) {
                 }
             }
         }
-        this.idSave+=1;        
-        this.php.load({tip: 'mkdir', dir: this.link+this.idSave}, function (e) {              
+        this.idSave+=1;
+        trace("##########################",this.link,this.idSave);        
+        this.php.load({tip: 'mkdir', dir: this.link+this.idSave}, function (e) {  
+            trace("##########################>>>>",e);             
             self.php.load({tip: 'copyDir', dirWith: '../save/base/', dir: self.link+self.idSave +'/'}, function (e) { 
                 self.poiskId2();
             })
@@ -139,6 +141,7 @@ export function MenuSave (par) {
 
             self.otprovlashka.naEmail(str, self.otprovlashka.arrayAE[0], str1,strText, function(e){               
                 fun();
+                
             })
         },true)
     }
@@ -584,10 +587,13 @@ export function Otprovlashka (par, cont) {
             return
         }
 
-
+        this.link='../save/';
+        if(this.php.key!=null) this.link="../users/"+this.php.key+"/save/";
 
         doLink=aGlaf.server+'save/'+id+"/";
-        var ddd='../save/'+id+'/infoTime' 
+        var ddd=this.link+id+'/infoTime';
+        trace("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",doLink,ddd) 
+
         this.php.load({tip: 'mkdir', dir: ddd}, function (e) { 
             self.par.saveFile1251(str,function(s){                
                 sahFoto=0
@@ -794,7 +800,8 @@ export function Otprovlashka (par, cont) {
     }
 
 
-    this.finish=function(){
+    this.finish=function(){        
+        aGlaf.par.fun("creatLarvij",self.par.idSave);
         self.par.active=false;        
         self.par.par.mInfo.setFun("ЗАКАЗ ОФОРМЛЕН","В ближайшее время наш менеджер свяжеться с Вами для подтверждения заказа.");
     }

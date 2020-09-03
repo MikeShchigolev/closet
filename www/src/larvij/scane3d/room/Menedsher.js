@@ -359,15 +359,16 @@ export class Menedsher  {
 
         var blok=null
         var p={x:0,y:0}
-        this.down = function (e) {           
+        this.down = function (e) { 
+                      
             if(self.par.par.bactive==false)return
             if(e){
                 if(e.target){
+                    
                     blok=self.poiscParam(e.target,"blok");
                     self.testActSten(e.target)
                     if(blok!=null){ 
-                        
-
+                      
                         p.x=e.originalEvent.clientX;
                         p.y=e.originalEvent.clientY;
                         self.par.par.dubag.setBlok(blok); 

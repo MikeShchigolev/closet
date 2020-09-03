@@ -446,7 +446,19 @@ export class BTBoxVstavka extends Blok {
 
 
         this.dragStart=function(){ 
-            
+            if(this.mO.boolClone){                
+                let o=this.getObj();
+                let blok=this.mO.getBlok(this.object)                        
+                blok.setObj(o);
+                this.parent.add(blok, false); 
+                this.mO.activIndex=blok.idArr;                  
+
+                blok.setXY(o.x,o.y);
+                this.mO.par.par.visiActiv.setObject(blok);
+
+                this.mO.par.setBlokActiv(blok)
+                this.mO.par.start(blok)
+            }
         }
 
         this.stopDrag=function(){   

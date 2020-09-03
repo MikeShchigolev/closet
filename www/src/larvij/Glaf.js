@@ -39,6 +39,8 @@ export class Glaf  {
         //u1 Включена замена полок апдейт up1_10_06_2020 
         this.up1 = false; //смена полок 55 иди
         this.up1Obj = undefined;
+
+        this.urlSave = null;
         
         if(main.confText.up1 && main.confText.up1.active){
             this.up1 = true
@@ -263,12 +265,12 @@ export class Glaf  {
 
         //открываем новый продукт по ид
         this.openId = function (id) {   
-            console.warn("id-------------------",id,this.par.php.key)
-
+            
             let link = "save/"+id+"/config.json";
-            if(this.par.php.key != null) link="users/"+this.par.php.key+"/save/"+id+"/config.json"; 
-            console.warn("id-----@@@@@@@@@@@@@@--------------",link)
+            if(this.par.php.key != null) link="users/"+this.par.php.key+"/save/"+id+"/config.json";
 
+            if(this.par.php.urlSave!=null) link=this.par.php.urlSave+id+"/config.json";
+           
             $.ajax({
                 url: link,
                 success: function function_name(data) {                         
@@ -285,18 +287,22 @@ export class Glaf  {
                     //oo.children[1].children[0].children.splice(1,1)
                     trace(oo.children[1].children[0])
 
-
-                    if(self.scane3d.saveModel!=undefined){
-                        self.scane3d.saveModel.setObj(oo)  
-                    }  else{
-                        self.scane3d.room.setObj(oo) 
-                    }               
+                    self.setObj(oo)
+                                  
                 },
                 error:function function_name(data) {
                     console.error("Что то случилось с конфигом")
                 }
             });
-        }   
+        } 
+
+        this.setObj = function (oo) {
+            if(self.scane3d.saveModel!=undefined){
+                self.scane3d.saveModel.setObj(oo)  
+            }  else{
+                self.scane3d.room.setObj(oo) 
+            } 
+        }  
 
   		//ап дете сцена деленая на 2 в мейне
 		this.update = function () {

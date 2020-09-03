@@ -283,6 +283,22 @@ export class BPieceObject extends Blok {
         this.arrDerag=[]
         this.bds=false;
         this.dragStart=function(){
+            if(this.mO.boolClone){  
+                console.warn("dragStart@@@@@@@@@@@@@@@@@@@@@@@@1")              
+                let o=this.getObj();
+                let blok=this.mO.getBlok(this.object)                        
+                blok.setObj(o);
+                this.parent.add(blok, false); 
+                this.mO.activIndex=blok.idArr;                  
+
+                blok.setXY(o.x,o.y);
+                this.mO.par.par.visiActiv.setObject(blok);
+
+                this.mO.par.setBlokActiv(blok)
+                this.mO.par.start(blok)
+                console.warn("dragStart@@@@@@@@@@@@@@@@@@@@@@@@")
+                return true;
+            }
             this.bds=true; 
             this.arrDerag=[]
             this.parent.sWidth= this.parent._W                
@@ -348,6 +364,7 @@ export class BPieceObject extends Blok {
         var x4,x3,x5,x6,x7,xx1,xx2;
         var bxx,popo, vb, xz,xz1;
         this.testObject=function(_x,_y){           
+            console.warn("testObject",_x,_y)
             aS=mO.par.sten;
             //return true
             
@@ -424,7 +441,7 @@ export class BPieceObject extends Blok {
                 }
             }
 
-            if(this.parent!=undefined)
+            if(this.parent!=undefined && aS)
             for (var i = 0; i < aS.children.length; i++) {                
                 if(aS.children[i].type=="BPieceTop"){
                     if(aS.children[i].idRandom!=mO.pieceTop.idRandom)                  

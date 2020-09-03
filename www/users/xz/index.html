@@ -6,19 +6,6 @@
 <script src='../../src/libMy/divLib.js'></script>
 
 
-<?php
-	
-	if($tip == "saveJSON") {//Сохронения конфигурации проекта		
-		$mytext = stripslashes($_REQUEST['text']);	
-		$fp2 = fopen ($_REQUEST['link'], "w");  
-		fwrite($fp2,$mytext);  
-		fclose($fp2);		
-		echo "okSave";
-		return;
-	}
-
-
-?>
 
 
 
@@ -28,19 +15,6 @@
 	var trace = window.console.log.bind(window.console);
 
 
-	var jsVar = `<?php
-	
-		if($tip == "saveJSON") {//Сохронения конфигурации проекта		
-			$mytext = stripslashes($_REQUEST['text']);	
-			$fp2 = fopen ($_REQUEST['link'], "w");  
-			fwrite($fp2,$mytext);  
-			fclose($fp2);		
-			echo "okSave";
-			return;
-		}
-
-
-	?>`;
 
 
 
@@ -287,14 +261,14 @@ function DIVsakoe(par) {
 
 
 
-   // yy+=32
+    yy+=32;
 
-    this.chekBuy=new DCheckBox(this.panel, this.otstup, yy, "кноп. Заказ", function(s){ 
+    this.chekBuy=new DCheckBox(this.dCont, this.otstup, yy, "кноп. Заказ", function(s){ 
         self.confText.buy = this.value; 
         self.par.saveTime();        
     });  
 
-    yy+=32
+    yy+=32;
 
 /*
 

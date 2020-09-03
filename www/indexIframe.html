@@ -3,6 +3,7 @@
 <title>larvij</title>	
 <script src='common/AppLoader.js'></script>
 <script src='src/libMy/utility/DetectIE.js'></script>
+
 <script src='src/lib/jquery-1.11.3.js'></script>
 
 
@@ -28,6 +29,15 @@
 	
 		if (lMain) lMain.sizeWindow(w, h);		
 		if (appLoader) appLoader.sizeWindow(w,h);
+	}
+
+
+	function receiveMessage(event){
+		if(!event.data)return;
+		if(!event.data.type)return;
+		if(!lMain)return;
+		if(event.data.type=="сhangesSave")lMain.сhangesSave(event.data.param);
+		if(event.data.type=="setObj")lMain.setObj(event.data.param);  	
 	}
 
 	function init () {
@@ -75,8 +85,6 @@
 			{src: path + 'lib/encoding-indexes.js' + plus},
 			{src: path + 'lib/fileSaver.js' + plus},
 			{src: path + 'lib/windows1251.js' + plus},	
-			
-			{src: path + '/php/Php.js' + plus},
 			{src: path + 'libMy/utility/Calc.js' + plus},
 			{src: path + 'libMy/utility/Rectangle.js' + plus},	
 			{src: path + 'SceneSB.js' + plus},
@@ -103,35 +111,22 @@
 		video.style.top = '9354px';
 
 			
-			
+		var urlOt=getURLParameters("url")
+
+
 		appLoader = new AppLoader(
 			"resources/image/pic3.png",
 			'resources/image/pic4.png',
 			manifest,
-			function () {		 
-				
-				
-				
-				korektTrace()
+			function () {
+				//korektTrace()
 				//либа для интерфейсов в HTML к vorodis2@gmail.com
         		//или https://github.com/vorodis2/T3Comp/
 				dcmParam = new DCM();
-				trace("sah0: "+dcmParam.mobile)
-				if(dcmParam.mobile==false){
-					let r = navigator.userAgent.match(/iPhone|iPad|iPod/i);
-					trace("sah1: "+r)
-			        if(r==null ){	
-			        	trace("sah2: "+navigator.userAgent.match(/Mac OS/i))        	
-			            if(navigator.userAgent.match(/Mac OS/i)!=null){
-			            	trace("sah3: "+window.matchMedia("(any-pointer:coarse)").matches)
-			                if(window.matchMedia("(any-pointer:coarse)").matches==true){
-			                    trace("sah4")
-			                    dcmParam.mobile=true
-			                }
-			            }
-			        }
-				}
 				
+				
+				//window.parent.postMessage({"setBlockId": "xz1"}, "*");
+				//trace("############$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$################",window.parent);	
 				//либа для помогания в 3д, если что к vorodis2@gmail.com
         		//или https://github.com/vorodis2/divLib/
 				tStyle=new TStyle();
@@ -139,25 +134,28 @@
 				Это, я не вижу тасков и обьемки задачь. Предлогаю переходить на почасовку. Давай звониться обсудим данный вопрос
 				*/
 				
-				lMain=new LMain(function(s){
-					if(s=="init"){
-
+				lMain=new LMain(function(s,p){
+					if(s=="init"){					
+						window.addEventListener("message", receiveMessage, false);
+						window.parent.postMessage('compliteLarvij',urlOt);
 						appLoader.indicator.procent = 100;
-
-						
-						/*trace("v: 1.0")*/
-						
-						sizeWindow()					
+						sizeWindow();						
+					}
+					if(s=="save"){					
+						window.parent.postMessage(p,urlOt);
+					}
+					trace(s,p);
+					if(s=="creatLarvij"){					
+						window.parent.postMessage({type:s,id:p},urlOt);
 					}
 				},plus)				
-				sizeWindow()
-				trace("sah5!!!!"+dcmParam.mobile)
-				if(textarea)document.body.appendChild(textarea)	
+				sizeWindow();
 				
-				/*video = document.getElementById('video'); 
+				
+				video = document.getElementById('video'); 
 				 
 				video.style.position = 'fixed';
-				video.style.top = '9354px';*/
+				video.style.top = '0px';
 
 				
 			},
@@ -170,71 +168,45 @@
 		window.onresize = sizeWindow;
 		sizeWindow();
 	}
-	var textarea
-	function korektTrace () {
-		textarea = document.createElement('textarea')
-		textarea.style.width=(150)+"px";
-		textarea.style.height=(150)+"px";
-		textarea.style.position = 'fixed';
-		textarea.style.top = '400px';
-		textarea.style.left = '0px';
-		document.body.appendChild(textarea)	
-		trace=function(s){			
-			textarea.value=s+"\n"+textarea.value
-		}
-	}
+
+	//customDepth+trasparent
+	function getURLParameters(paramName){
+        var sURL = window.document.URL.toString();
+		var arrParams = sURL.split("/");  			    		
+        if (sURL.indexOf("?") > 0) {
+			var arrParams = sURL.split("?");
+        	var arrURLParams = arrParams[1].split("&");
+       	 	var arrParamNames = new Array(arrURLParams.length);
+        	var arrParamValues = new Array(arrURLParams.length);
+
+            arrParams = sURL.split("?");
+            arrURLParams = arrParams[1].split("&");
+            arrParamNames = new Array(arrURLParams.length);
+            arrParamValues = new Array(arrURLParams.length);
+
+
+            var i = 0;
+            for (i = 0; i < arrURLParams.length; i++) {
+
+                var sParam =  arrURLParams[i].split("=");
+                arrParamNames[i] = sParam[0];
+                if (sParam[1] != "")
+                    arrParamValues[i] = unescape(sParam[1]);
+                else
+                    arrParamValues[i] = null;
+            }
+
+            for (i=0; i<arrURLParams.length; i++) {
+                if (arrParamNames[i] == paramName) {
+
+                    return arrParamValues[i];
+                }
+            }
+            return null;
+        }
+    }
 
 	
-	function startInfo () {
-
-		(function (d, w, c) {
-	    (w[c] = w[c] || []).push(function() {
-	    	
-	        try {
-	        	
-	            w.yaCounter33060308 = new Ya.Metrika({
-	                id:33060308,
-	                clickmap:true,
-	                trackLinks:true,
-	                accurateTrackBounce:true,
-	                webvisor:true,
-	                trackHash:true
-	            });
-	        } catch(e) { 
-	        	
-	        }
-	    });
-
-	    var n = d.getElementsByTagName("script")[0],
-	        s = d.createElement("script"),
-	        f = function () { n.parentNode.insertBefore(s, n); };
-	    
-	    s.type = "text/javascript";
-	    s.async = true;
-	    s.src = "https://mc.yandex.ru/metrika/watch.js";
-
-	    if (w.opera == "[object Opera]") {
-	        d.addEventListener("DOMContentLoaded", f, false);
-	    } else { f(); }
-		})(document, window, "yandex_metrika_callbacks");
-		
-/*
-		document.write("<a href='http://www.liveinternet.ru/click' "+
-		"target=_blank><img src='http://counter.yadro.ru/hit?t44.1;r"+
-		escape(document.referrer)+((typeof(screen)=="undefined")?"":
-		";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
-		screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
-		";"+Math.random()+
-		"' alt='' title='LiveInternet' "+
-		"border='0' width='31' height='31'><\/a>")*/
-
-		//trace(document.body.firstChild)
-		//document.body.firstChild.style.position = 'fixed';
-		//document.body.firstChild.style.top = '2000px';
-	}
-
-	startInfo();
-
 </script>
 
 <style type="text/css">
