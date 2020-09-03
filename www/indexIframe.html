@@ -38,6 +38,9 @@
 		if(!lMain)return;
 		if(event.data.type=="сhangesSave")lMain.сhangesSave(event.data.param);
 		if(event.data.type=="setObj")lMain.setObj(event.data.param);  	
+		if(event.data.type=="setObjectsJSON")lMain.setObjectsJSON(event.data.param);
+		//trace("^^>>>>>>>>>>>>>>>>>",event.data);
+
 	}
 
 	function init () {

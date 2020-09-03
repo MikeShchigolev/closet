@@ -1,0 +1,69 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>larvijUseIframe</title>
+
+
+<script>
+    //разработчик vorodis2@gmail.com
+    //заказчик larvij.ru
+	var iframe;		
+	function init () {	
+
+		let urlA =window.location.href.split("?")[0].split("/");
+		let url=""
+		for (var i = 0; i < urlA.length-1; i++) url+=urlA[i]+"/";
+
+		let key="xz";
+		var linkIframe = "https://larvij.ru/planner3d/indexIframe.html";//линк для ифрейма 
+	
+
+		let id=null;
+        let ar = window.location.href.split("?")
+        if(ar[1]){
+            let arr =ar[1].split("&"); 
+            for (var i = 0; i < arr.length; i++){
+                if(arr[i].indexOf("id")!=-1)id=arr[i].split("=")[1]            
+            }
+        }    
+
+
+
+
+        //где и как будет расположен контейнер с конструктором, собственно пихать можно куда угодно
+		iframe = document.createElement("IFRAME");        
+        iframe.style.position = 'fixed';
+        iframe.style.top = '0px';
+        iframe.style.left = '0px';
+        iframe.style.width="100%";
+        iframe.style.height="100%";
+        iframe.style.border= '0px solid';
+        document.body.appendChild(iframe);
+        
+        //Добовляем к ифрейму ключь
+        let lp="?key="+key;
+        //если есть номер проекта добовляем что бы он срасу создался //не обезательно
+        if(id!=null) lp+="&id="+id;
+        //добовляем урл который будет писаться в почту клиента        
+        lp+="&url="+url+"";
+
+        
+
+        //слушаем если создался проект, обробатываем линк //не обезательно
+        window.addEventListener('message', function(event) {
+            if(event.data && event.data.type=="creatLarvij"){
+                let s=window.location.href.split("?")[0]+"?id="+event.data.id;                      
+                history.pushState(null, null, s);    
+            }
+        })
+
+        iframe.src=linkIframe+lp;        
+	}      
+
+
+	
+</script>
+
+</head>
+<body onload="init()">
+	
+</body></html>

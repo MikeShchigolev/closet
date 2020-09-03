@@ -196,20 +196,33 @@ export class LMain  {
   			self.glaf.setObj(object);            
         } 
         this.setObjectsJSON = function (object) {
+        	
         	let b
-        	trace(">>>>>",this.csvConfigArray.length)
-        	for (var i = 0; i < object.array.length; i++) {
-        		
+        	//trace("^^",object)
+        	for (var i = 0; i < object.array.length; i++) {        		
         		b=this.csvConfigArray.length;
         		for (var j = 0; j < this.csvConfigArray.length; j++) {
         			if(object.array[i].id == this.csvConfigArray[j].id){
-        				if(object.array[i].id==46)trace(i+"   ",object.array[i])
+        				
         				b=j;
         			}
         		}
-        		this.csvConfigArray[b]=object.array[i];
+        		this.csvConfigArray[b]=object.array[i];      		
         	}
-        	trace("FIXE не обновлябться в менеджере<<<<<",this.csvConfigArray.length)
+
+        	for (var i = 0; i < this.objectBase.bd.length; i++) {
+	            for (var j = 0; j < this.csvConfigArray.length; j++) {                             
+	                if(this.objectBase.bd[i].id+""==this.csvConfigArray[j].id){
+	                    //this.objectBase.bd[i].obj.info=array[j];
+	                    //arrxz.push(this.objectBase.bd[i].obj)
+	                    this.objectBase.bd[i].obj.info=this.csvConfigArray[j]
+	                    //trace(i+"^^"+j+"  ",this.objectBase.bd[i].obj.info)
+	                    //trace(this.objectBase.bd[i].obj.info)	                    
+	                }
+	            }            
+	        }
+
+        	//trace("FIXE не обновлябться в менеджере<<<<<",this.csvConfigArray.length)
 
         	//this.csvConfigArray
         }
@@ -408,10 +421,10 @@ export class KlassCSVObj  {
 	            
 	            	
 	            o.color={};
-	            //o.array=[]
+	            o.array=[]
 	            let sah=0;
 	            for (var j = 0; j < ddd.length; j++) {       
-	                //o.array[j]={id:ddd[j]}
+	                o.array[j]={id:ddd[j]}
 	                let jj=5+j*4
 	                o.color[ddd[sah]]={}
 	                //o.color[ddd[sah]].id=arr[i][0];
@@ -421,7 +434,7 @@ export class KlassCSVObj  {
 	                if(isNaN(o.color[ddd[sah]].pri))o.color[ddd[sah]].pri=arr[i][jj+1]
 
 	                o.color[ddd[sah]].niz=arr[i][jj+2];
-	                //o.color[ddd[sah]].xz=arr[i][jj+3];
+	                o.color[ddd[sah]].xz=arr[i][jj+3];
 	                sah++;
 	            }
 	            array.push(o);
@@ -450,7 +463,7 @@ export class KlassCSVObj  {
 	        	array:this.csvConfigArray
 	        }
 
-	       // trace(JSON.stringify(o, null,4))
+	        //trace(JSON.stringify(o, null,4))
 	    }
 	    this.bigZamena(csvConfig)	   
   	}

@@ -1,0 +1,139 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>larvijUse</title>
+
+
+
+<script src='jquery-1.11.3.js'></script>
+
+
+<script>
+    //разработчик vorodis2@gmail.com
+    //заказчик larvij.ru
+
+	var iframe;	
+
+	function sizeWindow () {
+		var w = document.documentElement.clientWidth;
+		var h = document.documentElement.clientHeight;
+		if(window.innerWidth!=undefined)w = window.innerWidth;
+		if(window.innerHeight!=undefined)h = window.innerHeight;
+		iframe.style.width=w+"px";
+		iframe.style.height=h+"px";
+	}
+
+	function init () {
+		
+
+		let urlA =window.location.href.split("?")[0].split("/");
+		let url=""
+		for (var i = 0; i < urlA.length-1; i++) url+=urlA[i]+"/";
+
+		let key="xz";
+		var linkIframe = "https://larvij.ru/planner3d/indexIframe.html";//линк для ифрейма 
+
+		
+		iframe = document.createElement("IFRAME");        
+        iframe.style.position = 'fixed';
+        iframe.style.top = '0px';
+        iframe.style.left = '0px';
+        iframe.style.width="500px";
+        iframe.style.height="300px";
+        iframe.style.border= '0px solid';
+        document.body.appendChild(iframe);		
+		
+        let lp="?key="+key;
+          
+        lp+="&url="+url+"indexIfrem.html";
+
+		///Добовление методов для общения	
+		var origin=null
+		var source=null
+        window.addEventListener('message', function(event) {//конект с ифреймом 
+        	if(event.data=="compliteLarvij"){//конструктор загрузился, еще не начал загрузку id, там по сетТайм  
+        		origin=event.origin;
+        		source=event.source;
+        		setLarvij({type:"сhangesSave"});//ВАЖНО отрезает возможность сохронения проекта на сервере ларвич
+           		
+                if(getURLParameters("id")!=null){ //ид свое и у себя на серваке       			       			
+        			$.ajax({
+			            url: "save/"+getURLParameters("id")+"/config.json",
+			            success: function fun(data) {
+							setLarvij({type:"setObj",param:data}); //открываем обьект идишника								                 
+			            }
+			        }); 
+        		}
+        	}
+        	if(event.data && event.data.type=="save"){
+        		var id=new Date().getTime();//Math.round(Math.random()*10000)
+        		console.warn(event.data)
+				$.post("script.php", {tip:"mkdir",dir:"save/"+id}, function(data){	//создаем директорию которая и евляеться ид 
+                    //записываем обьект моделе стиложей в конфиг так же есть 
+                    //event.data.model-обьект
+                    //event.data.pic-Base64 png фото обьекта 
+                    //event.data.list-обьект
+					$.post("script.php", {tip:"saveJSON",link:"save/"+id+"/config.json",text:JSON.stringify(event.data.model)}, function(data){
+						let s=window.location.href.split("?")[0]+"?id="+id						
+						history.pushState(null, null, s);
+					})		
+					console.warn(data)
+				});
+        	}        	 		
+	  	})
+
+ 		function setLarvij(param){
+ 			if(origin){
+ 				source.postMessage(param, origin)
+ 			}
+        } 
+
+        iframe.src=linkIframe+lp;
+        window.onresize = sizeWindow;
+		sizeWindow();
+
+	}
+
+
+	function getURLParameters(paramName){
+        var sURL = window.document.URL.toString();
+		var arrParams = sURL.split("/");  			    		
+        if (sURL.indexOf("?") > 0) {
+			var arrParams = sURL.split("?");
+        	var arrURLParams = arrParams[1].split("&");
+       	 	var arrParamNames = new Array(arrURLParams.length);
+        	var arrParamValues = new Array(arrURLParams.length);
+            arrParams = sURL.split("?");
+            arrURLParams = arrParams[1].split("&");
+            arrParamNames = new Array(arrURLParams.length);
+            arrParamValues = new Array(arrURLParams.length);
+            var i = 0;
+            for (i = 0; i < arrURLParams.length; i++) {
+
+                var sParam =  arrURLParams[i].split("=");
+                arrParamNames[i] = sParam[0];
+                if (sParam[1] != "")
+                    arrParamValues[i] = unescape(sParam[1]);
+                else
+                    arrParamValues[i] = null;
+            }
+            for (i=0; i<arrURLParams.length; i++) {
+                if (arrParamNames[i] == paramName) {
+                    return arrParamValues[i];
+                }
+            }
+            return null;
+        }
+    }
+
+	
+</script>
+
+<style type="text/css">
+	#stats { position: absolute; top:0; left: 200px; }
+</style>
+
+</head>
+<meta name="viewport" content="width=device-width,height=device-height,user-scalable=no user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<body onload="init()">
+	
+</body></html>

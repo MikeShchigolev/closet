@@ -734,12 +734,15 @@ export class MenedsherObject  {
 
 
         this.csvTest=function(o){
+            trace(o,"^^",this.par.csvConfigArray)
             if(this.par.csvConfigArray==undefined)return o;
+            trace("^^OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+            
             
             for (var i = 0; i < this.par.csvConfigArray.length; i++) {
                 
                 if(this.par.csvConfigArray[i].id*1==o.id*1){
-                    
+                    trace(i+">>>>>>>>>>>",this.par.csvConfigArray[i])
                     o.info=this.par.csvConfigArray[i]
                    
                    
