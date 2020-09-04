@@ -256,8 +256,9 @@ export class Mani  {
             o.mass=this.mass;
             o.volume=this.volume;
             o.array=[]
-            for (var i = 0; i < arrP2.length; i++) {                
-                o.array[i]=[arrP2[i][0],arrP2[i][7],arrP2[i][10],arrP2[i][11]];
+            for (var i = 0; i < arrP2.length; i++) {
+                o.array[i]={p:arrP2[i][0],p1:arrP2[i][7],p2:arrP2[i][10],p3:arrP2[i][11]};
+                //o.array[i]=[arrP2[i][0],arrP2[i][7],arrP2[i][10],arrP2[i][11]];
             }
             return o
         }
