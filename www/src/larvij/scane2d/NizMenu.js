@@ -558,11 +558,11 @@ export class Up1Menu  {
         this.object=undefined;
         this.par=par
         this.setObject=function(o){
-            trace("%%",o)    
+              
             if(o.pppObj)
             if(o.pppObj.up1.active==true){
                 this.object=o; 
-                trace("%%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!",o)
+                
                 if(main.localStorage.object.up1==undefined){
                     main.localStorage.object.up1={}
                     main.localStorage.object.up1.sahTime=main.glaf.up1Obj.sahTime
@@ -589,8 +589,7 @@ export class Up1Menu  {
                     {x:135-(main.glaf.up1Obj.width/2),y:-13-(main.glaf.up1Obj.height)}
                 );*/
                 
-                trace("###################33333333333!!!!!!!!!!!!!!!!",main.localStorage.object.up1.sahTime);
-
+               
             }else{
                 if(main.localStorage.object.up1==undefined){
                     main.localStorage.object.up1={}

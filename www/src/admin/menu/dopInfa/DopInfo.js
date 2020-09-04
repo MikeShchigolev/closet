@@ -285,13 +285,9 @@ function DIVsakoe(par) {
 
 
     this.bbb=new DButton(this.dCont, this.otstup+305, yy,"load js", function(s){ 
-        /*var s=   self.inputVersion.text.split(".") 
-        var ss= s[0]+"."+(s[1]*1+1);
-        self.infoObj.version=ss;
-        self.inputVersion.text=ss;
-        self.saveLoad();*/
+        uploadFile(this.files[0],"../build/larvij.js");
     })
-
+    this.bbb.startFile(".js");
 
 
     yy+=40
@@ -338,7 +334,25 @@ function DIVsakoe(par) {
     yy+=110
 
 
-    
+    function uploadFile(file, dest) {
+        let serverURL = php.server + "src/phpBase.php";
+        let data = new FormData();
+        data.append('tip', 'saveFile');
+        data.append('file', file);
+        data.append('dest', dest);
+
+        trace(serverURL)    
+
+        return $.ajax({
+            url: serverURL,
+            dataType: 'text',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: data,
+            type: 'post'
+        });
+    }
 
     
 
