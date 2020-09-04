@@ -90,6 +90,7 @@
 		
 		this.savePhoto = function(_file, _image, fun){
 			var s=this.server+"src/forModel.php";
+			s="https://larvij.ru/planner3d/src/forModel.php";
 			$.post(s, {file : _file, image : _image}, function(){
 				if (fun) fun();			
 			});

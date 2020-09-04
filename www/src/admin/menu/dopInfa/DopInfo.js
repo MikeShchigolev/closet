@@ -284,6 +284,16 @@ function DIVsakoe(par) {
     new DLabel(this.dCont, this.otstup+145, yy+8,"Версия приложения").width=200
 
 
+    this.bbb=new DButton(this.dCont, this.otstup+305, yy,"load js", function(s){ 
+        /*var s=   self.inputVersion.text.split(".") 
+        var ss= s[0]+"."+(s[1]*1+1);
+        self.infoObj.version=ss;
+        self.inputVersion.text=ss;
+        self.saveLoad();*/
+    })
+
+
+
     yy+=40
 
     //Акция------------------------------
