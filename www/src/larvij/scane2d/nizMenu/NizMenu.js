@@ -173,9 +173,12 @@ export class PlusMM  {
                    
                     //self.par.par.mInfo.setFunSave("str",function(s){})
 
-                    self.par.par.menuSave.getNewProd(function(str){
+                    self.par.par.menuSave.getNewProd(function(str){  
+                        trace("***",str)                      
                         self.par.par.mInfo.setFunSave(str,
-                            function(s){              
+                            function(s){
+                                trace("***==============",s) 
+                                trace("***==============",this.text)                
                                 self.par.par.menuSave.setMail(this.text, function(){
                                     self.par.par.mInfo.setFun("ПИСЬМО ОТПРАВЛЕННО.", "Письмо было отправелнено на Ваш эмеил, но могло попасть в спам!",function(){},true)
                                 });

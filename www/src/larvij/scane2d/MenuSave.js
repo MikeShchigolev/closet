@@ -84,8 +84,13 @@ export function MenuSave (par) {
     this.fun1
     this.textID
     this.poiskId3=function(){
-        var s=this.php.server;                
-        this.textID=s+"index.html?id="+this.idSave;
+        var s=this.php.server; 
+
+        let link=self.php.server+"index.html?id="+this.idSave;
+        if(self.php.url!=null)link=self.php.url+"?id="+this.idSave;
+
+        this.textID=link//s+"index.html?id="+this.idSave;
+        trace("****************************",this.textID)
         if(this.fun1!=undefined){
             this.fun1(this.textID)
             this.fun1=undefined;
@@ -127,11 +132,15 @@ export function MenuSave (par) {
         this.pNew() 
 
         this.otprovlashka.creatResurs(function(){   
+            let link=self.php.server+"index.html?id="+self.idSave;
+            if(self.php.url!=null)link=self.php.url+"?id="+self.idSave;
+
+
             var strText=''  
             var str1="Конструктор гардеробных систем Larvij. Ваш проект N "+self.idSave+"\n";               
             strText=  "Вы сохраняли проект в конструкторе гардеробных систем Larvij.\n"            
             strText+=  "По этой ссылке вы можете вернуться в проект\n" 
-            strText+=  self.php.server+"index.html?id="+self.idSave+"\n";
+            strText+=  link+"\n";//self.php.server+"index.html?id="+self.idSave+"\n";
             
             strText+=dcmParam.tCInfa.getText(3)+"\n"
             strText+=dcmParam.tCInfa.getText(4)+"\n"

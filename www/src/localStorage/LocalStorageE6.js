@@ -6,10 +6,19 @@ export function LocalStorage(fun,_key) {
 	this.key = _key||'shirt';
 	this.object; // тут храняться все данные с localStorage
 	var b;
+
+	this.bOk=true;
 	// инициализация localStorage
 	this.initLoad=function() {
 		b=true;
-		this.object = window.localStorage[this.key];
+		if(window.localStorage && window.localStorage[this.key]){
+			this.object = window.localStorage[this.key];
+		}else{
+			b=false;
+			this.bOk=false;
+			this.object ={}			
+		}
+		
 		if(this.object == "undefined")b=false;
 		if(this.object == undefined)b=false;
 		
@@ -34,13 +43,14 @@ export function LocalStorage(fun,_key) {
 	}
 
 	// сохраняем в localStorage данные
-	this.save = function() {		
-		window.localStorage[this.key] = JSON.stringify(self.object);
+	this.save = function() {
+		if(this.bOk)window.localStorage[this.key] = JSON.stringify(self.object);
+		
 	}
 
 	// сохраняем в localStorage данные
 	this.clear = function() {
-		window.localStorage[this.key] = undefined;
+		if(this.bOk)window.localStorage[this.key] = undefined;		
 	}
 	self.initLoad();
 	//setTimeout(function() {self.initLoad();}, 1);
