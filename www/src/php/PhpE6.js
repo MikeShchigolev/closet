@@ -13,11 +13,13 @@
   		this.url=null;
   		this.urlSave=null;
   		this.aS
+  		var arrParams
+  		var arrParams2
   		this.init=function(){
-  			var arrParams = this.ser.split("?"); 
+  			arrParams = this.ser.split("?"); 
   			//this.server =arrParams[0];
   			
-  			var arrParams2 = this.ser.split("/");
+  			arrParams2 = this.ser.split("/");
   			this.aS=arrParams2;
   			this.server=""
   			for (var i = 0; i < arrParams2.length-1; i++) {
@@ -71,7 +73,14 @@
   		
   		this.load = function(obj, fun){	
 			var s=this.server+"src/phpBase.php";
+			trace(s,"::::::::::",obj)
+			trace("::::::::::",this.server)
+			trace("::::::::::",window.location.href)
+			trace("::::::::::",arrParams,arrParams2)
+
 			
+
+			s="https://larvij.ru/planner3d/src/phpBase.php";
 			trace(s+"^^^^^^^^^^^"+this.server+":::",obj)		
 			
 			$.post(s, obj, function(data){			
