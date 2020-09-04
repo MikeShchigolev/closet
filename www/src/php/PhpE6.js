@@ -19,7 +19,7 @@
   			arrParams = this.ser.split("?"); 
   			//this.server =arrParams[0];
   			
-  			arrParams2 = this.ser.split("/");
+  			arrParams2 = arrParams[0].split("/");
   			this.aS=arrParams2;
   			this.server=""
   			for (var i = 0; i < arrParams2.length-1; i++) {
@@ -69,10 +69,13 @@
 	        }
 	    }
   		//------------------------------------------
-
+  		trace(":::>>>>>>>>>>>>>>>>>>>>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!vers2")
   		
   		this.load = function(obj, fun){	
 			var s=this.server+"src/phpBase.php";
+
+
+
 			trace(s,"::::::::::",obj)
 			trace("::::::::::",this.server)
 			trace("::::::::::",window.location.href)
@@ -90,7 +93,7 @@
 		
 		this.savePhoto = function(_file, _image, fun){
 			var s=this.server+"src/forModel.php";
-			s="https://larvij.ru/planner3d/src/forModel.php";
+			s = "https://larvij.ru/planner3d/src/forModel.php";
 			trace(":::>>>>>>>>>>>>>>>>>>>>",s)
 			$.post(s, {file : _file, image : _image}, function(){
 				if (fun) fun();			
