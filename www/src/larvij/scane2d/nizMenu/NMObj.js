@@ -406,6 +406,18 @@ export class ButArAr  {
                 
             }   
 
+
+/*
+
+1. заменить титл http://prntscr.com/ubd5a1
+2. хз но он тармозит, в плане подгрузки ресурсов, хотя я и на свой пихал он у меня тож подвисал, возможно в нашей замечательной стране вставили какие то проверки на контент с Руских серверов, хз может у меня инет глючит
+3. конфиг не настроен 
+4. ошибка сохронения файла, не понятный запрос к рзр http://prntscr.com/ubdbd9  не работает запись конструктора
+
+*/
+
+
+
        
 
             return sah
@@ -425,7 +437,7 @@ export class ButArAr  {
 
 
 export class Up1Menu  {
-    constructor(par) {   
+    constructor(par) {  
         var self=this       
         this.type="Up1Menu";
         this.object=undefined;
@@ -437,7 +449,7 @@ export class Up1Menu  {
             if(o.pppObj.up1.active==true){
                 if(this.object &&this.object.idArr==o.idArr)return
                 this.object=o;  
-                trace("%%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",main.localStorage.object.up1.sahTime)               
+                              
                 if(main.localStorage.object.up1==undefined){
                     main.localStorage.object.up1={}
                     main.localStorage.object.up1.sahTime=5
@@ -448,9 +460,9 @@ export class Up1Menu  {
                 main.localStorage.object.up1.sahTime--;
                 main.localStorage.save();
                 
-                trace("%%%%!!!",o)
+               
                 self.par.par.par.mHelp.setHelp(
-                    "Выберите нужный вариант установки корзины: на раму или на телескопические направляющие.",
+                    "Выберите нужный вариант установки корзины:\n на раму или на телескопические направляющие.",
                     "resources/image/mhelp.png",
                     this.par.dCont,
                     {x:150,y:-3}

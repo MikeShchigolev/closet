@@ -70,7 +70,10 @@
 
   		
   		this.load = function(obj, fun){	
-			var s=this.server+"src/phpBase.php";		
+			var s=this.server+"src/phpBase.php";
+			
+			trace(s+"^^^^^^^^^^^"+this.server+":::",obj)		
+			
 			$.post(s, obj, function(data){			
 				if (fun) fun(data);
 			});
