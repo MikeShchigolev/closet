@@ -832,8 +832,8 @@ export function Otprovlashka (par, cont) {
         r+="В ближайшее время наш менеджер свяжется с Вами для его подтверждения.\n";
         r+="Общая стоимость вашего заказа составляет: "+aMani.price+" "+dcmParam.tCInfa.getText(1)+"\n\n";
 
-        r+="Проект: "+link2+"?id="+this.par.idSave+"\n";                
-        //r+="Спецификация: "+this.par.php.server+'/save/'+this.par.idSave+'/infoTime/info.csv'+"\n\n"; 
+        r+="Проект: "+link+"?id="+this.par.idSave+"\n";                
+        if(this.par.php.url==null)r+="Спецификация: "+this.par.php.server+'/save/'+this.par.idSave+'/infoTime/info.csv'+"\n\n"; 
 
         
         if(dcmParam.tCInfa.getText(7)!="null") r+=dcmParam.tCInfa.getText(7)+"\n";        
