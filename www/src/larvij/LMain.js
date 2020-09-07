@@ -147,7 +147,7 @@ export class LMain  {
   		this.startText = function(){  
   			//грузим текстовый фаил
   			let link="resources/configText.json"+this.plus;
-  			if(this.php.key!=null)link="users/"+this.php.key+"/configText.json"+this.plus;
+  			if(this.php.key!=null)link="users/"+this.php.key+"/configText.json"+this.plus+"&"+Math.random();
 	  		$.ajax({
 	            url: link,
 	            success: function function_name(data) {                         
@@ -170,7 +170,7 @@ export class LMain  {
   		this.startCSV = function(){  
   			//грузим текстовый фаил
   			let link="resources/csvConfig.csv"+this.plus;
-  			if(this.php.key!=null)link="users/"+this.php.key+"/csvConfig.csv"+this.plus;
+  			if(this.php.key!=null)link="users/"+this.php.key+"/csvConfig.csv"+this.plus+"&"+Math.random();
   			
   			//return
 	  		$.ajax({	  			
