@@ -35,8 +35,7 @@ function DopInfo(par, fun) {
                     var conf = JSON.parse(data)
                     self.confText = conf;
                 } else self.confText = data;              
-                self.init2();           
-                                 
+                self.init2();                                
             },
             error:function function_name(data) {
                 trace("Что то случилось с конфигом");
@@ -53,6 +52,7 @@ function DopInfo(par, fun) {
     this.init2=function(){        
         this.array[0]=this.vsakoe=new DIVsakoe(this);
         this.array[1]=this.arrText=new DIArrText(this);
+        this.array[2]=this.diCsv=new DICsv(this);
         this.setActiv(this.vsakoe);
         this.sizeWindow();
     }
@@ -60,7 +60,7 @@ function DopInfo(par, fun) {
 
 
     this.setActiv = function(o){  
-        trace(o)        
+               
         for (var i = 0; i < this.array.length; i++) {
             trace(i+"  "+this.array[i])
             if(this.array[i].type==o.type) this.array[i].active = true
@@ -109,6 +109,8 @@ function DopInfo(par, fun) {
 
         this.arrText.sizeWindow(this.width, this.height);
 
+
+        this.diCsv.sizeWindow(this.width, this.height);
     }
 
 
@@ -134,6 +136,595 @@ function DopInfo(par, fun) {
 }
 
 
+///////////////////////////////////////
+/////////////////////////////////////
+
+
+function DICsv(par) {  
+    var self=this;  
+    this.type="DICsv";
+    this.par=par;
+    this.otstup=2;
+    this._active=false;
+
+    this._indexColor=-2;
+
+    this.dCont=new DCont(this.par.w.content);
+    this.dCont.visible=false   
+    this.button=new DButton(this.par.w, this.otstup*3+200, this.otstup,"Ред csv", function(s){       
+        self.par.setActiv(self);
+    });
+    this.button.height=28;
+
+    this.arrayColor=[];
+    this.csvConfig = null; 
+    
+    var yy=this.otstup;
+
+    this.bbb=false;
+
+
+    this.dGal=new DIGal(this,function(s,p){
+        doSave();
+    })
+
+
+    this.init=function(){
+        if(this.bbb==true)return
+        this.bbb= true   
+       
+        //return
+        $.ajax({                
+            url:"resources/csvConfig.csv?"+Math.random(),
+            success: function function_name(data) {
+                self.csvConfig = data;               
+                self.startText(self.csvConfig);                                       
+            }
+        });
+
+    }
+
+    this.startText=function(_str){
+        this.clear();
+
+        let a=_str.split("\n")
+        
+        if(a[0].indexOf("id")!=-1){
+            a.splice(0,1);
+        }
+        this.arrayColor.push(new DIVColor(this,a[0]));
+
+        for (var i = 1; i < a.length; i++) {   
+            
+            if(a[i].indexOf("colorNew")!=-1){
+                this.arrayColor.push(new DIVColor(this,a[i]));
+                continue;
+            } 
+            this.arrayColor[this.arrayColor.length-1].setStr(a[i]);
+               
+            
+        }
+        this.redragColor();
+       
+
+    }
+
+
+    this.clear=function(){
+        this.arrayColor=[];
+    }
+
+
+
+
+    ////////////////////соновляем пачку цветов////
+
+
+    function doSave(){
+        self.batSave.alpha=1
+    }
+
+    
+    this.save=function(){   
+        //if(self.batSave.alpha!=1)return
+        var s="";
+        for (var i = 0; i < this.arrayColor.length; i++) {
+            s+="colorNew;"+this.arrayColor[i].name+";;;;";
+            for (var j = 0; j < this.arrayColor[i].arrayColor.length; j++) {
+                s+=this.arrayColor[i].arrayColor[j]+";;;;";
+            }
+            s+="\n";
+            for (var j = 0; j < this.arrayColor[i].arrayBlok.length; j++) { 
+                s+=this.arrayColor[i].arrayBlok[j][0];
+                for (var jj = 1; jj < this.arrayColor[i].arrayBlok[j].length; jj++) {
+                    s+=";"+this.arrayColor[i].arrayBlok[j][jj];
+                }
+                s+="\n";             
+            }          
+        }
+        self.batSave.alpha=0.25        
+        
+        var l = "../resources/csvConfig.csv";        
+        aGlaf.php.load({tip:"saveJSON", link:l, text:s},function(e){
+            
+
+        });
+    }
+
+
+    this.sobBC=function(){
+        self.indexColor=this.idArr;
+    }   
+    this.panel=new DPanel(this.dCont, this.otstup, this.otstup);
+    this.panel.height=36
+    this.panel.width=1111
+
+    this.input=new DInput(this.panel, this.otstup, this.otstup,"null", function(s){ 
+        if(self.arrayColor[self.indexColor]!=undefined){
+            self.arrayColor[self.indexColor].name=this.value;
+            self.abc[self.indexColor].text=this.value;
+            doSave();
+        }
+
+    });
+    this.input.timeFun=1;
+
+    this.input1=new DInput(this.panel, this.otstup, this.otstup,"null", function(s){ 
+        
+    });
+    this.input1.timeFun=1;
+
+    this.bat=new DButton(this.panel, this.otstup, this.otstup,"-",function(){
+
+    });
+    this.bat.width=this.bat.height
+
+    this.bat1=new DButton(this.panel, this.otstup, this.otstup,"+",function(){
+
+    });
+    this.bat1.width=this.bat.height
+
+    this.batSave=new DButton(this.panel, this.otstup, this.otstup,"SAVE",function(){
+        self.save();
+    });
+    this.batSave.color="#f28044";
+    this.batSave.width=150
+    this.batSave.alpha=0.2
+
+    this.abc=[];
+    this.redragColor=function(){
+        let ww=150
+        for (var i = 0; i < this.arrayColor.length; i++) {
+            let b
+            if(this.abc[i]==undefined){
+                this.abc[i]=new DButton(this.panel, this.otstup+(this.otstup+150)*(i+1), this.otstup,"",this.sobBC);
+                this.abc[i].width=150
+                this.abc[i].idArr=i
+            }
+            this.abc[i].text=this.arrayColor[i].name;
+            
+
+        }
+        let ba=16
+        this.input.x=(this.arrayColor.length+1)*150+ba
+        this.input1.x=(this.arrayColor.length+1)*150+102+ba
+        this.bat.x=(this.arrayColor.length+1)*150+204+ba
+        this.bat1.x=(this.arrayColor.length+1)*150+204+this.bat1.width+ba
+
+        this.indexColor=0;
+    }
+
+    this.indexColor=-1;
+
+
+
+    this.width=100;
+    this.height=100;
+    this.sizeWindow = function(w,h){  
+        
+
+        if(w!=undefined){
+            this.width=w;
+            this.height=h; 
+        }
+        this.dGal.sizeWindow(w,h);
+    }
+
+
+
+    Object.defineProperty(this, "indexColor", {
+        set: function (value) {            
+            if(this._indexColor!=value){
+                this._indexColor=value;
+                if(this.arrayColor[this._indexColor]){
+                    this.input.visible=true;                    
+                    this.input1.visible=true;                    
+                    this.bat.visible=true;                    
+                    this.bat1.visible=true;
+
+                    for (var i = 0; i < this.arrayColor.length; i++) {
+                        if(i==this._indexColor)this.abc[i].alpha=0.5
+                        else this.abc[i].alpha=1
+                    }
+                    this.input.value=this.arrayColor[this._indexColor].name
+                    this.dGal.setDCol(this.arrayColor[this._indexColor]);
+                    this.dGal.index=-1;
+                    this.dGal.index=0;
+
+                }else{
+                    this.input.visible=false;                   
+                    this.input1.visible=false;                   
+                    this.bat.visible=false;                    
+                    this.bat1.visible=false;
+                   
+                }
+                             
+            }           
+        },
+        get: function () {
+            return this._indexColor;
+        }
+    });
+
+
+    Object.defineProperty(this, "active", {
+        set: function (value) {            
+            if(this._active!=value){
+                this._active=value;
+                this.init();               
+                if(value) this.button.alpha =0.5
+                else this.button.alpha =1
+                this.dCont.visible=value;                             
+            }           
+        },
+        get: function () {
+            return this._active;
+        }
+    });
+}
+
+function DIVColor(par, strStart) { 
+    this.strStart=strStart;
+    this.par=par;
+    this.name="null";
+    let a=strStart.split(";");
+    this.name=a[1];
+
+    this.arrayColor=[];
+    this.arrayBlok=[];
+
+    for (var i = 5; i < a.length; i+=4) {
+        if(a[i].indexOf("m_")!=-1){
+            this.arrayColor.push(a[i]);
+        }       
+    }
+
+    this.strS    
+    this.setStr=function(str){
+        this.strS =str
+        this.arrayBlok.push(str.split(";"))
+    }
+}
+
+
+
+function DIGal(par, fun) {  
+    var self=this;  
+    this.type="DIGal";
+    this.par=par;
+    this.otstup=2;
+    this._active=false;
+    this.dCont=new DCont(this.par.dCont);
+
+    this.panel=new DPanel(this.dCont, this.otstup+322, this.otstup+42);
+    this.panel.height=1200;
+    this.panel.width=1200;
+
+    this.dmxz=new DXZXZ(this,function(s,p){
+        if(s=="sd"){
+            self.gallery.array[self.gallery.index].redragggg() 
+            fun()
+        }
+    })
+
+
+    this.gallery = new GalleryXZ1(this.panel,2,2,function(){
+        self.index=this.index;
+    });
+    this.gallery.width=this.panel.width-6;
+    this.gallery.kolII=4;
+    this.gallery.widthPic=(this.gallery.width-4-(this.gallery.kolII*2))/this.gallery.kolII;
+    this.gallery.heightPic=40;
+
+
+    this.dCol=null
+    this.setDCol=function(dCol){
+        this.dCol=dCol;
+        this.gallery.start(this.dCol.arrayBlok);
+        this.dmxz.setDCol(dCol)
+
+    }
+
+    this.width=100;
+    this.height=100;
+    this.sizeWindow = function(w,h){
+        if(w!=undefined){
+            this.width=w;
+            this.height=h; 
+        }        
+        this.panel.height=h-this.gallery.y-130
+        this.gallery.height=this.panel.height-8
+    }
+
+    Object.defineProperty(this, "index", {
+        set: function (value) {            
+            if(this._index!=value){
+                this._index=value;                
+                this.gallery.index=value;
+                if(this.gallery.array[this.gallery.index]){
+                    this.dmxz.setObj(this.gallery.array[this.gallery.index].object)
+                }
+                
+                             
+            }           
+        },
+        get: function () {
+            return this._index;
+        }
+    });
+}
+
+
+
+function DXZXZ(par, fun) {  
+    var self=this;  
+    this.type="DopInfo";
+    this.par=par;
+    this.otstup=2;
+    this._active=false;
+
+    this.dCont=new DCont(this.par.dCont);   
+
+
+    this.w=new DWindow(this.dCont, this.otstup, this.otstup+40 ," ");
+    this.w.width=320;
+    //this.w.dragBool=false;
+    this.w.hasMinimizeButton=false;
+
+    this.image = new DImage(this.w.content,this.otstup,this.otstup)    
+
+    var yy=this.otstup
+    new DLabel(this.w.content,this.otstup*2+100,yy+10,"id");
+    this.input=new DInput(this.w.content,this.otstup*2+150,yy,"-",function(){
+        self.arr[0]=this.value;
+        self.image.link="resources/data/"+self.arr[0]+"/100.png"
+        fun("sd");
+    })
+    this.input.width=this.w.width-4-this.input.x
+
+    yy+=34
+    new DLabel(this.w.content,this.otstup*2+100,yy+10,"text")
+    this.input1=new DInput(this.w.content,this.otstup*2+150,yy,"-",function(){
+        self.arr[1]=this.value;        
+        fun("sd");
+    })
+    this.input1.width=this.w.width-4-this.input1.x
+
+    yy+=34
+    new DLabel(this.w.content,this.otstup*2+100,yy+10,"размер")
+    this.input2=new DInput(this.w.content,this.otstup*2+150,yy,"-",function(){
+        self.arr[2]=this.value;        
+        fun("sd");
+    })
+    this.input2.width=this.w.width-4-this.input1.x
+
+    yy+=34
+    new DLabel(this.w.content,this.otstup*2+100,yy+10,"масса")
+    this.input3=new DInput(this.w.content,this.otstup*2+150,yy,"-",function(){
+        self.arr[3]=this.value;        
+        fun("sd");
+    })
+    this.input3.width=this.w.width-4-this.input1.x
+
+    yy+=34
+    new DLabel(this.w.content,this.otstup*2+100,yy+10,"обьем")
+    this.input4=new DInput(this.w.content,this.otstup*2+150,yy,"-",function(){
+        self.arr[4]=this.value;        
+        fun("sd");
+    })
+    this.input4.width=this.w.width-4-this.input1.x
+
+    this.arr
+    this.setObj=function(arr){
+        this.arr=arr;        
+        this.redrag();
+        for (var i = 0; i < this.array.length; i++) {
+            this.array[i].setObj(arr)
+        }
+    }
+
+
+
+    this.redrag=function(){
+        this.image.link="resources/data/"+this.arr[0]+"/100.png"
+        this.input.value=this.arr[0];
+        this.input1.value=this.arr[1];
+        this.input2.value=this.arr[2];
+        this.input3.value=this.arr[3];
+        this.input4.value=this.arr[4];
+    }
+
+
+    this.sob=function(s){
+        fun("sd");        
+    }
+
+    this.array=[];
+    this.dCol=null
+    this.setDCol=function(dCol){
+        this.dCol=dCol;
+        for (var i = 0; i < this.array.length; i++) {
+            this.array[i].dCont.visible=false;
+        }
+        for (var i = 0; i < this.dCol.arrayColor.length; i++) {
+            if(this.array[i]==undefined){
+                this.array[i]=new BLADXZ(this, i, this.sob)
+            }
+
+            this.array[i].setId(this.dCol.arrayColor[i])
+        }
+        this.w.height=32+180+(this.dCol.arrayColor.length)*155;
+    }
+}
+
+
+////////
+function BLADXZ(par, idArr,fun) {
+    var self=this  
+    this.type="DopInfo";
+    this.par=par;
+    this.h=110;
+    this.otstup=2;
+    this.idArr=idArr;
+    
+    this.dCont=new DCont(this.par.w.content); 
+
+    this.panel=new DPanel(this.dCont,this.otstup,180+idArr*this.h); 
+    this.panel.width=this.par.w.width-4
+    this.panel.height=this.h-2; 
+
+    this.image = new DImage(this.panel,this.otstup,this.otstup);
+
+
+    this.setId=function(id){
+        this.image.link="resources/data/"+id+"/100.png";
+        this.dCont.visible=true;
+    }
+
+    var yy=this.otstup
+    new DLabel(this.panel,this.otstup*2+100,yy+10,"маркер");
+    this.input=new DInput(this.panel,this.otstup*2+190,yy,"-",function(){
+        self.arr[5+self.idArr*4]=this.value;
+        fun()  
+    })
+    this.input.width=this.panel.width-4-this.input.x
+    yy+=34
+   
+    new DLabel(this.panel,this.otstup*2+100,yy+10,"цена");
+    this.input1=new DInput(this.panel,this.otstup*2+190,yy,"-",function(){
+        self.arr[5+self.idArr*4+1]=this.value;
+        fun() 
+    })
+    this.input1.width=this.panel.width-4-this.input.x
+    yy+=34
+
+    new DLabel(this.panel,this.otstup*2+100,yy+10,"тип");
+    this.input2=new DInput(this.panel,this.otstup*2+190,yy,"-",function(){
+        self.arr[5+self.idArr*4+2]=this.value;
+        fun() 
+    })
+    this.input2.width=this.panel.width-4-this.input.x
+    yy+=34
+
+    this.arr
+    this.setObj=function(arr){
+        this.arr=arr;
+        this.input.value = self.arr[5+self.idArr*4] 
+        this.input1.value = self.arr[5+self.idArr*4+1]
+        this.input2.value = self.arr[5+self.idArr*4+2]      
+    }
+}  
+
+
+
+
+
+
+
+
+function GalleryXZ1(dCont, _x, _y, _fun) {
+    DGallery.call(this, dCont, _x, _y, _fun);             
+    this.createZamen=function(){            
+        var r=new BoxXZ1(this.content, 0, 0, this.downBtn, this);            
+        return r;
+    }    
+}
+GalleryXZ1.prototype = Object.create(DGallery.prototype);
+GalleryXZ1.prototype.constructor = GalleryXZ1;
+
+
+function BoxXZ1(dCont, _x, _y, _fun, par) {
+    DBox.call(this, dCont, _x, _y, _fun);
+    this.type = 'BoxXZ1';
+    var self =this
+    var ss;
+    this.label1 = new DLabel(this, 80, 10, '====');
+    this.label1.fontSize=16;
+    this.label1.width=400;
+    this.label.div.style.pointerEvents="none";
+    this.label1.div.style.pointerEvents="none";
+
+
+    // Отрисовка и позиционирование иконки, обводки
+    this.draw = function () {
+
+        ss = (this._width - this._otstup * 2) / this.image.picWidth;
+        if (ss > (this._height - this._otstup * 2) / this.image.picHeight)ss = (this._height - this._otstup * 2) / this.image.picHeight;
+        this.image.x = 0;
+        this.image.width=this.image.picWidth*ss;
+        this.image.height=this.image.picHeight*ss;
+
+        this.image.x = 32;
+        this.image.y = 2;
+
+        this.label.x = 2;
+        this.label.y = 10;
+
+
+        if (this.postDraw) this.postDraw();
+    }; 
+
+    this.startLoad = function (_obj) {        
+        this.object = _obj
+        this.redragggg();    
+ 
+        self.funLoad();
+        this.draw();
+    } 
+
+
+    this.redragggg = function () {    
+        if(this.object[0]!=""){
+            this.image.link = "resources/data/"+this.object[0]+"/100.png";
+            this.label.visible=true 
+            this.label.value=this.object[0]
+            this.label.width=this.panel.width-100
+            let s ="";
+            for (var i = 6; i < this.object.length; i+=4) {
+                s+="\t"+this.object[i];
+            }
+            this.label1.value=s;
+        } 
+    } 
+
+}
+BoxXZ1.prototype = Object.create(DBox.prototype);
+BoxXZ1.prototype.constructor = BoxXZ1;
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////
+/////////////////////////////////////
+
+
+
 function DIVsakoe(par) {  
     var self=this;  
     this.type="DIVsakoe";
@@ -151,7 +742,7 @@ function DIVsakoe(par) {
     this.button.height=28;
 
     
-    var yy=this.otstup
+    var yy=this.otstup;
 
 
 
@@ -341,7 +932,7 @@ function DIVsakoe(par) {
         data.append('file', file);
         data.append('dest', dest);
 
-        trace(serverURL)    
+  
 
         return $.ajax({
             url: serverURL,

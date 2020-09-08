@@ -392,7 +392,7 @@ function MMod(c,x,y,f) {
     this.button.startFile();  
 
 
-    this.bClose=new DButton(this.panel, this.panel.width-this.otstup*2-this.button.height, this.otstup,"x", function(b){   
+    this.bClose=new DButton(this.panel, this.panel.width-this.otstup*2-this.button.height, this.otstup,"x", function(b){
 
         self.o.mod.name="n";
         self.button.text="null load";
@@ -443,7 +443,8 @@ function MMod(c,x,y,f) {
 
     this.saveF=function(){
         var l='../'+aGlaf.resursData + self.o.id+"/mod/";
-        self.li=l;   
+        self.li=l;
+
 
         php.load({tip: 'mkdir', dir: l}, function (e) {             
             php.load({tip: 'mkdir', dir: '../'+aGlaf.resurs+'tmp/'}, function (e) { 
@@ -453,11 +454,39 @@ function MMod(c,x,y,f) {
         self.fun("saveKey");        
     }
 
+ /*   function uploadFile(file, dest) {
+        let serverURL = php.server + "src/phpBase.php";
+        let data = new FormData();
+        data.append('tip', 'saveFile');
+        data.append('file', file);
+        data.append('dest', dest);
+
+        trace(serverURL)    
+
+        return $.ajax({
+            url: serverURL,
+            dataType: 'text',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: data,
+            type: 'post'
+        });
+    }
+*/
+
+
 
 
 
 
     this.saveFile=function(){
+       /* trace(self.files[self.sss])
+        
+        uploadFile(self.files[self.sss],self.files[self.sss].name)
+
+
+        return;*/
         var ll=php.server+"src/upload.php";
         var form_data = new FormData();
 

@@ -188,11 +188,11 @@ export class LMain  {
   		}
 
   		this.сhangesSave= function(object){  
-  			trace("##>сhangesSave>",object);  			
+  			 			
   			self.glaf.menuDiv.menuSave.сhangesSave=true;
   		}
   		this.setObj = function (object) {
-  			trace("##>setObj>",object);
+  			
   			self.glaf.setObj(object);            
         } 
         this.setObjectsJSON = function (object) {
@@ -336,12 +336,13 @@ export class KlassCSVObj  {
 
 	       	a=_str.split("\n")        
 	        ar=[]
-	       
+	       	trace(a)
 	        var aea=a[1].split(";")
 	        var ddd=[];
 	        for (var i = 5; i < aea.length; i+=4) {           
 	            ddd.push(aea[i])
 	        }
+
 
 
 
