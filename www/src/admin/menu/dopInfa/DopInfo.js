@@ -147,6 +147,8 @@ function DICsv(par) {
     this.otstup=2;
     this._active=false;
 
+    this._boolBog=false;
+
     this._indexColor=-2;
 
     this.dCont=new DCont(this.par.w.content);
@@ -168,6 +170,9 @@ function DICsv(par) {
         doSave();
     })
 
+    this.dGBig=new DGBig(this,function(s,p){
+        doSave();
+    })
 
     this.init=function(){
         if(this.bbb==true)return
@@ -262,7 +267,7 @@ function DICsv(par) {
     this.panel=new DPanel(this.dCont, this.otstup, this.otstup);
     this.panel.height=36
     this.panel.width=1111
-
+/*
     this.input=new DInput(this.panel, this.otstup, this.otstup,"null", function(s){ 
         if(self.arrayColor[self.indexColor]!=undefined){
             self.arrayColor[self.indexColor].name=this.value;
@@ -286,13 +291,39 @@ function DICsv(par) {
     this.bat1=new DButton(this.panel, this.otstup, this.otstup,"+",function(){
 
     });
-    this.bat1.width=this.bat.height
+    this.bat1.width=this.bat.height*/
+
+
+
+    this.batS=new DButton(this.panel, this.otstup, this.otstup,"csv Заменна Markerov ",function(s){
+        var a=s.split("base64,");
+        var str=window.atob(a[1]);
+        let aa=str.split(";");
+        
+        for (var i = 0; i < self.arrayColor.length; i++) {
+           self.arrayColor[i].testMarkArr(aa)
+        }
+        var hh=this._indexColor;
+        
+         
+    });
+    this.batS.width=200;
+    this.batS.startFile("csv");
+
+
+
+    this.bat=new DCheckBox(this.panel, 125, this.otstup, " ",function(){
+        self.boolBog=this.value
+    });
+    this.bat
+    
+
 
     this.batSave=new DButton(this.panel, this.otstup, this.otstup,"SAVE",function(){
         self.save();
     });
     this.batSave.color="#f28044";
-    this.batSave.width=150
+    this.batSave.width=120
     this.batSave.alpha=0.2
 
     this.abc=[];
@@ -310,10 +341,10 @@ function DICsv(par) {
 
         }
         let ba=16
-        this.input.x=(this.arrayColor.length+1)*150+ba
+       /* this.input.x=(this.arrayColor.length+1)*150+ba
         this.input1.x=(this.arrayColor.length+1)*150+102+ba
         this.bat.x=(this.arrayColor.length+1)*150+204+ba
-        this.bat1.x=(this.arrayColor.length+1)*150+204+this.bat1.width+ba
+        this.bat1.x=(this.arrayColor.length+1)*150+204+this.bat1.width+ba*/
 
         this.indexColor=0;
     }
@@ -329,9 +360,26 @@ function DICsv(par) {
             this.width=w;
             this.height=h; 
         }
+        this.panel.width=w-4
+        this.batS.x=this.panel.width-this.batS.width;
+        
         this.dGal.sizeWindow(w,h);
     }
 
+
+
+    Object.defineProperty(this, "boolBog", {
+        set: function (value) {            
+            if(this._boolBog!=value){
+                this._boolBog=value;
+                this.dGal.dCont.visible= !value;   
+                this.dGBig.dCont.visible= value;                                        
+            }           
+        },
+        get: function () {
+            return this._boolBog;
+        }
+    });
 
 
     Object.defineProperty(this, "indexColor", {
@@ -339,26 +387,26 @@ function DICsv(par) {
             if(this._indexColor!=value){
                 this._indexColor=value;
                 if(this.arrayColor[this._indexColor]){
-                    this.input.visible=true;                    
+                    /*this.input.visible=true;                    
                     this.input1.visible=true;                    
                     this.bat.visible=true;                    
-                    this.bat1.visible=true;
+                    this.bat1.visible=true;*/
 
                     for (var i = 0; i < this.arrayColor.length; i++) {
                         if(i==this._indexColor)this.abc[i].alpha=0.5
                         else this.abc[i].alpha=1
                     }
-                    this.input.value=this.arrayColor[this._indexColor].name
+                    //this.input.value=this.arrayColor[this._indexColor].name
                     this.dGal.setDCol(this.arrayColor[this._indexColor]);
+                    this.dGBig.setDCol(this.arrayColor[this._indexColor]);
                     this.dGal.index=-1;
-                    this.dGal.index=0;
+                    this.dGal.index=this.dGal.gallery.array.length-1;
 
                 }else{
-                    this.input.visible=false;                   
+                   /* this.input.visible=false;                   
                     this.input1.visible=false;                   
                     this.bat.visible=false;                    
-                    this.bat1.visible=false;
-                   
+                    this.bat1.visible=false;*/                   
                 }
                              
             }           
@@ -385,7 +433,150 @@ function DICsv(par) {
     });
 }
 
+
+function DGBig(par, fun) {  
+    var self=this;  
+    this.type="DGBig";
+    this.par=par;
+    this.otstup=2;
+    this._active=false;
+    this.dCont=new DCont(this.par.dCont);
+    this.dCont.visible=false;
+    this.w=new DWindow(this.dCont, this.otstup, this.otstup+40 ,"Настройки цветов");
+    this.w.width=320;
+    //this.w.dragBool=false;
+    this.w.hasMinimizeButton=false;
+
+    let yy=this.otstup
+    this.bat=new DButton(this.w.content, this.otstup, this.otstup,"Новая",function(s){
+        self.par.arrayColor.push(new DIVColor(self.par,"colorNew;Новая;;;;"))        
+        self.par.redragColor()
+        self.par.indexColor=self.par.arrayColor.length-1;
+    });
+    this.bat.width=(this.w.width-4);
+   
+    /*this.bat=new DButton(this.w.content, this.otstup+(this.w.width-8)/2, this.otstup,"Удалить эту",function(s){
+        if(self.par.arrayColor.length>=1){
+            if(self.par.arrayColor[self.par.indexColor]){
+                self.par.arrayColor.splice(self.par.indexColor,1);
+                var pp=self.par.indexColor-1;
+                if(pp<0)pp=0
+                self.par.redragColor();
+                self.par._indexColor=-1
+                self.par.indexColor=pp;
+            }
+        }
+    });
+    this.bat.width=(this.w.width-8)/2*/
+    yy+=34
+
+    new DLabel(this.w.content,this.otstup*2,yy+10,"name").fontSize=12
+    this.input=new DInput(this.w.content, this.otstup*3+70, yy,"null", function(s){ 
+        if(self.dCol!=undefined){
+            self.dCol.name=this.value;
+            par.abc[par.indexColor].text=this.value;
+           // doSave();
+        }
+    });
+    this.input.timeFun=1;
+    this.input.width=this.w.width-4-this.input.x;
+
+
+    this.gl=null
+    this.aC=function(){
+        if(this.gl==null){
+            this.gl=new DGallery(this.w.content, this.otstup+this.w.width ,70,function(){
+                self.dCol.addColor(self.gl.array[self.gl._index].object.title);
+                self.setDCol(self.dCol);
+                self.gl.visible=false;
+            })
+            this.gl.width=48*4+15;
+            this.gl.kolII=4;
+            this.gl.widthPic=48;
+            this.gl.heightPic=48;
+            this.gl.height=600;
+            trace(aGlaf.objectBase)
+            let aZZ=[];  
+            for (var i = 0; i < aGlaf.objectBase.materials.length; i++) {
+                aZZ.push({src:"resources/data/"+aGlaf.objectBase.materials[i].id+"/64.png",title:aGlaf.objectBase.materials[i].id});
+            }
+            this.gl.start(aZZ);
+        }
+        this.gl.index=-1
+        this.gl.visible=true
+
+    }
+
+    this.down=function(){
+        if(this.text=="+")self.aC();
+        if(this.text=="-"){
+            if(self.gallery.array[self.gallery.index])self.dCol.clearMark(self.gallery.array[self.gallery.index].object.title);
+            self.setDCol(self.dCol);
+            self.gallery.index=-1;
+        }
+        if(this.text=="<"){
+            if(self.gallery.array[self.gallery.index]&&self.gallery.array[self.gallery.index-1]){
+                self.dCol.naMark(
+                    self.gallery.array[self.gallery.index].object.title,
+                    self.gallery.array[self.gallery.index-1].object.title
+                );
+                
+                let pp=self.gallery._index
+                self.setDCol(self.dCol);
+                self.gallery._index=-1
+                self.gallery.index=pp;
+            }           
+        } 
+        
+
+
+    }
+
+
+    var b;
+    var ww=28;
+    for (var i = 0; i < 3; i++) {
+        b=new DButton(this.w.content,(this.otstup+ww)*i+this.otstup, 70, " ",this.down);
+        b.idArr=i;
+         
+        if(i==0)b.text="+";
+        if(i==1)b.text="-";
+        if(i==2)b.text="<"; 
+               
+        b.width=ww;
+        b.height=ww;
+    }
+
+    this.gallery=new DGallery(this.w.content, this.otstup ,100,function(){
+      
+    })
+    this.gallery.width=this.w.width-8;
+    this.gallery.kolII=3;
+    this.gallery.widthPic=this.gallery.width/this.gallery.kolII-3;
+    this.gallery.heightPic=this.gallery.widthPic;
+
+    this.gallery.height=this.gallery.heightPic*2+10
+
+    this.w.height=this.gallery.height+2+this.gallery.y+32
+
+    this.dCol=null
+    this.setDCol=function(dCol){
+        this.dCol=dCol;
+        this.input.value=dCol.name;
+        let aZZ=[];        
+        for (var i = 0; i < dCol.arrayColor.length; i++) {
+            aZZ.push({src:"resources/data/"+dCol.arrayColor[i]+"/64.png",title:dCol.arrayColor[i]});            
+        }                  
+        this.gallery.start(aZZ);
+        if(self.gl)self.gl.visible=false;
+    }
+
+
+}
+
+
 function DIVColor(par, strStart) { 
+    trace(strStart)
     this.strStart=strStart;
     this.par=par;
     this.name="null";
@@ -404,8 +595,75 @@ function DIVColor(par, strStart) {
     this.strS    
     this.setStr=function(str){
         this.strS =str
+
         this.arrayBlok.push(str.split(";"))
+        this.arrayBlok[this.arrayBlok.length-1].splice(6+this.arrayColor.length*4)
     }
+
+    this.addColor=function(idMat){
+        this.arrayColor.push(idMat)
+        for (var i = 0; i < this.arrayBlok.length; i++) {            
+            this.arrayBlok[i].push("","","","");
+        }
+    }
+
+
+    this.clearMark=function(idMat){
+        
+        for (var i = 0; i < this.arrayColor.length; i++) {
+            if(idMat==this.arrayColor[i]){
+                this.arrayColor.splice(i,1);
+                for (var j = 0; j < this.arrayBlok.length; j++) {
+                    this.arrayBlok[j].splice(5+(i*4),4);
+                }
+            }
+        }
+    }
+
+    this.naMark=function(idMat, naMat){
+        var p=-1;
+        var p1=-1;
+        for (var i = 0; i < this.arrayColor.length; i++) {
+            if(idMat==this.arrayColor[i])p=i;
+            if(naMat==this.arrayColor[i])p1=i;
+        }
+
+        if(p!=-1&&p>=1){
+            let c = this.arrayColor.splice(p,1)[0];
+            this.arrayColor.splice(p-1,0,c);
+
+            for (var j = 0; j < this.arrayBlok.length; j++) {
+                let c1 =this.arrayBlok[j].splice(5+(p*4),4);
+                this.arrayBlok[j].splice(5+(p-1)*4,0,c[0],c[1],c[2],c[3]);
+            }
+        }
+
+
+
+    }
+
+
+    this.testMarkArr=function(a){
+       
+        for (var j = 0; j < this.arrayBlok.length; j++) {
+            for (var i = 0; i < this.arrayColor.length; i++){            
+                if(this.arrayBlok[j][5+i*4]!=undefined){
+                    if(this.arrayBlok[j][5+i*4].length>3){
+                        //trace("  >>>  "+this.arrayBlok[j][5+i*4]+"    "+this.arrayBlok[j][6+i*4]);
+                        for (var ii = 0; ii < a.length-1; ii++) {
+                            if(a[ii] == this.arrayBlok[j][5+i*4]){
+                                this.arrayBlok[j][6+i*4]=a[ii+1]                              
+                            }   
+
+                        }
+                        
+
+                    }
+                }  
+            }
+        } 
+    }
+        
 }
 
 
@@ -424,8 +682,8 @@ function DIGal(par, fun) {
 
     this.dmxz=new DXZXZ(this,function(s,p){
         if(s=="sd"){
-            self.gallery.array[self.gallery.index].redragggg() 
-            fun()
+            self.gallery.array[self.gallery.index].redragggg(p) 
+            fun();
         }
     })
 
@@ -468,15 +726,18 @@ function DIGal(par, fun) {
             }else{
                 this.index=-1;
             }
-            fun()
+            fun();
         }
     }
 
     this.addArray = function(ind,arr){
-        this.dCol.arrayBlok.splice(ind,0,arr)
+        this.dCol.arrayBlok.push(arr)
         this.gallery.start(this.dCol.arrayBlok);
+
+        //this.dCol.arrayBlok.splice(ind,0,arr)
+        
         this.index=-1;
-        this.index=ind;
+        this.index=this.dCol.arrayBlok.length-1;
     }
 
     Object.defineProperty(this, "index", {
@@ -526,7 +787,7 @@ function DXZXZ(par, fun) {
     this.image = new DImage(this.w.content,this.otstup,this.otstup)    
 
     var yy=this.otstup
-    new DLabel(this.w.content,this.otstup*2+100,yy+10,"id");
+    new DLabel(this.w.content,this.otstup*2+100,yy+10,"id").fontSize=12
     this.input=new DInput(this.w.content,this.otstup*2+150,yy,"-",function(){
         self.arr[0]=this.value;
         self.image.link="resources/data/"+self.arr[0]+"/100.png"
@@ -535,44 +796,61 @@ function DXZXZ(par, fun) {
     this.input.width=this.w.width-4-this.input.x
 
     yy+=34
-    new DLabel(this.w.content,this.otstup*2+100,yy+10,"text")
+    new DLabel(this.w.content,this.otstup*2+100,yy+10,"text").fontSize=12
     this.input1=new DInput(this.w.content,this.otstup*2+150,yy,"-",function(){
         self.arr[1]=this.value;        
-        fun("sd");
+        fun("sd",1);
     })
     this.input1.width=this.w.width-4-this.input1.x
 
     yy+=34
-    new DLabel(this.w.content,this.otstup*2+100,yy+10,"размер")
+    new DLabel(this.w.content,this.otstup*2+100,yy+10,"размер").fontSize=12
     this.input2=new DInput(this.w.content,this.otstup*2+150,yy,"-",function(){
         self.arr[2]=this.value;        
-        fun("sd");
+        fun("sd",1);
     })
     this.input2.width=this.w.width-4-this.input1.x
 
     yy+=34
-    new DLabel(this.w.content,this.otstup*2+100,yy+10,"масса")
-    this.input3=new DInput(this.w.content,this.otstup*2+150,yy,"-",function(){
+    new DLabel(this.w.content,this.otstup*2+100,yy+10,"масса грамы").fontSize=12
+    this.input3=new DInput(this.w.content,this.otstup*2+190,yy,"-",function(){
         self.arr[3]=this.value;        
-        fun("sd");
+        fun("sd",1);
     })
-    this.input3.width=this.w.width-4-this.input1.x
+    this.input3.width=this.w.width-4-this.input3.x
 
     yy+=34
-    new DLabel(this.w.content,this.otstup*2+100,yy+10,"обьем")
-    this.input4=new DInput(this.w.content,this.otstup*2+150,yy,"-",function(){
+    new DLabel(this.w.content,this.otstup*2+100,yy+10,"обьем см3").fontSize=12
+    this.input4=new DInput(this.w.content,this.otstup*2+190,yy,"-",function(){
         self.arr[4]=this.value;        
-        fun("sd");
+        fun("sd",1);
     })
-    this.input4.width=this.w.width-4-this.input1.x
+    this.input4.width=this.w.width-4-this.input4.x
 
     this.arr
     this.setObj=function(arr){
         this.arr=arr;        
         this.redrag();
+        let ac=[] 
         for (var i = 0; i < this.array.length; i++) {
-            this.array[i].setObj(arr)
+            this.array[i].setObj(arr);
+            ac.push(this.array[i].input.value);
+        }   
+
+
+        let b=dcmParam._color1
+        for (var i = 0; i < ac.length; i++) {
+            for (var j = 0; j< ac.length; j++) {                
+                if(i!=j && ac[i]==ac[j]){
+                    b="#f5ccbc";
+                }
+            }
         }
+        trace(">>>>>>>>>>>>",b,ac)
+        for (var i = 0; i < this.array.length; i++) {            
+            this.array[i].input.color1=b
+        } 
+
     }
 
 
@@ -588,13 +866,14 @@ function DXZXZ(par, fun) {
 
 
     this.sob=function(s){
-        fun("sd");        
+        fun("sd",1);        
     }
 
     this.array=[];
     this.dCol=null
     this.setDCol=function(dCol){
         this.dCol=dCol;
+        
         for (var i = 0; i < this.array.length; i++) {
             this.array[i].dCont.visible=false;
         }
@@ -604,7 +883,11 @@ function DXZXZ(par, fun) {
             }
 
             this.array[i].setId(this.dCol.arrayColor[i])
+            
         }
+
+         
+
         this.w.height=32+180+(this.dCol.arrayColor.length)*155;
     }
 }
@@ -634,7 +917,7 @@ function BLADXZ(par, idArr,fun) {
     }
 
     var yy=this.otstup
-    new DLabel(this.panel,this.otstup*2+100,yy+10,"маркер");
+    new DLabel(this.panel,this.otstup*2+100,yy+10,"маркер (>3Символ)").fontSize=10
     this.input=new DInput(this.panel,this.otstup*2+190,yy,"-",function(){
         self.arr[5+self.idArr*4]=this.value;
         fun()  
@@ -642,7 +925,7 @@ function BLADXZ(par, idArr,fun) {
     this.input.width=this.panel.width-4-this.input.x
     yy+=34
    
-    new DLabel(this.panel,this.otstup*2+100,yy+10,"цена");
+    new DLabel(this.panel,this.otstup*2+100,yy+10,"цена").fontSize=12
     this.input1=new DInput(this.panel,this.otstup*2+190,yy,"-",function(){
         self.arr[5+self.idArr*4+1]=this.value;
         fun() 
@@ -650,7 +933,7 @@ function BLADXZ(par, idArr,fun) {
     this.input1.width=this.panel.width-4-this.input.x
     yy+=34
 
-    new DLabel(this.panel,this.otstup*2+100,yy+10,"тип");
+    new DLabel(this.panel,this.otstup*2+100,yy+10,"тип").fontSize=12
     this.input2=new DInput(this.panel,this.otstup*2+190,yy,"-",function(){
         self.arr[5+self.idArr*4+2]=this.value;
         fun() 
@@ -663,7 +946,9 @@ function BLADXZ(par, idArr,fun) {
         this.arr=arr;
         this.input.value = self.arr[5+self.idArr*4] 
         this.input1.value = self.arr[5+self.idArr*4+1]
-        this.input2.value = self.arr[5+self.idArr*4+2]      
+        this.input2.value = self.arr[5+self.idArr*4+2] 
+         
+
     }
 }  
 
@@ -676,6 +961,131 @@ function BLADXZ(par, idArr,fun) {
 
 function GalleryXZ1(dCont, _x, _y, _fun) {
     DGallery.call(this, dCont, _x, _y, _fun);             
+    
+    this.aaaa=[]
+    // перерисовка галереи
+    var ii, jj, ww, hh, bat, sahLoad, wM, hM, sliderOtstup;
+    this.draw = function () {
+        if (this.preDraw) this.preDraw();
+        
+        ii = 0;
+        jj = 0;
+        sliderOtstup = this.otstup1 + this.otstup * 2;
+        ww = 1;
+        if (this._kolII > this.array.length)ww = this.array.length * (this._widthPic + this._otstup) + this._otstup;
+        hh = this._heightPic + this._otstup * 2;
+
+        let axz=[]
+        axz[0]=[]
+        for (var i = 0; i < this.array.length; i++) {
+
+            if(this.aaaa[i]==undefined)this.aaaa[i]=new THREE.Vector2();
+            this.aaaa[i].x=ii * (this._widthPic + this._otstup) + this._otstup;
+            this.aaaa[i].y=jj * (this._heightPic + this._otstup) + this._otstup;
+
+            //this.array[i].x = ii * (this._widthPic + this._otstup) + this._otstup;
+            //this.array[i].y = jj * (this._heightPic + this._otstup) + this._otstup;
+            if (this.array[i].x + this._widthPic + this._otstup > ww)ww = this.aaaa[i].x + this._widthPic + this._otstup;
+            hh = (jj + 1) * (this._heightPic + this._otstup) + this._otstup;
+            axz[jj][ii]=this.aaaa[i];
+            ii++;
+            if (ii >= this._kolII) {
+                ii = 0;
+                jj++;
+                axz[jj]=[];
+            }
+        }
+        //jj++;
+
+        ii = this.array.length-1;
+        /*trace(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",axz,this.array)
+        trace(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",this._kolII)
+        for (var i = 0; i <= this._kolII; i++) {
+            for (var j = 0; j < jj; j++) {                
+                if(axz[i]!=undefined){
+                    if(axz[j][i]!=undefined){
+                        trace(ii+"  "+i+"  "+j+"  ",axz[j][i])                    
+                        this.array[ii].x = axz[j][i].x;
+                        this.array[ii].y = axz[j][i].y;
+
+                        ii-=1;                    
+                        if(ii==-1)break
+                    }
+                }
+            }
+        }*/
+
+
+
+
+
+
+        for (var i = 0; i < this.array.length; i++) {
+            this.array[this.array.length-1-i].x = this.aaaa[i].x;
+            this.array[this.array.length-1-i].y = this.aaaa[i].y;
+        }
+
+
+
+        if (ww > this._width) this.scrollBarH.visible = true;
+        else this.scrollBarH.visible = false;
+
+        if (hh > this._height) this.scrollBarV.visible = true;
+        else this.scrollBarV.visible = false;
+
+
+        this.scrollBarH.widthContent = ww;
+        this.scrollBarV.heightContent = hh;
+
+
+        if (ww > this._width) {
+            wM = this._width;
+        } else {
+            wM = ww;
+        }
+        if (hh > this._height) {
+            hM = this._height;
+        } else {
+            hM = hh;
+        }
+
+        this.ww = ww;
+        this.wM = wM;
+        this.hh = hh;
+        this.hM = hM;
+
+        if (this._boolPositScrol) {
+            if (this._boolPositOtctup) {
+                this.scrollBarH.y = hM - this.otstup - this._otstup1;
+                this.scrollBarV.x = wM - this.otstup - this._otstup1;
+            } else {
+                this.scrollBarH.y = hM + this.otstup;
+                this.scrollBarV.x = wM + this.otstup;
+            }
+
+
+        } else {
+            if (this._boolPositOtctup) {
+                this.scrollBarH.y = this.otstup;
+                this.scrollBarV.x = this.otstup;
+            } else {
+                this.scrollBarH.y = -this.otstup - this._otstup1;
+                this.scrollBarV.x = -this.otstup - this._otstup1;
+            }
+        }
+
+        if(this.panel!=undefined){          
+            this.panel.width=this._width;
+            this.panel.height=this._height;
+        }
+        //this.graphics.drawRect(0, 0, ww, hh);
+        this.dragIE()
+        if (this.postDraw) this.postDraw();
+    };
+
+
+
+
     this.createZamen=function(){            
         var r=new BoxXZ1(this.content, 0, 0, this.downBtn, this);            
         return r;
@@ -690,13 +1100,20 @@ function BoxXZ1(dCont, _x, _y, _fun, par) {
     this.type = 'BoxXZ1';
     var self =this
     var ss;
-    this.label1 = new DLabel(this, 80, 10, '====');
+    this.label1 = new DLabel(this, 80, 2, '====');
     this.label1.fontSize=16;
     this.label1.width=400;
     this.label.div.style.pointerEvents="none";
     this.label1.div.style.pointerEvents="none";
 
 
+    this.label2 = new DLabel(this, 80, 22, '====');
+    this.label2.fontSize=12;
+    this.label2.width=400;
+    this.label2.div.style.pointerEvents="none";
+
+
+    this.label.bold=true
     // Отрисовка и позиционирование иконки, обводки
     this.draw = function () {
 
@@ -713,6 +1130,7 @@ function BoxXZ1(dCont, _x, _y, _fun, par) {
         this.label.y = 10;
 
 
+
         if (this.postDraw) this.postDraw();
     }; 
 
@@ -724,18 +1142,74 @@ function BoxXZ1(dCont, _x, _y, _fun, par) {
         this.draw();
     } 
 
-
-    this.redragggg = function () {    
+    var iiii="225"
+    this.redragggg = function (bool) {    
         if(this.object[0]!=""){
-            this.image.link = "resources/data/"+this.object[0]+"/100.png";
+            let b=false
+            if(bool==undefined)this.image.link = "resources/data/"+this.object[0]+"/100.png";
             this.label.visible=true 
+            if(this.object[0]==iiii)trace(">>>>>"+this.object)
+
             this.label.value=this.object[0]
+
             this.label.width=this.panel.width-100
-            let s ="";
-            for (var i = 6; i < this.object.length; i+=4) {
-                s+="\t"+this.object[i];
+            let s1 =""+this.object[1];
+            let s2 ="";
+            let ac=[]
+            for (var i = 0; i < 5; i++) {
+                if(this.object[i]==undefined){
+                    b=true
+                    continue
+                }
+                if(this.object[i]==""){
+                    if(this.object[0]==iiii)trace(i+">>>>>"+this.object[i])
+                    b=true
+                    continue;
+                }
+
             }
-            this.label1.value=s;
+
+
+
+            for (var i = 5; i < this.object.length-1; i+=4) {
+                s2+="\t"+this.object[i+1];
+                ac.push(this.object[i]);
+
+                if(this.object[i]==""){ 
+                    if(this.object[0]==iiii)trace(i+">+1>>>>"+this.object[i+1]);                  
+                    b=true
+                }
+                if(this.object[i+1]==""){ 
+                    if(this.object[0]==iiii)trace(i+">+2>>>>"+this.object[i+2])                   
+                    b=true
+                }
+
+            }
+            for (var i = 0; i < ac.length; i++) {
+                for (var j = 0; j < ac.length; j++) {
+                    if(i!=j)if(ac[i]==ac[j]){
+                        b=true
+                        if(this.object[0]==iiii)trace(i+">+2>>>>"+ac[i],ac[j],i,j) 
+                    }
+                }
+            }
+
+
+
+            this.label1.value=s1.substr(0, 24)//.splice(24,99);
+            this.label2.value=s2;
+
+
+            let c=dcmParam._color1
+            if(b){
+                c="#f5ccbc"                
+            }
+
+            if(this.object[1] && this.object[1].indexOf("Хранитель")!=-1)c="#c7edfc"
+
+            
+            this.color1=c
+            this.panel.color1=c
         } 
     } 
 
