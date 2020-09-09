@@ -221,13 +221,13 @@ function DICsv(par) {
 
 
     function doSave(){
-        self.batSave.alpha=1
+        self.batSave.alpha=1        
     }
 
     
     this.save=function(){   
         //if(self.batSave.alpha!=1)return
-        var s="";
+        var s="id\n";
         for (var i = 0; i < this.arrayColor.length; i++) {
             s+="colorNew;"+this.arrayColor[i].name+";;;;";
             for (var j = 0; j < this.arrayColor[i].arrayColor.length; j++) {
@@ -242,13 +242,17 @@ function DICsv(par) {
                 s+="\n";             
             }          
         }
-        self.batSave.alpha=0.25        
+        self.batSave.alpha=0.25; 
+        s=s.slice(0, -1);
+        
+        
         
         var l = "../resources/csvConfig.csv";        
         aGlaf.php.load({tip:"saveJSON", link:l, text:s},function(e){
-            
+            trace(">>>>>>>>>>>>>>>>>>",e);
 
         });
+        
     }
 
 
@@ -320,9 +324,7 @@ function DICsv(par) {
 
     this.width=100;
     this.height=100;
-    this.sizeWindow = function(w,h){  
-        
-
+    this.sizeWindow = function(w,h){
         if(w!=undefined){
             this.width=w;
             this.height=h; 
@@ -456,6 +458,27 @@ function DIGal(par, fun) {
         this.gallery.height=this.panel.height-8
     }
 
+    this.clearArray = function(ind){
+        if(this.gallery.array[ind]){
+            this.dCol.arrayBlok.splice(ind,1)
+            this.gallery.start(this.dCol.arrayBlok);
+            if(this.gallery.array[ind]){
+                this.index=-1;
+                this.index=ind;
+            }else{
+                this.index=-1;
+            }
+            fun()
+        }
+    }
+
+    this.addArray = function(ind,arr){
+        this.dCol.arrayBlok.splice(ind,0,arr)
+        this.gallery.start(this.dCol.arrayBlok);
+        this.index=-1;
+        this.index=ind;
+    }
+
     Object.defineProperty(this, "index", {
         set: function (value) {            
             if(this._index!=value){
@@ -463,9 +486,7 @@ function DIGal(par, fun) {
                 this.gallery.index=value;
                 if(this.gallery.array[this.gallery.index]){
                     this.dmxz.setObj(this.gallery.array[this.gallery.index].object)
-                }
-                
-                             
+                }           
             }           
         },
         get: function () {
@@ -490,6 +511,17 @@ function DXZXZ(par, fun) {
     this.w.width=320;
     //this.w.dragBool=false;
     this.w.hasMinimizeButton=false;
+
+    this.but=new DButton(this.w,this.w.width-102,2,"удалить",function(){
+        par.clearArray(par.index);
+    })
+    this.but.height=28;
+
+    this.but=new DButton(this.w,this.w.width-204,2,"добавить",function(){
+        par.addArray(0,[""]);
+    })
+    this.but.height=28;
+
 
     this.image = new DImage(this.w.content,this.otstup,this.otstup)    
 

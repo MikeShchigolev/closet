@@ -89,7 +89,7 @@ export class BTBoxVstavka extends Blok {
                 //Эмулируем тумбочку
                 this.setXY2Tumba(_x,_y);
             }  
-            if(this._parent)this._parent.changeMarkers();      
+            if(this._parent && this._parent.changeMarkers)this._parent.changeMarkers();      
         }
         this.boxHelper.visible=false
 
@@ -771,12 +771,20 @@ export class BVPlus {
         this.array=[]
         var mesh
 
+        trace(this.par.id+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",this.par.object.str[2])
+
         if(this.par.object.str[2]=="187"){
-            this.activeId=187
+            this.activeId=187;
         }
         if(this.par.object.str[2]=="204"){
-            this.activeId=204
+            this.activeId=204;
         }
+
+       /* if(this.par.object.str[2]=="225"){
+            this.activeId=187
+        }*/
+
+       
 
 
         var z0=32
@@ -789,6 +797,7 @@ export class BVPlus {
             ooo=this.par.arrObj[this._indexW][this._indexH];
 
             if(self.activeId==187){
+                trace(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",self.activeId)
                 self.array[0].rotation.y=Math.PI/2
                 self.array[0].position.y=0;
                 self.array[0].position.z=ooo.d-this._ot2;
@@ -830,18 +839,33 @@ export class BVPlus {
             }
 
             if(self.activeId==204){
-                self.array[0].rotation.y=Math.PI/2
-                self.array[0].rotation.x=-Math.PI/2
-                self.array[0].position.y=0;
-                self.array[0].position.z=ooo.d-this._ot2;
-                self.array[0].position.x=-ooo.w/2+this.par.otstup;
+                if(self.array[0]!=undefined){
+                    self.array[0].rotation.y=Math.PI/2
+                    self.array[0].rotation.x=-Math.PI/2
+                    self.array[0].position.y=0;
+                    self.array[0].position.z=ooo.d-this._ot2;
+                    self.array[0].position.x=-ooo.w/2+this.par.otstup;
 
-                self.array[1].rotation.y=-Math.PI/2;
-                self.array[1].rotation.x=-Math.PI/2;
-                self.array[1].scale.x=-1
-                self.array[1].position.y=0;
-                self.array[1].position.z=ooo.d-this._ot2;
-                self.array[1].position.x=ooo.w/2-this.par.otstup;
+                    self.array[1].rotation.y=-Math.PI/2;
+                    self.array[1].rotation.x=-Math.PI/2;
+                    self.array[1].scale.x=-1
+                    self.array[1].position.y=0;
+                    self.array[1].position.z=ooo.d-this._ot2;
+                    self.array[1].position.x=ooo.w/2-this.par.otstup;
+                }
+
+                if(self.array[2]!=undefined){
+                    for (var i = 2; i < 8; i++) {
+                        self.array[i].rotation.y=aaaaa[i-2].r;
+                        self.array[i].rotation.x=-aaaaa[i-2].r//-Math.PI/2/**/
+                        self.array[i].position.y=aaaaa[i-2].y;
+                        self.array[i].position.z=ooo.d-aaaaa[i-2].z;
+
+                        if(i<5)self.array[i].position.x=-ooo.w/2+aaaaa[i-2].x; 
+                        else self.array[i].position.x=ooo.w/2+aaaaa[i-2].x; 
+                    }
+                    
+                }
 
             }
         }
@@ -873,6 +897,7 @@ export class BVPlus {
             if(self.activeId==204){
                 let aa=menedsherMaterial.getArrOtObj(self.hron.object.obj,idMat,intColor);                 
                 if(aa!=null){
+                    
                     let aaaa=[]                   
                     for (var ii = 0; ii < 2; ii++) {
                         let ad=[];                         
@@ -886,8 +911,29 @@ export class BVPlus {
                         ad[11]=aa[3]*1;
                         aaaa.push(ad); 
                     }
+
+                    for (var ii = 2; ii < 8; ii++) {
+                        let ad=[];                         
+                        for (var j = 0; j < aa.length; j++) {
+                            ad[j]=aa[j];                                
+                        }
+                        ad[6]="BTboxDin_BVPlus";
+                        ad[8]=self.hron1.object.obj;
+                        ad[9]=self.hron1.object.obj.id;
+                        ad[10]=1;
+                        ad[11]=aa[3]*1;
+                        aaaa.push(ad); 
+                    }
+
                     return aaaa;               
                 }
+
+
+
+
+
+
+
                 
             }
 
@@ -902,6 +948,7 @@ export class BVPlus {
        // this.par.content3d.add(this.content3d);
 
         this.hron=new BKHron(this, this.activeId, 1)
+        this.hron1=null;
         this.hron.initHron=function(){            
             self.boolLad = true;
             if(self.activeId==187){
@@ -924,6 +971,73 @@ export class BVPlus {
             }, 100);
         }
         this.hron.init();
+
+
+        var aaaaa=[
+            {x:4.8,y:-3.2,z:6.5,r:Math.PI/2},
+            {x:4.8,y:-3.2,z:28.7,r:Math.PI/2},
+            {x:4.8,y:-3.2,z:51.2,r:Math.PI/2},
+            {x:-4.8,y:-3.2,z:6.5,r:-Math.PI/2},
+            {x:-4.8,y:-3.2,z:28.7,r:-Math.PI/2},
+            {x:-4.8,y:-3.2,z:51.2,r:-Math.PI/2},
+        ]
+
+
+        var oPos=aaaaa[1];
+
+        if(self.activeId==204){
+            self.hron1 = new BKHron(self, 178, 1)
+            this.hron1.initHron=function(){  
+                if(self.activeId==204){
+                    for (var i = 2; i < 8; i++) {
+                        self.array[i]=self.hron1.get();
+                        let aa=new THREE.AxesHelper(8);
+                        self.array[i].add(aa);
+                    }
+
+                    
+
+                    let dCont=new DCont(main.contentHTML)
+                    dCont.x=400
+                    dCont.y=200;
+                    var o=self.array[2]
+
+                    o.position.x=-22;
+                    o.position.y=-3.23;
+                    o.position.z=51.34;
+
+                    this.slid=new DSliderBig(dCont, 2,2, function(s){ 
+                        oPos.x=this.value*1;
+                        self.drag();
+                        self.par.fun("visi3d"); 
+
+                    }, "x", -30, 30);
+                    this.slid.value=oPos.x
+                    this.slid.width=200
+
+                    this.slid=new DSliderBig(dCont, 2,50, function(s){ 
+                        oPos.y=this.value*1;
+                        self.drag();
+                        self.par.fun("visi3d");  
+                    }, "y", -5, 5);
+                    this.slid.value=oPos.y
+                    this.slid.width=200
+                     this.slid=new DSliderBig(dCont, 2,100, function(s){ 
+                        oPos.z=this.value*1;
+                        self.drag();
+                        self.par.fun("visi3d");  
+                    }, "z", 0, 100);
+                    this.slid.value=0
+                    this.slid.width=200;
+
+                }
+                self.drag();
+                setTimeout(function() {
+                    self.drag();
+                }, 100);
+            }
+            this.hron1.init();
+        }
         
     }
 
