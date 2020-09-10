@@ -623,8 +623,7 @@ export class BTBoxVstavka extends Blok {
         }
 
         
-        this.sobKey = function(tip,e,arrNa){
-            trace("===",tip,arrNa)
+        this.sobKey = function(tip,e,arrNa){            
 
             let b=false;
           

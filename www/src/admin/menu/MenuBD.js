@@ -319,11 +319,9 @@ function MenuBD(menu, fun) {
         if(i==0)b.text="+";
         if(i==1)b.text="-";
         if(i==2)b.text="<"; 
-        if(i==3)b.text=">"; 
-        
+        if(i==3)b.text=">";        
         b.width=ww;
         b.height=ww;
-
     }
 
 

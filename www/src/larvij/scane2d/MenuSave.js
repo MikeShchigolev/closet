@@ -822,10 +822,9 @@ export function Otprovlashka (par, cont) {
 
     this.creatText=function(){
 
-        let link2=this.par.php.server2;
-        if(this.par.php.url!=null)link2=this.par.php.url;
 
-        let link=this.par.php.server;
+
+        let link=this.par.php.server2;
         if(this.par.php.url!=null)link=this.par.php.url;
 
 
@@ -842,7 +841,7 @@ export function Otprovlashka (par, cont) {
         r+="Общая стоимость вашего заказа составляет: "+aMani.price+" "+dcmParam.tCInfa.getText(1)+"\n\n";
 
         r+="Проект: "+link+"?id="+this.par.idSave+"\n";                
-        if(this.par.php.url==null)r+="Спецификация: "+this.par.php.server+'/save/'+this.par.idSave+'/infoTime/info.csv'+"\n\n"; 
+        if(this.par.php.url==null)r+="Спецификация: "+this.par.php.server+'save/'+this.par.idSave+'/infoTime/info.csv'+"\n\n"; 
 
         
         if(dcmParam.tCInfa.getText(7)!="null") r+=dcmParam.tCInfa.getText(7)+"\n";        

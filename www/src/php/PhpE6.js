@@ -17,7 +17,7 @@
   		var arrParams2
   		this.init=function(){
   			arrParams = this.ser.split("?"); 
-  			//this.server =arrParams[0];
+  			this.server2 =arrParams[0];
   			
   			arrParams2 = arrParams[0].split("/");
   			this.aS=arrParams2;
@@ -27,7 +27,7 @@
   				
   			}
 
-  			this.server2=this.server
+  			//this.server2=this.server
 			this.id = getURLParameters("id");
 			this.key = getURLParameters("key");
 			this.url=getURLParameters("url");
