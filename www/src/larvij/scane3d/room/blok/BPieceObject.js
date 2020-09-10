@@ -1187,7 +1187,11 @@ export class HrenNiz {
 
         this.initKey=function(){
             if(this.bkhKey!=null)return;
-            this.bkhKey = new BKHron(this, "235", 1);
+
+            trace(this.idSvaz,"!!!^^!!!",self.par.object.mod.r)
+            var kkk="235"
+            if(self.par.object.mod.r[4]>35)kkk="236";
+            this.bkhKey = new BKHron(this, kkk, 1);
 
             
             //L
