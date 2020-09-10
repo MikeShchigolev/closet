@@ -815,7 +815,7 @@ function DXZXZ(par, fun) {
     this.input2.width=this.w.width-4-this.input1.x
 
     yy+=34
-    new DLabel(this.w.content,this.otstup*2+100,yy+10,"масса грамы").fontSize=12
+    new DLabel(this.w.content,this.otstup*2+100,yy+10,"масса килограм").fontSize=12
     this.input3=new DInput(this.w.content,this.otstup*2+190,yy,"-",function(){
         self.arr[3]=this.value;        
         fun("sd",1);
@@ -823,7 +823,7 @@ function DXZXZ(par, fun) {
     this.input3.width=this.w.width-4-this.input3.x
 
     yy+=34
-    new DLabel(this.w.content,this.otstup*2+100,yy+10,"обьем см3").fontSize=12
+    new DLabel(this.w.content,this.otstup*2+100,yy+10,"обьем м3").fontSize=12
     this.input4=new DInput(this.w.content,this.otstup*2+190,yy,"-",function(){
         self.arr[4]=this.value;        
         fun("sd",1);

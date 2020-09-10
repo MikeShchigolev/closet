@@ -17,6 +17,7 @@ export class MenedsherMaterial  {
 
 
         this.getArrOtObj=function(o, s, intColor){
+            trace("o^^",o)
             
             if(o&&o.info){                
                 if(o.info.color[s]){

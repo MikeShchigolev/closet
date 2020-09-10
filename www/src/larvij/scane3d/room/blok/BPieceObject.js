@@ -518,10 +518,10 @@ export class BPieceObject extends Blok {
             }
 
             if(s=="plusL"){
-                self.hrenNiz.plusL=!self.hrenNiz.plusL;
+                self.krai.plusL=!self.krai.plusL;
             }
             if(s=="plusR"){
-                self.hrenNiz.plusR=!self.hrenNiz.plusR;
+                self.krai.plusR=!self.krai.plusR;
             }
 
 
@@ -692,9 +692,14 @@ export class BPieceObject extends Blok {
             obj.hrenNiz.intSah1=this.hrenNiz.intSah1;
 
             obj.polka=this.polka
+            obj.plusR=this.krai.plusR
+            obj.plusL=this.krai.plusL
+
             obj.children=[];
             obj.idColor=this.idColor;
             if(this.sahSuper.bool==true)obj.sahSuper=this.sahSuper.getObj()
+
+
 
             for (var i = 0; i < this.children.length; i++) {
                 obj.children[i]=this.children[i].getObj();
@@ -728,7 +733,15 @@ export class BPieceObject extends Blok {
                 this.notDrag=false;
             } 
 
+
             if(obj.polka)this.polka=obj.polka
+            if(obj.plusR!=undefined){                
+                this.krai.plusR = obj.plusR;
+                this.krai.plusL = obj.plusL;
+            } 
+
+
+
                 
             if(obj.intSah!=undefined){                
                 self.hrenNiz._intSah=self.krai._intSah=self._intSah=-2
@@ -904,6 +917,9 @@ export class BKrai {
         var sah=0
         this.boolLoadHron=false;
 
+        this._plusL=false;
+        this._plusR=false;
+
         this.initHron=function(){            
             sah++;
             if(sah==2)self.initHron2()            
@@ -937,6 +953,93 @@ export class BKrai {
                 self.par.dragToPanel()
             //}, 1);
         } 
+
+                //Вставляем вешалку
+        this.bkhKey=null;
+
+        this.initKey=function(){
+            if(this.bkhKey!=null)return;            
+            var kkk="235"
+            if(self.par.object.mod.r[4]>35)kkk="236";
+            this.bkhKey = new BKHron(this, kkk, 1);
+
+            
+            //L
+            this.c3dkL = new THREE.Object3D();
+            //this.c3dkL.visible=false;
+            this.par.c3dNa.add(this.c3dkL)
+
+
+            //R
+            this.c3dkR = new THREE.Object3D();
+            //this.c3dkR.visible=false;
+            this.par.c3dNa.add(this.c3dkR)
+
+            
+
+            this.bkhKey.initHron=function(){
+                
+                let m=self.bkhKey.get();
+                self.c3dkL.add(m);
+                m.position.set(0,0,0);
+   
+                
+                self.c3dkL.position.x=self.par.object.mod.r[0];
+                self.c3dkL.position.z=self.par.object.mod.r[4]/2;
+                self.c3dkL.rotation.z=Math.PI/2;
+                self.c3dkL.rotation.x=Math.PI/2;
+
+                var omb, o
+                var mark=self.par.markers
+                for (var i = m.children[0].children.length-1; i >=0 ; i--) {                    
+                    if(m.children[0].children[i].name.indexOf("marker")!=-1){                        
+                        o = self.par.mO.getRendomID("tit12");                        
+                        omb=mark.getO3D(o)
+                        omb.setPRS({
+                            x:m.children[0].children[i].position.x,
+                            y:m.children[0].children[i].position.z,
+                            z:-m.children[0].children[i].position.y
+                        })                        
+                        m.children[0].add(omb.content3d);
+                        omb.content3d.rotation.x=Math.PI/2;
+                        omb.boolColVisi=false;
+                        m.children[0].remove(m.children[0].children[i])
+                    }
+                }
+
+
+
+                m=self.bkhKey.get();
+                self.c3dkR.add(m);
+                m.position.set(0,0,0);                
+                self.c3dkR.position.x=-self.par.object.mod.r[0];
+                self.c3dkR.position.z=self.par.object.mod.r[4]/2;
+                self.c3dkR.rotation.z=-Math.PI/2;
+                self.c3dkR.rotation.x=Math.PI/2;
+
+
+                for (var i = m.children[0].children.length-1; i >=0 ; i--) {                    
+                    if(m.children[0].children[i].name.indexOf("marker")!=-1){                        
+                        o = self.par.mO.getRendomID("tit12");                       
+                        omb=mark.getO3D(o)
+                        omb.setPRS({
+                            x:m.children[0].children[i].position.x,
+                            y:m.children[0].children[i].position.z,
+                            z:-m.children[0].children[i].position.y
+                        })                        
+                        m.children[0].add(omb.content3d)
+                        omb.content3d.rotation.x=Math.PI/2
+                        omb.boolColVisi=false
+                        m.children[0].remove(m.children[0].children[i])                                              
+                    }
+                }
+                self.drag();
+            }
+            this.bkhKey.init();
+        }
+
+
+        //--------------
        
 
         var mesh,sahPlus,sahPlus1
@@ -944,6 +1047,9 @@ export class BKrai {
             if(this.bool==false)return 
             if(this.boolLoadHron==false)return
            
+            if(this.c3dkL)this.c3dkL.visible=false; 
+            if(this.c3dkR)this.c3dkR.visible=false; 
+
             for (var i = 0; i < self.arrHron.length; i++) {
                 this.arrHron[i].clear();
             }
@@ -955,31 +1061,47 @@ export class BKrai {
                     mesh.position.x=-this.par.object.mod.r[3]/2                
                     mesh.scale.x=1;
                 }
-                if(this.par._polka==false)
-                if(this.hronPlus)if(this.hronPlus.obj3d){//закрывашки
-                    mesh=this.hronPlus.get();
-                    mesh.position.x=-this.par.object.mod.r[3]/2 
-                    mesh.scale.x=1;
-                    sahPlus++; 
-                } 
+                if(this.par._polka==false){
+                    if(this._plusL==false){
+                        if(this.hronPlus)if(this.hronPlus.obj3d){//закрывашки
+                            mesh=this.hronPlus.get();
+                            mesh.position.x=-this.par.object.mod.r[3]/2 
+                            mesh.scale.x=1;
+                            sahPlus++; 
+                        } 
+                    }else{
+                        if(this.bkhKey!=null && this.bkhKey.obj3d){
+                            this.c3dkL.visible=true; 
+                        }
+                    }
+                }                
             }
 
-
+            
             if(this._intSah1!=-1){
                 if(this.arrHron[this._intSah1]!=undefined){                    
                     mesh=this.arrHron[this._intSah1].get();
                     mesh.position.x=this.par.object.mod.r[3]/2                    
                     mesh.scale.x=-1;
                 }
-                if(this.par._polka==false)
-                if(this._intSah1==0){
-                    if(this.hronPlus)if(this.hronPlus.obj3d){//закрывашки
-                        mesh=this.hronPlus.get();
-                        mesh.position.x=this.par.object.mod.r[3]/2 
-                        mesh.scale.x=-1;
-                        sahPlus++ 
+
+                if(this.par._polka==false){                    
+                    if(this._intSah1==0){
+                        if(this._plusR==false){
+                            if(this.hronPlus)if(this.hronPlus.obj3d){//закрывашки
+                                mesh=this.hronPlus.get();
+                                mesh.position.x=this.par.object.mod.r[3]/2 
+                                mesh.scale.x=-1;
+                                sahPlus++ 
+                            }
+                        }else{
+                            if(this.bkhKey!=null && this.bkhKey.obj3d){
+                                this.c3dkR.visible=true; 
+                            }  
+                        }
                     }
                 }
+                
             }
         }
 
@@ -1020,8 +1142,24 @@ export class BKrai {
         this.getPrice=function(a, intColor, idMat){
             if(this.bool==false)return
             strXZ="plus"
-            if(intColor==1)strXZ="plus1" 
+            if(intColor==1)strXZ="plus1"; 
 
+
+            if(this.c3dkR && this.c3dkR.visible){
+                aaa = menedsherMaterial.getArrOtObj(this.bkhKey.object.obj,idMat,intColor)
+                aaa[9]=this.bkhKey.object.obj.id;
+                aaa[8]=this.bkhKey.object.obj;
+                a.push(aaa); 
+                trace("^^^^^^1^^^^^",aaa)
+            }
+            if(this.c3dkL && this.c3dkL.visible){
+                trace("^^^^^2^^^^^^====",this.bkhKey.object.obj)
+                aaa = menedsherMaterial.getArrOtObj(this.bkhKey.object.obj,idMat,intColor)
+                aaa[9]=this.bkhKey.object.obj.id;
+                aaa[8]=this.bkhKey.object.obj;
+                a.push(aaa); 
+                trace("^^^^^2^^^^^^",aaa)
+            }
 
             if(this._intSah!=-1){
                 aaa = menedsherMaterial.getArrOtObj(this.arrHron[this._intSah].object.obj,idMat,intColor)
@@ -1079,6 +1217,26 @@ export class BKrai {
         }
     }
 
+    set plusL(v) {
+        if(this._plusL!=v){            
+            this._plusL= v;
+            this.initKey();
+            this.drag()
+        }       
+    }   
+    get plusL() { return  this._plusL;}
+
+
+    set plusR(v) {
+        if(this._plusR!=v){
+            this._plusR= v;
+            this.initKey();
+            this.drag()
+            
+        }       
+    }   
+    get plusR() { return  this._plusR;}
+
 
     set intSah(v) {
         if(this._intSah!=v){
@@ -1116,8 +1274,7 @@ export class HrenNiz {
         this.arrModel=[];
         this._polka=false;
 
-        this._plusL=false;
-        this._plusR=false;
+
 
         this._intSah=-1;
         this._intSah1=-1;
@@ -1166,7 +1323,7 @@ export class HrenNiz {
 
         this.bkHron=new BKHron(this, this.idSvaz, 0);       
         
-        var arr=this.object.obj.str[0].split(",")  
+        var arr=this.object.obj.str[0].split(",");  
 
         this.arrHron.push(new BKHron(this, this.idSvaz, 0))
         this.arrHron.push(new BKHron(this, arr[0], 1))
@@ -1175,124 +1332,19 @@ export class HrenNiz {
         this.arrHron.push(new BKHron(this, arr[3], 1))
 
 
+
+
         
-        //this.arrHron.push(new BKHron(this, "215", 1))
 
 
-
-        trace(this.idSvaz,"!!!^^!!!",arr)
-
-        //Вставляем вешалку
-        this.bkhKey=null;
-
-        this.initKey=function(){
-            if(this.bkhKey!=null)return;
-
-            trace(this.idSvaz,"!!!^^!!!",self.par.object.mod.r)
-            var kkk="235"
-            if(self.par.object.mod.r[4]>35)kkk="236";
-            this.bkhKey = new BKHron(this, kkk, 1);
-
-            
-            //L
-            this.c3dkL = new THREE.Object3D();
-            //this.c3dkL.visible=false;
-            this.par.c3dNa.add(this.c3dkL)
-
-
-            //R
-            this.c3dkR = new THREE.Object3D();
-            //this.c3dkR.visible=false;
-            this.par.c3dNa.add(this.c3dkR)
-
-            
-
-            this.bkhKey.initHron=function(){
-                
-                let m=self.bkhKey.get();
-                self.c3dkL.add(m);
-                m.position.set(0,0,0)
-   
-                
-                self.c3dkL.position.x=self.par.object.mod.r[0];
-                self.c3dkL.position.z=self.par.object.mod.r[4]/2;
-                self.c3dkL.rotation.z=Math.PI/2;
-                self.c3dkL.rotation.x=Math.PI/2;
-
-                var omb, o
-                var mark=self.par.markers
-                for (var i = m.children[0].children.length-1; i >=0 ; i--) {                    
-                    if(m.children[0].children[i].name.indexOf("marker")!=-1){
-                        
-                        o = self.par.mO.getRendomID("tit12");
-                        trace(m.children[0].children[i].position)
-                        omb=mark.getO3D(o)
-                        trace("^^^^",o,omb)
-
-                        omb.setPRS({
-                            x:m.children[0].children[i].position.x,
-                            y:m.children[0].children[i].position.z,
-                            z:-m.children[0].children[i].position.y
-                        })                        
-                        m.children[0].add(omb.content3d);
-                        omb.content3d.rotation.x=Math.PI/2;
-                        omb.boolColVisi=false;
-                    }
-                }
-
-
-
-
-                let rrr=new THREE.AxesHelper(50);
-                self.par.c3dNa.add(rrr);
-
-
-
-                m=self.bkhKey.get();
-                self.c3dkR.add(m);
-                m.position.set(0,0,0);                
-                self.c3dkR.position.x=-self.par.object.mod.r[0];
-                self.c3dkR.position.z=self.par.object.mod.r[4]/2;
-                self.c3dkR.rotation.z=-Math.PI/2;
-                self.c3dkR.rotation.x=Math.PI/2;
-
-
-                for (var i = m.children[0].children.length-1; i >=0 ; i--) {                    
-                    if(m.children[0].children[i].name.indexOf("marker")!=-1){
-                        
-                        o = self.par.mO.getRendomID("tit12");                       
-                        omb=mark.getO3D(o)                       
-
-                        omb.setPRS({
-                            x:m.children[0].children[i].position.x,
-                            y:m.children[0].children[i].position.z,
-                            z:-m.children[0].children[i].position.y
-                        })                        
-                        m.children[0].add(omb.content3d)
-                        omb.content3d.rotation.x=Math.PI/2
-                        omb.boolColVisi=false
-
-                        m.children[0].remove(m.children[0].children[i])
-                                              
-                    }
-                }
-
-
-
-            }
-            this.bkhKey.init();
-
-        }
-
-
-        //--------------
 
         
         
 
         this.par.aa.unshift("polka");
-        this.par.aa.unshift("plusL");
         this.par.aa.unshift("plusR");
+        this.par.aa.unshift("plusL");
+        
 
         this.clear=function(){  
             for (var i = 0; i < this.arrHron.length; i++) {
@@ -1509,24 +1561,7 @@ export class HrenNiz {
 
     
 
-    set plusL(v) {
-        if(this._plusL!=v){
-            this._plusL= v;
-            this.initKey()
-            this.c3dkL.visible=v;
-        }       
-    }   
-    get plusL() { return  this._plusL;}
 
-
-    set plusR(v) {
-        if(this._plusR!=v){
-            this._plusR= v;
-            this.initKey()
-            this.c3dkR.visible=v;
-        }       
-    }   
-    get plusR() { return  this._plusR;}
 
 
 
