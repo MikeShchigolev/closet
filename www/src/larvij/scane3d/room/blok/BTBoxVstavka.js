@@ -109,10 +109,8 @@ export class BTBoxVstavka extends Blok {
             this.creadDebag(self.cont3dLoad.children[0]);
             visi3D.objShadow(self.cont3dLoad, true)            
             self.boolLoad=true;
-            this.dragIndex();
-
+            this.dragIndex();            
             
-            trace(">>>",self.cont3dLoad.position)
             let o=this.mO.getRendomID("tit2");
             let omb=this.markers.getO3D(o);            
             /*
@@ -575,7 +573,7 @@ export class BTBoxVstavka extends Blok {
             
             let aaa=this.bvPlus.getPrice(intColor,idMat)  
             
-           
+            trace(">>>>>",this.arrObj[this._indexW][this._indexH])
             let ooo= this.arrObj[this._indexW][this._indexH].obj;
             if(ooo){
                 if(this.object.priority!=undefined)ooo.priority= this.object.priority;
@@ -584,11 +582,12 @@ export class BTBoxVstavka extends Blok {
             else{
                 return []
             }
-
+            
 
 
             aa=menedsherMaterial.getArrOtObj(ooo.obj,idMat,intColor); 
 
+            trace(">>>>>!!!!",aa)
             if(aa!=null){
                 ad=[];                         
                 for (var j = 0; j < aa.length; j++) {
@@ -991,13 +990,13 @@ export class BVPlus {
                 if(self.activeId==204){
                     for (var i = 2; i < 8; i++) {
                         self.array[i]=self.hron1.get();
-                        let aa=new THREE.AxesHelper(8);
-                        self.array[i].add(aa);
+                        /*let aa=new THREE.AxesHelper(8);
+                        self.array[i].add(aa);*/
                     }
 
                     
 
-                    let dCont=new DCont(main.contentHTML)
+                  /*  let dCont=new DCont(main.contentHTML)
                     dCont.x=400
                     dCont.y=200;
                     var o=self.array[2]
@@ -1028,7 +1027,7 @@ export class BVPlus {
                         self.par.fun("visi3d");  
                     }, "z", 0, 100);
                     this.slid.value=0
-                    this.slid.width=200;
+                    this.slid.width=200;*/
 
                 }
                 self.drag();
