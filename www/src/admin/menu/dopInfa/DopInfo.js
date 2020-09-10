@@ -295,7 +295,7 @@ function DICsv(par) {
 
 
 
-    this.batS=new DButton(this.panel, this.otstup, this.otstup,"csv Заменна Markerov ",function(s){
+    this.batS=new DButton(this.panel, this.otstup, this.otstup,"Выборочная замена цены ",function(s){
         var a=s.split("base64,");
         var str=window.atob(a[1]);
         let aa=str.split(";");
@@ -307,7 +307,7 @@ function DICsv(par) {
         
          
     });
-    this.batS.width=200;
+    this.batS.width=250;
     this.batS.startFile("csv");
 
 
@@ -495,7 +495,7 @@ function DGBig(par, fun) {
             this.gl.widthPic=48;
             this.gl.heightPic=48;
             this.gl.height=600;
-            trace(aGlaf.objectBase)
+            
             let aZZ=[];  
             for (var i = 0; i < aGlaf.objectBase.materials.length; i++) {
                 aZZ.push({src:"resources/data/"+aGlaf.objectBase.materials[i].id+"/64.png",title:aGlaf.objectBase.materials[i].id});
@@ -568,6 +568,9 @@ function DGBig(par, fun) {
             aZZ.push({src:"resources/data/"+dCol.arrayColor[i]+"/64.png",title:dCol.arrayColor[i]});            
         }                  
         this.gallery.start(aZZ);
+        /*for (var i = 0; i < this.gallery.array.length; i++) {
+            this.gallery.array[i].lebel.visible=true
+        }*/
         if(self.gl)self.gl.visible=false;
     }
 
@@ -914,10 +917,16 @@ function BLADXZ(par, idArr,fun) {
     this.setId=function(id){
         this.image.link="resources/data/"+id+"/100.png";
         this.dCont.visible=true;
+        ll.value=id+""
     }
 
     var yy=this.otstup
-    new DLabel(this.panel,this.otstup*2+100,yy+10,"маркер (>3Символ)").fontSize=10
+
+    var ll=new DLabel(this.panel,this.otstup,yy,"null")
+    ll.bold=true
+    ll.fontSize=12
+
+    new DLabel(this.panel,this.otstup*2+100,yy+10,"артикул").fontSize=10
     this.input=new DInput(this.panel,this.otstup*2+190,yy,"-",function(){
         self.arr[5+self.idArr*4]=this.value;
         fun()  
@@ -936,7 +945,7 @@ function BLADXZ(par, idArr,fun) {
     new DLabel(this.panel,this.otstup*2+100,yy+10,"тип").fontSize=12
     this.input2=new DInput(this.panel,this.otstup*2+190,yy,"-",function(){
         self.arr[5+self.idArr*4+2]=this.value;
-        fun() 
+        fun(); 
     })
     this.input2.width=this.panel.width-4-this.input.x
     yy+=34
@@ -946,8 +955,9 @@ function BLADXZ(par, idArr,fun) {
         this.arr=arr;
         this.input.value = self.arr[5+self.idArr*4] 
         this.input1.value = self.arr[5+self.idArr*4+1]
-        this.input2.value = self.arr[5+self.idArr*4+2] 
-         
+        this.input2.value = self.arr[5+self.idArr*4+2]
+
+        
 
     }
 }  

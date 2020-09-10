@@ -284,7 +284,7 @@ export class BPieceObject extends Blok {
         this.bds=false;
         this.dragStart=function(){
             if(this.mO.boolClone){  
-                console.warn("dragStart@@@@@@@@@@@@@@@@@@@@@@@@1")              
+                         
                 let o=this.getObj();
                 let blok=this.mO.getBlok(this.object)                        
                 blok.setObj(o);
@@ -296,7 +296,7 @@ export class BPieceObject extends Blok {
 
                 this.mO.par.setBlokActiv(blok)
                 this.mO.par.start(blok)
-                console.warn("dragStart@@@@@@@@@@@@@@@@@@@@@@@@")
+               
                 return true;
             }
             this.bds=true; 
@@ -768,15 +768,7 @@ export class BPieceObject extends Blok {
                         b=true;
                     }
 
-                    /*if(e.keyCode==37 || e.keyCode==65)  {
-                        xxx-=30;    
-                        b=true;
-                    }
-
-                    if(e.keyCode==39 || e.keyCode==68)  {
-                        xxx+=30;    
-                        b=true;
-                    }*/
+                    
 
                     
                     this.bds=true;
