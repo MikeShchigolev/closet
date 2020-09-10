@@ -702,6 +702,8 @@ export class OMB{
         this.obj=obj;
         this.par=par;
 
+        this.boolColVisi=true
+
 
         this.rect=[]
         for (var i = 0; i < this.obj.obj.mod.r.length; i++) this.rect[i]=this.obj.obj.mod.r[i]*1
@@ -791,6 +793,7 @@ export class OMB{
             this.rectObj.x+=this.obj.obj.mod.r[0];
             this.rectObj.w=this.obj.obj.mod.r[3];
             this.rectObj.h=this.obj.obj.mod.r[4];
+            console.warn("@@@@@@@@@@@@")
             return this.rectObj
         }  
 

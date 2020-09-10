@@ -516,6 +516,15 @@ export class BPieceObject extends Blok {
                 self.testKorektActiv();  
                 r=true 
             }
+
+            if(s=="plusL"){
+                self.hrenNiz.plusL=!self.hrenNiz.plusL;
+            }
+            if(s=="plusR"){
+                self.hrenNiz.plusR=!self.hrenNiz.plusR;
+            }
+
+
             if(!r&&s.indexOf("mod_55_")!=-1){
                 let oo=self.pppObj.up1.testBool()
                 if(oo==null){
@@ -792,10 +801,8 @@ export class BPieceObject extends Blok {
                     }, 100);
                 }
             }          
-        } 
-
-
-        this.parOld=undefined
+        }
+        this.parOld=undefined;
     } 
 
 
@@ -1108,6 +1115,10 @@ export class HrenNiz {
         this.arrHron;
         this.arrModel=[];
         this._polka=false;
+
+        this._plusL=false;
+        this._plusR=false;
+
         this._intSah=-1;
         this._intSah1=-1;
 
@@ -1141,11 +1152,10 @@ export class HrenNiz {
             sah++            
             if(sah<self.arrHron.length)return;
             mesh=self.arrHron[0].get();            
-            //setTimeout(function() {
-                //console.warn("@@@")
-                if(self.par.dragPar)self.par.dragPar();
-                self.drag();
-            //}, 1000);            
+            
+            if(self.par.dragPar)self.par.dragPar();
+            self.drag();
+                        
         }
 
         this.object=this.par.mO.getIdObj(this.idSvaz);       
@@ -1163,10 +1173,122 @@ export class HrenNiz {
         this.arrHron.push(new BKHron(this, arr[1], 1))
         this.arrHron.push(new BKHron(this, arr[2], 1))
         this.arrHron.push(new BKHron(this, arr[3], 1))
+
+
+        
+        //this.arrHron.push(new BKHron(this, "215", 1))
+
+
+
+        trace(this.idSvaz,"!!!^^!!!",arr)
+
+        //Вставляем вешалку
+        this.bkhKey=null;
+
+        this.initKey=function(){
+            if(this.bkhKey!=null)return;
+            this.bkhKey = new BKHron(this, "235", 1);
+
+            
+            //L
+            this.c3dkL = new THREE.Object3D();
+            //this.c3dkL.visible=false;
+            this.par.c3dNa.add(this.c3dkL)
+
+
+            //R
+            this.c3dkR = new THREE.Object3D();
+            //this.c3dkR.visible=false;
+            this.par.c3dNa.add(this.c3dkR)
+
+            
+
+            this.bkhKey.initHron=function(){
+                
+                let m=self.bkhKey.get();
+                self.c3dkL.add(m);
+                m.position.set(0,0,0)
+   
+                
+                self.c3dkL.position.x=self.par.object.mod.r[0];
+                self.c3dkL.position.z=self.par.object.mod.r[4]/2;
+                self.c3dkL.rotation.z=Math.PI/2;
+                self.c3dkL.rotation.x=Math.PI/2;
+
+                var omb, o
+                var mark=self.par.markers
+                for (var i = m.children[0].children.length-1; i >=0 ; i--) {                    
+                    if(m.children[0].children[i].name.indexOf("marker")!=-1){
+                        
+                        o = self.par.mO.getRendomID("tit12");
+                        trace(m.children[0].children[i].position)
+                        omb=mark.getO3D(o)
+                        trace("^^^^",o,omb)
+
+                        omb.setPRS({
+                            x:m.children[0].children[i].position.x,
+                            y:m.children[0].children[i].position.z,
+                            z:-m.children[0].children[i].position.y
+                        })                        
+                        m.children[0].add(omb.content3d);
+                        omb.content3d.rotation.x=Math.PI/2;
+                        omb.boolColVisi=false;
+                    }
+                }
+
+
+
+
+                let rrr=new THREE.AxesHelper(50);
+                self.par.c3dNa.add(rrr);
+
+
+
+                m=self.bkhKey.get();
+                self.c3dkR.add(m);
+                m.position.set(0,0,0);                
+                self.c3dkR.position.x=-self.par.object.mod.r[0];
+                self.c3dkR.position.z=self.par.object.mod.r[4]/2;
+                self.c3dkR.rotation.z=-Math.PI/2;
+                self.c3dkR.rotation.x=Math.PI/2;
+
+
+                for (var i = m.children[0].children.length-1; i >=0 ; i--) {                    
+                    if(m.children[0].children[i].name.indexOf("marker")!=-1){
+                        
+                        o = self.par.mO.getRendomID("tit12");                       
+                        omb=mark.getO3D(o)                       
+
+                        omb.setPRS({
+                            x:m.children[0].children[i].position.x,
+                            y:m.children[0].children[i].position.z,
+                            z:-m.children[0].children[i].position.y
+                        })                        
+                        m.children[0].add(omb.content3d)
+                        omb.content3d.rotation.x=Math.PI/2
+                        omb.boolColVisi=false
+
+                        m.children[0].remove(m.children[0].children[i])
+                                              
+                    }
+                }
+
+
+
+            }
+            this.bkhKey.init();
+
+        }
+
+
+        //--------------
+
         
         
 
         this.par.aa.unshift("polka");
+        this.par.aa.unshift("plusL");
+        this.par.aa.unshift("plusR");
 
         this.clear=function(){  
             for (var i = 0; i < this.arrHron.length; i++) {
@@ -1379,6 +1501,29 @@ export class HrenNiz {
             this.arrHron[i].init();
         }       
     }
+
+
+    
+
+    set plusL(v) {
+        if(this._plusL!=v){
+            this._plusL= v;
+            this.initKey()
+            this.c3dkL.visible=v;
+        }       
+    }   
+    get plusL() { return  this._plusL;}
+
+
+    set plusR(v) {
+        if(this._plusR!=v){
+            this._plusR= v;
+            this.initKey()
+            this.c3dkR.visible=v;
+        }       
+    }   
+    get plusR() { return  this._plusR;}
+
 
 
     set polka(v) {

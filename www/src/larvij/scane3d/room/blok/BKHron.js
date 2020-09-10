@@ -15,8 +15,8 @@ export class BKHron {
         else this.mO=this.par.par.mO
 
        
-
-        this.object=this.mO.getIdObj(id)
+        self.initHron=undefined;  
+        this.object = this.mO.getIdObj(id)
        
         this.array=[]
 
