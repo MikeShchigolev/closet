@@ -440,7 +440,6 @@ export class Galleres  {
             this._colorBool = true;
             this.array[0].index=this._index;
 
-            trace(this.object.array)
 
 
             this.array[1].start(this.object.array);
@@ -548,7 +547,7 @@ export class GalleryXZ extends DGallery {
         };
 
         this.div.removeEventListener('mousewheel', this.mousewheel)
-        //trace(">>>>>>>>>",e.wheelDelta, e.delta, e.deltaY, e.detail)
+
         // прокрутка колесом мышки
         var hhh, www;
         this.mousewheel = function (e) {
@@ -582,8 +581,6 @@ export class GalleryXZ extends DGallery {
                 if(e.wheelDelta>0)delta=-1;
                 else delta=1;
             }
-
-            trace(">>>>>>>>>",e.wheelDelta, e.delta, e.deltaY, e.detail)
 
 
             p=delta;

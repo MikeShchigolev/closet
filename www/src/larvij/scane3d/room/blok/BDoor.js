@@ -218,7 +218,7 @@ export class BDoor extends Blok {
             this.cont.scale.y=s;
             this.arrayMesh[9].scale.y=(this._height-ott)/195;
             this.arrayMesh[9].scale.x=(this._width-ott-ott)/90;
-            trace("this.arrayMesh[9] ",this.arrayMesh[9])
+            
             this.arrayMesh[9].position.set(0,0,0)//дверь 
             
             this.arrayMesh[11].position.x=this._width-10-10           
@@ -373,7 +373,6 @@ export class BDoor extends Blok {
             this.boxColizi.rectCollisMeshdy.x=obj.x-this._width/2
             this.boxColizi.rectCollisMeshdy.y=obj.y-this._height/2
 
-            trace(this.boxColizi.rectCollisMeshdy.x+" !!! ",this.boxColizi)
             this.x=obj.x;
             this.y=obj.y; 
 

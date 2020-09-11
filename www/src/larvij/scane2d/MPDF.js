@@ -26,7 +26,7 @@ export class MPDF {
             pdf.fromHTML(document.body);
             pdf.save('test.pdf');
 
-            trace(pdf)
+
         }
 
         this.creat2=function(c){
@@ -188,7 +188,7 @@ export class MPDF {
 
             doc.end();
             stream.on('finish', function() {
-                trace("adsf");
+
                 var blob = stream.toBlob('application/pdf');
                 saveData(blob, 'aa.pdf');
             })

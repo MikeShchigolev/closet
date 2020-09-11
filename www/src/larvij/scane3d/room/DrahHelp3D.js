@@ -104,9 +104,7 @@ export class DrahHelp3D  {
 
 
 
-           /* axesPlacement = visi3D.camera.localToWorld(vec)
-            vectorScreen.z =axesPlacement.z;
-            trace(axesPlacement)*/
+
 
             return vectorScreen;
         }
@@ -205,7 +203,7 @@ export class BoxDH3D  {
 
             vect = this.par.getPP(this.blok.content3d) 
             z= Math.round((1-vect.z)*1000)/1000
-            //trace(z,vect)
+
             this.dCont.visible=true;  
             this.dCont.x=vect.x;
             this.dCont.y=vect.y;

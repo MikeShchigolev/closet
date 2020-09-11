@@ -315,13 +315,11 @@ export class MPrint  {
         var r2 = [255, 255, 255, 255];
         var r = [255, 255, 255, 255];
         this.corectBMP=function(bmp){
-            trace(bmp.width+"   "+bmp.height)
+ 
             for (var i = 0; i < bmp.width; i++) {
                 for (var j = 0; j < bmp.height; j++) {
                     rgba=bmp.getPixel(i,j)
-                    if(rgba[3]!=255){
-                        if(i==5)trace(rgba)
-                    }
+                   
                     if(rgba[3]==0){
                         bmp.setPixel(i,j,r)
                     }else{

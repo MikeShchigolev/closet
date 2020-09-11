@@ -31,7 +31,7 @@ export class NizMenu  {
 
         this._vusot=47;
 
-        trace("##########NMGalf####################");
+
         this.nmGalf=new NMGalf(this,function(s,p){//подобектная
             if(s=="foto"){
                 self.fotoMenu.setFoto(p)
@@ -174,11 +174,9 @@ export class PlusMM  {
                     //self.par.par.mInfo.setFunSave("str",function(s){})
 
                     self.par.par.menuSave.getNewProd(function(str){  
-                        trace("***",str)                      
+                    
                         self.par.par.mInfo.setFunSave(str,
                             function(s){
-                                trace("***==============",s) 
-                                trace("***==============",this.text)                
                                 self.par.par.menuSave.setMail(this.text, function(){
                                     self.par.par.mInfo.setFun("ПИСЬМО ОТПРАВЛЕННО.", "Письмо было отправелнено на Ваш эмеил, но могло попасть в спам!",function(){},true)
                                 });
@@ -214,8 +212,7 @@ export class PlusMM  {
         }
 
         function download(data, filename, type) {
-            trace(self.par.par.par);
-            trace(self.par.par.menuSave);           
+
             var dd=self.zamenaSimvol(data,["×","x"])  
             var time=(new Date()).getTime()
             var ll="../resources/tmpInfo/"+time+".csv";
@@ -290,7 +287,7 @@ export class NMWebCam  {
 
         var xx=this.otstup
         this.but=new DButSim(this.dCont,xx,this.otstup," ",function(){
-            trace(self.par.par)
+
             self.par.par.menuActiv(false, 500);
             self.par.setObject(null)
             self.par.par.par.webCamera.active=false
@@ -306,9 +303,6 @@ export class NMWebCam  {
         xx+=this._vusot+this.otstup;
 
         this.but=new DButSim(this.dCont,xx,this.otstup," ",function(){
-            trace("####")
-           /* var base64= self.par.par.par.scane3d.foto3dLarvij.get("original") 
-            self.par.fotoMenu.setFoto(base64)*/
             self.par.par.par.scane3d.foto3dLarvij.getOriginalWeb(function(base64){
                 self.par.fotoMenu.setFoto(base64) 
             })  
@@ -393,7 +387,6 @@ export class NMGalf  {
         var  bb=new DButSim(this.dCont,xx,this.otstup," ",function(){
             
             self.room.par.bactive=false
-            trace(self.room.par)
         },"resources/image/www.png",)
         bb.borderRadius=111;
         bb.boolLine=false;
@@ -463,7 +456,6 @@ export class NMGalf  {
 
         this.down=function(b){
             if(this.alpha!=1)return  
-            trace("@@@@@@@")
 
             if(this.idArr==0){//спецификация  
                 self.par.plusMM.active=true;                 

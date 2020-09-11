@@ -64,7 +64,6 @@ export class TudaSuda  {
         this.tDoChildren=function(c,c1,a){
             if(c.length!=c1.length)return false;
 
-            //trace(c,c1)
 
             return true; 
         }

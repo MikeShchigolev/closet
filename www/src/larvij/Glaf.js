@@ -294,13 +294,8 @@ export class Glaf  {
                         var conf = JSON.parse(data)
                         oo = conf;
                     } else oo = data;   
-                    trace("__________________________________") 
-                    
-                    //oo.children[1].children.splice(1,1) 
-                    //oo.children[1].children[0].children.splice(1,1)
-                    //oo.children[1].children[0].children.splice(1,1)
-                    //oo.children[1].children[0].children.splice(1,1)
-                    trace(oo.children[1].children[0])
+
+
 
                     self.setObj(oo)
                                   

@@ -51,11 +51,11 @@ export class LMain  {
         if(dcmParam.mobile==false){
 			let r = navigator.userAgent.match(/iPhone|iPad|iPod/i);			
 	        if(r==null ){	
-	        	trace("sah2: "+navigator.userAgent.match(/Mac OS/i))        	
+       	
 	            if(navigator.userAgent.match(/Mac OS/i)!=null){
-	            	trace("sah3: "+window.matchMedia("(any-pointer:coarse)").matches)
+
 	                if(window.matchMedia("(any-pointer:coarse)").matches==true){
-	                    trace("sah4")
+
 	                    dcmParam.mobile=true
 	                }
 	            }
@@ -198,7 +198,7 @@ export class LMain  {
         this.setObjectsJSON = function (object) {
         	
         	let b
-        	//trace("^^",object)
+
         	for (var i = 0; i < object.array.length; i++) {        		
         		b=this.csvConfigArray.length;
         		for (var j = 0; j < this.csvConfigArray.length; j++) {
@@ -213,18 +213,12 @@ export class LMain  {
         	for (var i = 0; i < this.objectBase.bd.length; i++) {
 	            for (var j = 0; j < this.csvConfigArray.length; j++) {                             
 	                if(this.objectBase.bd[i].id+""==this.csvConfigArray[j].id){
-	                    //this.objectBase.bd[i].obj.info=array[j];
-	                    //arrxz.push(this.objectBase.bd[i].obj)
+
 	                    this.objectBase.bd[i].obj.info=this.csvConfigArray[j]
-	                    //trace(i+"^^"+j+"  ",this.objectBase.bd[i].obj.info)
-	                    //trace(this.objectBase.bd[i].obj.info)	                    
+                   
 	                }
 	            }            
 	        }
-
-        	//trace("FIXE не обновлябться в менеджере<<<<<",this.csvConfigArray.length)
-
-        	//this.csvConfigArray
         }
         
 
@@ -336,7 +330,7 @@ export class KlassCSVObj  {
 
 	       	a=_str.split("\n")        
 	        ar=[]
-	       	trace(a)
+
 	        var aea=a[1].split(";")
 	        var ddd=[];
 	        for (var i = 5; i < aea.length; i+=4) {           

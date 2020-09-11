@@ -71,23 +71,11 @@
 	        }
 	    }
   		//------------------------------------------
-  		trace(":::>>>>>>>>>>>>>>>>>>>>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!vers2 lK7leWqI")
-  		
+
   		this.load = function(obj, fun){	
 			var s=this.server+"src/phpBase.php";
 
 
-/*
-			trace(s,"::::::::::",obj)
-			trace("::::::::::",this.server)
-			trace("::::::::::",window.location.href)
-			trace("::::::::::",arrParams,arrParams2)
-
-			
-
-			s="https://larvij.ru/planner3d/src/phpBase.php";
-			trace(s+"^^^^^^^^^^^"+this.server+":::",obj)*/		
-			
 			$.post(s, obj, function(data){			
 				if (fun) fun(data);
 			});
@@ -95,9 +83,7 @@
 		
 		this.savePhoto = function(_file, _image, fun){
 			var s=this.server+"src/forModel.php";
-/*
-			s = "https://larvij.ru/planner3d/src/forModel.php";
-			trace(":::>>>>>>>>>>>>>>>>>>>>",s)*/
+
 			$.post(s, {file : _file, image : _image}, function(){
 				if (fun) fun();			
 			});
