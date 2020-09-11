@@ -364,7 +364,7 @@ export class BPieceObject extends Blok {
         var x4,x3,x5,x6,x7,xx1,xx2;
         var bxx,popo, vb, xz,xz1;
         this.testObject=function(_x,_y){           
-            console.warn("testObject",_x,_y)
+
             aS=mO.par.sten;
             //return true
             
@@ -1150,15 +1150,15 @@ export class BKrai {
                 aaa[9]=this.bkhKey.object.obj.id;
                 aaa[8]=this.bkhKey.object.obj;
                 a.push(aaa); 
-                trace("^^^^^^1^^^^^",aaa)
+                
             }
             if(this.c3dkL && this.c3dkL.visible){
-                trace("^^^^^2^^^^^^====",this.bkhKey.object.obj)
+                
                 aaa = menedsherMaterial.getArrOtObj(this.bkhKey.object.obj,idMat,intColor)
                 aaa[9]=this.bkhKey.object.obj.id;
                 aaa[8]=this.bkhKey.object.obj;
-                a.push(aaa); 
-                trace("^^^^^2^^^^^^",aaa)
+                a.push(aaa);
+                
             }
 
             if(this._intSah!=-1){
@@ -1292,6 +1292,10 @@ export class HrenNiz {
         this.arrHron=[];
         this.arrMark=undefined;
 
+        this.bool3=false;
+        if(this.par.object.bool[3]==1)this.bool3=true;
+        trace("this.bool3  ",this.bool3, this.par.object.bool);
+
         if(this.idSvaz=="0"){            
             return;
         }else{
@@ -1315,9 +1319,16 @@ export class HrenNiz {
                         
         }
 
-        this.object=this.par.mO.getIdObj(this.idSvaz);       
-        this.content3d.position.z=this.object.obj.mod.r[2];
-        this.content3d.position.y=-this.object.obj.mod.r[1];
+        this.object=this.par.mO.getIdObj(this.idSvaz); 
+        if(this.bool3==true){
+             this.content3d.position.z=this.par.object.mod.r[4];           
+        }else{
+            this.content3d.position.z=this.object.obj.mod.r[2];
+            this.content3d.position.y=-this.object.obj.mod.r[1];
+        }
+
+
+
         this.yF=-this.object.obj.mod.r[1]-this.object.obj.mod.r[4]/2;
         this.ySMin=this.object.obj.mod.r[1]+this.object.obj.mod.r[4]/2;
 
@@ -1326,24 +1337,39 @@ export class HrenNiz {
         var arr=this.object.obj.str[0].split(",");  
 
         this.arrHron.push(new BKHron(this, this.idSvaz, 0))
-        this.arrHron.push(new BKHron(this, arr[0], 1))
-        this.arrHron.push(new BKHron(this, arr[1], 1))
-        this.arrHron.push(new BKHron(this, arr[2], 1))
-        this.arrHron.push(new BKHron(this, arr[3], 1))
 
 
 
 
-        
 
 
 
         
-        
 
-        this.par.aa.unshift("polka");
-        this.par.aa.unshift("plusR");
-        this.par.aa.unshift("plusL");
+
+
+        
+        
+        if(this.bool3==false){
+            this.par.aa.unshift("polka");
+            this.par.aa.unshift("plusR");
+            this.par.aa.unshift("plusL");
+
+            this.arrHron.push(new BKHron(this, arr[0], 1))
+            this.arrHron.push(new BKHron(this, arr[1], 1))
+            this.arrHron.push(new BKHron(this, arr[2], 1))
+            this.arrHron.push(new BKHron(this, arr[3], 1))
+
+        }
+        if(this.bool3==true){
+            setTimeout(function() {
+                self.par.polka=true  
+            }, 1);
+
+            trace(arr)
+            this.arrHron.push(new BKHron(this, arr[0], 1))
+        }
+        
         
 
         this.clear=function(){  
@@ -1383,38 +1409,51 @@ export class HrenNiz {
             ww=this.www;
             xx=0;            
             
-            mesh=this.arrHron[2].get();
-            mesh.position.x=-this.www/2;
-            mesh.position.y=-this.arrHron[2].object.obj.mod.r[2];
-            mesh.position.z=this.arrHron[2].object.obj.mod.r[0]
-            mesh1=null;
+            if(this.arrHron[3]){
+                mesh=this.arrHron[2].get();
+                mesh.position.x=-this.www/2;
+                mesh.position.y=-this.arrHron[2].object.obj.mod.r[2];
+                mesh.position.z=this.arrHron[2].object.obj.mod.r[0]
+                mesh1=null;
+            }
 
             if(this._intSah!=-1){
                 if(this._intSah==0){
-                    mesh=this.arrHron[1].get();
-                    mesh.position.x=-this.www/2 -this.otstup;
+                    if(this.arrHron[1]){
+                        mesh=this.arrHron[1].get();
+                        mesh.scale.x=1
+                        mesh.position.x=-this.www/2 -this.otstup;
+                    }
+
                     xx=-this.otstup/2;                    
-                    ww+=this.otstup;
-                    mesh.scale.x=1
+                    ww+=this.otstup;                    
                 }  
 
                 if(this._intSah==1){
-                    mesh=this.arrHron[3].get();
-                    mesh.position.x=-this.www/2;
+                    if(this.arrHron[3]){
+                        mesh=this.arrHron[3].get();
+                        mesh.position.x=-this.www/2;
+                    }
                 }               
             }
 
             if(this._intSah1!=-1){
                 if(this._intSah1==0){
-                    mesh=this.arrHron[1].get();
-                    mesh.position.x=+this.www/2 +this.otstup;
-                    mesh.scale.x=-1
+                    if(this.arrHron[1]){
+                        mesh=this.arrHron[1].get();
+                        mesh.position.x=+this.www/2 +this.otstup;
+                        mesh.scale.x=-1  
+                    }                    
+
                     xx+=this.otstup/2;                    
                     ww+=this.otstup;
-                    mesh1=this.arrHron[2].get();
-                    mesh1.position.x=this.www/2;
-                    mesh1.position.y=-this.arrHron[2].object.obj.mod.r[2];
-                    mesh1.position.z=this.arrHron[2].object.obj.mod.r[0]
+
+                    if(this.arrHron[2]){
+                        mesh1=this.arrHron[2].get();
+                        mesh1.position.x=this.www/2;
+                        mesh1.position.y=-this.arrHron[2].object.obj.mod.r[2];
+                        mesh1.position.z=this.arrHron[2].object.obj.mod.r[0]
+                    }
                 }
             }
 
@@ -1447,11 +1486,17 @@ export class HrenNiz {
             for (var i = 0; i < 92; i++) {                
                 if(o!=null){ 
                     omb=mark.getO3D(o)
-                    this.arrMark.push(omb)                   
+                    this.arrMark.push(omb) 
+                    let z=o.obj.mod.r[4]+this.object.obj.mod.r[1]-this.arrHron[0].object.obj.mod.r[5]/2-1+o.obj.mod.r[1]
+                    let y= this.object.obj.mod.r[2]+this.arrHron[0].object.obj.mod.r[5]/2+ o.obj.mod.r[5]/2+o.obj.mod.r[2];
+                    if(this.bool3==true) {
+                        z=o.obj.mod.r[4]-2 
+                        y=this.content3d.position.z
+                    }               
                     omb.setPRS({
                         x:otSah-o.obj.mod.r[0],
-                        y:this.object.obj.mod.r[2]+this.arrHron[0].object.obj.mod.r[5]/2+ o.obj.mod.r[5]/2+o.obj.mod.r[2],
-                        z:o.obj.mod.r[4]+this.object.obj.mod.r[1]-this.arrHron[0].object.obj.mod.r[5]/2-1+o.obj.mod.r[1]
+                        y:y,
+                        z:z
                     });
                     otSah+=o.obj.mod.r[3]+2;
                 }
@@ -1483,22 +1528,26 @@ export class HrenNiz {
 
                
             //висяшки первая
-            //aaa=[] 
-            aaa = menedsherMaterial.getArrOtObj(this.arrHron[2].object.obj, idMat, intColor)  
-            //this.parsArr(this.arrHron[2].object.obj[strXZ], aaa)           
-            aaa[9]=this.arrHron[2].object.obj.id;
-            aaa[8]=this.arrHron[2].object.obj;
-            a.push(aaa)
-           
+            //aaa=[]
+            if(this.arrHron[2]){ 
+                aaa = menedsherMaterial.getArrOtObj(this.arrHron[2].object.obj, idMat, intColor)  
+                //this.parsArr(this.arrHron[2].object.obj[strXZ], aaa)           
+                aaa[9]=this.arrHron[2].object.obj.id;
+                aaa[8]=this.arrHron[2].object.obj;
+                a.push(aaa)
+            }
+               
             
             //висяшки вторая
             if(mesh1!=null){
-                aaa1=[] 
-                aaa1 = menedsherMaterial.getArrOtObj(this.arrHron[2].object.obj, idMat, intColor)  
-                //this.parsArr(aaa, aaa1) 
-                aaa1[9]=this.arrHron[2].object.obj.id;
-                aaa1[8]=this.arrHron[2].object.obj;
-                a.push(aaa1);
+                if(this.arrHron[2]){ 
+                    aaa1=[]                 
+                    aaa1 = menedsherMaterial.getArrOtObj(this.arrHron[2].object.obj, idMat, intColor)  
+                    //this.parsArr(aaa, aaa1) 
+                    aaa1[9]=this.arrHron[2].object.obj.id;
+                    aaa1[8]=this.arrHron[2].object.obj;
+                    a.push(aaa1);
+                }
 
                          
             }
@@ -1511,35 +1560,33 @@ export class HrenNiz {
             }
             if(p!=-1){
                 //aaa=[] 
+                
                 aaa = menedsherMaterial.getArrOtObj(this.arrTrub[p].obj, idMat, intColor) 
                 //this.parsArr(this.arrTrub[p].obj[strXZ], aaa)                         
                 aaa[9]=this.arrTrub[p].obj.id;
                 aaa[8]=this.arrTrub[p].obj;
                 a.push(aaa);
+                
             }
 
             if(this._intSah==0){
                 aaa = menedsherMaterial.getArrOtObj(this.arrHron[1].object.obj, idMat, intColor) 
-               // aaa=[]                 
-               // this.parsArr(this.arrHron[1].object.obj[strXZ], aaa)           
                 aaa[9]=this.arrHron[1].object.obj.id;
                 aaa[8]=this.arrHron[1].object.obj;
                 a.push(aaa)               
             }
 
             if(this._intSah==1){
-                aaa = menedsherMaterial.getArrOtObj(this.arrHron[3].object.obj, idMat, intColor) 
-                //aaa=[] 
-                //this.parsArr(this.arrHron[3].object.obj[strXZ], aaa)           
-                aaa[9]=this.arrHron[3].object.obj.id;
-                aaa[8]=this.arrHron[3].object.obj;               
-                a.push(aaa);             
+                if(this.arrHron[3]){ 
+                    aaa = menedsherMaterial.getArrOtObj(this.arrHron[3].object.obj, idMat, intColor) 
+                    aaa[9]=this.arrHron[3].object.obj.id;
+                    aaa[8]=this.arrHron[3].object.obj;               
+                    a.push(aaa); 
+                }            
             }
 
             if(this._intSah1==0){
-                aaa = menedsherMaterial.getArrOtObj(this.arrHron[1].object.obj, idMat, intColor) 
-               // aaa=[] 
-                //this.parsArr(this.arrHron[1].object.obj[strXZ], aaa)           
+                aaa = menedsherMaterial.getArrOtObj(this.arrHron[1].object.obj, idMat, intColor)        
                 aaa[9]=this.arrHron[1].object.obj.id;
                 aaa[8]=this.arrHron[1].object.obj;
                 a.push(aaa)              
@@ -1566,6 +1613,7 @@ export class HrenNiz {
 
 
     set polka(v) {
+        if(this.bool3==true && v==false)return
         if(this._polka!=v){
             this._polka= v; 
             if(this.bool==false) return              

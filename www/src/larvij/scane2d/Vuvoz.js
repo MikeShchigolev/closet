@@ -101,10 +101,6 @@ export function Vuvoz (par, dCont, x, y, obj,w) {
 
             button.label.fontFamily="SFUIDisplay-Light"
 
-            //this.label.text=this.object.array[i][0];
-            //trace(this.object.array[i][0]+"===========",this.label.getRect())
-           
-            //button.object.style.fontFamily="SFUIDisplay-Light";
             button.fontSize=this.fs;
 
 
@@ -112,7 +108,7 @@ export function Vuvoz (par, dCont, x, y, obj,w) {
             
             button.height=hhh;
             button.boolLine=false;
-            //trace(this.object.array[i][0]+"===========",button.label.getRect())
+
         }
 
 
@@ -121,14 +117,7 @@ export function Vuvoz (par, dCont, x, y, obj,w) {
         this.panel1.height=this.array.length*(hhh+this.otstup)+this.otstup
         this.dC.y=-(this.panel1.height-this.hh)/2;
 
-        setTimeout(function() {
-            for (var i = 0; i < self.object.array.length; i++) {
-                trace(self.array[i].label.text)
-                trace(self.array[i].label.div.scrollWidth)
-                trace(self.object.array[i][0]+"===========",self.array[i].label.getRect())
-            }
-
-        }, 5000);
+        
 
 
     }

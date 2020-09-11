@@ -109,7 +109,6 @@ export class LinerMetrik  {
                     x=blok.x+blok.rect[0]-blok.rect[3]/2;
                     x1=blok.x+blok.rect[3]/2+blok.rect[0]; 
                     aP.push(x,x1);
-                    trace(blok.rect)
                     x=blok.y-blok.rect[5]/2;
                     x1=blok.y+blok.rect[5]/2;
                     aP1.push(x,x1)
@@ -156,7 +155,7 @@ export class LinerMetrik  {
 
             if(num!=undefined){
                 for (var i = a.length-1; i >=1; i--) {
-                    trace((a[i]-num)+"  >  "+a[i-1])
+
                     if(a[i]-num<a[i-1]){
                         a.splice((i-1),1)
                         i=a.length-1;
@@ -164,9 +163,6 @@ export class LinerMetrik  {
 
                 }                
             }
-            
-
-            trace("a==",a)
         }
 
 

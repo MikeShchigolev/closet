@@ -67,25 +67,7 @@ export class WebCamera  {
             bb.width=this.window.width-4;
             yy+=36;       
           
-/*
 
-            var bb=new DButton(this.window.content,2,yy,"clear",function(){        
-               textarea.text=""
-                       
-            })
-            bb.width=this.window.width-4;
-            yy+=36; 
-
-           
-            var textarea = new DTextArea(this.window.content,2,yy,"")
-            textarea.width=this.window.width-4
-            textarea.height=350
-            yy+=2+textarea.height   
-
-            trace=function(s){ 
-                console.log(s)        
-                textarea.text=s+"\n"+textarea.text
-            }*/
             this.window.height=yy+2+32;
         }
 
@@ -103,62 +85,6 @@ export class WebCamera  {
 
         }
 
-        /* var bbb=false
-        this.init=function(){
-            if(bbb)return
-            bbb=true
-            //this.video= document.createElement('video'); 
-            this.video= document.getElementById('video');
-           // this.video.src="resources/video/test.mp4";
-
-            
-
-            getVideo(this.video)
-
-            
-
-            this.texture = new THREE.VideoTexture(this.video);
-            this.texture.minFilter = THREE.LinearFilter;
-            this.texture.magFilter = THREE.LinearFilter;
-
-            this.material=new THREE.MeshPhongMaterial({ 
-                map:this.texture, 
-                color: 0xffffff
-            } ) ; 
-
-            backgroundScene = new THREE.Scene();
-            backgroundCamera = new THREE.Camera();           
-            backgroundScene.add(backgroundCamera);
-
-            var lightAmb = new THREE.AmbientLight(0xffffff);
-            backgroundScene.add(lightAmb);
-
-            var r=100;
-            var r2=5;
-            var geometry = new THREE.BoxBufferGeometry( 2, 2, 2 );
-           for ( var i = 0; i < 20; i ++ ) {
-                var object = new THREE.Mesh( geometry, this.material);
-                object.position.x = Math.random() * r - r/2;
-                object.position.y = Math.random() * r - r/2;
-                object.position.z = Math.random() * r - r/2;
-                object.rotation.x = Math.random() * 2 * Math.PI;
-                object.rotation.y = Math.random() * 2 * Math.PI;
-                object.rotation.z = Math.random() * 2 * Math.PI;
-                object.scale.x = Math.random() * r2;
-                object.scale.y = Math.random() * r2;
-                object.scale.z = Math.random() * r2;
-                self.content3d.add( object );
-            }
-            self.par.content3d.add(self.content3d)
-            self.mesh = new THREE.Mesh( geometry, this.material);
-            backgroundScene.add(self.mesh);            
-        } 
-
-        function dragCam2() {                 
-            self.par.visi3D.renderer.autoClear = false;
-            self.par.visi3D.renderer.clear();
-            self.par.visi3D.renderer.render(backgroundScene , backgroundCamera);       
-        }*/
 
 
         var ww, hh, ss
@@ -202,29 +128,6 @@ export class WebCamera  {
         }
 
 
-        //после актива, предусмотрена задержка на загрузку видоса
-     /*   this.dragScan=function(){
-            if(this._active==true){
-                if(this.par.visi3D.utility.sky.mesh!=undefined)  this.par.visi3D.utility.sky.active=false
-                this.par.visi3D.alwaysRender=true
-                if(self.par.visi3D.arrayDoRender2.length==0)self.par.visi3D.arrayDoRender2.push(dragCam2);
-                this.video.play();
-
-                self.par.scane3d.room.nafig(true)
-            }else{
-                if(this.par.visi3D.utility.sky.mesh!=undefined)  this.par.visi3D.utility.sky.active=true
-                this.par.visi3D.alwaysRender=false 
-                self.par.visi3D.arrayDoRender2.length=0
-                this.video.pause();
-                self.par.scane3d.room.nafig(false);
-            }
-            this.par.visi3D.intRend=0;           
-        }*/
-
-
-
-
-
         //поллучение видио потока с самеры девайса
         //fun доргаеться когда видио уже сформировано
 
@@ -234,16 +137,10 @@ export class WebCamera  {
 
 
         function getVideo() { 
-            trace("getVideo") 
-            trace("=0="+navigator)
-            trace("=1="+navigator.mediaDevices)
-            trace("=3="+navigator.mediaDevices.getUserMedia)
-            /*if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-               trace("Let's get this party started")
-            }*/
+
 
             if (navigator.mediaDevices.getUserMedia === undefined) {
-                trace("n.m.g==undefined")
+               
                 navigator.mediaDevices.getUserMedia = function(constraints) {
                     
                     var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -255,7 +152,7 @@ export class WebCamera  {
                     });
                 }
             }
-            trace("0000"); 
+         
 
             var constraints;
             navigator.mediaDevices.enumerateDevices()
@@ -264,13 +161,13 @@ export class WebCamera  {
                 var videoDeviceIndex = 0;
                 var _deviceId
                 var sah=0
-                trace("1111") 
+               
                 devices.forEach(function(device) {                    
                     if (device.kind == 'videoinput') {
                         if (device.label.indexOf('front')!=1) {  
                             sah=videoDevices.length;                            
                         }
-                        trace("1111") 
+                        
                         _deviceId= device.deviceId;
                         videoDevices.push(device.deviceId)
                         videoDevices[videoDeviceIndex++] =  device.deviceId;                        
@@ -288,7 +185,7 @@ export class WebCamera  {
         }
 
         function setVideo1(c,f) {   
-            trace("setVideo1") 
+            
             navigator.mediaDevices.getUserMedia(c)
             .then(function(stream) {
               if ("srcObject" in video) {
@@ -296,9 +193,9 @@ export class WebCamera  {
               } else {
                 self.video.src = window.URL.createObjectURL(stream);
               }
-              trace("s11") 
+              
               video.onloadedmetadata = function(e) { 
-                trace("s22")                
+                             
                 self.video.play();               
                 self.sizeWindow();
               };

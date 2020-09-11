@@ -17,8 +17,7 @@ export class MenedsherMaterial  {
 
 
         this.getArrOtObj=function(o, s, intColor){
-            trace("o^^",o)
-            
+
             if(o&&o.info){                
                 if(o.info.color[s]){
                     return [o.info.color[s].art,o.info.text,o.info.size,o.info.color[s].pri,o.info.color[s].niz];
@@ -42,13 +41,9 @@ export class MenedsherMaterial  {
                     }
                     return aa
                 }
-            }
-           
-
-            
+            }        
             return null;
         }
-
     }
     set materialBase(v) {
         this._materialBase = v;   
@@ -260,7 +255,7 @@ function GeterMat(visi3D, matarialArray, linkServ, par) {
                                  
             },
             error:function function_name(data) {
-                trace("Что то случилось с конфигом")
+             
                 self.start();
             }
         }); 

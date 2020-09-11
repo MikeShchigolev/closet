@@ -141,7 +141,7 @@ export class Room  {
         }
 
         this.setObj=function(o){ 
-            trace("o",o)             
+          
             if(o==undefined)  return;  
             if(o.color!=undefined)this.color=o.color
             if(o.idMatObject!=undefined)  this.idMatObject=  o.idMatObject;
@@ -283,7 +283,7 @@ export class Room  {
 
     set idMatObject(v) {
         if(this._idMatObject!=v){
-            console.warn("%%%%%sdfsdf")
+           
             this._idMatObject = v;
                             
             this.menedsher.mMaterial.geterMat.idColor=v;

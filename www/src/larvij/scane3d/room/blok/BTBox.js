@@ -221,7 +221,7 @@ export class BTBox extends Blok {
                     }
 
                 }
-                //trace(self.arrPositZ)
+                
             }      
 
             self.arrPosit.sort(function(a, b) {
@@ -257,7 +257,7 @@ export class BTBox extends Blok {
         }
 
         this.isOver=function(sten,_xx,_yy){
-            trace(">>>Продолжим сдесь, тупо проверка а можно ли вситавить ",sten.collision);
+           
             
 
             
@@ -272,7 +272,7 @@ export class BTBox extends Blok {
         this.isWA = function(arrRect,_xx, _ww, _not, _wBig){
             if(_xx<_ww/2)_xx=_ww/2
             if(_xx>_wBig-_ww/2)_xx=_wBig-_ww/2   
-            //trace(">>>>>>>,_xx,_yy  ",arrRect,_xx, _ww, _not, _wBig);
+           
             let a =[];
 
             for (var i = 0; i < arrRect.length; i++) {
@@ -285,7 +285,7 @@ export class BTBox extends Blok {
             }
             let rb=true
             for (var i = 0; i < a.length; i+=2) {
-                //trace(i+"  ",a[i],a[i+1])
+            
                 if(calc.test2d(a[i],a[i+1],_xx-_ww/2,_xx+_ww/2)==true){                    
                     rb=false
                 }
@@ -343,11 +343,6 @@ export class BTBox extends Blok {
                     ind=i
                 }
             }
-                
-
-           // trace(aaa[ind],aaa)
-           //trace(rb,_xx-_ww/2,_xx+_ww/2)
-
 
             return aaa[ind]
         }
@@ -637,13 +632,7 @@ export class BTBox extends Blok {
 
             var ad=[]
             var aa=null
-            //trace(">>>>>>>>>>>>>>>>>>>>>",this.parent) 
             if(this.parent==undefined)return []
-            //if(this.parent.parent==undefined)return []    
-           
-            
-
-              
 
             let ooo= this.arrObj[this._indexW][this._indexH].obj;
             ooo.priority= this.object.priority;
@@ -659,34 +648,8 @@ export class BTBox extends Blok {
                 ad[9]=ooo.id;
                 ad[10]=1;
                 ad[11]=aa[3]*1;                
-            }  
-                        
+            }                        
             return [ad]
-/*            
-
-
-
-
-            aaa=[];
-            aa=menedsherMaterial.getArrOtObj(this.object,idMat,intColor) 
-           
-
-
-            if(aa!=undefined){
-                ad=[];                         
-                for (var j = 0; j < aa.length; j++) {
-                    ad[j]=aa[j];                                
-                }
-                ad[8]=this.object;
-                ad[9]=this.object.id;
-                ad[10]=1;
-                ad[11]=aa[3]*1;
-                aaa.push(ad)
-            }
-            this.plusObj.getPrice(aaa, intColor,idMat);
-            return aaa;
-
-*/
         }
 
 
@@ -777,10 +740,6 @@ export class BTBox extends Blok {
                             mHelp.setHelp("Данная ширина не влазит, не хватает пространства","resources/image/mhelp.png",mHelp.dCNM,{x:200,y:-13});
                             return
                         }else{
-                           /* setTimeout(function() {
-                                mHelp.setHelp("Тестируем большой текст Тестируем большой текст Тестируем большой текст Тестируем большой текст Тестируем большой текст Тестируем большой текст Данная ширина не влазит, не хватает пространства","resources/image/mhelp.png",mHelp.dCNM,{x:200,y:-13});
-                               
-                            }, 100);*/
                             this.setXY(xx,0); 
                         }
                     }
@@ -791,7 +750,6 @@ export class BTBox extends Blok {
 
             }
             if(s=="indexH"){
-                trace(self.indexH+"_::_"+p)
                 self.indexH=p  
                 self.mO.par.par.visiActiv.setObject(self)               
             }

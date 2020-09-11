@@ -79,27 +79,13 @@ export class BPieceTop extends Blok {
         } 
         this.isOver=function(s,x,y){
             if(s){
-                trace(s.width+"<<<<"  ,this.visiBPT._width)
+                
                 if(s.width<this.visiBPT._width){
                     return false;
                 }
                 else{
                     if(this.bptColiz.array[0]){
-                        /*let box=this.bptColiz.array[0].boxColizi.rectCollisMeshdy
                         
-
-                        this.bptColiz.rCM.x=22//s.width/2//-box.width/2;
-                        this.bptColiz.rCM.y=s.height/2//-box.height/2;
-
-                        this.bptColiz.rCM.width=box.width;
-                        this.bptColiz.rCM.height=box.height;
-
-
-                        s.collision.colozi.activBox=box//this.bptColiz.rCM; 
-
-                        var b = s.collision.colozi.correct();
-                        trace("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",b); 
-                        return b;*/
                           
                     }
                     
@@ -2025,7 +2011,7 @@ export class VisiBPT {
             this.content.position.x = this.content3d.position.x;
             this.dragCont(); 
 
-            trace("wwwwwwwwwwwwwww",this._width);           
+               
         } 
 
 

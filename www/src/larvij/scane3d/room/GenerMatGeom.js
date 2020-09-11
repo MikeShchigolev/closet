@@ -146,7 +146,6 @@ export class GenerMatGeom  {
             }
             context.scale(1/ss,0.5);
 
-            trace("#############")
     
         }
 

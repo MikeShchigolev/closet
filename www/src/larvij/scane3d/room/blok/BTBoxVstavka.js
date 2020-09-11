@@ -573,7 +573,7 @@ export class BTBoxVstavka extends Blok {
             
             let aaa=this.bvPlus.getPrice(intColor,idMat)  
             
-            trace(">>>>>",this.arrObj[this._indexW][this._indexH])
+
             let ooo= this.arrObj[this._indexW][this._indexH].obj;
             if(ooo){
                 if(this.object.priority!=undefined)ooo.priority= this.object.priority;
@@ -587,7 +587,7 @@ export class BTBoxVstavka extends Blok {
 
             aa=menedsherMaterial.getArrOtObj(ooo.obj,idMat,intColor); 
 
-            trace(">>>>>!!!!",aa)
+
             if(aa!=null){
                 ad=[];                         
                 for (var j = 0; j < aa.length; j++) {
@@ -769,7 +769,6 @@ export class BVPlus {
         this.array=[]
         var mesh
 
-        trace(this.par.id+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",this.par.object.str[2])
 
         if(this.par.object.str[2]=="187"){
             this.activeId=187;
@@ -795,7 +794,6 @@ export class BVPlus {
             ooo=this.par.arrObj[this._indexW][this._indexH];
 
             if(self.activeId==187){
-                trace(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",self.activeId)
                 self.array[0].rotation.y=Math.PI/2
                 self.array[0].position.y=0;
                 self.array[0].position.z=ooo.d-this._ot2;
