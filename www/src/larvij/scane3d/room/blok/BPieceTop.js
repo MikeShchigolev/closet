@@ -1277,7 +1277,7 @@ export class VisiNisu {
                     ypp=ptn
                     i=999;
                 }
-                trace(">>>>poiskPos>>>>",y)
+                
                 rezzzz=this.testPos2(ypp, _obj, -i*this.oSah)
                 if(rezzzz==null){
                     

@@ -972,9 +972,7 @@ export class BKrai {
         this.bkhKey=null;
 
         this.initKey=function(){
-            if(this.bkhKey!=null)return; 
-            this.par.aa.unshift("plusR");
-            this.par.aa.unshift("plusL");           
+            if(this.bkhKey!=null)return;            
             var kkk="235"
             if(self.par.object.mod.r[4]>35)kkk="236";
             this.bkhKey = new BKHron(this, kkk, 1);
@@ -1294,7 +1292,7 @@ export class HrenNiz {
         this._polka=false;
 
         this._polka1="null";
-        this.arrP1=[239,236];
+        this.arrP1=[];
         this.aP1=[];
 
 
@@ -1381,7 +1379,8 @@ export class HrenNiz {
         
         if(this.bool3==false){
             
-            
+            this.par.aa.unshift("plusR");
+            this.par.aa.unshift("plusL");
             this.par.aa.unshift("polka");
             for (var i = 0; i < this.arrP1.length; i++) {
                 this.par.aa.push("p1_"+this.arrP1[i]);
@@ -1908,9 +1907,11 @@ export class SahSuper {
 
 
         var aa;
-        this.aaSob=function(s,p){            
+        this.aaSob=function(s,p){ 
+            trace(s,p)           
             aa=s.split("_")           
             if(aa[0]=="mod"){
+                trace(s,p) 
                 this.getObjSob(aa[1]);
             }
         }
@@ -1919,13 +1920,17 @@ export class SahSuper {
         this.objObj={}
         var o3d
         this.getObjSob=function(s){
+            
             if(s=="clear"){
                 this.clear()
                 return
             }
+
             if(this.objObj[s]==undefined)this.objObj[s]=this.par.mO.getIdObj(s)
             
-            var a=this.getPosit(this.objObj[s])            
+            
+            var a=this.getPosit(this.objObj[s]) 
+
             if(a.length!=0){
                 for (var i = 0; i < a.length; i++) {
                     o3d=this.getO3D(this.objObj[s]);                    
@@ -1938,12 +1943,15 @@ export class SahSuper {
                     o3d.visible=true;  
                 }
                 this.par.fun("visi3d");
-            }            
+            } 
+            trace(a)           
         }
 
 
         var kool
-        this.getPosit=function(o){           
+        this.getPosit=function(o){ 
+            trace(o) 
+            //-1.5,7.9,4,5.8,3.23,1,0.5,|243|         
             var r=[]
             var a=o.obj.str[0].split(",")
             var kol=a[0]*1
@@ -1951,6 +1959,7 @@ export class SahSuper {
             var iii=a[1]*1
             var jjj=a[2]*1
             var id=o.obj.id;
+
             for (var ii = 0; ii < kol; ii++) {
                 var o={id:id};
                 for (var i = 0; i < this.kolII; i++) {
