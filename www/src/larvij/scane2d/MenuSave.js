@@ -62,9 +62,9 @@ export function MenuSave (par) {
             }
         }
         this.idSave+=1;
-        trace("##########################",this.link,this.idSave);        
+                
         this.php.load({tip: 'mkdir', dir: this.link+this.idSave}, function (e) {  
-            trace("##########################>>>>",e);             
+                       
             self.php.load({tip: 'copyDir', dirWith: '../save/base/', dir: self.link+self.idSave +'/'}, function (e) { 
                 self.poiskId2();
             })
@@ -90,7 +90,7 @@ export function MenuSave (par) {
         if(self.php.url!=null)link=self.php.url+"?id="+this.idSave;
 
         this.textID=link//s+"index.html?id="+this.idSave;
-        trace("****************************",this.textID)
+      
         if(this.fun1!=undefined){
             this.fun1(this.textID)
             this.fun1=undefined;
@@ -605,7 +605,7 @@ export function Otprovlashka (par, cont) {
 
         doLink=aGlaf.server+'save/'+id+"/";
         var ddd=this.link+id+'/infoTime';
-        trace("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",doLink,ddd) 
+       
 
         this.php.load({tip: 'mkdir', dir: ddd}, function (e) { 
             self.par.saveFile1251(str,function(s){                
@@ -614,7 +614,7 @@ export function Otprovlashka (par, cont) {
             },'../save/'+id+'/infoTime/info.csv');
 
             var d =new Date()
-            trace("____________________###_____________________")
+            
             self.plusDopInfa({
                 id:self.par.idSave,
                 name:self.par.arrComp[0].text,
@@ -864,8 +864,7 @@ export function Otprovlashka (par, cont) {
 
     this.naEmail = function(naMail, _emeil, _mailTitle, _mailText, fun, _id){
         
-        trace("------naEmail-------",_id, naMail, _emeil, _mailTitle)
-        trace("---_mailText------",_mailText)
+
         var obj={};
         obj.mailmy=naMail;
         obj.mailMeil=_emeil;

@@ -359,7 +359,7 @@ export class Mani  {
 
                 bbI=-1;
                 for (var j = 0; j < arrP2.length; j++) {
-                    //trace(arrP2[j][9]+"==="+arrP[i][9]+"   ",arrP2[j],arrP2[i])
+             
                     if(arrP2[j][9]==arrP[i][9])bbI=j;
                 }
 

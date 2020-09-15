@@ -73,7 +73,7 @@ export class BoxTumba3D  {
             let hh=0;           
             for (var i = 0; i < 100; i++) {
                 hh=this._height/2-i*this._ot-this._ot1;
-                //if(i==0)trace(this._height+" ::1 "+i+"  "+hh+"  "+this._ot1)
+
                 if(hh>-this._height/2+this._thickness+this._niz){
                     oo=this.getO()
                     oo.position.x=this._width/2-this._thickness/2-oooot;                    

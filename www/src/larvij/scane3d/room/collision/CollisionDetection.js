@@ -33,7 +33,7 @@ export function CollisionDetection() {
 		
 		
 		if (this.isStick)this.stick();// прилипалка
-		// console.clear()
+
 
 		if (this.bigBox) this.checkBigBox(); // если есть большая коробка проверяем и позиционируем с ней
 
@@ -85,7 +85,7 @@ export function CollisionDetection() {
 
 		return isCorrect;
 		// if (!this.isInBigBox(this.activBox)) if (this.activBox.funErr) this.activBox.funErr();
-		// console.clear()
+
 
 		// if(this.isStick) this.stick();// прилипалка
 
@@ -207,7 +207,7 @@ export function CollisionDetection() {
 
 		for (var i = 0; i < this.collisionBox.length; i++) {
 			var a = this.getAngleBox(b, this.collisionBox[i]);
-			// console.clear()
+
 			this.moveBoxFromCollBox(b, this.collisionBox[i], a);
 			if (this.isInBigBox(b, 2)) {// если коробка внутри
 				if (this.getCollisionBox(b, this.arrBox, this.activBox).length == 0) { // если колизий нету добавляем в возможные позиции
@@ -488,7 +488,7 @@ export function CollisionDetection() {
 	this.checkBigBox = function () {
 		// проверяем колизии с большым боксом
 		var arr = [];//коробки которые в нутри большой коробки
-		// console.clear();
+
 		for (var i = 0; i < this.arrBox.length; i++) {
 			// лежит в коробке
 			if (this.isInBigBox(this.arrBox[i])) {

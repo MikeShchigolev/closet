@@ -19,7 +19,7 @@ import { BatArr } from './BatArr.js';
 export class NMObj  {
     constructor(par) {          
         this.type="NMObj";
-        trace("##########NMObj####################");
+
         var self=this;
         this.par=par
         this._active=false;
@@ -45,7 +45,7 @@ export class NMObj  {
         setTimeout(function() {
            if(main.glaf.up1 == true){//Включена смена 55 up1
                 self.up1Menu=new Up1Menu(self)
-                trace("##################################################%%");
+
             } 
         }, 10);
         
@@ -101,7 +101,6 @@ export class NMObj  {
         this.batArr=new BatArr(this,0,this.otstup,function(t,s){            
             if(t=="polka"){//не можем поставить полку
                 self.par.par.mHelp.setHelp("В данном положении полки, установка перекладины невозможна","resources/image/mhelp.png",this.dCont,{x:24,y:-13});
-            
             }
             if(t=="saveMod"){//не можем поставить полку
                 self.room.par.tudaSuda.saveMod();
@@ -160,7 +159,7 @@ export class NMObj  {
             
             if(bColor==false) xx+=-113
             let inwH=this.butArAr.setObject(o)
-            //trace("+inwH"+inwH)    
+    
             if(inwH!=false) {
                 xx+=inwH
             }   
@@ -178,7 +177,7 @@ export class NMObj  {
             this.batArr.dCont.x=xx;
             xx+= this.batArr.width;
             this.width=xx+this.otstup;
-            trace("%%",this.up1Menu)
+      
             if(this.up1Menu!=undefined)this.up1Menu.setObject(o);
 
             //--------------
@@ -436,7 +435,7 @@ export class Up1Menu  {
         this.par=par
 
         this.setObject=function(o){
-            trace("%%%%",o)
+
             if(o.pppObj)
             if(o.pppObj.up1.active==true){
                 if(this.object &&this.object.idArr==o.idArr)return

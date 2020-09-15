@@ -226,7 +226,7 @@ export class BTBoxDV extends Blok {
 
 
         this.dragStart=function(){ 
-            trace(this.mO.boolClone+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@dragStart@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");   
+ 
             if(this.mO.boolClone){                             
                 let o=this.getObj();
                 let blok=this.mO.getBlok(this.object)                        
@@ -665,14 +665,14 @@ export class BTBoxDV extends Blok {
                     this.mO.par.par.visiActiv.setObject(this);  
                 }                
             }
-            trace(tip)
+
             if(e.keyCode==38 || e.keyCode==87||e.keyCode==40 || e.keyCode==83)
             if(tip=="up"){
                 var iAp=Math.random()
                 this.iAp=iAp;
                 setTimeout(function() {
                     if(self.iAp==iAp){
-                        trace("===========iAp================");
+
                         self.mO.par.par.par.tudaSuda.saveMod()
                     }
 
@@ -732,7 +732,7 @@ export class BTBoxDV extends Blok {
 
     set indexH(v) {
         if(this._indexH!=v){
-            console.warn(this._indexH+"----------------------",v)
+
             this._indexH = v; 
             this.bvPlus.indexH = v;
 

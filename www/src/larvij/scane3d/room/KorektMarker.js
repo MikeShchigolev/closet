@@ -120,10 +120,13 @@ export class KorektMarker  {
 
         var xx,yy,box
         this.poiskMarkers=function(mark){ 
+            if(mark.boolColVisi==false)return;
             mark.c1.visible=true;
+            
             box=mark.getBox()
             if(box==null)return;
-            if(box.v==0)return;                       
+            if(box.v==0)return; 
+
 
             kmb=this.getKMB(mark)  
             kmb.setXYWH(box.x,box.y,box.w,box.h)

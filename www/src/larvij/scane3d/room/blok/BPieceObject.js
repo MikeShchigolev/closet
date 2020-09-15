@@ -284,7 +284,7 @@ export class BPieceObject extends Blok {
         this.bds=false;
         this.dragStart=function(){
             if(this.mO.boolClone){  
-                console.warn("dragStart@@@@@@@@@@@@@@@@@@@@@@@@1")              
+                         
                 let o=this.getObj();
                 let blok=this.mO.getBlok(this.object)                        
                 blok.setObj(o);
@@ -296,7 +296,7 @@ export class BPieceObject extends Blok {
 
                 this.mO.par.setBlokActiv(blok)
                 this.mO.par.start(blok)
-                console.warn("dragStart@@@@@@@@@@@@@@@@@@@@@@@@")
+               
                 return true;
             }
             this.bds=true; 
@@ -364,7 +364,7 @@ export class BPieceObject extends Blok {
         var x4,x3,x5,x6,x7,xx1,xx2;
         var bxx,popo, vb, xz,xz1;
         this.testObject=function(_x,_y){           
-            console.warn("testObject",_x,_y)
+
             aS=mO.par.sten;
             //return true
             
@@ -516,6 +516,15 @@ export class BPieceObject extends Blok {
                 self.testKorektActiv();  
                 r=true 
             }
+
+            if(s=="plusL"){
+                self.krai.plusL=!self.krai.plusL;
+            }
+            if(s=="plusR"){
+                self.krai.plusR=!self.krai.plusR;
+            }
+
+
             if(!r&&s.indexOf("mod_55_")!=-1){
                 let oo=self.pppObj.up1.testBool()
                 if(oo==null){
@@ -683,9 +692,14 @@ export class BPieceObject extends Blok {
             obj.hrenNiz.intSah1=this.hrenNiz.intSah1;
 
             obj.polka=this.polka
+            obj.plusR=this.krai.plusR
+            obj.plusL=this.krai.plusL
+
             obj.children=[];
             obj.idColor=this.idColor;
             if(this.sahSuper.bool==true)obj.sahSuper=this.sahSuper.getObj()
+
+
 
             for (var i = 0; i < this.children.length; i++) {
                 obj.children[i]=this.children[i].getObj();
@@ -719,7 +733,15 @@ export class BPieceObject extends Blok {
                 this.notDrag=false;
             } 
 
+
             if(obj.polka)this.polka=obj.polka
+            if(obj.plusR!=undefined){                
+                this.krai.plusR = obj.plusR;
+                this.krai.plusL = obj.plusL;
+            } 
+
+
+
                 
             if(obj.intSah!=undefined){                
                 self.hrenNiz._intSah=self.krai._intSah=self._intSah=-2
@@ -768,15 +790,7 @@ export class BPieceObject extends Blok {
                         b=true;
                     }
 
-                    /*if(e.keyCode==37 || e.keyCode==65)  {
-                        xxx-=30;    
-                        b=true;
-                    }
-
-                    if(e.keyCode==39 || e.keyCode==68)  {
-                        xxx+=30;    
-                        b=true;
-                    }*/
+                    
 
                     
                     this.bds=true;
@@ -800,10 +814,8 @@ export class BPieceObject extends Blok {
                     }, 100);
                 }
             }          
-        } 
-
-
-        this.parOld=undefined
+        }
+        this.parOld=undefined;
     } 
 
 
@@ -905,6 +917,9 @@ export class BKrai {
         var sah=0
         this.boolLoadHron=false;
 
+        this._plusL=false;
+        this._plusR=false;
+
         this.initHron=function(){            
             sah++;
             if(sah==2)self.initHron2()            
@@ -938,6 +953,93 @@ export class BKrai {
                 self.par.dragToPanel()
             //}, 1);
         } 
+
+                //Вставляем вешалку
+        this.bkhKey=null;
+
+        this.initKey=function(){
+            if(this.bkhKey!=null)return;            
+            var kkk="235"
+            if(self.par.object.mod.r[4]>35)kkk="236";
+            this.bkhKey = new BKHron(this, kkk, 1);
+
+            
+            //L
+            this.c3dkL = new THREE.Object3D();
+            //this.c3dkL.visible=false;
+            this.par.c3dNa.add(this.c3dkL)
+
+
+            //R
+            this.c3dkR = new THREE.Object3D();
+            //this.c3dkR.visible=false;
+            this.par.c3dNa.add(this.c3dkR)
+
+            
+
+            this.bkhKey.initHron=function(){
+                
+                let m=self.bkhKey.get();
+                self.c3dkL.add(m);
+                m.position.set(0,0,0);
+   
+                
+                self.c3dkL.position.x=self.par.object.mod.r[0];
+                self.c3dkL.position.z=self.par.object.mod.r[4]/2;
+                self.c3dkL.rotation.z=Math.PI/2;
+                self.c3dkL.rotation.x=Math.PI/2;
+
+                var omb, o
+                var mark=self.par.markers
+                for (var i = m.children[0].children.length-1; i >=0 ; i--) {                    
+                    if(m.children[0].children[i].name.indexOf("marker")!=-1){                        
+                        o = self.par.mO.getRendomID("tit12");                        
+                        omb=mark.getO3D(o)
+                        omb.setPRS({
+                            x:m.children[0].children[i].position.x,
+                            y:m.children[0].children[i].position.z,
+                            z:-m.children[0].children[i].position.y
+                        })                        
+                        m.children[0].add(omb.content3d);
+                        omb.content3d.rotation.x=Math.PI/2;
+                        omb.boolColVisi=false;
+                        m.children[0].remove(m.children[0].children[i])
+                    }
+                }
+
+
+
+                m=self.bkhKey.get();
+                self.c3dkR.add(m);
+                m.position.set(0,0,0);                
+                self.c3dkR.position.x=-self.par.object.mod.r[0];
+                self.c3dkR.position.z=self.par.object.mod.r[4]/2;
+                self.c3dkR.rotation.z=-Math.PI/2;
+                self.c3dkR.rotation.x=Math.PI/2;
+
+
+                for (var i = m.children[0].children.length-1; i >=0 ; i--) {                    
+                    if(m.children[0].children[i].name.indexOf("marker")!=-1){                        
+                        o = self.par.mO.getRendomID("tit12");                       
+                        omb=mark.getO3D(o)
+                        omb.setPRS({
+                            x:m.children[0].children[i].position.x,
+                            y:m.children[0].children[i].position.z,
+                            z:-m.children[0].children[i].position.y
+                        })                        
+                        m.children[0].add(omb.content3d)
+                        omb.content3d.rotation.x=Math.PI/2
+                        omb.boolColVisi=false
+                        m.children[0].remove(m.children[0].children[i])                                              
+                    }
+                }
+                self.drag();
+            }
+            this.bkhKey.init();
+        }
+
+
+        //--------------
        
 
         var mesh,sahPlus,sahPlus1
@@ -945,6 +1047,9 @@ export class BKrai {
             if(this.bool==false)return 
             if(this.boolLoadHron==false)return
            
+            if(this.c3dkL)this.c3dkL.visible=false; 
+            if(this.c3dkR)this.c3dkR.visible=false; 
+
             for (var i = 0; i < self.arrHron.length; i++) {
                 this.arrHron[i].clear();
             }
@@ -956,31 +1061,47 @@ export class BKrai {
                     mesh.position.x=-this.par.object.mod.r[3]/2                
                     mesh.scale.x=1;
                 }
-                if(this.par._polka==false)
-                if(this.hronPlus)if(this.hronPlus.obj3d){//закрывашки
-                    mesh=this.hronPlus.get();
-                    mesh.position.x=-this.par.object.mod.r[3]/2 
-                    mesh.scale.x=1;
-                    sahPlus++; 
-                } 
+                if(this.par._polka==false){
+                    if(this._plusL==false){
+                        if(this.hronPlus)if(this.hronPlus.obj3d){//закрывашки
+                            mesh=this.hronPlus.get();
+                            mesh.position.x=-this.par.object.mod.r[3]/2 
+                            mesh.scale.x=1;
+                            sahPlus++; 
+                        } 
+                    }else{
+                        if(this.bkhKey!=null && this.bkhKey.obj3d){
+                            this.c3dkL.visible=true; 
+                        }
+                    }
+                }                
             }
 
-
+            
             if(this._intSah1!=-1){
                 if(this.arrHron[this._intSah1]!=undefined){                    
                     mesh=this.arrHron[this._intSah1].get();
                     mesh.position.x=this.par.object.mod.r[3]/2                    
                     mesh.scale.x=-1;
                 }
-                if(this.par._polka==false)
-                if(this._intSah1==0){
-                    if(this.hronPlus)if(this.hronPlus.obj3d){//закрывашки
-                        mesh=this.hronPlus.get();
-                        mesh.position.x=this.par.object.mod.r[3]/2 
-                        mesh.scale.x=-1;
-                        sahPlus++ 
+
+                if(this.par._polka==false){                    
+                    if(this._intSah1==0){
+                        if(this._plusR==false){
+                            if(this.hronPlus)if(this.hronPlus.obj3d){//закрывашки
+                                mesh=this.hronPlus.get();
+                                mesh.position.x=this.par.object.mod.r[3]/2 
+                                mesh.scale.x=-1;
+                                sahPlus++ 
+                            }
+                        }else{
+                            if(this.bkhKey!=null && this.bkhKey.obj3d){
+                                this.c3dkR.visible=true; 
+                            }  
+                        }
                     }
                 }
+                
             }
         }
 
@@ -1021,8 +1142,24 @@ export class BKrai {
         this.getPrice=function(a, intColor, idMat){
             if(this.bool==false)return
             strXZ="plus"
-            if(intColor==1)strXZ="plus1" 
+            if(intColor==1)strXZ="plus1"; 
 
+
+            if(this.c3dkR && this.c3dkR.visible){
+                aaa = menedsherMaterial.getArrOtObj(this.bkhKey.object.obj,idMat,intColor)
+                aaa[9]=this.bkhKey.object.obj.id;
+                aaa[8]=this.bkhKey.object.obj;
+                a.push(aaa); 
+                
+            }
+            if(this.c3dkL && this.c3dkL.visible){
+                
+                aaa = menedsherMaterial.getArrOtObj(this.bkhKey.object.obj,idMat,intColor)
+                aaa[9]=this.bkhKey.object.obj.id;
+                aaa[8]=this.bkhKey.object.obj;
+                a.push(aaa);
+                
+            }
 
             if(this._intSah!=-1){
                 aaa = menedsherMaterial.getArrOtObj(this.arrHron[this._intSah].object.obj,idMat,intColor)
@@ -1080,6 +1217,26 @@ export class BKrai {
         }
     }
 
+    set plusL(v) {
+        if(this._plusL!=v){            
+            this._plusL= v;
+            this.initKey();
+            this.drag()
+        }       
+    }   
+    get plusL() { return  this._plusL;}
+
+
+    set plusR(v) {
+        if(this._plusR!=v){
+            this._plusR= v;
+            this.initKey();
+            this.drag()
+            
+        }       
+    }   
+    get plusR() { return  this._plusR;}
+
 
     set intSah(v) {
         if(this._intSah!=v){
@@ -1116,6 +1273,9 @@ export class HrenNiz {
         this.arrHron;
         this.arrModel=[];
         this._polka=false;
+
+
+
         this._intSah=-1;
         this._intSah1=-1;
 
@@ -1131,6 +1291,10 @@ export class HrenNiz {
         this.ySMin=0;
         this.arrHron=[];
         this.arrMark=undefined;
+
+        this.bool3=false;
+        if(this.par.object.bool[3]==1)this.bool3=true;
+        trace("this.bool3  ",this.bool3, this.par.object.bool);
 
         if(this.idSvaz=="0"){            
             return;
@@ -1149,32 +1313,64 @@ export class HrenNiz {
             sah++            
             if(sah<self.arrHron.length)return;
             mesh=self.arrHron[0].get();            
-            //setTimeout(function() {
-                //console.warn("@@@")
-                if(self.par.dragPar)self.par.dragPar();
-                self.drag();
-            //}, 1000);            
+            
+            if(self.par.dragPar)self.par.dragPar();
+            self.drag();
+                        
         }
 
-        this.object=this.par.mO.getIdObj(this.idSvaz);       
-        this.content3d.position.z=this.object.obj.mod.r[2];
-        this.content3d.position.y=-this.object.obj.mod.r[1];
+        this.object=this.par.mO.getIdObj(this.idSvaz); 
+        if(this.bool3==true){
+             this.content3d.position.z=this.par.object.mod.r[4];           
+        }else{
+            this.content3d.position.z=this.object.obj.mod.r[2];
+            this.content3d.position.y=-this.object.obj.mod.r[1];
+        }
+
+
+
         this.yF=-this.object.obj.mod.r[1]-this.object.obj.mod.r[4]/2;
         this.ySMin=this.object.obj.mod.r[1]+this.object.obj.mod.r[4]/2;
 
         this.bkHron=new BKHron(this, this.idSvaz, 0);       
         
-        var arr=this.object.obj.str[0].split(",")  
+        var arr=this.object.obj.str[0].split(",");  
 
         this.arrHron.push(new BKHron(this, this.idSvaz, 0))
-        this.arrHron.push(new BKHron(this, arr[0], 1))
-        this.arrHron.push(new BKHron(this, arr[1], 1))
-        this.arrHron.push(new BKHron(this, arr[2], 1))
-        this.arrHron.push(new BKHron(this, arr[3], 1))
-        
+
+
+
+
+
+
+
         
 
-        this.par.aa.unshift("polka");
+
+
+        
+        
+        if(this.bool3==false){
+            this.par.aa.unshift("polka");
+            this.par.aa.unshift("plusR");
+            this.par.aa.unshift("plusL");
+
+            this.arrHron.push(new BKHron(this, arr[0], 1))
+            this.arrHron.push(new BKHron(this, arr[1], 1))
+            this.arrHron.push(new BKHron(this, arr[2], 1))
+            this.arrHron.push(new BKHron(this, arr[3], 1))
+
+        }
+        if(this.bool3==true){
+            setTimeout(function() {
+                self.par.polka=true  
+            }, 1);
+
+            trace(arr)
+            this.arrHron.push(new BKHron(this, arr[0], 1))
+        }
+        
+        
 
         this.clear=function(){  
             for (var i = 0; i < this.arrHron.length; i++) {
@@ -1213,38 +1409,51 @@ export class HrenNiz {
             ww=this.www;
             xx=0;            
             
-            mesh=this.arrHron[2].get();
-            mesh.position.x=-this.www/2;
-            mesh.position.y=-this.arrHron[2].object.obj.mod.r[2];
-            mesh.position.z=this.arrHron[2].object.obj.mod.r[0]
-            mesh1=null;
+            if(this.arrHron[3]){
+                mesh=this.arrHron[2].get();
+                mesh.position.x=-this.www/2;
+                mesh.position.y=-this.arrHron[2].object.obj.mod.r[2];
+                mesh.position.z=this.arrHron[2].object.obj.mod.r[0]
+                mesh1=null;
+            }
 
             if(this._intSah!=-1){
                 if(this._intSah==0){
-                    mesh=this.arrHron[1].get();
-                    mesh.position.x=-this.www/2 -this.otstup;
+                    if(this.arrHron[1]){
+                        mesh=this.arrHron[1].get();
+                        mesh.scale.x=1
+                        mesh.position.x=-this.www/2 -this.otstup;
+                    }
+
                     xx=-this.otstup/2;                    
-                    ww+=this.otstup;
-                    mesh.scale.x=1
+                    ww+=this.otstup;                    
                 }  
 
                 if(this._intSah==1){
-                    mesh=this.arrHron[3].get();
-                    mesh.position.x=-this.www/2;
+                    if(this.arrHron[3]){
+                        mesh=this.arrHron[3].get();
+                        mesh.position.x=-this.www/2;
+                    }
                 }               
             }
 
             if(this._intSah1!=-1){
                 if(this._intSah1==0){
-                    mesh=this.arrHron[1].get();
-                    mesh.position.x=+this.www/2 +this.otstup;
-                    mesh.scale.x=-1
+                    if(this.arrHron[1]){
+                        mesh=this.arrHron[1].get();
+                        mesh.position.x=+this.www/2 +this.otstup;
+                        mesh.scale.x=-1  
+                    }                    
+
                     xx+=this.otstup/2;                    
                     ww+=this.otstup;
-                    mesh1=this.arrHron[2].get();
-                    mesh1.position.x=this.www/2;
-                    mesh1.position.y=-this.arrHron[2].object.obj.mod.r[2];
-                    mesh1.position.z=this.arrHron[2].object.obj.mod.r[0]
+
+                    if(this.arrHron[2]){
+                        mesh1=this.arrHron[2].get();
+                        mesh1.position.x=this.www/2;
+                        mesh1.position.y=-this.arrHron[2].object.obj.mod.r[2];
+                        mesh1.position.z=this.arrHron[2].object.obj.mod.r[0]
+                    }
                 }
             }
 
@@ -1277,11 +1486,17 @@ export class HrenNiz {
             for (var i = 0; i < 92; i++) {                
                 if(o!=null){ 
                     omb=mark.getO3D(o)
-                    this.arrMark.push(omb)                   
+                    this.arrMark.push(omb) 
+                    let z=o.obj.mod.r[4]+this.object.obj.mod.r[1]-this.arrHron[0].object.obj.mod.r[5]/2-1+o.obj.mod.r[1]
+                    let y= this.object.obj.mod.r[2]+this.arrHron[0].object.obj.mod.r[5]/2+ o.obj.mod.r[5]/2+o.obj.mod.r[2];
+                    if(this.bool3==true) {
+                        z=o.obj.mod.r[4]-2 
+                        y=this.content3d.position.z
+                    }               
                     omb.setPRS({
                         x:otSah-o.obj.mod.r[0],
-                        y:this.object.obj.mod.r[2]+this.arrHron[0].object.obj.mod.r[5]/2+ o.obj.mod.r[5]/2+o.obj.mod.r[2],
-                        z:o.obj.mod.r[4]+this.object.obj.mod.r[1]-this.arrHron[0].object.obj.mod.r[5]/2-1+o.obj.mod.r[1]
+                        y:y,
+                        z:z
                     });
                     otSah+=o.obj.mod.r[3]+2;
                 }
@@ -1313,22 +1528,26 @@ export class HrenNiz {
 
                
             //висяшки первая
-            //aaa=[] 
-            aaa = menedsherMaterial.getArrOtObj(this.arrHron[2].object.obj, idMat, intColor)  
-            //this.parsArr(this.arrHron[2].object.obj[strXZ], aaa)           
-            aaa[9]=this.arrHron[2].object.obj.id;
-            aaa[8]=this.arrHron[2].object.obj;
-            a.push(aaa)
-           
+            //aaa=[]
+            if(this.arrHron[2]){ 
+                aaa = menedsherMaterial.getArrOtObj(this.arrHron[2].object.obj, idMat, intColor)  
+                //this.parsArr(this.arrHron[2].object.obj[strXZ], aaa)           
+                aaa[9]=this.arrHron[2].object.obj.id;
+                aaa[8]=this.arrHron[2].object.obj;
+                a.push(aaa)
+            }
+               
             
             //висяшки вторая
             if(mesh1!=null){
-                aaa1=[] 
-                aaa1 = menedsherMaterial.getArrOtObj(this.arrHron[2].object.obj, idMat, intColor)  
-                //this.parsArr(aaa, aaa1) 
-                aaa1[9]=this.arrHron[2].object.obj.id;
-                aaa1[8]=this.arrHron[2].object.obj;
-                a.push(aaa1);
+                if(this.arrHron[2]){ 
+                    aaa1=[]                 
+                    aaa1 = menedsherMaterial.getArrOtObj(this.arrHron[2].object.obj, idMat, intColor)  
+                    //this.parsArr(aaa, aaa1) 
+                    aaa1[9]=this.arrHron[2].object.obj.id;
+                    aaa1[8]=this.arrHron[2].object.obj;
+                    a.push(aaa1);
+                }
 
                          
             }
@@ -1341,35 +1560,33 @@ export class HrenNiz {
             }
             if(p!=-1){
                 //aaa=[] 
+                
                 aaa = menedsherMaterial.getArrOtObj(this.arrTrub[p].obj, idMat, intColor) 
                 //this.parsArr(this.arrTrub[p].obj[strXZ], aaa)                         
                 aaa[9]=this.arrTrub[p].obj.id;
                 aaa[8]=this.arrTrub[p].obj;
                 a.push(aaa);
+                
             }
 
             if(this._intSah==0){
                 aaa = menedsherMaterial.getArrOtObj(this.arrHron[1].object.obj, idMat, intColor) 
-               // aaa=[]                 
-               // this.parsArr(this.arrHron[1].object.obj[strXZ], aaa)           
                 aaa[9]=this.arrHron[1].object.obj.id;
                 aaa[8]=this.arrHron[1].object.obj;
                 a.push(aaa)               
             }
 
             if(this._intSah==1){
-                aaa = menedsherMaterial.getArrOtObj(this.arrHron[3].object.obj, idMat, intColor) 
-                //aaa=[] 
-                //this.parsArr(this.arrHron[3].object.obj[strXZ], aaa)           
-                aaa[9]=this.arrHron[3].object.obj.id;
-                aaa[8]=this.arrHron[3].object.obj;               
-                a.push(aaa);             
+                if(this.arrHron[3]){ 
+                    aaa = menedsherMaterial.getArrOtObj(this.arrHron[3].object.obj, idMat, intColor) 
+                    aaa[9]=this.arrHron[3].object.obj.id;
+                    aaa[8]=this.arrHron[3].object.obj;               
+                    a.push(aaa); 
+                }            
             }
 
             if(this._intSah1==0){
-                aaa = menedsherMaterial.getArrOtObj(this.arrHron[1].object.obj, idMat, intColor) 
-               // aaa=[] 
-                //this.parsArr(this.arrHron[1].object.obj[strXZ], aaa)           
+                aaa = menedsherMaterial.getArrOtObj(this.arrHron[1].object.obj, idMat, intColor)        
                 aaa[9]=this.arrHron[1].object.obj.id;
                 aaa[8]=this.arrHron[1].object.obj;
                 a.push(aaa)              
@@ -1389,7 +1606,14 @@ export class HrenNiz {
     }
 
 
+    
+
+
+
+
+
     set polka(v) {
+        if(this.bool3==true && v==false)return
         if(this._polka!=v){
             this._polka= v; 
             if(this.bool==false) return              

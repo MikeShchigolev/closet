@@ -60,7 +60,7 @@ export class ButDrag  {
             }
             tStyle.obj3dGron.drag()
             self.fun("inputDrag",this.value) 
-            trace("@@@@@@@@@@@@drag@@@@@@@",this.value);            
+        
         })
         this.input.input.timeFun=null;
         this.input.funFocus=function(){
@@ -137,7 +137,7 @@ export class ButDrag  {
             this.button.idArr=0
 
             this.button2=new But3D(this.c2,function(){  
-                trace("@@@@@@@@@@@button@@@@@@@@@");               
+           
                 tStyle.obj3dGron.korektSten.cPTUP(self.idArr)
                 tStyle.obj3dGron.drag()
                 tStyle.obj3dGron.dragRoom(true)
@@ -279,7 +279,7 @@ export class But3D  {
         this.isC3d=function(c){
             if(!c)return false;
             if(!c.uuid)return false;
-            //trace(c.uuid)
+
             if(c.uuid==this.content3d.uuid)return true;
 
             if(c.parent){
@@ -309,7 +309,7 @@ export class But3D  {
             if(!e)return
                  
             if(self.isC3d(e.target)==false)return 
-            trace(e)      
+    
             self.e = e               
             self.fun() 
             e.target=null  

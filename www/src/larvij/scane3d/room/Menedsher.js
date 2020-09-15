@@ -107,7 +107,7 @@ export class Menedsher  {
         }
 
         this.copy=function(blok){
-            console.log("FIXE")
+            
         }
 
 
@@ -135,7 +135,7 @@ export class Menedsher  {
 
 
         this.startObj=function(obj){
-            //console.warn("#########@@@###",obj.obj)
+         
             this.menedsherObject.csvTest(obj.obj);
             this.start(this.menedsherObject.getBlok(obj.obj));
         }
@@ -443,23 +443,7 @@ export class Menedsher  {
                 this.pointZdvig.x=b.content3d.position.x
                 this.pointZdvig.y=b.content3d.position.y
 
-                //нижний уровень что бы снизу как бы по полу
-                //this.whDrag
-                /*let ott=200;
-                if(b.parent){
-                    if(b.parent.type=="Sten"){
-                        
-                    }
-                }
-                b.parent.content3d.add(this.mPNa);
-                this.mPNa.position.x=this.mPanel.position.x
-                this.mPNa.rotation.x=Math.PI/2
-                this.mPNa.position.z=ott/2
-                this.mPNa.scale.y=ott/this.whDrag
-                trace("@@@@@@@@@",this.pointZdvig,b.parent)*/
-
-
-                /////////////////////
+               
 
             }else{
                 if(b.parent.parent.pozZdvig!=undefined){
@@ -1094,7 +1078,7 @@ export class MenedsherObject  {
 
     set activIndex(v) {
         if(this._activIndex!=v){
-            trace("==_activIndex===",v);
+
             this._activIndex = v;
             for (var i = 0; i < this.array.length; i++) {
                 if(i==this._activIndex)this.array[i].activTime=true;

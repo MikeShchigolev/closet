@@ -512,7 +512,6 @@ export class Blok{
         }
 
         this.sobKey = function(tip,e,arrNa){ 
-            trace("Blok  !! ",this.idArr,tip,arrNa,e,this);
             
         } 
 
@@ -649,10 +648,10 @@ export class Markers{
                 aa= o3d.name.split("_");  
 
                 if(aa[1]){
-                    trace("@@",aa[1])   
+                      
                     var o=par.mO.getRendomID(aa[1])                  
                     if(o!=null){ 
-                        //trace("@@",o)                      
+                                          
                         var omb = this.getO3D(o)                        
                         var pp = new THREE.Vector3(o3d.position.x,o3d.position.y,o3d.position.z-self.par.rect[2])
                         omb.setPRS(pp, o3d.rotation, o3d.scale); 
@@ -701,6 +700,8 @@ export class OMB{
         this.idArr=idArr;
         this.obj=obj;
         this.par=par;
+
+        this.boolColVisi=true
 
 
         this.rect=[]
@@ -791,6 +792,7 @@ export class OMB{
             this.rectObj.x+=this.obj.obj.mod.r[0];
             this.rectObj.w=this.obj.obj.mod.r[3];
             this.rectObj.h=this.obj.obj.mod.r[4];
+
             return this.rectObj
         }  
 

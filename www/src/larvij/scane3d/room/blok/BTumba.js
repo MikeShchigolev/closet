@@ -791,7 +791,6 @@ export class BKHron {
         this.bbbb=true        
         this.init=function(){             
             if(this.object.obj==undefined){
-                console.error("По умолчанию не вложен обьект")
                 return;
             }
             this.link="resources/data/"+this.object.obj.id+"/mod/"+ this.object.obj.mod.name       

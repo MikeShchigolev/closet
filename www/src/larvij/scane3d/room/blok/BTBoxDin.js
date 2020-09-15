@@ -490,7 +490,6 @@ export class BTBoxDin extends Blok {
             }
             
 
-            //trace("=arrRect.length=",arrRect.length)
             for (var i = 0; i < arrRect.length; i++) {
                 if(_not){
                     if(_not.idRandom==arrRect[i].idRandom)continue;                    
@@ -502,9 +501,6 @@ export class BTBoxDin extends Blok {
                     arrRect[i].rectCollisMeshdy.x+arrRect[i].rectCollisMeshdy.width
                 );
             }
-
-        
-
 
 
 
@@ -943,7 +939,7 @@ export class BTBoxDin extends Blok {
 
         this.aaSob=function(s,p){            
             if(s=="clear"){
-                trace(">>>>>>>>>>"+self.children.length);
+
                 var p=self.parent;
                 self.mO.par.clear(self);
                 self.clear();
@@ -1108,13 +1104,7 @@ export class BTBoxDin extends Blok {
             if(tip=="up"){
                 if(e.keyCode==37 || e.keyCode==65 || e.keyCode==39 || e.keyCode==68) {
                     var iAp=Math.random();
-                    this.iAp=iAp;
-                    setTimeout(function() {
-                        if(self.iAp==iAp){
-                            trace("===========iAp================");
-                            
-                        }
-                    }, 500);
+                    this.iAp=iAp;                   
                 }               
             }  
         }

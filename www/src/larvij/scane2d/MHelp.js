@@ -163,7 +163,7 @@ export class MHelp  {
   			}else{  				
   				document.removeEventListener("touchstart", self.mouseup);  				
   			}
-            trace(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+       
             self.dCIframe.visible=false; 	
         }
 

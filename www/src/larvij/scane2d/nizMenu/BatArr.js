@@ -67,11 +67,9 @@ export class BatArr  {
                 }
             }
             if(typeof r =="object"){
-                //setTimeout(function() {                    
-                    self.par.par.par.mHelp.setHelp(r.text,"resources/image/mhelp.png",this.dCont,{x:24,y:-13});
-                   
-               // }, 100);
-                trace(">>>>>>",r )
+                                 
+                self.par.par.par.mHelp.setHelp(r.text,"resources/image/mhelp.png",this.dCont,{x:24,y:-13});
+
             }
 
 

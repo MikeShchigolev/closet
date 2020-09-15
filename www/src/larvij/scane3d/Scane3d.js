@@ -197,7 +197,7 @@ export class AnimatS3D  {
         var bbbbb=false
 
         this.dragActiv=function(t){
-            console.warn("dragActiv",t)
+
             if(t==undefined){
                 if(bbbbb==false){
                     t=0
@@ -334,7 +334,7 @@ export class AnimatS3D  {
 
 
         this.mouseup = function (e) { 
-            trace("mouseup")           
+        
             self.boolDrag=false; 
             if (dcmParam.mobile==false){
                 document.removeEventListener("mouseup", self.mouseup);
@@ -574,7 +574,7 @@ export class SaveModel  {
         this.json ='{"color":"#ffffff","children":[{"type":"Sten","width":300,"height":275,"active":false,"children":[]},{"type":"Sten","width":300,"height":275,"active":true,"children":[{"type":"BPieceTop","id":14,"x":72.94569430772117,"y":186.2014636180158,"children":[{"type":"BPieceObject","id":39,"x":0,"y":1.4255789905515641,"intSah":0,"intSah1":0,"polka":false,"children":[],"idColor":"m_8"}]}]},{"type":"Sten","width":300,"height":275,"active":false,"children":[]}]}'
         
         this.setModel=function(strObj){
-            trace(">>>>>>=@>>>>",this.par.par.par)
+
             var o = JSON.parse(strObj);
             self.textArae.text=strObj;             
             self.setObj(o);                
@@ -696,7 +696,7 @@ export class Foto3dLarvij  {
 
         this.getOriginalWeb=function(f){
 
-            trace("getOriginalWeb")
+
             var r=null;
             wOld=aGlaf.visi3D.width;
             hOld=aGlaf.visi3D.height;

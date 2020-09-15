@@ -136,7 +136,7 @@ export class PlusMM  {
 
         this.galeri = new GaleriLitel(this,0,0,arrObj,function(s,p){ 
             if(s=="index"){
-                trace(this.array[p].link)
+
                 if(this.array[p].link=="resources/image/xp0.png"){//csv                    
                     var a=self.par.par.mani.getArr();
                     var str= 'артикул;название;размер;цена;цвет;кол.;общая цена;id БД\n'//"data:text/csv;charset=utf-8,%EF%BB%BF\n";
@@ -168,7 +168,7 @@ export class PlusMM  {
                     })  
                     
                 }  
-                trace(this.array[p].link)
+
                 if(this.array[p].link=="resources/image/w2.png"){//save
 
                     self.par.par.mInfo.setFun("ПИСЬМО ОТПРАВЛЕННО.", "Письмо было отправелнено на Ваш эмеил, но могло попасть в спам!",function(){},true)
@@ -211,8 +211,7 @@ export class PlusMM  {
         }
 
         function download(data, filename, type) {
-            trace(self.par.par.par);
-            trace(self.par.par.menuSave);           
+         
             var dd=self.zamenaSimvol(data,["×","x"])  
             var time=(new Date()).getTime()
             var ll="../resources/tmpInfo/"+time+".csv";
@@ -287,7 +286,7 @@ export class NMWebCam  {
 
         var xx=this.otstup
         this.but=new DButSim(this.dCont,xx,this.otstup," ",function(){
-            trace(self.par.par)
+
             self.par.par.menuActiv(false, 500);
             self.par.setObject(null)
             self.par.par.par.webCamera.active=false
@@ -303,9 +302,8 @@ export class NMWebCam  {
         xx+=this._vusot+this.otstup;
 
         this.but=new DButSim(this.dCont,xx,this.otstup," ",function(){
-            trace("####")
-           /* var base64= self.par.par.par.scane3d.foto3dLarvij.get("original") 
-            self.par.fotoMenu.setFoto(base64)*/
+
+
             self.par.par.par.scane3d.foto3dLarvij.getOriginalWeb(function(base64){
                 self.par.fotoMenu.setFoto(base64) 
             })  
@@ -384,7 +382,7 @@ export class NMObj  {
         this.up1Menu=undefined;
         
         setTimeout(function() {
-           trace("%%%%%%%%%%%%%%%%%%%",main.glaf.up1) 
+
            if(main.glaf.up1 == true){//Включена смена 55 up1
                 self.up1Menu=new Up1Menu(self)
             } 
@@ -409,7 +407,6 @@ export class NMObj  {
 
         if(bColor==true){
             this.vuborMat = new VuborMat(this,this.otstup,this.otstup,"resources/data/"+this.par.par.par.par.objectBase.three[2].array[2].id+"/yoriginal.png",this.par.par.par.par.objectBase.three[1],function(){
-                trace("this.arrObj.array[this.index].id    ",this.arrObj.array[this.index].id)
                 self.room.idMatObject = this.arrObj.array[this.index].id;
             });            
             this.vuborMat.index = this.par.par.par.par.objectBase.three[1].array.length-1;        
@@ -443,7 +440,7 @@ export class NMObj  {
         this.setObject=function(o){
             this.object=o;
             this.clear()
-            trace(this.object)
+
             this.arrLine[0].x=this.otstup+this._vusot*2-this._vusot*0.25
 
 
@@ -464,7 +461,7 @@ export class NMObj  {
             this.batArr.dCont.x=xx;
             xx+= this.batArr.width;
             this.width=xx+this.otstup;
-            trace("%%",this.up1Menu);
+
             if(this.up1Menu!=undefined)this.up1Menu.setObject(o);
         }
 
@@ -729,11 +726,9 @@ export class BatArr  {
                 }
             }
             if(typeof r =="object"){
-                //setTimeout(function() {                    
-                    self.par.par.par.mHelp.setHelp(r.text,"resources/image/mhelp.png",this.dCont,{x:24,y:-13});
-                   
-               // }, 100);
-                trace(">>>>>>",r )
+                                  
+                self.par.par.par.mHelp.setHelp(r.text,"resources/image/mhelp.png",this.dCont,{x:24,y:-13});
+
             }
 
 

@@ -114,7 +114,7 @@ export class Sten  {
         this.linerMetrik=new LinerMetrik(this);//отсечение коробок маркера
         this.lineVisi=new LineVisi(this, this.content3d);//линии 3д и текст
         this.butDrag=new ButDrag(this,function(t,p){//управление 3д кнопками
-            trace("t,p",t,p,self._width)
+            
         });
         this.korektMarker=new KorektMarker(this,function(t,p){
 
@@ -235,9 +235,7 @@ export class Sten  {
             this.geometry2.setRect(0, 0, this._width, this._height);
             this.mesh2.position.set(0, 0, 0.1);
 
-            if(this.idArr==1){
-                trace(">>>",this.geometry2.arrBox)
-            }
+          
 
             this.geometry3._textureWidth=this._width;
             this.geometry3._textureHeight=this._height;
@@ -698,7 +696,7 @@ export class Sten  {
 
         //сверяем две полосы
         this.test2d=function(ps,pf,ps1,pf1){  
-           // trace(ps,pf,ps1,pf1)          
+                    
             if(ps1>=ps &&ps1<=pf)return true;
             if(ps>=ps1 &&ps<=pf1)return true;
             return false;
@@ -706,8 +704,7 @@ export class Sten  {
 
 
         this.mWFun=function(){
-            trace("mWFun!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",this.idArr)
-            //trace(this.content3d.position, this.c3Glaf.position)
+
             if(this.idArr==0){//крайня первая
                 let ww =this._maxWidth;
                 let ww1 =this._width-this._maxWidth;
@@ -829,7 +826,6 @@ export class Sten  {
             this._avAct = v;           
             this.drahAct();  
             for (var i = 0; i < this.children.length; i++) {
-               // trace(this.idArr,i,"@@@@@@@@@",this.children[i])
                 this.children[i].avAct=this._avAct
             }            
         }       
@@ -892,8 +888,7 @@ export class Sten  {
     set width(v) {
         if(this._width!=v){
             this._width = v; 
-           // this.setka.width = v;  
-           //console.warn("w",v)        
+     
             this.butDrag.width = v;
             this.redrag();
             this.gMGm.width = this._width;
