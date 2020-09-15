@@ -2,12 +2,12 @@
     "id": 215,
     "title": 215,
     "key": "o_215",
-    "orig": "melkoset_900.png",
+    "orig": "xz.png",
     "mod": {
         "key": "glb",
-        "name": "melkaya_setka_900.glb",
+        "name": "900_melk_setka.glb",
         "r": [
-            -45,
+            -46,
             4,
             -0.511,
             90,
@@ -15,7 +15,7 @@
             1.022
         ],
         "r1": [
-            -45,
+            -46,
             -0.008,
             -0.511,
             90,
