@@ -720,6 +720,8 @@ export class BPieceObject extends Blok {
             obj.hrenNiz.intSah=this.hrenNiz.intSah;
             obj.hrenNiz.intSah1=this.hrenNiz.intSah1;
 
+            obj.polka1=this.hrenNiz.polka1;
+
             obj.polka=this.polka
             obj.plusR=this.krai.plusR
             obj.plusL=this.krai.plusL
@@ -766,6 +768,7 @@ export class BPieceObject extends Blok {
 
 
             if(obj.polka)this.polka=obj.polka
+            if(obj.polka1)this.hrenNiz.polka1=obj.polka1    
             if(obj.plusR!=undefined){                
                 this.krai.plusR = obj.plusR;
                 this.krai.plusL = obj.plusL;
@@ -1321,7 +1324,7 @@ export class HrenNiz {
                     }
 
                     trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",this.par.object.str[5],o);
-                    //{|type|:|polka1|,|id|:242}
+                    //{|type|:|polka1|,|id|:242,|kol|:2}
                 }
                 
             }
