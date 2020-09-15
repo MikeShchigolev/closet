@@ -45,6 +45,15 @@ export class BPieceObject extends Blok {
         /*let rrr=new THREE.AxesHelper(50);
         this.content3d.add(rrr);*/
 
+/*
+        let dCont=new DCont(main.contentHTML)
+        dCont.x=400
+        dCont.y=200;
+        var dL=new DLabel(dCont,0,0,"2222222222\r\n333333333333333333333")
+        dL.dCT.div.setAttribute('style', 'white-space: pre;');
+        dL.width=5555*/
+
+
         if(this.object.bool[3]==1){
             this.boolKr=true;//может быть две на одной рейке
         }
@@ -517,26 +526,31 @@ export class BPieceObject extends Blok {
             }         
             if(s=="polka"){
                 if(self.xztest()) return false
-
                 self.polka=!self.polka;
                 self.parent.dVertic() ;
                 self.parent.dragCildren();
                 self.dragRect();
                 self.testKorektActiv();  
-                r=true 
+                r=true;
             }
 
             if(s=="plusL"){
+                if(self.polka==true)return "Установка данного аксессуара с перекладиной невозможна.";
+                if(self.intSah==1)return "Установка аксессуара с это стороны невозможна."; 
                 self.krai.plusL=!self.krai.plusL;
             }
             if(s=="plusR"){
+                if(self.polka==true)return "Установка данного аксессуара с перекладиной невозможна.";                
+                if(self.intSah1==1)return "Установка аксессуара с это стороны невозможна.";   
+                
                 self.krai.plusR=!self.krai.plusR;
             }
 
             if(s.indexOf("p1")!=-1){
                 self.hrenNiz.polka1=s;
                 self.dragRect();
-                self.testKorektActiv(); 
+                self.testKorektActiv();
+                return false
             }
 
 
@@ -706,10 +720,12 @@ export class BPieceObject extends Blok {
             obj.hrenNiz.intSah=this.hrenNiz.intSah;
             obj.hrenNiz.intSah1=this.hrenNiz.intSah1;
 
+            obj.polka1=this.hrenNiz.polka1;
+
             obj.polka=this.polka
             obj.plusR=this.krai.plusR
             obj.plusL=this.krai.plusL
-            obj.polka1=this.hrenNiz.polka1
+            
             
 
             obj.children=[];
@@ -752,11 +768,12 @@ export class BPieceObject extends Blok {
 
 
             if(obj.polka)this.polka=obj.polka
+            if(obj.polka1)this.hrenNiz.polka1=obj.polka1    
             if(obj.plusR!=undefined){                
                 this.krai.plusR = obj.plusR;
                 this.krai.plusL = obj.plusL;
             } 
-            if(obj.polka1!=undefined)this.hrenNiz.polka1=obj.polka1
+            
 
 
 
@@ -890,19 +907,7 @@ export class BPieceObject extends Blok {
     get parent() { return  this._parent;}
 
 
-  /*  set avAct(v) {
-        if(this._avAct!=v){
-            this._avAct = v;
-            // this.c3dNa.visible=v; 
-            this.c3dNa.visible=v;
-            if(this.cont3dLoad)this.cont3dLoad.visible=v;
 
-            this.boxHelper.visible=!v;    
-                 
-             
-        }       
-    }   
-    get avAct() { return  this._avAct;}*/
 }
 
 
@@ -934,6 +939,8 @@ export class BKrai {
         this._plusL=false;
         this._plusR=false;
 
+
+
         this.initHron=function(){            
             sah++;
             if(sah==2)self.initHron2()            
@@ -961,11 +968,10 @@ export class BKrai {
             if(b==false)return
 
             this.drag();            
-            //setTimeout(function() {
 
-                self.par.testKorektActiv()                
-                self.par.dragToPanel()
-            //}, 1);
+            self.par.testKorektActiv()                
+            self.par.dragToPanel()
+
         } 
 
                 //Вставляем вешалку
@@ -977,17 +983,14 @@ export class BKrai {
             if(self.par.object.mod.r[4]>35)kkk="236";
             this.bkhKey = new BKHron(this, kkk, 1);
 
-            
             //L
-            this.c3dkL = new THREE.Object3D();
-            //this.c3dkL.visible=false;
-            this.par.c3dNa.add(this.c3dkL)
+            this.c3dkL = new THREE.Object3D();            
+            this.par.c3dNa.add(this.c3dkL);
 
 
             //R
             this.c3dkR = new THREE.Object3D();
-            //this.c3dkR.visible=false;
-            this.par.c3dNa.add(this.c3dkR)
+            this.par.c3dNa.add(this.c3dkR);
 
             
 
@@ -1054,7 +1057,7 @@ export class BKrai {
 
 
         //--------------
-       
+
 
         var mesh,sahPlus,sahPlus1
         this.drag=function(){             
@@ -1142,6 +1145,8 @@ export class BKrai {
             for (var i = 0; i < this.arrHron.length; i++) {
                 this.arrHron[i].init();
             }
+            this.par.aa.unshift("plusR");
+            this.par.aa.unshift("plusL");
         }else{
             this.par.yMax=this.yMax=this.par.object.mod.r[5]*1;
             this.par.ySMin=this.par.object.mod.r[5]*1;            
@@ -1294,7 +1299,36 @@ export class HrenNiz {
         this._polka1="null";
         this.arrP1=[];
         this.aP1=[];
+        this.kolP1=1;
 
+
+        if(this.par.object.str[5]!=undefined){
+            if((this.par.object.str[5]+"").length>6){
+                if(this.par.object.str[5].indexOf("polka1")!=-1){
+                    let ss=""
+                    for (var i = 0; i < this.par.object.str[5].length; i++) {                        
+                        if(this.par.object.str[5][i]=="|")ss+='"'
+                        else ss+=this.par.object.str[5][i]
+                            
+                    }
+                    var oo={type:"polka1",id:244}
+
+
+                    trace(JSON.stringify(oo)+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",ss);
+
+
+                    let o=JSON.parse(ss); 
+                    if(o.type && o.type=="polka1" && o.id) {
+                        this.arrP1.push(o.id)
+                        if(o.kol)this.kolP1= o.kol;
+                    }
+
+                    trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",this.par.object.str[5],o);
+                    //{|type|:|polka1|,|id|:242,|kol|:2}
+                }
+                
+            }
+        }
 
         this._intSah=-1;
         this._intSah1=-1;
@@ -1375,15 +1409,14 @@ export class HrenNiz {
 
 
 
-        var oPlus=new THREE.Vector3(0,0,0)  
-        
-        if(this.bool3==false){
-            
-            this.par.aa.unshift("plusR");
-            this.par.aa.unshift("plusL");
+        var oPlus=new THREE.Vector3(0,0,0);        
+        if(this.bool3==false){            
             this.par.aa.unshift("polka");
+
             for (var i = 0; i < this.arrP1.length; i++) {
-                this.par.aa.push("p1_"+this.arrP1[i]);
+                
+                this.par.aa.splice(1,0,"p1_"+this.arrP1[i]);
+
                 this.aP1.push(new BKHron(this, this.arrP1[i], 1));
             }
 
@@ -1512,24 +1545,31 @@ export class HrenNiz {
             
             self.hmp1=null
             if(self.polka1!="null"){
-                
-                
                 for (var i = 0; i < self.aP1.length; i++) {                    
                     if(self.polka1.indexOf(self.aP1[i].object.id+"")!=-1){
                         if(self.aP1[i].obj3d!=undefined){
-                            mesh=self.aP1[i].get();
+                          /*  mesh=self.aP1[i].get();
                             mesh.rotation.x=-Math.PI/2;
                             self.hmp1=self.aP1[i] 
+                            mesh.position.y=self.aP1[i].object.obj.mod.r[1]; */
 
-                            mesh.position.y=self.aP1[i].object.obj.mod.r[1];
-                            //mesh.position.z=self.aP1[i].object.obj.mod.r[2];
-                            
+                            let sah=(self.object.obj.mod.r[3]/(self.kolP1+1))
+                            trace("sah>>>",sah)
+                            for (var j = 0; j < self.kolP1; j++) {
+
+                                mesh=self.aP1[i].get();
+                                mesh.rotation.x=-Math.PI/2;
+                                self.hmp1=self.aP1[i] 
+                                mesh.position.y=self.aP1[i].object.obj.mod.r[1]; 
+
+                                mesh.position.x=-self.object.obj.mod.r[3]/2+sah+j*sah
+                                
+                            }/**/
+                                                      
                             break;
-                        }
-                        
+                        }                        
                     }
                 }
-
             }
 
 
@@ -1665,10 +1705,13 @@ export class HrenNiz {
             }
 
             if(this.hmp1!=null){
-                aaa = menedsherMaterial.getArrOtObj(this.hmp1.object.obj, idMat, intColor)        
-                aaa[9]=this.hmp1.object.obj.id;
-                aaa[8]=this.hmp1.object.obj;
-                a.push(aaa) 
+                for (var i = 0; i < this.kolP1; i++) {
+                    aaa = menedsherMaterial.getArrOtObj(this.hmp1.object.obj, idMat, intColor)        
+                    aaa[9]=this.hmp1.object.obj.id;
+                    aaa[8]=this.hmp1.object.obj;
+                    a.push(aaa) 
+                }
+                
             }
         } 
 
@@ -1711,6 +1754,8 @@ export class HrenNiz {
             if(this.bool==false) return              
             this.content3d.visible=this._polka;     
             if(v==true){
+                this._polka1="nul";
+                this.polka1="null";
                 this.par.yF=this.yF; 
                 this.par.ySMin=this.ySMin;                 
                 this.drag();                             
@@ -1727,8 +1772,6 @@ export class HrenNiz {
         if(this._polka1=="null" && v=="null")return;
         if(this._polka1!="null" && this._polka1==v)v="null";
 
-
-
         
         this._polka1= v;          
         this.initP1()
@@ -1738,12 +1781,10 @@ export class HrenNiz {
             this.par.yS=0;    
         }else{
             if(this.hmp1!=null){
+                this.polka=false;
                 this.par.yS=this.hmp1.object.obj.mod.r[4]
-            }
-            //this.par.yS=100;
-        }
-        //this.par.dragRect()
-        //trace(this.par.yS)
+            }            
+        }       
 
 
         

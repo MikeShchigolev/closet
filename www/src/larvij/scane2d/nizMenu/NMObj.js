@@ -98,8 +98,21 @@ export class NMObj  {
         this.butArAr=new ButArAr(this);
 
 
-        this.batArr=new BatArr(this,0,this.otstup,function(t,s){            
-            if(t=="polka"){//не можем поставить полку
+        this.batArr=new BatArr(this,0,this.otstup,function(t,s){ 
+            console.warn(t,s)
+
+            if(typeof s == "string") {
+                self.par.par.mHelp.setHelp(s,"resources/image/mhelp.png",this.dCont,{x:24+this.xxx,y:-13});
+            }
+
+            /*if(t=="plusL"  && s==false){//не можем поставить полку
+                self.par.par.mHelp.setHelp("Установка данного аксессуара с перекладиной невозможна.","resources/image/mhelp.png",this.dCont,{x:24+self._vusot+10,y:-13});
+            }
+            if(t=="plusR" && s==false){//не можем поставить полку
+                self.par.par.mHelp.setHelp("Установка данного аксессуара с перекладиной невозможна.","resources/image/mhelp.png",this.dCont,{x:24+self._vusot*2+20,y:-13});
+            }*/
+
+            if(t=="polka"&& s==false){//не можем поставить полку
                 self.par.par.mHelp.setHelp("В данном положении полки, установка перекладины невозможна","resources/image/mhelp.png",this.dCont,{x:24,y:-13});
             }
             if(t=="saveMod"){//не можем поставить полку

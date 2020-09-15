@@ -828,7 +828,7 @@ export class VisiNisu {
                     i--;
                 }
             }
-            this.array.reverse()
+            this.array.reverse();
 
             aa=[]
             for (var i = this.array.length-1; i >=0 ; i--) {
