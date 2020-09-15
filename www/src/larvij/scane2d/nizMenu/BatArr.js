@@ -58,21 +58,15 @@ export class BatArr  {
             if(this._width!=0)this._width-=this.otstup
         }
 
-
+        this.xxx=0
         this.down=function(){
-            var r = self.object.aaSob(this.name)
-            if(this.name=="polka"){
-                if(r==false){
-                    self.fun("polka", false)
-                }
-            }
-            if(typeof r =="object"){
-                                 
+            var r = self.object.aaSob(this.name)  
+            self.xxx= this.x         
+            self.fun(this.name, r)
+
+            if(typeof r =="object"){                                 
                 self.par.par.par.mHelp.setHelp(r.text,"resources/image/mhelp.png",this.dCont,{x:24,y:-13});
-
             }
-
-
             self.fun("saveMod", false) 
         }
 
