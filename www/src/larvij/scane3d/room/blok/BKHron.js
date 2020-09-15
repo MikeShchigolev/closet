@@ -12,7 +12,10 @@ export class BKHron {
 
         this.mO=undefined    
         if(mO)this.mO=mO
-        else this.mO=this.par.par.mO
+        else this.mO=this.par.par.mO;
+
+        this.content3d=undefined
+        if(par.content3d)this.content3d=par.content3d
 
        
         self.initHron=undefined;  
@@ -54,7 +57,7 @@ export class BKHron {
         this.get=function(){ 
             for (var i = 0; i < this.array.length; i++) {
                 if(this.array[i].parent==undefined){
-                    this.par.content3d.add(this.array[i])
+                    if(this.content3d!=undefined)this.content3d.add(this.array[i])
                     return this.array[i]
                 }
             } 
@@ -64,7 +67,8 @@ export class BKHron {
 
 
             this.array.push(self.obj3d.clone())
-            this.par.content3d.add(this.array[this.array.length-1])
+            if(this.content3d!=undefined)this.content3d.add(this.array[this.array.length-1])
+
             if(this.par.par.recurcChild){
                 this.par.par.recurcChild(this.array[this.array.length-1])
             }
