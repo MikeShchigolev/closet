@@ -41,8 +41,8 @@ export class BPieceTop extends Blok {
 
 
 
-       /* let aa=new THREE.AxesHelper(100);
-        this.content3d.add(aa);*/
+        let aa=new THREE.AxesHelper(100);
+        this.content3d.add(aa);
         
         this.funInit=function(){            
             self.boxColizi.rectCollisMeshdy.boolZ=false
@@ -228,7 +228,8 @@ export class BPieceTop extends Blok {
         var xx, xMax,xMin,xxold
         this.boolSash=false;
         this.rashuishka = function(arr){             
-            if(this.boolSash==false)return            
+            if(this.boolSash==false)return  
+                     
             this.boolSash=false;
             xMin=99999    
             xMax=-99999 
@@ -692,57 +693,84 @@ export class VisiNisu {
         this.oSah=3.2;
         this.maxSah=0     
 
-        var b,b1, p, p1, vnb, xxx;
+        var b,b1, b2, p, p1, vnb, xxx;
         this.testStoik=function(blok){
-
+            b2=true;
             this.maxSah=0
             b=false;
             b1=false;
             p=-1;
             p1=-1;
-            xxx=Math.round(blok.boxColizi.rectCollisMeshdy.x/30)*30;
-            if(blok.boxColizi.rectCollisMeshdy.x==xxx)blok.boxColizi.rectCollisMeshdy.x=xxx;            
-            for (var i = 0; i < this.array.length; i++) {
-                if(Math.round(this.array[i].x)==Math.round(blok.boxColizi.rectCollisMeshdy.x)){
-                    b=true;
-                    p=i;                    
-                    this.array[i].visible=true;
+            if(blok.boxColizi.rectCollisMeshdy.width>15){  
+                xxx=Math.round(blok.boxColizi.rectCollisMeshdy.x/30)*30;
+                if(blok.boxColizi.rectCollisMeshdy.x==xxx)blok.boxColizi.rectCollisMeshdy.x=xxx;                         
+                for (var i = 0; i < this.array.length; i++) {
+                    if(Math.round(this.array[i].x)==Math.round(blok.boxColizi.rectCollisMeshdy.x)){
+                        b=true;
+                        p=i;                    
+                        this.array[i].visible=true;
+                    }                
+                    if(Math.round(this.array[i].x)==Math.round(blok.boxColizi.rectCollisMeshdy.x+blok.boxColizi.rectCollisMeshdy.width)){
+                        b1=true;
+                        p1=i;                   
+                        this.array[i].visible=true;
+                    }              
                 }
                 
-                if(Math.round(this.array[i].x)==Math.round(blok.boxColizi.rectCollisMeshdy.x+blok.boxColizi.rectCollisMeshdy.width)){
-                    b1=true;
-                    p1=i;                   
-                    this.array[i].visible=true;
-                }              
-            }
-           
-            if(b==false){
-                vnb=this.creat(Math.round(blok.boxColizi.rectCollisMeshdy.x*10)/10);
-                p=vnb.idArr;                
-                vnb.visible=true;
-            }
-            if(b1==false){
-                vnb=this.creat(Math.round((blok.boxColizi.rectCollisMeshdy.x+blok.boxColizi.rectCollisMeshdy.width)*10)/10);
-                p1=vnb.idArr;                
-                vnb.visible=true;
-            }
-            
-            if(p1>this.maxSah)this.maxSah=p1
+                if(b==false){
+                    vnb=this.creat(Math.round(blok.boxColizi.rectCollisMeshdy.x*10)/10);
+                    p=vnb.idArr;                
+                    vnb.visible=true;
+                }
+                if(b1==false){
+                    vnb=this.creat(Math.round((blok.boxColizi.rectCollisMeshdy.x+blok.boxColizi.rectCollisMeshdy.width)*10)/10);
+                    p1=vnb.idArr;                
+                    vnb.visible=true;
+                }
+                
+                if(p1>this.maxSah)this.maxSah=p1
 
-            this.array[p].visible=true
-            this.array[p1].visible=true
-            this.array[p].testHH(blok);
-            this.array[p1].testHH(blok);
+                this.array[p].visible=b
+                this.array[p1].visible=b1
+                this.array[p].testHH(blok);
+                this.array[p1].testHH(blok);
 
-            if(this.xMin>this.array[p].x-this.otstup)this.xMin=this.array[p].x-this.otstup;
-            if(this.xMax<this.array[p].x+this.otstup)this.xMax=this.array[p].x+this.otstup;
+                if(this.xMin>this.array[p].x-this.otstup)this.xMin=this.array[p].x-this.otstup;
+                if(this.xMax<this.array[p].x+this.otstup)this.xMax=this.array[p].x+this.otstup;
 
-            if(this.xMin>this.array[p1].x-this.otstup)this.xMin=this.array[p1].x-this.otstup;
-            if(this.xMax<this.array[p1].x+this.otstup)this.xMax=this.array[p1].x+this.otstup;         
+                if(this.xMin>this.array[p1].x-this.otstup)this.xMin=this.array[p1].x-this.otstup;
+                if(this.xMax<this.array[p1].x+this.otstup)this.xMax=this.array[p1].x+this.otstup;         
 
-            if(b==false||b1==false) {                
+                if(b==false||b1==false) {                
+                    return true;
+                }
+            }else{
+                xxx=Math.round(blok.boxColizi.rectCollisMeshdy.x/15)*15;                
+                blok.boxColizi.rectCollisMeshdy.x=xxx; 
+                for (var i = 0; i < this.array.length; i++) {
+                    if(Math.round(this.array[i].x)==Math.round(blok.boxColizi.rectCollisMeshdy.x)){
+                        b=true;
+                        p=i;                    
+                        this.array[i].visible=true;
+                    } 
+                }
+                if(b==false){
+                    vnb=this.creat(Math.round(blok.boxColizi.rectCollisMeshdy.x*10)/10);
+                    p=vnb.idArr;                
+                    vnb.visible=true;
+                }
+
+                if(this.xMin>this.array[p].x-this.otstup)this.xMin=this.array[p].x-this.otstup;
+                if(this.xMax<this.array[p].x+this.otstup)this.xMax=this.array[p].x+this.otstup;
+                
+
+                this.array[p].visible=b;
+                this.array[p].testHH(blok);
                 return true;
             }
+
+
+
             return false
         }
 
@@ -764,15 +792,18 @@ export class VisiNisu {
 
 
         this.sort=function(){ 
+            
             this.sortFalse()
             ww=this.xMax-this.xMin;
             zdv=-ww/2-this.xMin;
             this.par.visiBPT.zdvigX(0) 
+            
             for (var i = 0; i < this.array.length; i++) {                
-                this.array[i].x=this.array[i]._x+zdv;                    
+                this.array[i].x=this.array[i]._x+zdv;
             }
+
             for (i = 0; i < this.par.children.length; i++) {
-                this.par.children[i].boxColizi.rectCollisMeshdy.x=this.par.children[i].boxColizi.rectCollisMeshdy.x+zdv;                
+                this.par.children[i].boxColizi.rectCollisMeshdy.x=this.par.children[i].boxColizi.rectCollisMeshdy.x+zdv;
             }
             this.par.boxColizi.position.x=this.par.boxColizi.position._x-zdv
             this.par.dVertic()
@@ -821,20 +852,36 @@ export class VisiNisu {
                 wewe= this.array[i+1].x -this.array[i].x   
                 xxx=this.array[i].x+(wewe)/2;
                 bb=false;
+                
+
                 for ( var j = 0; j < this.par.children.length; j++) {
-                    if(xxx>this.par.children[j].boxColizi.rectCollisMeshdy.x){
-                        if(xxx<this.par.children[j].boxColizi.rectCollisMeshdy.x+this.par.children[j].boxColizi.rectCollisMeshdy.width){
-                            bb=true;
-                            if(rrr==-1)aa.push(this.par.children[j]);
-                            else aa1.push(this.par.children[j]);
-                        }
-                    }
-                } 
+                   /* if(this.par.children[j].boxColizi.rectCollisMeshdy.width<15){
+                        bb=true;
+                        if(rrr==-1)aa.push(this.par.children[j]);
+                        else aa1.push(this.par.children[j]);
+
+                        trace("##########");
+                    }else{*/
+                        if(xxx>this.par.children[j].boxColizi.rectCollisMeshdy.x){                        
+                            if(xxx<this.par.children[j].boxColizi.rectCollisMeshdy.x+this.par.children[j].boxColizi.rectCollisMeshdy.width){
+                                bb=true;
+                                if(rrr==-1)aa.push(this.par.children[j]);
+                                else aa1.push(this.par.children[j]);
+                            }
+                        }   
+                   // }
+
+                    
+                }  
+               
+                
+
                 if(bb==false){
                     wwwww=wewe
                     rrr=i;
                 }
             }
+
 
             for (var i = 0; i < aa1.length; i++) {
                 for (var j = i+1; j < aa1.length; j++) {
@@ -855,7 +902,8 @@ export class VisiNisu {
             }
 
             if(rrr!=-1){
-                if(aa1.length!=0){                    
+                if(aa1.length!=0){ 
+
                     this.par.rashuishka(aa1);
                 }
             }
@@ -926,31 +974,62 @@ export class VisiNisu {
         //пигаем ночальную точку///////////////////////////////////////////
         this.position=new Position()
         this.position=new Position()
+        var xx,xx1
         this.testPosition = function(point, _obj, _bSort){ 
-                                        
+                           
             if(point.y>30)return null;
-            if(point.y>0)point.y=0;           
+            if(point.y>0)point.y=0; 
+      
             //тест на не сортировку
           
 
             if(_bSort!=undefined){                
                 let r=this.testSortingPosit();                
-            } 
+            }
 
-            for (var i = 0; i < this.array.length-1; i++) {                
-                if(this.array[i+1].visible==false)return null;
+
+
+
+
+            if(_obj && _obj.boxColizi.rectCollisMeshdy.width<15){
+                xx1=Math.round(point.x/15)*15
+                var p=0;
+                for (var i = 0; i < this.array.length; i++) { 
+                    if(this.array[i].visible==true)p++
+                }
+
+                if(p==1){
+                    for (var i = 0; i < this.array.length; i++) {                               
+                        if(this.array[i].visible==false)return null;                         
+                        if(xx1==Math.round(this.array[i].x/15)*15){                           
+                                             
+                            return this.testPosition2(i, point, _obj)                     
+                            
+                        }
+                    }
+                }                
+            }
+
+
+
+            for (var i = 0; i < this.array.length-1; i++) {                               
+                if(this.array[i+1].visible==false)return null;                
                 if(point.x>this.array[i].x){
                     if(point.x<this.array[i+1].x){                        
                         return this.testPosition2(i, point, _obj)                     
                     }
                 }
             }
+        
+
+
             return null;              
         }
 
         
         this.testPosition2= function(i, point, _obj){
-            
+
+
             //FIXE большая хрень подрезана, хз
             this.position.z=_obj.rect[3]//this.array[i+1].x-this.array[i].x;            
             this.position.x=_obj.x;//this.array[i].x+this.position.z/2;                     
@@ -968,16 +1047,22 @@ export class VisiNisu {
         this.aLeft=[]//прямые столкновения 
         this.aRight=[]//прямые столкновения 
         this.aIn=[]//прямые столкновения 
-        this.aWith=[]//прямые столкновения 
+        this.aWith=[]//прямые столкновения
+        this.arrAll=[]
+
         this.testPos= function(x, _obj){ 
             this.aAr.length=0;
             this.aLeft.length=0;
             this.aRight.length=0;
             this.aIn.length=0;
             this.aWith.length=0;
-           
+            this.arrAll.length=0;
+
+
+
             for (var i = 0; i < this.par.children.length; i++) {
-                if(_obj.idRandom!==this.par.children[i].idRandom){                   
+                if(_obj.idRandom!==this.par.children[i].idRandom){ 
+                    this.arrAll.push(this.par.children[i])                  
                     //те что с лева и попадают на
                     if(Math.round(this.par.children[i].boxColizi.rectCollisMeshdy.x)==Math.round(_obj.boxColizi.rectCollisMeshdy.x)){                        
                         this.aAr.push(this.par.children[i])
@@ -1044,7 +1129,7 @@ export class VisiNisu {
         }
 
 
-        var yy, yh, yy1, yh1, _oB, pL, pR;
+        var yy, yh, yy1, yh1, _oB, pL, pR,iii;
         this.testPos2= function(y, _obj,_y1){   
             pL=-1;
             pR=-1;     
@@ -1052,7 +1137,12 @@ export class VisiNisu {
             yh=y+(-_obj.ySMin)+_obj.yPol;
             pL=-1;
 
-           
+            trace(">>>>this.testPos2>>")
+           /* iii=this.testPosCol(y, _obj)
+            if(iii!=null){
+                return iii
+            }*/
+
             //проверка точных пересечений
             for (var i = 0; i < this.aAr.length; i++) {
                 yy1=this.aAr[i].boxColizi.rectCollisMeshdy.y+(this.aAr[i].yPol+this.aAr[i].yS+_obj.ySRR);
@@ -1121,7 +1211,26 @@ export class VisiNisu {
 
             return null;
         }
+        
+        this.testPosCol= function(y, _obj,minX){ 
+            //проверка общих контейнеров
+            yy=y+(_obj.yPol+_obj.yS+_obj.ySRR);
+            yh=y+(-_obj.ySMin)+_obj.yPol;
+            
+            for (var i = 0; i < this.arrAll.length; i++) {
 
+                yy1=this.arrAll[i].boxColizi.rectCollisMeshdy.y+(this.arrAll[i].yPol+this.arrAll[i].yS+_obj.ySRR);
+                yh1=this.arrAll[i].boxColizi.rectCollisMeshdy.y+(-this.arrAll[i].ySMin)//+this.aAr[i].yPol;
+                
+                /*if(this.testLineXZ(yy,yh,yy1,yh1)==true){
+                    
+                    
+                }*/
+            }
+
+
+            return null;
+        }
 
         //сравниваем элементы
         this.isTo2= function(_o, _o1, bool){ 
@@ -1162,16 +1271,23 @@ export class VisiNisu {
             for (var i = 0; i < 900; i++) {
                 ypp=yss-i*this.oSah;
                 ptn=this.testNiz(ypp,_obj)
+
+
                 if(ptn!=null){
                     ypp=ptn
                     i=999;
                 }
+                trace(">>>>poiskPos>>>>",y)
                 rezzzz=this.testPos2(ypp, _obj, -i*this.oSah)
-                if(rezzzz==null){              
-                    if(Math.abs(yMin)>Math.abs(ypp-y)){
-                        yMin=Math.abs(ypp-y);
-                        ry=ypp;                        
-                    }
+                if(rezzzz==null){
+                    
+                        if(Math.abs(yMin)>Math.abs(ypp-y)){
+                            yMin=Math.abs(ypp-y);
+                            ry=ypp;                        
+                        }  
+                    
+
+                    
                 } 
             }
             return ry;
@@ -1181,13 +1297,14 @@ export class VisiNisu {
         //коректируем высоту обьекта по у
         var p,p1, rPo,ptn;
         this.corectY= function(x, y, _obj){ 
+            
             if(this.par.boolY==false){
                 return y;
             } 
             //
-            p= y           
-            this.poiskNiz(x, _obj);
             
+            p=y;           
+            this.poiskNiz(x, _obj);            
             if(p>0)p=0;
             this.poiskNiz(x, _obj);
             ptn=this.testNiz(p, _obj);
@@ -1197,7 +1314,14 @@ export class VisiNisu {
 
             p1=p
             p1=this.corektNizzz(p)
-            this.testPos(x, _obj);            
+            this.testPos(x, _obj);
+
+            /*if(_obj.boxColizi.rectCollisMeshdy.width<15){
+                rPo=this.testPosCol(p1, _obj);
+                if(){}
+            }*/
+
+
             if(this.aAr.length==0 && this.aLeft.length==0 && this.aRight.length==0)return p1;//пустая хрень
             
             rPo=this.testPos2(p1, _obj);            
@@ -1215,6 +1339,7 @@ export class VisiNisu {
         
         this.corektNizzz= function(y){             
             var yy=y
+            
             if(this.par.children.length<1){
                 if(yy<-192&&yy>-201.6){
                     yy=-201.6                
@@ -1228,7 +1353,8 @@ export class VisiNisu {
                         yy=-182.4
                     }               
                 }
-            }            
+            } 
+            
             return yy
         }
 
@@ -1258,8 +1384,15 @@ export class VisiNisu {
                         cx1=_obj.boxColizi.rectCollisMeshdy.x+_obj.boxColizi.rectCollisMeshdy.width+this.par.x;                        
 
                         if(ooW.type=="BPieceTop"){
-                            cy= ooW.boxColizi.rectCollisMeshdy.x-_obj.boxColizi.rectCollisMeshdy.width/2;
-                            cy1=ooW.boxColizi.rectCollisMeshdy.x+_obj.boxColizi.rectCollisMeshdy.width/2;
+                           
+                            if(ooW.boxColizi.rectCollisMeshdy.width>15){
+                                cy= ooW.boxColizi.rectCollisMeshdy.x-_obj.boxColizi.rectCollisMeshdy.width/2;
+                                cy1=ooW.boxColizi.rectCollisMeshdy.x+_obj.boxColizi.rectCollisMeshdy.width/2; 
+                            }else{
+                                cy= ooW.boxColizi.rectCollisMeshdy.x-ooW.boxColizi.rectCollisMeshdy.width/2;
+                                cy1=ooW.boxColizi.rectCollisMeshdy.x+ooW.boxColizi.rectCollisMeshdy.width/2; 
+                            }
+                            
                         }
                         if(ooW.type=="BWindow"||ooW.type=="BDoor"){
                             cy= ooW.boxColizi.rectCollisMeshdy.x;
@@ -1303,9 +1436,9 @@ export class VisiNisu {
         this.clearHH= function(){
             this.xMin=99990;
             this.xMax=-99990;
-            this.maxSah=0
+            this.maxSah=0;
             for (var i = 0; i < this.array.length; i++) {
-                this.array[i].clear()
+                this.array[i].clear();
             }
         }
 
@@ -1340,6 +1473,7 @@ export class VisiNisu {
 
         this.dragKr2= function(_o){
             if(_o.arr.length==0)return;
+            
             for (var i = 0; i < _o.arr.length; i++) {
                 _o.arr[i].xz=null;
                 _o.arr[i].xz1=null;
@@ -1358,13 +1492,16 @@ export class VisiNisu {
                     }
                 }
             }
-
+             
             for (var i = 0; i < _o.arr.length; i++) {                
-                if(_o.arr[i].xz==null){
-                    _o.arr[i].intSah=0                    
+                
+                if(_o.arr[i].xz==null){                    
+                    _o.arr[i].intSah=0 
+                                      
                 }else{
-                    _o.arr[i].intSah=-1                    
+                    _o.arr[i].intSah=-1                                      
                 }
+                
                 if(_o.arr[i].xz1==null){
                     _o.arr[i].intSah1=0
                 }else{                    
@@ -1987,6 +2124,38 @@ export class VisiBPT {
             this.meshS.position.x=this.meshS.xx/2-zd-otX;
             vv+=this.meshS.xx;
 
+            
+            if(wwww<30){
+                this.meshS.position.x=0
+                this.meshS.scale.x=wwww/vv;
+
+                this.meshF.visible=false
+                
+                this.content3d.position.x=-this._width/2;
+                this.content.position.x = this.content3d.position.x;
+                var ww=5;
+                this.par.boxColizi.width=ww;            
+                this.par.boxColizi.rectCollisMeshdy.width=ww;
+                this.par.boxColizi.x=-ww/2;
+                this.par.boxColizi.sx=-ww/2;
+                this.par.boxColizi.rectCollisMeshdy.x=-ww/2+this.par.x;
+                
+                this.par.boxColizi.y=-ww/2;
+                this.par.boxColizi.sy=-ww/2;
+
+
+
+                this.dragCont();
+
+
+
+                return
+            }else{
+                this.meshS.scale.x=1
+                this.meshF.visible=true
+            }/**/
+
+            
             for (var i = 0; i < wwww; i+=this.marker.xx) {
                 mesh = this.getMesh(0);                           
                 mesh.position.x=vv+this.marker.xx/2-zd-otX;
@@ -2009,6 +2178,7 @@ export class VisiBPT {
             this.par.boxColizi.sy=-ww/2;
 
             this.content.position.x = this.content3d.position.x;
+            //this.content3d.scale.x=0.1
             this.dragCont(); 
 
                
@@ -2123,7 +2293,8 @@ export class VisiBPT {
     }
     set width(v) {
         if(this._width!=v){
-            this._width = v;             
+            this._width = v;
+                      
             this.draw();   
         }                   
     }   

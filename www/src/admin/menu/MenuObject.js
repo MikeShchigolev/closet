@@ -615,6 +615,7 @@ function MBLOt(p,c,x,y,f) {
     var sahPlus=34;
  
     var kolObj=4;
+    var kolObj2=6;
 
 
     this.drag=function(){
@@ -628,7 +629,7 @@ function MBLOt(p,c,x,y,f) {
         for (var i = 0; i < kolObj; i++) {
             this.o.num[i]=this.aNum[i].value*1;        
         }
-        for (var i = 0; i < kolObj; i++) {
+        for (var i = 0; i < kolObj2; i++) {
             this.o.str[i]=this.aStr[i].value;          
         }
         for (var i = 0; i < 5; i++) {            
@@ -664,7 +665,7 @@ function MBLOt(p,c,x,y,f) {
 
 
 
-        for (var i = 0; i < kolObj; i++) {
+        for (var i = 0; i < kolObj2; i++) {
             if(this.o.str[i]==undefined)this.o.str[i]="0"
             this.aStr[i].value=this.o.str[i];           
         }
@@ -681,8 +682,8 @@ function MBLOt(p,c,x,y,f) {
        
 
 
-        this.sPriority.value=self.o.priority
-        this.sBagY.value=self.o.bagY
+        this.sPriority.value=self.o.priority;
+        this.sBagY.value=self.o.bagY;
         
         for (var i = 0; i < this.o.mod.r.length; i++) {
             this.ar[i].value=Math.round(this.o.mod.r[i]*1000)/1000
@@ -801,7 +802,7 @@ function MBLOt(p,c,x,y,f) {
     this.lstr=new DLabel(this.panel,this.otstup,sah+9,"str");
     this.aStr=[];
     ss=0
-    for (var i = 0; i < kolObj; i++) {
+    for (var i = 0; i < kolObj2; i++) {
         this.aStr[i]=new DInput(this.panel,45+ss*(w+this.otstup), sah,i+" ",this.drag);
         this.aStr[i].idArr=i
         this.aStr[i].width=w;
