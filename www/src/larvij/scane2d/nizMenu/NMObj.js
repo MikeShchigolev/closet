@@ -110,11 +110,11 @@ export class NMObj  {
             }
             if(t=="plusR" && s==false){//не можем поставить полку
                 self.par.par.mHelp.setHelp("Установка данного аксессуара с перекладиной невозможна.","resources/image/mhelp.png",this.dCont,{x:24+self._vusot*2+20,y:-13});
-            }*/
+            }
 
             if(t=="polka"&& s==false){//не можем поставить полку
                 self.par.par.mHelp.setHelp("В данном положении полки, установка перекладины невозможна","resources/image/mhelp.png",this.dCont,{x:24,y:-13});
-            }
+            }*/
             if(t=="saveMod"){//не можем поставить полку
                 self.room.par.tudaSuda.saveMod();
             }

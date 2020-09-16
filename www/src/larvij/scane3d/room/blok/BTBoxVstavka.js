@@ -109,25 +109,43 @@ export class BTBoxVstavka extends Blok {
             this.creadDebag(self.cont3dLoad.children[0]);
             visi3D.objShadow(self.cont3dLoad, true)            
             self.boolLoad=true;
-            this.dragIndex();            
-            
-            let o=this.mO.getRendomID("tit2");
+            this.dragIndex();
+
+            let yy=this.rect[4]/2+(Math.random()*20-10)  
+                      
+            let ss="tit2"
+            if(this.id==225){
+                ss="tit7"
+                yy=this.rect[4]/2
+                
+            }
+
+
+              
+            let o=this.mO.getRendomID(ss);
             let omb=this.markers.getO3D(o);            
-            /*
+            
             if(omb.rect[3]>35){
                 let s=35/omb.rect[3];
                 for (var i = 0; i < omb.rect.length; i++) {
                     omb.rect[i]*=s
                 }
                 omb.content3d.scale.set(s,s,s)
-            }*/
+            }
             this.yMP =-(this.rect[5]-2);
             this.yMP1 = this.yMP+ omb.rect[4]; 
-                     
+            
+
+            let zz=-this.yMP  
+            if(this.id==225){
+                zz-=4
+            }
+
+
             omb.setPRS({
                 x:0,
-                y:this.rect[4]/2+(Math.random()*20-10),
-                z:-this.yMP
+                y:yy,
+                z:zz
             });
             this.omb=omb;
 
