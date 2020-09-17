@@ -108,19 +108,22 @@ export class BPieceObject extends Blok {
         
 
         this.funInitMod = function(){
-
-            self.cont3dLoad.position.y=this.rect[2]+this.smesenie;        
-            if(self.object.bagY){
-                self.cont3dLoad.position.z=self.object.bagY;
+            if(self.cont3dLoad){
+                self.cont3dLoad.position.y=this.rect[2]+this.smesenie;        
+                if(self.object.bagY){
+                    self.cont3dLoad.position.z=self.object.bagY;
+                }
+            
+                this.testYF();   
             }
             
-            this.testYF();    
+
             if(this.id==42)this.testShadow(self.cont3dLoad)
             this.dragRect();         
             self.testKorektActiv();                
             self.dragToPanel(); 
 
-            this.cont3dLoad.visible=this._avAct;           
+            if(self.cont3dLoad)this.cont3dLoad.visible=this._avAct;           
         }
 
 
@@ -624,7 +627,7 @@ export class BPieceObject extends Blok {
             }
 
             if(s.indexOf("p1")!=-1){
-                trace(self.hrenNiz.rect)
+                
                 if(self.isBoxParent({
                     x:self.boxColizi.rectCollisMeshdy.x+self.boxColizi.rectCollisMeshdy.width/2+self.hrenNiz.rect.x,
                     y:self.boxColizi.rectCollisMeshdy.y+self.hrenNiz.rect.y+self.hrenNiz.rect.h,
@@ -1428,22 +1431,6 @@ export class HrenNiz {
 
                         trace(this.rect)
 
-                        /*
-
-                            let sah=(self.par.object.mod.r[3]/(self.kolP1+1))
-                            trace("sah>>>",sah)
-                            for (var j = 0; j < self.kolP1; j++) {
-
-                                mesh=self.aP1[i].get();
-                                mesh.rotation.x=-Math.PI/2;
-                                self.hmp1=self.aP1[i] 
-                                mesh.position.y=self.aP1[i].object.obj.mod.r[1]; 
-
-                                mesh.position.x=self.par.object.mod.r[0]+sah+j*sah
-                                
-                            }
-
-                        */
                     }
 
          
@@ -1532,7 +1519,8 @@ export class HrenNiz {
 
 
 
-        var oPlus=new THREE.Vector3(0,0,0);        
+        var oPlus=new THREE.Vector3(0,0,0); 
+        var oPlus1=new THREE.Vector3(0,0,0);       
         if(this.bool3==false){            
             this.par.aa.unshift("polka");
 
@@ -1560,6 +1548,9 @@ export class HrenNiz {
             oPlus.z=1.5
             this.arrHron.push(new BKHron(this, arr[0], 1))
             this.arrHron[2]=new BKHron(this, arr[2], 1)
+
+            oPlus1.y=-1.8
+            oPlus1.z=-2.2
         }
 
 
@@ -1615,8 +1606,8 @@ export class HrenNiz {
                 if(this.bool3==false){
                     mesh=this.arrHron[2].get();
                     mesh.position.x=-this.www/2+oPlus.x;
-                    mesh.position.y=-this.arrHron[2].object.obj.mod.r[2]+oPlus.y;
-                    mesh.position.z=this.arrHron[2].object.obj.mod.r[0]+oPlus.z;
+                    mesh.position.y=-this.arrHron[2].object.obj.mod.r[2]+oPlus.y+oPlus1.y;
+                    mesh.position.z=this.arrHron[2].object.obj.mod.r[0]+oPlus.z+oPlus1.z;
                     mesh1=null;
                     
                 }
@@ -1628,6 +1619,10 @@ export class HrenNiz {
                         mesh=this.arrHron[1].get();
                         mesh.scale.x=1
                         mesh.position.x=-this.www/2 -this.otstup;
+                        mesh.position.y=oPlus1.y;
+                        mesh.position.z=oPlus1.z;
+
+
                     }
 
                     xx=-this.otstup/2;                    
@@ -1647,7 +1642,9 @@ export class HrenNiz {
                     if(this.arrHron[1]){
                         mesh=this.arrHron[1].get();
                         mesh.position.x=+this.www/2 +this.otstup;
-                        mesh.scale.x=-1  
+                        mesh.scale.x=-1
+                        mesh.position.y=oPlus1.y;
+                        mesh.position.z=oPlus1.z; 
                     }                    
 
                     xx+=this.otstup/2;                    
@@ -1664,7 +1661,12 @@ export class HrenNiz {
 
             mesh=self.arrHron[0].get();
             mesh.scale.x=ww/self.arrHron[0].object.obj.mod.r[3];
-            mesh.position.x=xx; 
+            mesh.position.x=xx;
+
+
+            mesh.position.y=oPlus1.y;
+            mesh.position.z=oPlus1.z;
+
             
             self.hmp1=null
             if(self.polka1!="null"){
