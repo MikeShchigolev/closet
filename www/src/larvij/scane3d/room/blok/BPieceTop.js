@@ -1209,6 +1209,20 @@ export class VisiNisu {
                 }
             }
 
+            if(_obj){
+                let w=5;
+                if(_obj.boxColizi.rectCollisMeshdy.width<15)w=0
+                if(_obj.isBoxParent({
+                    x:_obj.boxColizi.rectCollisMeshdy.x+w,
+                    y:yy,
+                    w:_obj.boxColizi.rectCollisMeshdy.width-w,
+                    h:_obj.rect[5]
+                },[_obj.idArr]) !=null){                    
+                    return {xz:"xz"}; 
+                    
+                }
+            }
+
             return null;
         }
         
@@ -1322,7 +1336,7 @@ export class VisiNisu {
             }*/
 
 
-            if(this.aAr.length==0 && this.aLeft.length==0 && this.aRight.length==0)return p1;//пустая хрень
+            if(this.aAr.length==0 && this.aLeft.length==0 && this.aRight.length==0 &&_obj.boxColizi.rectCollisMeshdy.width>15)return p1;//пустая хрень
             
             rPo=this.testPos2(p1, _obj);            
             if(rPo==null){

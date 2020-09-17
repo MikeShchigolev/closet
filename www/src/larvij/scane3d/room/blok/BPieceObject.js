@@ -503,19 +503,28 @@ export class BPieceObject extends Blok {
         //проверяем пересечение коробок родителя
         var box={x:0,y:0,w:100,h:100}
         var box1={x:0,y:0,w:100,h:100}
-        this.isBoxParent=function(_box,_arrNotId){ 
+        this.isBoxParent=function(_box,_arrNotId,bool){ 
             if(!_box)return null;
             if(this.parent==undefined)return null   
             if(_arrNotId==undefined)_arrNotId=[]    
             if(_box.w!=undefined)for(let s in _box)   box[s] =_box[s];
             else{
-                if(_box.boxColizi!=undefined){
-                    box.x=_box.boxColizi.rectCollisMeshdy.x
-                    box.y=_box.boxColizi.rectCollisMeshdy.y
-                    box.w=_box.boxColizi.rectCollisMeshdy.width
-                    box.h=_box.boxColizi.rectCollisMeshdy.height
+                
+                if(_box.boxColizi!=undefined){  
+                    if(bool!=true){                      
+                        box.x=_box.boxColizi.rectCollisMeshdy.x
+                        box.y=_box.boxColizi.rectCollisMeshdy.y
+                        box.w=_box.boxColizi.rectCollisMeshdy.width
+                        box.h=_box.boxColizi.rectCollisMeshdy.height
+                    }else{
+                        box.x=_box.boxColizi.rectCollisMeshdy.x
+                        box.y=_box.boxColizi.rectCollisMeshdy.y
+                        box.w=_box.rect[3]
+                        box.h=_box.rect[5] 
+                    }
 
                 }
+                
             }
             //проверяем не нужные коробки
             trace(" box=====  ",box) 
@@ -525,10 +534,17 @@ export class BPieceObject extends Blok {
                     if(_arrNotId[j]==this.parent.children[i].idArr)b=false
                 }
                 if(b){
-                    box1.x=this.parent.children[i].boxColizi.rectCollisMeshdy.x
-                    box1.y=this.parent.children[i].boxColizi.rectCollisMeshdy.y
-                    box1.w=this.parent.children[i].boxColizi.rectCollisMeshdy.width
-                    box1.h=this.parent.children[i].boxColizi.rectCollisMeshdy.height
+                    if(bool!=true){  
+                        box1.x=this.parent.children[i].boxColizi.rectCollisMeshdy.x
+                        box1.y=this.parent.children[i].boxColizi.rectCollisMeshdy.y
+                        box1.w=this.parent.children[i].boxColizi.rectCollisMeshdy.width
+                        box1.h=this.parent.children[i].boxColizi.rectCollisMeshdy.height
+                    }else{
+                        box1.x=this.parent.children[i].boxColizi.rectCollisMeshdy.x
+                        box1.y=this.parent.children[i].boxColizi.rectCollisMeshdy.y
+                        box1.w=this.parent.children[i].rect[3]
+                        box1.h=this.parent.children[i].rect[5]
+                    }
 
                 
                     if(this.testLineXZ2(box.x, box.x+box.w,box1.x, box1.x+box1.w )==true){
@@ -590,7 +606,7 @@ export class BPieceObject extends Blok {
                     w:self.boxColizi.rectCollisMeshdy.width-20,
                     h:12
                 },[self.idArr]) !=null){
-                    return "Установка полки невозможна, что то мешает снизу.";
+                    return "Для установки аксессуара недостаточно свободного места.";
                 }  
 
                 self.polka=!self.polka;
@@ -608,7 +624,7 @@ export class BPieceObject extends Blok {
             }
             if(s=="plusR"){
                 if(self.polka==true)return "Установка данного аксессуара с перекладиной невозможна.";                
-                if(self.intSah1==1)return "Установка аксессуара с это стороны невозможна.";   
+                if(self.intSah1==1)return "Установка аксессуара с этой стороны невозможна.";   
                 
                 self.krai.plusR=!self.krai.plusR;
             }
@@ -621,7 +637,7 @@ export class BPieceObject extends Blok {
                     w:self.hrenNiz.rect.w,
                     h:self.hrenNiz.rect.h
                 },[self.idArr]) !=null){
-                    return "Установка полки невозможна, что то мешает.";
+                    return "Для установки аксессуара недостаточно свободного места.";
                 }  
 
                 
@@ -2105,7 +2121,7 @@ export class SahSuper {
                     w:self.rect.w,
                     h:self.rect.h
                 },[self.par.idArr]) !=null){                    
-                    return "Установка полки невозможна, что то мешает.";
+                    return "Для установки аксессуара недостаточно свободного места.";
                 }
             }
 
