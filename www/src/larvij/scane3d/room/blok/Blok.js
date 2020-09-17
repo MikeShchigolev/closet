@@ -383,28 +383,46 @@ export class Blok{
             this.creatBC();
             this.modelObj=_obj;
             if(self.funInit!=undefined)self.funInit();
-            
-            mO.getModel(this.linkMod, o.mod.key, function(o){
-                self.cont3dLoad=o;
-                self.testMaterial();
-                
-                self.markers.setO3D(self.cont3dLoad) 
-                self.content3d.add(self.cont3dLoad);
-                
-               
+            trace("##############################",self.idArr,o.id,o.mod.key)
 
-                self.recurcChild(self.cont3dLoad)                              
-                self.mO.visi3D.objShadow(self.content3d, true)
+            if(o.mod.key!="n"){
+                mO.getModel(this.linkMod, o.mod.key, function(o){
+                    trace("#############",self.idArr,o.id)
+                    self.cont3dLoad=o;
+                    self.testMaterial();
+                    
+                    self.markers.setO3D(self.cont3dLoad) 
+                    self.content3d.add(self.cont3dLoad);
+                    
+                   
+
+                    self.recurcChild(self.cont3dLoad)                              
+                    self.mO.visi3D.objShadow(self.content3d, true)
+                    self.boxHelper.visible=false
+                    var v=self._activTime;
+                    self._activTime=null
+                    self.activTime=v
+                    self.init2();                
+                    self.okPrice=true;
+                    self.mO.dragPriceScane();
+                    self.testDver(o,true)
+                    if(self.funInitMod!=undefined)self.funInitMod();              
+                });
+            }else{
+                self.cont3dLoad=new THREE.Mesh(self.mO.gBox)
+
+
                 self.boxHelper.visible=false
                 var v=self._activTime;
                 self._activTime=null
                 self.activTime=v
-                self.init2();                
-                self.okPrice=true;
-                self.mO.dragPriceScane();
+                self.okPrice=true;                
+                self.init2(); 
                 self.testDver(o,true)
-                if(self.funInitMod!=undefined)self.funInitMod();              
-            });
+                if(self.funInitMod!=undefined)self.funInitMod(); 
+            }
+            
+            
         }
 
 

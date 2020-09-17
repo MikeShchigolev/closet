@@ -76,15 +76,11 @@ export class BPieceObject extends Blok {
 
         this.yyyF=0;
         this.testYF = function(){
-
-
             if(this.yF>-this.rect[5]){
                 this.yF=-this.rect[5];
                 if(this.rect[5]>this.yMax)this.yF=-this.rect[5];
                 else this.yF=-this.yMax;
-            }
-
-           
+            }           
         }
 
 
@@ -112,19 +108,22 @@ export class BPieceObject extends Blok {
         
 
         this.funInitMod = function(){
-
-            self.cont3dLoad.position.y=this.rect[2]+this.smesenie;        
-            if(self.object.bagY){
-                self.cont3dLoad.position.z=self.object.bagY;
+            if(self.cont3dLoad){
+                self.cont3dLoad.position.y=this.rect[2]+this.smesenie;        
+                if(self.object.bagY){
+                    self.cont3dLoad.position.z=self.object.bagY;
+                }
+            
+                this.testYF();   
             }
             
-            this.testYF();    
+
             if(this.id==42)this.testShadow(self.cont3dLoad)
             this.dragRect();         
             self.testKorektActiv();                
             self.dragToPanel(); 
 
-            this.cont3dLoad.visible=this._avAct;           
+            if(self.cont3dLoad)this.cont3dLoad.visible=this._avAct;           
         }
 
 
@@ -154,9 +153,7 @@ export class BPieceObject extends Blok {
 
                 this.rect[0]=this.object.mod.r1[0]+self.cont3dLoad.position.z;
                 this.rect[3]=this.object.mod.r1[3];
-            }
-            trace(this.yS,this.rect)
-
+            } 
             this.dragObjHA(this.boxHelper, this.rect);
             this.rect[1]=hh11; 
             this.bagRectID.dragRect()                   
@@ -630,7 +627,7 @@ export class BPieceObject extends Blok {
             }
 
             if(s.indexOf("p1")!=-1){
-                trace(self.hrenNiz.rect)
+                
                 if(self.isBoxParent({
                     x:self.boxColizi.rectCollisMeshdy.x+self.boxColizi.rectCollisMeshdy.width/2+self.hrenNiz.rect.x,
                     y:self.boxColizi.rectCollisMeshdy.y+self.hrenNiz.rect.y+self.hrenNiz.rect.h,
@@ -1066,7 +1063,7 @@ export class BKrai {
 
         } 
 
-                //Вставляем вешалку
+        //Вставляем вешалку
         this.bkhKey=null;
 
         this.initKey=function(){
@@ -1237,8 +1234,13 @@ export class BKrai {
             for (var i = 0; i < this.arrHron.length; i++) {
                 this.arrHron[i].init();
             }
-            this.par.aa.unshift("plusR");
-            this.par.aa.unshift("plusL");
+           
+            if(this.par.object.str[2]==32||this.par.object.str[2]==23){
+                this.par.aa.unshift("plusR");
+                this.par.aa.unshift("plusL");
+
+            }
+            
         }else{
             this.par.yMax=this.yMax=this.par.object.mod.r[5]*1;
             this.par.ySMin=this.par.object.mod.r[5]*1;            
@@ -1429,22 +1431,6 @@ export class HrenNiz {
 
                         trace(this.rect)
 
-                        /*
-
-                            let sah=(self.par.object.mod.r[3]/(self.kolP1+1))
-                            trace("sah>>>",sah)
-                            for (var j = 0; j < self.kolP1; j++) {
-
-                                mesh=self.aP1[i].get();
-                                mesh.rotation.x=-Math.PI/2;
-                                self.hmp1=self.aP1[i] 
-                                mesh.position.y=self.aP1[i].object.obj.mod.r[1]; 
-
-                                mesh.position.x=self.par.object.mod.r[0]+sah+j*sah
-                                
-                            }
-
-                        */
                     }
 
          
@@ -1533,7 +1519,8 @@ export class HrenNiz {
 
 
 
-        var oPlus=new THREE.Vector3(0,0,0);        
+        var oPlus=new THREE.Vector3(0,0,0); 
+        var oPlus1=new THREE.Vector3(0,0,0);       
         if(this.bool3==false){            
             this.par.aa.unshift("polka");
 
@@ -1561,6 +1548,9 @@ export class HrenNiz {
             oPlus.z=1.5
             this.arrHron.push(new BKHron(this, arr[0], 1))
             this.arrHron[2]=new BKHron(this, arr[2], 1)
+
+            oPlus1.y=-1.8
+            oPlus1.z=-2.2
         }
 
 
@@ -1616,8 +1606,8 @@ export class HrenNiz {
                 if(this.bool3==false){
                     mesh=this.arrHron[2].get();
                     mesh.position.x=-this.www/2+oPlus.x;
-                    mesh.position.y=-this.arrHron[2].object.obj.mod.r[2]+oPlus.y;
-                    mesh.position.z=this.arrHron[2].object.obj.mod.r[0]+oPlus.z;
+                    mesh.position.y=-this.arrHron[2].object.obj.mod.r[2]+oPlus.y+oPlus1.y;
+                    mesh.position.z=this.arrHron[2].object.obj.mod.r[0]+oPlus.z+oPlus1.z;
                     mesh1=null;
                     
                 }
@@ -1629,6 +1619,10 @@ export class HrenNiz {
                         mesh=this.arrHron[1].get();
                         mesh.scale.x=1
                         mesh.position.x=-this.www/2 -this.otstup;
+                        mesh.position.y=oPlus1.y;
+                        mesh.position.z=oPlus1.z;
+
+
                     }
 
                     xx=-this.otstup/2;                    
@@ -1648,7 +1642,9 @@ export class HrenNiz {
                     if(this.arrHron[1]){
                         mesh=this.arrHron[1].get();
                         mesh.position.x=+this.www/2 +this.otstup;
-                        mesh.scale.x=-1  
+                        mesh.scale.x=-1
+                        mesh.position.y=oPlus1.y;
+                        mesh.position.z=oPlus1.z; 
                     }                    
 
                     xx+=this.otstup/2;                    
@@ -1665,7 +1661,12 @@ export class HrenNiz {
 
             mesh=self.arrHron[0].get();
             mesh.scale.x=ww/self.arrHron[0].object.obj.mod.r[3];
-            mesh.position.x=xx; 
+            mesh.position.x=xx;
+
+
+            mesh.position.y=oPlus1.y;
+            mesh.position.z=oPlus1.z;
+
             
             self.hmp1=null
             if(self.polka1!="null"){
