@@ -387,6 +387,8 @@ export class DHelpxz extends DCont {
         this.dCont=new DCont(this)
         
         
+        this.textArea=new DTextArea(this.dCont,0,0,"");
+
 
         this._color=dcmParam._color;
         this._colorText=dcmParam._colorText;
@@ -409,7 +411,12 @@ export class DHelpxz extends DCont {
         this.label.colorText1=this._colorText;
 
         this.label.dCT.div.setAttribute('style', 'white-space: pre;');
-        this.label.textAlign="center";
+       // 
+        this.textArea.visible=false
+
+        this.textArea.textAlign=this.label.textAlign="center"//"left"//;
+
+        this.textArea.object.setAttribute('style', 'white-space: nowrap; ');
 
 
         this.dragPic=function(){
@@ -486,38 +493,40 @@ export class DHelpxz extends DCont {
                 xt+= this._picWidth+this._otstup;
             }
             this.label.x=xt;
-            this.label.width=this._width-xt-this._otstup
+            let ww=this._width-xt-this._otstup
+            this.textArea.width=100//ww;
+            this.textArea.text= this.label.text
+            this.textArea.width=this.textArea.object.scrollWidth+10
+
+            let _w=this.textArea.width*1.2;
+
+            //if(_w+xt+this._otstup>this._width)_w=this._width-(xt+this._otstup)
+            this.panel.width = _w+xt+this._otstup;
+
+
+
+            this.label.width=_w            
             r=this.label.getRect();
             
-
+            this.textArea.x=this.label.x;
+            this.textArea.y=this.label.y+1111
 
             hh=r.height+this._otstup*2;
             if(this.image.visible!=false){
                 if(this.image.height+this._otstup*2>hh)hh=this.image.height+this._otstup*2
 
             }
-            this.panel.height=hh;
-
-            
-            this.dCont.x=-this.width/2
-
-
+            this.panel.height=hh;                        
+            this.dCont.x=-this.panel.width/2
             if(this._boolNiz==true){
                 this.dContNiz.y=hh-2
                 hh+=this._hCan;
-                this.dContNiz.x=(this._width-this._wCan)/2;
+                this.dContNiz.x=(this.panel.width-this._wCan)/2;
 
 
             }
 
-            this.dCont.y=-hh;
-
-
-
-            this._height
-
-            
-
+            this.dCont.y=-hh;      
         }
 
         
@@ -533,10 +542,10 @@ export class DHelpxz extends DCont {
 
     set text(value) {
         if(this._text!=value){            
-            this._text = value; 
-            trace(">>>>",this._text)           
+            this._text = value;                     
             if(this._text){
                 if(this._text.lenght!=0){
+
                     this.label.visible=true;
                     this.label.text = this._text;
                     this.draw();  
@@ -554,7 +563,8 @@ export class DHelpxz extends DCont {
     set fontFamily(value) {
         if(this._fontFamily!=value){            
             this._fontFamily = value; 
-            this.label.fontFamily=this._fontFamily;          
+            this.label.fontFamily=this._fontFamily;
+            this.textArea.fontFamily=this._fontFamily;          
             this.draw()         
         }       
     }   
@@ -567,8 +577,9 @@ export class DHelpxz extends DCont {
     set fontSize(value) {
         if(this._fontSize!=value){            
             this._fontSize = value;            
-            this.label.fontSize = value;          
-            this.draw()         
+            this.label.fontSize = value; 
+            this.textArea.fontSize = value+2;          
+            this.draw();        
         }       
     }   
     get fontSize() { return  this._fontSize;}
@@ -646,6 +657,7 @@ export class DHelpxz extends DCont {
         if(this._width!=value){            
             this._width = value;
             this.panel.width = value;
+
             this.draw()         
         }       
     }   

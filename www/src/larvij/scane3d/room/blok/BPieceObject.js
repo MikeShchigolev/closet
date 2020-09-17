@@ -425,7 +425,7 @@ export class BPieceObject extends Blok {
                                 }
                                 this.boxColizi.rectCollisMeshdy.x=x7                                
                                 vb=this.setXY2(x7+this.boxColizi.rectCollisMeshdy.width/2, popo.y+popo.bxx.y)  
-                                this.bSort=true
+                                this.bSort=true;
                                 return vb 
                             }else{                               
                                 return false
@@ -499,6 +499,64 @@ export class BPieceObject extends Blok {
             return null;
         }
 
+        ///////////////////////////////////////////////
+        //проверяем пересечение коробок родителя
+        var box={x:0,y:0,w:100,h:100}
+        var box1={x:0,y:0,w:100,h:100}
+        this.isBoxParent=function(_box,_arrNotId){ 
+            if(!_box)return null;
+            if(this.parent==undefined)return null   
+            if(_arrNotId==undefined)_arrNotId=[]    
+            if(_box.w!=undefined)for(let s in _box)   box[s] =_box[s];
+            else{
+                if(_box.boxColizi!=undefined){
+                    box.x=_box.boxColizi.rectCollisMeshdy.x
+                    box.y=_box.boxColizi.rectCollisMeshdy.y
+                    box.w=_box.boxColizi.rectCollisMeshdy.width
+                    box.h=_box.boxColizi.rectCollisMeshdy.height
+
+                }
+            }
+            //проверяем не нужные коробки
+            trace(" box=====  ",box) 
+            for (let i = 0; i < this.parent.children.length; i++) {
+                let b=true;
+                for (let j = 0; j < _arrNotId.length; j++) {
+                    if(_arrNotId[j]==this.parent.children[i].idArr)b=false
+                }
+                if(b){
+                    box1.x=this.parent.children[i].boxColizi.rectCollisMeshdy.x
+                    box1.y=this.parent.children[i].boxColizi.rectCollisMeshdy.y
+                    box1.w=this.parent.children[i].boxColizi.rectCollisMeshdy.width
+                    box1.h=this.parent.children[i].boxColizi.rectCollisMeshdy.height
+
+                
+                    if(this.testLineXZ2(box.x, box.x+box.w,box1.x, box1.x+box1.w )==true){
+                       
+                        if(this.testLineXZ2(box.y-box.h, box.y, box1.y-box1.h,  box1.y)==true){
+                           
+                            return this.parent.children[i]
+                        }
+                        
+                    }
+
+                        
+                }
+            }
+
+
+            return null
+        }
+        //сверяем две полосы
+        this.testLineXZ2=function(ps,pf,ps1,pf1){ 
+            trace(ps,pf,ps1,pf1)           
+            if(ps1>=ps &&ps1<=pf)return true;
+            if(ps>=ps1 &&ps<=pf1)return true;
+            return false;
+        }
+
+        /////////////////////////////////////
+
 
         this.setXY2=function(_x,_y){            
             return  this.parent.dragBlok(this, _x,_y)
@@ -525,7 +583,16 @@ export class BPieceObject extends Blok {
                 r=true 
             }         
             if(s=="polka"){
-                if(self.xztest()) return false
+                if(self.xztest()) return "В данном положении полки, установка перекладины невозможна"
+                if(self.isBoxParent({
+                    x:self.boxColizi.rectCollisMeshdy.x+10,
+                    y:self.boxColizi.rectCollisMeshdy.y,
+                    w:self.boxColizi.rectCollisMeshdy.width-20,
+                    h:12
+                },[self.idArr]) !=null){
+                    return "Установка полки невозможна, что то мешает снизу.";
+                }  
+
                 self.polka=!self.polka;
                 self.parent.dVertic() ;
                 self.parent.dragCildren();
@@ -534,9 +601,9 @@ export class BPieceObject extends Blok {
                 r=true;
             }
 
-            if(s=="plusL"){
+            if(s=="plusL"){                
                 if(self.polka==true)return "Установка данного аксессуара с перекладиной невозможна.";
-                if(self.intSah==1)return "Установка аксессуара с это стороны невозможна."; 
+                if(self.intSah==1||self.intSah==-1)return "Установка аксессуара с это стороны невозможна."; 
                 self.krai.plusL=!self.krai.plusL;
             }
             if(s=="plusR"){
@@ -547,6 +614,18 @@ export class BPieceObject extends Blok {
             }
 
             if(s.indexOf("p1")!=-1){
+                trace(self.hrenNiz.rect)
+                if(self.isBoxParent({
+                    x:self.boxColizi.rectCollisMeshdy.x+self.boxColizi.rectCollisMeshdy.width/2+self.hrenNiz.rect.x,
+                    y:self.boxColizi.rectCollisMeshdy.y+self.hrenNiz.rect.y+self.hrenNiz.rect.h,
+                    w:self.hrenNiz.rect.w,
+                    h:self.hrenNiz.rect.h
+                },[self.idArr]) !=null){
+                    return "Установка полки невозможна, что то мешает.";
+                }  
+
+                
+
                 self.hrenNiz.polka1=s;
                 self.dragRect();
                 self.testKorektActiv();
@@ -555,18 +634,19 @@ export class BPieceObject extends Blok {
 
 
             if(!r&&s.indexOf("mod_55_")!=-1){
+
+
                 let oo=self.pppObj.up1.testBool()
                 if(oo==null){
                     self.pppObj.up1.bool=!self.pppObj.up1.bool;
                     batArrGlobal.setObject(self)
                 }else{
                     return oo 
-                }                
-                
+                }
             }
            
 
-            if(self.sahSuper.bool==true)self.sahSuper.aaSob(s,p);   
+            if(self.sahSuper.bool==true)r=self.sahSuper.aaSob(s,p);   
             self.fun("visi3d");
             setTimeout(function() {self.fun("visi3d");}, 10);
             self.mO.dragPriceScane()
@@ -746,10 +826,7 @@ export class BPieceObject extends Blok {
 
         var ob,ooo
         this.setObj = function(obj){                      
-            this.setXYPosit(obj.x,obj.y); 
-
-
-            
+            this.setXYPosit(obj.x,obj.y);             
 
             if(obj.sahSuper!=undefined){
                 this.sahSuper.setObj(obj.sahSuper)
@@ -766,17 +843,12 @@ export class BPieceObject extends Blok {
                 this.notDrag=false;
             } 
 
-
             if(obj.polka)this.polka=obj.polka
             if(obj.polka1)this.hrenNiz.polka1=obj.polka1    
             if(obj.plusR!=undefined){                
                 this.krai.plusR = obj.plusR;
                 this.krai.plusL = obj.plusL;
             } 
-            
-
-
-
                 
             if(obj.intSah!=undefined){                
                 self.hrenNiz._intSah=self.krai._intSah=self._intSah=-2
@@ -1300,6 +1372,7 @@ export class HrenNiz {
         this.arrP1=[];
         this.aP1=[];
         this.kolP1=1;
+        this.rect={x:0,y:0,w:100,h:100}
 
 
         if(this.par.object.str[5]!=undefined){
@@ -1311,19 +1384,50 @@ export class HrenNiz {
                         else ss+=this.par.object.str[5][i]
                             
                     }
-                    var oo={type:"polka1",id:244}
-
-
-                    trace(JSON.stringify(oo)+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",ss);
-
-
+                    var oo={type:"polka1",id:244}              
                     let o=JSON.parse(ss); 
                     if(o.type && o.type=="polka1" && o.id) {
                         this.arrP1.push(o.id)
                         if(o.kol)this.kolP1= o.kol;
+
+
+                        let oo=this.par.mO.getIdObj(o.id);
+                        trace("**************************************************")
+                        trace(oo.obj)
+                        let sah=(self.par.object.mod.r[3]/(self.kolP1+1))
+
+
+                        this.rect.x=self.par.object.mod.r[0]+sah
+                        let f = self.par.object.mod.r[0]+sah+(self.kolP1-1)*sah
+                        this.rect.w=f-this.rect.x;
+
+                        this.rect.x+=oo.obj.mod.r[0];
+                        this.rect.w+=oo.obj.mod.r[3];
+
+                        this.rect.y=oo.obj.mod.r[1];
+                        this.rect.h=oo.obj.mod.r[4];
+
+                        trace(this.rect)
+
+                        /*
+
+                            let sah=(self.par.object.mod.r[3]/(self.kolP1+1))
+                            trace("sah>>>",sah)
+                            for (var j = 0; j < self.kolP1; j++) {
+
+                                mesh=self.aP1[i].get();
+                                mesh.rotation.x=-Math.PI/2;
+                                self.hmp1=self.aP1[i] 
+                                mesh.position.y=self.aP1[i].object.obj.mod.r[1]; 
+
+                                mesh.position.x=self.par.object.mod.r[0]+sah+j*sah
+                                
+                            }
+
+                        */
                     }
 
-                    trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",this.par.object.str[5],o);
+         
                     //{|type|:|polka1|,|id|:242,|kol|:2}
                 }
                 
@@ -1548,12 +1652,9 @@ export class HrenNiz {
                 for (var i = 0; i < self.aP1.length; i++) {                    
                     if(self.polka1.indexOf(self.aP1[i].object.id+"")!=-1){
                         if(self.aP1[i].obj3d!=undefined){
-                          /*  mesh=self.aP1[i].get();
-                            mesh.rotation.x=-Math.PI/2;
-                            self.hmp1=self.aP1[i] 
-                            mesh.position.y=self.aP1[i].object.obj.mod.r[1]; */
+                            
 
-                            let sah=(self.object.obj.mod.r[3]/(self.kolP1+1))
+                            let sah=(self.par.object.mod.r[3]/(self.kolP1+1))
                             trace("sah>>>",sah)
                             for (var j = 0; j < self.kolP1; j++) {
 
@@ -1562,7 +1663,7 @@ export class HrenNiz {
                                 self.hmp1=self.aP1[i] 
                                 mesh.position.y=self.aP1[i].object.obj.mod.r[1]; 
 
-                                mesh.position.x=-self.object.obj.mod.r[3]/2+sah+j*sah
+                                mesh.position.x=self.par.object.mod.r[0]+sah+j*sah
                                 
                             }/**/
                                                       
@@ -1782,7 +1883,7 @@ export class HrenNiz {
         }else{
             if(this.hmp1!=null){
                 this.polka=false;
-                this.par.yS=this.hmp1.object.obj.mod.r[4]
+                this.par.yS=this.rect.h;
             }            
         }       
 
@@ -1849,7 +1950,9 @@ export class SahSuper {
         this.sahII=0;
         this.sahJJ=0;
 
-        this.arrHron=[]; 
+        this.arrHron=[];
+
+        this.rect=undefined//{x:0,y:0,w:100,h:100}
 
         if(this.par.object.str[4]!=undefined){
             if((this.par.object.str[4]+"").length>6){
@@ -1864,27 +1967,31 @@ export class SahSuper {
         this.aroundButton=this.par.mO.par.aroundButton;
 
         var a=this.par.object.str[4].split(',');
-        var ab=this.par.object.str[4].split('|')
-        ab=ab[1].split(',');
+        var ab1=this.par.object.str[4].split('|')
+        var ab=ab1[1].split(',');
         var b,b1
         b1=true;
-        
+        let idR=-2
+       
+        if(ab1[2]!=undefined&&ab1[2]=="1"){
+           
+            idR=-1
+        }
         for (var j = 0; j < ab.length; j++) {
-            b=true;            
-           /* for (var i = 0; i < this.aroundButton.array.length; i++) {
-                if(this.aroundButton.array[i].name=="mod_"+ab[j])b=false
-                if(this.aroundButton.array[i].name=="mod_clear")b1=false    
-            } 
-            if(b==true){
-                this.aroundButton.creat("mod_"+ab[j],"resources/image/id_"+ab[j]+".png", "resources/image/id_"+ab[j]+".png",1)
-            }*/
+            b=true;
             this.par.aa.push("mod_"+ab[j])
+            
+            if(idR!=-2)idR=ab[j]*1;
         } 
-       /* if(b1==true){ 
-            this.aroundButton.creat("mod_clear_"+this.par.id,"resources/image/a_mod_clear_"+this.par.id+".png", "resources/image/a_mod_clear_"+this.par.id+".png",1)
-        }*/
 
         this.par.aa.push("mod_clear_"+this.par.id)
+
+
+        
+
+
+
+
 
         this.pozII=a[0]*1;
         this.pozJJ=a[3]*1-2.5;
@@ -1896,6 +2003,29 @@ export class SahSuper {
         this.kolJJ=a[5]*1;
         this.zz=a[6]*1;
         this.arrBool=[];
+
+        if(idR>0){
+
+            let oo=this.par.mO.getIdObj(idR)
+            if(oo){
+                this.rect={x:0,y:0,w:100,h:100}
+                this.rect.x=this.pozII+oo.obj.mod.r[0];
+                let f=this.sahII*(this.kolII-1)+oo.obj.mod.r[3]
+                this.rect.w=f-this.rect.x;
+
+                this.rect.y=this.pozJJ+oo.obj.mod.r[2]+oo.obj.mod.r[5]/2;
+                this.rect.h=oo.obj.mod.r[5];  
+                trace(this.pozJJ," idR,oooooooooooooooooooooo",oo.obj.mod.r) 
+                trace(idR,oo)  
+                trace(this.rect)                           
+            }
+
+
+
+        }
+
+
+
 
         for (var i = 0; i < this.kolII; i++) {
             this.arrBool[i]=[]
@@ -1949,12 +2079,14 @@ export class SahSuper {
 
         var aa;
         this.aaSob=function(s,p){ 
-            trace(s,p)           
+                       
             aa=s.split("_")           
             if(aa[0]=="mod"){
-                trace(s,p) 
-                this.getObjSob(aa[1]);
+                
+                
+                return this.getObjSob(aa[1]);
             }
+            return false
         }
 
 
@@ -1964,7 +2096,17 @@ export class SahSuper {
             
             if(s=="clear"){
                 this.clear()
-                return
+                return false
+            }
+            if(this.rect!=undefined){                
+                if(this.par.isBoxParent({
+                    x:self.par.boxColizi.rectCollisMeshdy.x+self.par.boxColizi.rectCollisMeshdy.width/2+self.rect.x,
+                    y:self.par.boxColizi.rectCollisMeshdy.y-self.par.hrenNiz.rect.y,
+                    w:self.rect.w,
+                    h:self.rect.h
+                },[self.par.idArr]) !=null){                    
+                    return "Установка полки невозможна, что то мешает.";
+                }
             }
 
             if(this.objObj[s]==undefined)this.objObj[s]=this.par.mO.getIdObj(s)
@@ -1984,15 +2126,22 @@ export class SahSuper {
                     o3d.visible=true;  
                 }
                 this.par.fun("visi3d");
+
+
+
             } 
-            trace(a)           
+
+
+
+
+
+            return false          
         }
 
 
         var kool
         this.getPosit=function(o){ 
-            trace(o) 
-            //-1.5,7.9,4,5.8,3.23,1,0.5,|243|         
+                   
             var r=[]
             var a=o.obj.str[0].split(",")
             var kol=a[0]*1
