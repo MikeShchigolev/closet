@@ -1476,12 +1476,12 @@ export class HrenNiz {
         if(this.par.object.num[2]==1)this.bool3=true;
         
 
-        if(this.idSvaz=="0"){            
+        if(this.idSvaz=="0" ){            
             return;
         }else{
             this.bool=true;
         }
-        this.bool3 = false;
+        
 
         this.arrTrub=[this.par.mO.getIdObj(84),this.par.mO.getIdObj(83),this.par.mO.getIdObj(82),this.par.mO.getIdObj(81)];
         this.www = Math.round(this.par.object.mod.r[3]/15)*15
@@ -2128,7 +2128,7 @@ export class SahSuper {
             if(this.objObj[s]==undefined)this.objObj[s]=this.par.mO.getIdObj(s)
             
             
-            var a=this.getPosit(this.objObj[s]) 
+            var a=this.getPosit(this.objObj[s]); 
 
             if(a.length!=0){
                 for (var i = 0; i < a.length; i++) {
