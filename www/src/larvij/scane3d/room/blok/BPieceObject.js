@@ -76,15 +76,11 @@ export class BPieceObject extends Blok {
 
         this.yyyF=0;
         this.testYF = function(){
-
-
             if(this.yF>-this.rect[5]){
                 this.yF=-this.rect[5];
                 if(this.rect[5]>this.yMax)this.yF=-this.rect[5];
                 else this.yF=-this.yMax;
-            }
-
-           
+            }           
         }
 
 
@@ -154,9 +150,7 @@ export class BPieceObject extends Blok {
 
                 this.rect[0]=this.object.mod.r1[0]+self.cont3dLoad.position.z;
                 this.rect[3]=this.object.mod.r1[3];
-            }
-            trace(this.yS,this.rect)
-
+            } 
             this.dragObjHA(this.boxHelper, this.rect);
             this.rect[1]=hh11; 
             this.bagRectID.dragRect()                   
@@ -1066,7 +1060,7 @@ export class BKrai {
 
         } 
 
-                //Вставляем вешалку
+        //Вставляем вешалку
         this.bkhKey=null;
 
         this.initKey=function(){
@@ -1237,8 +1231,13 @@ export class BKrai {
             for (var i = 0; i < this.arrHron.length; i++) {
                 this.arrHron[i].init();
             }
-            this.par.aa.unshift("plusR");
-            this.par.aa.unshift("plusL");
+           
+            if(this.par.object.str[2]==32||this.par.object.str[2]==23){
+                this.par.aa.unshift("plusR");
+                this.par.aa.unshift("plusL");
+
+            }
+            
         }else{
             this.par.yMax=this.yMax=this.par.object.mod.r[5]*1;
             this.par.ySMin=this.par.object.mod.r[5]*1;            
