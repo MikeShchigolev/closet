@@ -41,8 +41,8 @@ export class BPieceTop extends Blok {
 
 
 
-        let aa=new THREE.AxesHelper(100);
-        this.content3d.add(aa);
+       /* let aa=new THREE.AxesHelper(100);
+        this.content3d.add(aa);*/
         
         this.funInit=function(){            
             self.boxColizi.rectCollisMeshdy.boolZ=false

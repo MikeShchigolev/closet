@@ -662,7 +662,11 @@ export class BPieceObject extends Blok {
             }
            
 
-            if(self.sahSuper.bool==true)r=self.sahSuper.aaSob(s,p);   
+            if(self.sahSuper.bool==true){
+                r=self.sahSuper.aaSob(s,p);  
+                self.dragRect();
+                self.testKorektActiv(); 
+            }
             self.fun("visi3d");
             setTimeout(function() {self.fun("visi3d");}, 10);
             self.mO.dragPriceScane()
@@ -1667,21 +1671,17 @@ export class HrenNiz {
             if(self.polka1!="null"){
                 for (var i = 0; i < self.aP1.length; i++) {                    
                     if(self.polka1.indexOf(self.aP1[i].object.id+"")!=-1){
-                        if(self.aP1[i].obj3d!=undefined){
-                            
+                        if(self.aP1[i].obj3d!=undefined){                            
 
-                            let sah=(self.par.object.mod.r[3]/(self.kolP1+1))
-                            trace("sah>>>",sah)
+                            let sah=(self.par.object.mod.r[3]/(self.kolP1+1))                            
                             for (var j = 0; j < self.kolP1; j++) {
-
                                 mesh=self.aP1[i].get();
                                 mesh.rotation.x=-Math.PI/2;
                                 self.hmp1=self.aP1[i] 
-                                mesh.position.y=self.aP1[i].object.obj.mod.r[1]; 
-
-                                mesh.position.x=self.par.object.mod.r[0]+sah+j*sah
-                                
-                            }/**/
+                                mesh.position.y=0//self.aP1[i].object.obj.mod.r[1]; 
+                                mesh.position.x=self.par.object.mod.r[0]+sah+j*sah  
+                                mesh.position.z=- self.par.object.mod.r[2]                             
+                            }
                                                       
                             break;
                         }                        
@@ -1717,8 +1717,8 @@ export class HrenNiz {
             var o=this.par.mO.getRendomID("tit3");
             for (var i = 0; i < 92; i++) {                
                 if(o!=null){ 
-                    omb=mark.getO3D(o)
-                    this.arrMark.push(omb) 
+                    omb=mark.getO3D(o);
+                    this.arrMark.push(omb); 
                     let z=o.obj.mod.r[4]+this.object.obj.mod.r[1]-this.arrHron[0].object.obj.mod.r[5]/2-1+o.obj.mod.r[1]
                     let y= this.object.obj.mod.r[2]+this.arrHron[0].object.obj.mod.r[5]/2+ o.obj.mod.r[5]/2+o.obj.mod.r[2];
                     if(this.bool3==true) {
@@ -1891,15 +1891,18 @@ export class HrenNiz {
 
         
         this._polka1= v;          
-        this.initP1()
+        this.initP1();
 
         this.drag();
         if(this._polka1=="null"){
-            this.par.yS=0;    
+            this.par.yF=this.par.krai.yF;
+            this.par.ySMin=this.par.krai.ySMin;    
         }else{
             if(this.hmp1!=null){
                 this.polka=false;
-                this.par.yS=this.rect.h;
+                //this.par.yS=this.rect.h;
+                this.par.yF=-this.rect.h; 
+                this.par.ySMin=this.ySMin;    
             }            
         }       
 
@@ -2030,14 +2033,8 @@ export class SahSuper {
                 this.rect.w=f-this.rect.x;
 
                 this.rect.y=this.pozJJ+oo.obj.mod.r[2]+oo.obj.mod.r[5]/2;
-                this.rect.h=oo.obj.mod.r[5];  
-                trace(this.pozJJ," idR,oooooooooooooooooooooo",oo.obj.mod.r) 
-                trace(idR,oo)  
-                trace(this.rect)                           
+                this.rect.h=oo.obj.mod.r[5];                                         
             }
-
-
-
         }
 
 
@@ -2063,6 +2060,11 @@ export class SahSuper {
                     this.arrBool[i][j].bool=0
                 }
             }
+            if(this.rect!=undefined){
+                this.par.yS=0;
+            }
+
+
         }  
 
 
@@ -2083,7 +2085,8 @@ export class SahSuper {
                 oo.add(o);
                 o.position.z=-oo.object.obj.mod.r[1];
                 o.position.x=-oo.object.obj.mod.r[0];
-                o.position.y=oo.object.obj.mod.r[2]+oo.object.obj.mod.r[5]/2;                
+                o.position.y=oo.object.obj.mod.r[2]+oo.object.obj.mod.r[5]/2;
+                self.par.recurcChild(o);                               
                 self.par.fun("visi3d");
 
             });            
@@ -2094,9 +2097,8 @@ export class SahSuper {
 
 
         var aa;
-        this.aaSob=function(s,p){ 
-                       
-            aa=s.split("_")           
+        this.aaSob=function(s,p){                       
+            aa=s.split("_");           
             if(aa[0]=="mod"){
                 
                 
@@ -2141,6 +2143,9 @@ export class SahSuper {
                     o3d.jj=a[i].box.jj;
                     o3d.visible=true;  
                 }
+                this.par.yS=(this.rect.h);
+
+
                 this.par.fun("visi3d");
 
 
