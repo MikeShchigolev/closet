@@ -212,9 +212,9 @@ export class BPieceObject extends Blok {
         }
 
 
-        var xx,xx1,xx2,xxr, bbr
+        var xx,xx1,xx2,xxr, bbr,bbr2
         this.funOnrB=function(aS,_x,_y){
-            xxr=10;
+            xxr=20;
             if(this.oneBool==true){
                 bbr=false
                 popo=this.testObject2(_x,_y)
@@ -234,13 +234,13 @@ export class BPieceObject extends Blok {
                                     if(xx>xx1-xxr && xx<xx1+xxr){                                        
                                         xx2=bxx.bpt.visiNisu.array[j]._x
                                         bbr=true;
+                                        bbr2=bxx.bpt
+
                                         break;
                                     }
 
                                 }
-                            }
-
-                            
+                            }                            
                         }
                     } 
                 }
@@ -252,7 +252,7 @@ export class BPieceObject extends Blok {
                         this.x=xx2
                         this.boxColizi.rectCollisMeshdy._x=xx2
 
-                        bxx.bpt.add(this);                        
+                        bbr2.add(this);                        
                         tStyle.glaf.dragPic.stop()                       
                     }
                     return false; 
@@ -1491,8 +1491,7 @@ export class HrenNiz {
 
 
                         let oo=this.par.mO.getIdObj(o.id);
-                        trace("**************************************************")
-                        trace(oo.obj)
+                        
                         let sah=(self.par.object.mod.r[3]/(self.kolP1+1))
 
 
@@ -1506,7 +1505,7 @@ export class HrenNiz {
                         this.rect.y=oo.obj.mod.r[1];
                         this.rect.h=oo.obj.mod.r[4];
 
-                        trace(this.rect)
+                     
 
                     }
 
@@ -1800,9 +1799,10 @@ export class HrenNiz {
                     let z=o.obj.mod.r[4]+this.object.obj.mod.r[1]-this.arrHron[0].object.obj.mod.r[5]/2-1+o.obj.mod.r[1]
                     let y= this.object.obj.mod.r[2]+this.arrHron[0].object.obj.mod.r[5]/2+ o.obj.mod.r[5]/2+o.obj.mod.r[2];
                     if(this.bool3==true) {
-                        z=o.obj.mod.r[4]-2 
-                        y=this.content3d.position.z
-                    }               
+                        z=o.obj.mod.r[4]-2-oPlus1.z 
+                        y=this.content3d.position.z-3-oPlus1.y 
+                    } 
+
                     omb.setPRS({
                         x:otSah-o.obj.mod.r[0],
                         y:y,
