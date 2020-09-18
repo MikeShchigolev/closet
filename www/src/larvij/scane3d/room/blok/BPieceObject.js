@@ -214,7 +214,7 @@ export class BPieceObject extends Blok {
 
         var xx,xx1,xx2,xxr, bbr,bbr2
         this.funOnrB=function(aS,_x,_y){
-            xxr=20;
+            xxr=15;
             if(this.oneBool==true){
                 bbr=false
                 popo=this.testObject2(_x,_y)
@@ -225,10 +225,11 @@ export class BPieceObject extends Blok {
                         if(aS.children[i].type=="BPieceTop"){
                             bxx=aS.children[i].testPosition(_x, _y, this,undefined,true)
                             if(bxx!=null) {                                
-                                xx=_x-bxx.bpt.x;
-                                
+                                xx=_x-bxx.bpt.x;                                
                                 for (var j = 0; j < bxx.bpt.visiNisu.array.length; j++) { 
                                     if(bxx.bpt.visiNisu.array[j].visible==false ||bxx.bpt.visiNisu.array[j].height<=0)continue;
+                                    
+
                                     xx1=bxx.bpt.visiNisu.array[j]._x;
 
                                     if(xx>xx1-xxr && xx<xx1+xxr){                                        

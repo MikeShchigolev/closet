@@ -53,6 +53,9 @@ export class BPieceTop extends Blok {
         var rr;
         this.setXY=function(_x,_y){
             if(this.isOver(this._parent,_x,_y)==false)return;
+            let xxxx=this.isBoxIn(this._parent,_x,_y)
+            if(xxxx!=false)_x=xxxx;    
+
 
             if(Math.abs(_y-220)<5)_y=220;            
             kk=this.bptColiz.array.length;
@@ -92,6 +95,57 @@ export class BPieceTop extends Blok {
                 } 
             }
             return true;
+        }
+
+        //проверка между шкафов
+        var aB=[];
+        var aB1=[];
+        var aB2=[];
+
+        this.isBoxIn=function(s,x,y){
+            if(s){
+                aB.length=0;
+                aB1.length=0;
+                aB2.length=0;
+                for (var i = 0; i < s.children.length; i++) {
+                    
+                    if(s.children[i].type=="BTBoxDin"){
+                        aB.push(s.children[i])
+                    }
+                }
+                if(aB.length<=1)return true;
+                aB.sort(function(a, b) {
+                  return a.x - b.x;
+                });
+
+                aB1.push(0)
+                aB1.push(aB[0].x-aB[0].width/2)
+
+                aB2.push(0)
+                aB2.push(aB[0].x-aB[0].width/2)
+
+                for (var i = 0; i < aB.length-1; i++) {
+                    aB1.push(aB[i].x+aB[i].width/2)
+                    aB1.push(aB[i+1].x-aB[i+1].width/2)
+                   
+                    aB2.push(aB[i].x-aB[i].width/2)
+                    aB2.push(aB[i+1].x+aB[i+1].width/2)
+                }
+                aB1.push(aB[aB.length-1].x+aB[aB.length-1].width/2)
+                aB1.push(s.width)
+
+                aB2.push(aB[aB.length-1].x+aB[aB.length-1].width/2)
+                aB2.push(s.width)
+
+                for (var i = 0; i < aB1.length; i+=2) {
+                    if(y<236 && x>aB2[i] && x<aB2[i+1] && this._W>(aB1[i+1]-aB1[i]) ){
+                        trace(i+">>  ",this._W,aB1)
+
+                        return this.x;
+                    }
+                }
+            }
+            return false;
         }
 
         this.drahShadow=function(_x,_y){ 
@@ -1137,11 +1191,7 @@ export class VisiNisu {
             yh=y+(-_obj.ySMin)+_obj.yPol;
             pL=-1;
 
-            trace(">>>>this.testPos2>>",this.aAr,this.aWith,this.aLeft)
-           /* iii=this.testPosCol(y, _obj)
-            if(iii!=null){
-                return iii
-            }*/
+            
 
             //проверка точных пересечений
             for (var i = 0; i < this.aAr.length; i++) {
