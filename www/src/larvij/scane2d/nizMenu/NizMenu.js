@@ -477,8 +477,14 @@ export class NMGalf  {
         var p=0;
         var p1=this.otstup;
         var  hhh= 1
-        if(dcmParam.mobile==true)
-            hhh=2;       
+        trace("self.par.par.menuSave.php",self.par.par.menuSave.php)
+        if(dcmParam.mobile==true){
+            if(self.par.par.menuSave.php.key==undefined){
+                hhh=2;  
+            }else{
+
+            }                 
+        }
         
         for (var i = 0; i < hhh; i++) {
             var ll="resources/image/w6.png"
