@@ -42,10 +42,21 @@ export class BPieceObject extends Blok {
         this.smesenie=0
         this.notDrag=false
 
-        /*let rrr=new THREE.AxesHelper(50);
-        this.content3d.add(rrr);*/
+
+
+        this.oneBool=false//ставиться только на одну колону 
+        if(this.object.num[2]==2)this.oneBool=true;
+
+
+        /*if(this.oneBool){
+            let rrr=new THREE.AxesHelper(50);
+            this.content3d.add(rrr);
+        }*/
+        
 
 /*
+
+
         let dCont=new DCont(main.contentHTML)
         dCont.x=400
         dCont.y=200;
@@ -108,22 +119,20 @@ export class BPieceObject extends Blok {
         
 
         this.funInitMod = function(){
-            if(self.cont3dLoad){
-                self.cont3dLoad.position.y=this.rect[2]+this.smesenie;        
-                if(self.object.bagY){
-                    self.cont3dLoad.position.z=self.object.bagY;
-                }
             
-                this.testYF();   
+            self.cont3dLoad.position.y=this.rect[2]+this.smesenie;        
+            if(self.object.bagY){
+                self.cont3dLoad.position.z=self.object.bagY;
             }
             
-
+            this.testYF(); 
+               
             if(this.id==42)this.testShadow(self.cont3dLoad)
             this.dragRect();         
             self.testKorektActiv();                
             self.dragToPanel(); 
 
-            if(self.cont3dLoad)this.cont3dLoad.visible=this._avAct;           
+            this.cont3dLoad.visible=this._avAct;           
         }
 
 
@@ -167,6 +176,8 @@ export class BPieceObject extends Blok {
             aS=mO.par.sten;
             if(this.isOver(aS,_x,_y)==false)return;           
 
+            if(this.funOnrB(aS,_x,_y)==true)return;//this.oneBool==true)   
+
             b=this.testObject(_x,_y);  
                  
             if(b==false){
@@ -201,6 +212,70 @@ export class BPieceObject extends Blok {
         }
 
 
+        var xx,xx1,xx2,xxr, bbr
+        this.funOnrB=function(aS,_x,_y){
+            xxr=10;
+            if(this.oneBool==true){
+                bbr=false
+                popo=this.testObject2(_x,_y)
+                //trace(_x,_y,popo,aS);
+                if(aS!=undefined){                
+                    //trace("!",aS.children) 
+                    for (var i = 0; i < aS.children.length; i++) {                                       
+                        if(aS.children[i].type=="BPieceTop"){
+                            bxx=aS.children[i].testPosition(_x, _y, this,undefined,true)
+                            if(bxx!=null) {                                
+                                xx=_x-bxx.bpt.x;
+                                
+                                for (var j = 0; j < bxx.bpt.visiNisu.array.length; j++) { 
+                                    if(bxx.bpt.visiNisu.array[j].visible==false ||bxx.bpt.visiNisu.array[j].height<=0)continue;
+                                    xx1=bxx.bpt.visiNisu.array[j]._x;
+
+                                    if(xx>xx1-xxr && xx<xx1+xxr){                                        
+                                        xx2=bxx.bpt.visiNisu.array[j]._x
+                                        bbr=true;
+                                        break;
+                                    }
+
+                                }
+                            }
+
+                            
+                        }
+                    } 
+                }
+
+
+                if(bbr==true){
+                    if(this.parent==undefined){
+                        
+                        this.x=xx2
+                        this.boxColizi.rectCollisMeshdy._x=xx2
+
+                        bxx.bpt.add(this);                        
+                        tStyle.glaf.dragPic.stop()                       
+                    }
+                    return false; 
+                }else{
+                    if(this.parent!=undefined){
+                        this.parent.remove(this);                        
+                        let l=this.mO.par.getLink(self.object)                        
+                        tStyle.glaf.dragPic.start(32, l, null,null,true);
+
+                        
+                    }
+
+                }
+
+
+                return true;
+            }
+
+
+            return false; 
+        }
+
+
         this.drahShadow=function(_x,_y){ 
                   
             if(this._parent!=undefined){
@@ -223,6 +298,8 @@ export class BPieceObject extends Blok {
         this.dragImeag=function(){self.drahShadow()}
 
         this.isOver=function(s,x,y){
+            if(this.funOnrB(s,x,y)==true)return false;   
+
             if(s){
                 if(s.width<this.boxColizi.width){
                     return false;
@@ -321,7 +398,7 @@ export class BPieceObject extends Blok {
         }
 
 
-        var blok    
+        var blok;    
         //конец тоскания обьекта, если это базовый приветив то делаем с него копию
         this.stopDrag=function(){            
             if(this.parent!=undefined){ 
@@ -524,7 +601,7 @@ export class BPieceObject extends Blok {
                 
             }
             //проверяем не нужные коробки
-            trace(" box=====  ",box) 
+            
             for (let i = 0; i < this.parent.children.length; i++) {
                 let b=true;
                 for (let j = 0; j < _arrNotId.length; j++) {
@@ -562,7 +639,7 @@ export class BPieceObject extends Blok {
         }
         //сверяем две полосы
         this.testLineXZ2=function(ps,pf,ps1,pf1){ 
-            trace(ps,pf,ps1,pf1)           
+                     
             if(ps1>=ps &&ps1<=pf)return true;
             if(ps>=ps1 &&ps<=pf1)return true;
             return false;

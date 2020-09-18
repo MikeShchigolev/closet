@@ -464,12 +464,12 @@ export class Up1Menu  {
                 main.localStorage.object.up1.sahTime--;
                 main.localStorage.save();
                 
-               
+                
                 self.par.par.par.mHelp.setHelp(
-                    "Выберите нужный вариант установки корзины:\n на раму или на телескопические направляющие.",
+                    "Выберите нужный вариант установки корзины:\nна раму или на телескопические направляющие.",
                     "resources/image/mhelp.png",
                     this.par.dCont,
-                    {x:150,y:-3}
+                    {x:260,y:-3}
                 );
                /* self.par.par.par.mHelp.setIframe(
                     main.glaf.up1Obj.link,

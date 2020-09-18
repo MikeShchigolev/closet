@@ -414,7 +414,7 @@ export class DHelpxz extends DCont {
        // 
         this.textArea.visible=false
 
-        this.textArea.textAlign=this.label.textAlign="center"//"left"//;
+        this.textArea.textAlign=this.label.textAlign="left"//;"center"//
 
         this.textArea.object.setAttribute('style', 'white-space: nowrap; ');
 
@@ -522,9 +522,10 @@ export class DHelpxz extends DCont {
                 this.dContNiz.y=hh-2
                 hh+=this._hCan;
                 this.dContNiz.x=(this.panel.width-this._wCan)/2;
-
-
             }
+
+            this.image.y=(this.panel.height-this.image.height)/2
+            this.image.x+=this._otstup
 
             this.dCont.y=-hh;      
         }

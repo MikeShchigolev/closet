@@ -383,11 +383,10 @@ export class Blok{
             this.creatBC();
             this.modelObj=_obj;
             if(self.funInit!=undefined)self.funInit();
-            trace("##############################",self.idArr,o.id,o.mod.key)
+
 
             if(o.mod.key!="n"){
-                mO.getModel(this.linkMod, o.mod.key, function(o){
-                    trace("#############",self.idArr,o.id)
+                mO.getModel(this.linkMod, o.mod.key, function(o){                    
                     self.cont3dLoad=o;
                     self.testMaterial();
                     
