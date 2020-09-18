@@ -1137,7 +1137,7 @@ export class VisiNisu {
             yh=y+(-_obj.ySMin)+_obj.yPol;
             pL=-1;
 
-            trace(">>>>this.testPos2>>")
+            trace(">>>>this.testPos2>>",this.aAr,this.aWith,this.aLeft)
            /* iii=this.testPosCol(y, _obj)
             if(iii!=null){
                 return iii

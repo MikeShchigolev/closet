@@ -479,6 +479,7 @@ export class GalleryXZ extends DGallery {
 
         this.funDragOwer=undefined
         this.object=undefined;
+        this.sahDelta=40
 
         // Функция клика по иконке
         this.downBtn = function () {            
