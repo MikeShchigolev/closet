@@ -104,7 +104,7 @@ export class BPieceTop extends Blok {
 
         this.isBoxIn=function(s,x,y){
             if(s){
-                aB.length=0;
+               /* aB.length=0;
                 aB1.length=0;
                 aB2.length=0;
                 for (var i = 0; i < s.children.length; i++) {
@@ -143,7 +143,8 @@ export class BPieceTop extends Blok {
 
                         return this.x;
                     }
-                }
+                }*/
+
             }
             return false;
         }
