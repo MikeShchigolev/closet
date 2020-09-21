@@ -54,7 +54,7 @@ export class BPieceTop extends Blok {
         this.setXY=function(_x,_y){
             if(this.isOver(this._parent,_x,_y)==false)return;
             let xxxx=this.isBoxIn(this._parent,_x,_y)
-            if(xxxx!=false)_x=xxxx;    
+            if(xxxx!=true)_x=xxxx;    
 
 
             if(Math.abs(_y-220)<5)_y=220;            
@@ -114,6 +114,7 @@ export class BPieceTop extends Blok {
                     }
                 }
                 if(aB.length<=1)return true;
+
                 aB.sort(function(a, b) {
                   return a.x - b.x;
                 });
@@ -140,13 +141,12 @@ export class BPieceTop extends Blok {
                 for (var i = 0; i < aB1.length; i+=2) {
                     if(y<236 && x>aB2[i] && x<aB2[i+1] && this._W>(aB1[i+1]-aB1[i]) ){
                         trace(i+">>  ",this._W,aB1)
-
                         return this.x;
                     }
                 }
 
             }
-            return false;
+            return true;
         }
 
         this.drahShadow=function(_x,_y){ 
