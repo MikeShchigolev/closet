@@ -104,7 +104,7 @@ export class BPieceTop extends Blok {
 
         this.isBoxIn=function(s,x,y){
             if(s){
-               /* aB.length=0;
+                aB.length=0;
                 aB1.length=0;
                 aB2.length=0;
                 for (var i = 0; i < s.children.length; i++) {
@@ -143,7 +143,7 @@ export class BPieceTop extends Blok {
 
                         return this.x;
                     }
-                }*/
+                }
 
             }
             return false;
@@ -1260,13 +1260,16 @@ export class VisiNisu {
                 }
             }
 
+
+
             if(_obj){
                 let w=5;
                 if(_obj.boxColizi.rectCollisMeshdy.width<15)w=0
+
                 if(_obj.isBoxParent({
                     x:_obj.boxColizi.rectCollisMeshdy.x+w,
                     y:yy,
-                    w:_obj.boxColizi.rectCollisMeshdy.width-w,
+                    w:_obj.boxColizi.rectCollisMeshdy.width-w*2,
                     h:_obj.rect[5]
                 },[_obj.idArr]) !=null){                    
                     return {xz:"xz"}; 
