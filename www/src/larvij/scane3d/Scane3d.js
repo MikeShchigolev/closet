@@ -39,10 +39,11 @@ export class Scane3d  {
         this.room=new Room(this, function(type, param){ //основа 3д контента и пол           
             fun(type, param);
         })
+        this.foto3dLarvij=new Foto3dLarvij(this);//вото сцены        
         this.dubag=new Dubag(this, function(type, param){ //дебаги           
             
         })
-  		this.foto3dLarvij=new Foto3dLarvij(this);//вото сцены
+
         
 
         /*
@@ -503,6 +504,8 @@ export class Dubag  {
                 self.par.room.lmActive=this.value;               
             })
             this.checkBox.value=self.par.room.lmActive;
+
+            this.fotoXZ=new FotoXZ(this);
         }
 
 
@@ -563,6 +566,61 @@ export class Dubag  {
     }
     get active() { return  this._active;}
 }
+
+export class FotoXZ {
+    constructor(par,fun) {
+        this.par=par
+        var self=this;
+        this.dCont=new DCont(main.contentHTML)
+        this.dCont.x=650
+        this.dCont.y=50
+
+        this.panel1=new DPanel(this.dCont,0,0)
+        this.panel1.height=20
+        this.panel1.width=20
+        this.image=new DImage(this.panel1,2,2)
+
+
+        this.panel=new DPanel(this.dCont,-2,-2)
+        this.panel.height=36
+        this.panel.width=124
+
+
+        this.input=new DInput(this.dCont,0,0,"170"); 
+        this.input.width=30;
+        this.input1=new DInput(this.dCont,32,0,"170"); 
+        this.input1.width=30;
+
+        this.chek=new DCheckBox(this.dCont,66,8," ")
+
+        this.but=new DButton(this.dCont,85,0,"get",function(){
+            let b64=funFoto();
+            //trace(b64)
+            var down = document.createElement('a');
+                down.href = b64;
+                down.download = 'pic.png';
+                down.click();
+
+            self.panel1.width =self.input.value*1+4
+            self.panel1.height =self.input1.value*1+4 
+            self.panel1.y=38
+            self.image.width =self.input.value*1
+            self.image.height =self.input1.value*1
+            self.image.link=b64 
+        }) 
+        this.but.width=34;
+
+        this.fpGet = this.par.par.foto3dLarvij   
+        function funFoto(){
+
+            trace(self.input.value,self.input1.value)
+            let b64=self.fpGet.get("wh",self.input.value*1,self.input1.value*1)
+            return b64
+        }
+    }
+}
+
+
 
 
 
@@ -647,6 +705,7 @@ export class Foto3dLarvij  {
             if(type=="base") r=this.getBase(w, h);
             if(type=="arrayVisi") r=this.getArrayVisi(w, h);
             if(type=="original") r=this.getOriginal();
+            if(type=="wh") r=this.getWH(w, h);
 
             aGlaf.visi3D.sizeWindow(aGlaf.visi3D._x,aGlaf.visi3D._y,wOld,hOld);
             aGlaf.visi3D.rotationX=x;
@@ -664,6 +723,40 @@ export class Foto3dLarvij  {
         this.getOriginal=function(){
             aGlaf.visi3D.render();
             var r = aGlaf.visi3D.renderer.domElement.toDataURL(this.tip);
+            return r;
+        }
+
+        this.getWH=function(w, h){
+            wOld=aGlaf.visi3D.width;
+            hOld=aGlaf.visi3D.height;   
+            if(aGlaf.visi3D.utility.sky.cont3d!=undefined){
+                visOld=aGlaf.visi3D.utility.sky.cont3d.visible
+                aGlaf.visi3D.utility.sky.cont3d.visible=false;
+            }
+                
+            for (var i = 0; i < aGlaf.scane3d.room.array.length; i++) {
+                aGlaf.scane3d.room.array[i].c3dContent.visible=false
+            }
+            aGlaf.scane3d.room.niz.m.visible=false;
+            aGlaf.scane3d.room.niz.mesh.visible=false;
+
+
+            aGlaf.visi3D.sizeWindow(aGlaf.visi3D._x,aGlaf.visi3D._y,w,h);
+            aGlaf.visi3D.render();
+            var r = aGlaf.visi3D.renderer.domElement.toDataURL(this.tip);  
+
+
+            for (var i = 0; i < aGlaf.scane3d.room.array.length; i++) {
+                aGlaf.scane3d.room.array[i].c3dContent.visible=true
+            }
+            aGlaf.scane3d.room.niz.m.visible=true;
+            aGlaf.scane3d.room.niz.mesh.visible=true;
+
+
+            aGlaf.visi3D.sizeWindow(aGlaf.visi3D._x,aGlaf.visi3D._y,wOld,hOld);
+            if(aGlaf.visi3D.utility.sky.cont3d!=undefined){                
+                aGlaf.visi3D.utility.sky.cont3d.visible=visOld;
+            }
             return r;
         }
 

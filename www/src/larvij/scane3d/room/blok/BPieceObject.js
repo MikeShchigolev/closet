@@ -48,7 +48,8 @@ export class BPieceObject extends Blok {
         if(this.object.num[2]==2)this.oneBool=true;
 
 
-        /*if(this.oneBool){
+
+     /*   if(this.oneBool){
             let rrr=new THREE.AxesHelper(50);
             this.content3d.add(rrr);
         }*/
@@ -124,6 +125,12 @@ export class BPieceObject extends Blok {
             if(self.object.bagY){
                 self.cont3dLoad.position.z=self.object.bagY;
             }
+
+            if(this.object.str[1]=="0"){
+                trace("&&&",this.object)
+                trace(this.yS,"&&&",this.rect)
+                //this.yS=-this.rect[2]
+            }
             
             this.testYF(); 
                
@@ -132,7 +139,8 @@ export class BPieceObject extends Blok {
             self.testKorektActiv();                
             self.dragToPanel(); 
 
-            this.cont3dLoad.visible=this._avAct;           
+            this.cont3dLoad.visible=this._avAct;   
+
         }
 
 
@@ -214,7 +222,7 @@ export class BPieceObject extends Blok {
 
         var xx,xx1,xx2,xxr, bbr,bbr2
         this.funOnrB=function(aS,_x,_y){
-            xxr=20;
+            xxr=10;
             if(this.oneBool==true){
                 bbr=false
                 popo=this.testObject2(_x,_y)
@@ -245,7 +253,7 @@ export class BPieceObject extends Blok {
                     } 
                 }
 
-
+                
                 if(bbr==true){
                     if(this.parent==undefined){
                         
@@ -258,6 +266,7 @@ export class BPieceObject extends Blok {
                     return false; 
                 }else{
                     if(this.parent!=undefined){
+                        
                         this.parent.remove(this);                        
                         let l=this.mO.par.getLink(self.object)                        
                         tStyle.glaf.dragPic.start(32, l, null,null,true);
@@ -329,6 +338,7 @@ export class BPieceObject extends Blok {
 
             }else{
                 if(aS.idArr != mO.pieceTop.parent.idArr){
+                    console.warn(">>>>>>>3>>>>>>>>")
                     mO.pieceTop.parent.remove(mO.pieceTop);
                     aS.sWidth=aS._W;
 
@@ -356,6 +366,7 @@ export class BPieceObject extends Blok {
                     
                     bbb=true;
                     var ppp=this.parent
+                    console.warn(">>>>>>>2>>>>>>>>")
                     this.parent.remove(this)                     
                     this.boxColizi.rectCollisMeshdy.x=-this.boxColizi.rectCollisMeshdy.width/2;
                     this.boxColizi.rectCollisMeshdy.y=-(this.yPol+this.yS)+mO.pieceTop.visiNisu.otstup-mO.pieceTop.visiNisu.oPod;                    
@@ -445,8 +456,10 @@ export class BPieceObject extends Blok {
             this.boxColizi.rectCollisMeshdy.y=_bObj.y;
 
             if(p.idRandom==mO.pieceTop.idRandom){
-                if(p.parent)
+                if(p.parent){
+                    console.warn(">>>>>>>1>>>>>>>>")
                     p.parent.remove(p)
+                }
             }
             this.bds=true
             
@@ -466,7 +479,7 @@ export class BPieceObject extends Blok {
                     popo=this.testObject2(_x,_y)
                   
                     vb=false; 
-
+                    
                     if(popo==null){
                         this.bds=false;                                             
                         return true; 
@@ -489,9 +502,12 @@ export class BPieceObject extends Blok {
                         if(x6!=x5){                            
                             x7=x3+((-x4+x5)*30);
                             //вылазим за границы стены
+                            
                             if(this.isBoxTest(x7,popo.bxx.y, this.boxColizi.rectCollisMeshdy.width)==false ){ 
-                                if(popo.bxx.bpt.sWidth/2<xx1){
-                                    var pw=this.parent;
+                                
+
+                                if(popo.bxx.bpt.sWidth!=0&& popo.bxx.bpt.sWidth/2<xx1){
+                                    var pw=this.parent;                                   
                                     this.parent.remove(this)
                                     this.boxColizi.rectCollisMeshdy.y=0
                                     this.boxColizi.position.y=0
@@ -577,9 +593,11 @@ export class BPieceObject extends Blok {
         //проверяем пересечение коробок родителя
         var box={x:0,y:0,w:100,h:100}
         var box1={x:0,y:0,w:100,h:100}
-        this.isBoxParent=function(_box,_arrNotId,bool){ 
+        this.isBoxParent=function(_box,_arrNotId,bool,_ww){ 
             if(!_box)return null;
-            if(this.parent==undefined)return null   
+            if(this.parent==undefined)return null  
+            let ww=0;
+            if(_ww!=undefined) ww=_ww
             if(_arrNotId==undefined)_arrNotId=[]    
             if(_box.w!=undefined)for(let s in _box)   box[s] =_box[s];
             else{
@@ -609,14 +627,14 @@ export class BPieceObject extends Blok {
                 }
                 if(b){
                     if(bool!=true){  
-                        box1.x=this.parent.children[i].boxColizi.rectCollisMeshdy.x
+                        box1.x=this.parent.children[i].boxColizi.rectCollisMeshdy.x+ww
                         box1.y=this.parent.children[i].boxColizi.rectCollisMeshdy.y
-                        box1.w=this.parent.children[i].boxColizi.rectCollisMeshdy.width
+                        box1.w=this.parent.children[i].boxColizi.rectCollisMeshdy.width-ww*2
                         box1.h=this.parent.children[i].boxColizi.rectCollisMeshdy.height
                     }else{
-                        box1.x=this.parent.children[i].boxColizi.rectCollisMeshdy.x
+                        box1.x=this.parent.children[i].boxColizi.rectCollisMeshdy.x+ww
                         box1.y=this.parent.children[i].boxColizi.rectCollisMeshdy.y
-                        box1.w=this.parent.children[i].rect[3]
+                        box1.w=this.parent.children[i].rect[3]-ww*2
                         box1.h=this.parent.children[i].rect[5]
                     }
 
@@ -1583,7 +1601,7 @@ export class HrenNiz {
         
         var arr=this.object.obj.str[0].split(",");  
 
-        this.arrHron.push(new BKHron(this, this.idSvaz, 0))
+        this.arrHron.push(new BKHron(this, this.idSvaz, 0))//0
 
 
 
@@ -1609,11 +1627,11 @@ export class HrenNiz {
 
 
 
-            this.arrHron.push(new BKHron(this, arr[0], 1))
-            this.arrHron.push(new BKHron(this, arr[1], 1))
-            this.arrHron.push(new BKHron(this, arr[2], 1))
-            this.arrHron.push(new BKHron(this, arr[3], 1))
-
+            this.arrHron.push(new BKHron(this, arr[0], 1))//1
+            this.arrHron.push(new BKHron(this, arr[1], 1))//2
+            this.arrHron.push(new BKHron(this, arr[2], 1))//3
+            this.arrHron.push(new BKHron(this, arr[3], 1))//4
+            trace("arr",arr)
         }
         if(this.bool3==true){
             setTimeout(function() {
@@ -1622,9 +1640,9 @@ export class HrenNiz {
 
             oPlus.y=-1
             oPlus.z=1.5
-            this.arrHron.push(new BKHron(this, arr[0], 1))
-            this.arrHron[2]=new BKHron(this, arr[2], 1)
-
+            this.arrHron.push(new BKHron(this, arr[0], 1))//1
+            this.arrHron[2]=new BKHron(this, arr[2], 1)//2
+            this.arrHron[3]=new BKHron(this, arr[2], 1)//2            
             oPlus1.y=-1.8
             oPlus1.z=-2.2
         }
@@ -1684,8 +1702,7 @@ export class HrenNiz {
                     mesh.position.x=-this.www/2+oPlus.x;
                     mesh.position.y=-this.arrHron[2].object.obj.mod.r[2]+oPlus.y+oPlus1.y;
                     mesh.position.z=this.arrHron[2].object.obj.mod.r[0]+oPlus.z+oPlus1.z;
-                    mesh1=null;
-                    
+                    mesh1=null;                    
                 }
             }
 
@@ -1697,10 +1714,7 @@ export class HrenNiz {
                         mesh.position.x=-this.www/2 -this.otstup;
                         mesh.position.y=oPlus1.y;
                         mesh.position.z=oPlus1.z;
-
-
                     }
-
                     xx=-this.otstup/2;                    
                     ww+=this.otstup;                    
                 }  
@@ -1709,6 +1723,8 @@ export class HrenNiz {
                     if(this.arrHron[3]){
                         mesh=this.arrHron[3].get();
                         mesh.position.x=-this.www/2;
+                        mesh.position.y=oPlus1.y;
+                        mesh.position.z=oPlus1.z;
                     }
                 }               
             }
@@ -1839,24 +1855,25 @@ export class HrenNiz {
                
             //висяшки первая
             //aaa=[]
-            if(this.arrHron[2]){ 
+            trace("self.hmp1 ",self.bool3)
+            if(self.bool3==false && this.arrHron[2]){ 
                 aaa = menedsherMaterial.getArrOtObj(this.arrHron[2].object.obj, idMat, intColor)  
                 //this.parsArr(this.arrHron[2].object.obj[strXZ], aaa)           
                 aaa[9]=this.arrHron[2].object.obj.id;
                 aaa[8]=this.arrHron[2].object.obj;
-                a.push(aaa)
+                //a.push(aaa)
             }
                
             
             //висяшки вторая
-            if(mesh1!=null){
+            if(self.bool3==false && mesh1!=null){
                 if(this.arrHron[2]){ 
                     aaa1=[]                 
                     aaa1 = menedsherMaterial.getArrOtObj(this.arrHron[2].object.obj, idMat, intColor)  
                     //this.parsArr(aaa, aaa1) 
                     aaa1[9]=this.arrHron[2].object.obj.id;
                     aaa1[8]=this.arrHron[2].object.obj;
-                    a.push(aaa1);
+                    //a.push(aaa1);
                 }
 
                          
@@ -1916,9 +1933,12 @@ export class HrenNiz {
             }
         } 
 
+        
         for (var i = 0; i < this.arrHron.length; i++) {
+            
             this.arrHron[i].bbbb=false;
             this.arrHron[i].init();
+
         } 
 
 
@@ -2081,11 +2101,12 @@ export class SahSuper {
             if(idR!=-2)idR=ab[j]*1;
         } 
 
-        this.par.aa.push("mod_clear_"+this.par.id)
+        if(idR==-2)this.par.aa.push("mod_clear_"+this.par.id)
+        if(idR>0)this.par.aa.push("mod_clear_"+idR)    
 
 
         
-
+            
 
 
 
@@ -2177,9 +2198,7 @@ export class SahSuper {
         var aa;
         this.aaSob=function(s,p){                       
             aa=s.split("_");           
-            if(aa[0]=="mod"){
-                
-                
+            if(aa[0]=="mod"){               
                 return this.getObjSob(aa[1]);
             }
             return false
@@ -2203,6 +2222,7 @@ export class SahSuper {
                 },[self.par.idArr]) !=null){                    
                     return "Для установки аксессуара недостаточно свободного места.";
                 }
+
             }
 
             if(this.objObj[s]==undefined)this.objObj[s]=this.par.mO.getIdObj(s)
@@ -2221,13 +2241,9 @@ export class SahSuper {
                     o3d.jj=a[i].box.jj;
                     o3d.visible=true;  
                 }
-                this.par.yS=(this.rect.h);
-
-
+                if(this.rect)this.par.yS=(this.rect.h);
+                
                 this.par.fun("visi3d");
-
-
-
             } 
 
 

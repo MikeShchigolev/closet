@@ -1263,17 +1263,17 @@ export class VisiNisu {
 
 
             if(_obj){
-                let w=5;
+                let w=0;
                 if(_obj.boxColizi.rectCollisMeshdy.width<15)w=0
-
+               
                 if(_obj.isBoxParent({
                     x:_obj.boxColizi.rectCollisMeshdy.x+w,
-                    y:yy,
                     w:_obj.boxColizi.rectCollisMeshdy.width-w*2,
-                    h:_obj.rect[5]
-                },[_obj.idArr]) !=null){                    
+                    h:yy
+                },[_obj.idArr],null) !=null){                    
                     return {xz:"xz"}; 
                     
+                   // return 1;
                 }
             }
 
