@@ -77,6 +77,9 @@ export class Sten  {
         this.contPoz3d.add(this.content3d);
         this.content3d.rotation.x=-Math.PI/2;
 
+        this.c3dContent = new THREE.Object3D();    
+        this.content3d.add(this.c3dContent);
+
         this.colliL=undefined;
         this.colliR=undefined;
         this.bL=true;
@@ -112,7 +115,7 @@ export class Sten  {
         this.contPoz3d.sten=this
 
         this.linerMetrik=new LinerMetrik(this);//отсечение коробок маркера
-        this.lineVisi=new LineVisi(this, this.content3d);//линии 3д и текст
+        this.lineVisi=new LineVisi(this, this.c3dContent);//линии 3д и текст
         this.butDrag=new ButDrag(this,function(t,p){//управление 3д кнопками
             
         });
@@ -134,7 +137,7 @@ export class Sten  {
         this.geometryPort.textureWidth= this.minusPanel*5
         this.geometryPort.textureHeight= this.minusPanel
         this.meshPort = new THREE.Mesh(this.geometryPort, this.par.materialPort);
-        this.content3d.add(this.meshPort);
+        this.c3dContent.add(this.meshPort);
         this.meshPort.position.z=0.5
 
 
@@ -187,24 +190,24 @@ export class Sten  {
         
         this.mesh1 = new THREE.Mesh(this.geometry1, this.material1);
         this.mesh1.castShadow = true;
-        this.content3d.add(this.mesh);
-        this.content3d.add(this.mesh1); 
+        this.c3dContent.add(this.mesh);
+        this.c3dContent.add(this.mesh1); 
         this.mesh1.renderOrder=1;
 
 
         this.mesh2 = new THREE.Mesh(this.geometry2, this.gMGm.material);     
-        this.content3d.add(this.mesh2);
+        this.c3dContent.add(this.mesh2);
         this.mesh2.renderOrder=2;
 
         this.mesh3= new THREE.Mesh(this.geometry3, this.material);
-        this.content3d.add(this.mesh3);
+        this.c3dContent.add(this.mesh3);
         this.mesh3.renderOrder=2;
 
 
-        this.krai3D=new Krai3D(this.content3d,this.material1,function(s,p){
+        this.krai3D=new Krai3D(this.c3dContent,this.material1,function(s,p){
             if(self.idArr==1)if(s=="visible"){self.geometry3.isLeft=!p}
         });
-        this.krai3D1=new Krai3D(this.content3d,this.material1,function(s,p){
+        this.krai3D1=new Krai3D(this.c3dContent,this.material1,function(s,p){
             if(self.idArr==1)if(s=="visible")self.geometry3.isRight=!p
         });
     

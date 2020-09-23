@@ -46,6 +46,7 @@ export class Menedsher  {
         this.csvConfigArray=room.par.par.par.csvConfigArray
 
 
+
         this.matNull = new THREE.MeshPhongMaterial({
             color:0x0000ff,
             transparent:true,
