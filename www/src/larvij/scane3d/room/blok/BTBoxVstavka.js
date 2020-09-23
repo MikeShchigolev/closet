@@ -985,14 +985,14 @@ export class BVPlus {
         }
         this.hron.init();
 
-
+        var rr=-3.2
         var aaaaa=[
-            {x:4.8,y:-3.2,z:6.5,r:Math.PI/2},
-            {x:4.8,y:-3.2,z:28.7,r:Math.PI/2},
-            {x:4.8,y:-3.2,z:51.2,r:Math.PI/2},
-            {x:-4.8,y:-3.2,z:6.5,r:-Math.PI/2},
-            {x:-4.8,y:-3.2,z:28.7,r:-Math.PI/2},
-            {x:-4.8,y:-3.2,z:51.2,r:-Math.PI/2},
+            {x:4.8,y:rr,z:5.5,r:Math.PI/2},
+            {x:4.8,y:rr,z:30.7,r:Math.PI/2},
+            {x:4.8,y:rr,z:52.3,r:Math.PI/2},
+            {x:-4.8,y:rr,z:5.5,r:-Math.PI/2},
+            {x:-4.8,y:rr,z:30.7,r:-Math.PI/2},
+            {x:-4.8,y:rr,z:52.3,r:-Math.PI/2},
         ]
 
 
