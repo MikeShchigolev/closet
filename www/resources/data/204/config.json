@@ -5,7 +5,7 @@
     "orig": "xz.png",
     "mod": {
         "key": "glb",
-        "name": "teleskopi_hoff.glb",
+        "name": "teleskopik_hoff_2.glb",
         "r": [
             0,
             0,
@@ -44,6 +44,8 @@
         0
     ],
     "str": [
+        "0",
+        "0",
         "0",
         "0",
         "0",
