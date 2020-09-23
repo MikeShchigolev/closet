@@ -9,12 +9,14 @@
 */
 
 
+
 export class GalleryMani extends DGallery {
     constructor(dCont, x, y, fun) { 
         super();         
         this.simvol ="sdf"
         this._color = dcmParam.color;
         this._color1 = dcmParam.color;
+        this._prosentH=0;
 
         this.whPic=128;
         this.type="GalleryMani";
@@ -148,6 +150,20 @@ export class GalleryMani extends DGallery {
         }
     }
     get height() { return  this._height;}/**/
+
+
+    set prosentH(value) {
+                
+        this._prosentH = value;
+             
+        
+    }
+    get prosentH() {
+        let hd=this.hh-this._height;
+        if(hd<0) return 0;
+        return  this._prosentH;
+    }
+ 
 
     /*height: {// верх холеоеи
         set: function (value) {

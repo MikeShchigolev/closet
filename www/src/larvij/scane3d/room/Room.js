@@ -74,7 +74,8 @@ export class Room  {
         for (var i = 0; i < 3; i++) {
             this.array[i]=new Sten(this, this.content3d,i,this.sob);
             this.children[i]=this.array[i];            
-        }        
+        }  
+              
             
         this.upkrai=function(){
             for (var i = 0; i <this.array.length; i++) {

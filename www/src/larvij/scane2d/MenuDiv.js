@@ -180,6 +180,7 @@ export class Mani  {
 
         this.minMani=new MinMani(this);
 
+
         // let aM=false
         // if(main.localStorage.object.minMani==undefined) {
         //     main.localStorage.object.minMani=false;
@@ -822,15 +823,18 @@ export class MinMani  {
             }
             this.galleryMani.visible=true;
             this.arraySet=a;
+            let pp=this.galleryMani.prosentH;
             this.galleryMani.start(a);
-            this.setADrah()
+
+
+            this.setADrah();
+            this.galleryMani.prosentH=pp
         }
 
         var hh
         this.setADrah = function(){
              
-            if(this.galleryMani.hh>this._height){                
-                
+            if(this.galleryMani.hh>this._height){ 
                 this.panel.height=this._height;
                 this.galleryMani.height=this._height/this.ss;                              
             }else{
