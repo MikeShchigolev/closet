@@ -140,7 +140,7 @@ export class BPieceTop extends Blok {
 
                 for (var i = 0; i < aB1.length; i+=2) {
                     if(y<236 && x>aB2[i] && x<aB2[i+1] && this._W>(aB1[i+1]-aB1[i]) ){
-                        trace(i+">>  ",this._W,aB1)
+              
                         return this.x;
                     }
                 }
@@ -915,7 +915,7 @@ export class VisiNisu {
                         if(rrr==-1)aa.push(this.par.children[j]);
                         else aa1.push(this.par.children[j]);
 
-                        trace("##########");
+                      
                     }else{*/
                         if(xxx>this.par.children[j].boxColizi.rectCollisMeshdy.x){                        
                             if(xxx<this.par.children[j].boxColizi.rectCollisMeshdy.x+this.par.children[j].boxColizi.rectCollisMeshdy.width){
@@ -1264,7 +1264,7 @@ export class VisiNisu {
 
             if(_obj){
                 let w=0;
-                if(_obj.boxColizi.rectCollisMeshdy.width<15)w=0
+                if(_obj.boxColizi.rectCollisMeshdy.width<15)w=-15
                
                 if(_obj.isBoxParent({
                     x:_obj.boxColizi.rectCollisMeshdy.x+w,

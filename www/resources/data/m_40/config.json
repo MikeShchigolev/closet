@@ -19,15 +19,7 @@
         "emissive": "#000000",
         "specular": "#111111",
         "shininess": 30,
-        "textur": [
-            {
-                "link": "resources/data/m_40/textur/pic.jpg",
-                "l": "pic.jpg",
-                "name": "map",
-                "rx": 1,
-                "ry": 1
-            }
-        ]
+        "textur": []
     },
     "mirro": 0,
     "resurs": {

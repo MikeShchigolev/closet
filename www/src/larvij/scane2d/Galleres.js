@@ -49,10 +49,17 @@ export class Galleres  {
 
 
         this.clik111=function(){
-
+            if(dcmParam.mobile==true){
+                self.openG2()              
+            }
+           
         }
 
-        this.drag111=function(){    
+        this.drag111=function(){ 
+            if(dcmParam.mobile==true){
+                self.array[3].visible=false;                 
+                return;   
+            }
             var o=self.gallery[0];           
             var l=self.getLink(o.obj)
             self.par.dragPic.start(32, l, o);            
@@ -96,6 +103,7 @@ export class Galleres  {
 
 
         this.openG2=function(){
+            trace("openG2",this.array[3].visible)
             if(this.array[3].visible==false){ 
                 var y=this.array[1].y;
                 y+=this.array[1].content.y+this.array[1].array[this.array[1].index].y                
@@ -133,17 +141,30 @@ export class Galleres  {
         }
 
 
-        this.down=function(){                     
+        this.down=function(){  
+            trace(this.idArr+"    "+this.index)                   
             if(this.idArr==0){
                 self.index=this.index;
                 self.array[3].visible=false;
                 self.boolFinDrag=false;
             }
             if(this.idArr==1){
+                if(dcmParam.mobile==true){
+                    self.gallery=this;
+                    self.array[3].visible=false;                
+                    self.boolFinDrag=false;
+
+                    //self.gallery=this.array[this.index].object.array;
+                    self.par.dragPic.testDrag(5, self.clik111, self.drag111); 
+                    return;
+                }
+
+
                 if(this.array[this.index].object.array.length!=0){
                     self.gallery=this.array[this.index].object.array;
                     self.par.dragPic.testDrag(15, self.clik111, self.drag111); 
-                    if(dcmParam.mobile==true)self.openG2()                        
+                    if(dcmParam.mobile==true)self.openG2() 
+
                     return;
                 }  
 

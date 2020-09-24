@@ -123,13 +123,29 @@ export class NMObj  {
         this.clear=function(){
             this.dragWHXZ.dCont.visible=false;
             this.arrLine[1].visible=false
-        }    
+        } 
+
+
+        this.setManiO=function(o){            
+            this.par.par.setManiO(o);
+        }
 
         var xx
         this.object=undefined
         this.setObject=function(o){
+            
+            let b=false;
+            if(this.object==undefined){
+                b=true;
+            }else{
+                if(this.object.idArr!=o.idArr)b=true;
+            }
             this.object=o;
-            this.clear()
+            if(o)this.setManiO(o);
+
+
+            
+            this.clear();
 
 
 
@@ -270,7 +286,8 @@ export class NMObj  {
             if(this._active==true){
                 this.par.dCont.add(this.dCont)                
             }else{
-                this.par.dCont.remove(this.dCont)               
+                this.par.dCont.remove(this.dCont) 
+                this.par.par.setManiO(null);              
             } 
         }
     }
