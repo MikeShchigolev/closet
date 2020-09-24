@@ -2,7 +2,7 @@
     "id": 222,
     "title": "100_58",
     "key": "o_222",
-    "orig": "xz.png",
+    "orig": "prov_korz_small_1000.png",
     "mod": {
         "key": "n",
         "name": "n",
@@ -44,6 +44,8 @@
         0
     ],
     "str": [
+        "0",
+        "0",
         "0",
         "0",
         "0",
