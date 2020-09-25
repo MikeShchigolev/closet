@@ -1039,7 +1039,7 @@ export class BPieceObject extends Blok {
                         b=true;
                     }
                     this.bds=true;
-                    this.setXY(xxx,yyy)
+                    this.setXY(xxx,yyy);
                     this.bds=false;
                     if(b){
                         this.fun("visi3d"); 

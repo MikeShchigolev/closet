@@ -298,11 +298,28 @@ function DIVsakoe(par) {
     yy+=40
 
 
+    this.plan11=new DPanel(this.dCont, this.otstup, yy)
+    this.plan11.width=400
+    new DLabel(this.plan11,2,2,"Формирование цен").width=400
 
 
 
+    this.chekCSV=new DCheckBox(this.plan11, this.otstup, 20, "брать цены из основной базы Ларвидж", function(s){ 
+        self.confText.mainSCV= this.value; 
+        self.par.saveTime();     
+    });  
+    this.chekCSV.value=false
 
 
+    this.sliderCSV=new DSliderBig(this.plan11, 0, 50, function(s){ 
+        self.confText.prosentSCV = this.value; 
+        self.par.saveTime(); 
+    }, "процент от цены", 50, 300);
+    this.sliderCSV.okrug=1;
+    this.sliderCSV.width=190;
+
+
+    yy+=110
 
 
 
@@ -382,7 +399,7 @@ function DIVsakoe(par) {
     //Хрень с точками продажи
     this.dopSamovuvoz=new DopSamovuvoz(this.dCont, this.otstup, yy, function(s,p){
         self.par.saveTime(); 
-        trace(self.confText)
+        
     });
     
         
@@ -525,6 +542,16 @@ function DIVsakoe(par) {
         }
        
         this.chekU1.value=this.confText.up1.active;
+
+
+
+        if(this.confText.mainSCV==undefined){
+            this.confText.mainSCV=false;
+            this.confText.prosentSCV=100;
+        }
+        this.chekCSV.value=this.confText.mainSCV;
+        this.sliderCSV.value=this.confText.prosentSCV;
+
         /*this.slidU1W.value=this.confText.up1.width;
         this.slidU1H.value=this.confText.up1.height;
         this.inputU1.value=this.confText.up1.link;
