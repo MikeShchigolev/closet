@@ -18,7 +18,7 @@
     ],
     "str": [
         "BGroup",
-        "{|type|:|BPieceTop|,|id|:14,|x|:120.53164147270468,|y|:220,|children|:[{|type|:|BPieceObject|,|id|:44,|x|:45,|y|:-0.3999997734403621,|intSah|:0,|intSah1|:0,|polka|:true,|children|:[],|idColor|:|m_8|},{|type|:|BPieceObject|,|id|:44,|x|:-45,|y|:-0.39999959026515974,|intSah|:0,|intSah1|:1,|polka|:true,|children|:[],|idColor|:|m_8|},{|type|:|BPieceObject|,|id|:44,|x|:-45,|y|:-99.89999995661556,|intSah|:0,|intSah1|:0,|polka|:true,|children|:[],|idColor|:|m_8|}]}",
+        "{|type|:|BPieceTop|,|id|:14,|x|:133.11910662057957,|y|:207.30208825695829,|children|:[{|type|:|BPieceObject|,|id|:44,|x|:45,|y|:0,|intSah|:-1,|intSah1|:0,|hrenNiz|:{|intSah|:1,|intSah1|:0},|polka1|:|null|,|polka|:true,|plusR|:false,|plusL|:false,|children|:[],|idColor|:|m_8|,|sahSuper|:null,|up1|:false},{|type|:|BPieceObject|,|id|:44,|x|:-45,|y|:-0.050000000000000044,|intSah|:0,|intSah1|:1,|hrenNiz|:{|intSah|:0,|intSah1|:1},|polka1|:|null|,|polka|:true,|plusR|:false,|plusL|:false,|children|:[],|idColor|:|m_8|,|sahSuper|:null,|up1|:false},{|type|:|BPieceObject|,|id|:44,|x|:-45,|y|:-99.2,|intSah|:0,|intSah1|:0,|hrenNiz|:{|intSah|:0,|intSah1|:0},|polka1|:|null|,|polka|:true,|plusR|:false,|plusL|:false,|children|:[],|idColor|:|m_8|,|sahSuper|:null,|up1|:false}],|visiNisu|:{|array|:[{|x|:-90,|h|:108.93626682365513,|h1|:115.6},{|x|:0,|h|:108.93626682365513,|h1|:115.6},{|x|:90,|h|:9.736266823655134,|h1|:115.6}]}}",
         "0",
         "0",
         "0",
@@ -63,5 +63,13 @@
     "bagY": 0,
     "resurs": {
         "array": []
+    },
+    "param": {
+        "tOt": false,
+        "tNa": false,
+        "rO": -1,
+        "kesh": false,
+        "sG": false,
+        "clone": true
     }
 }

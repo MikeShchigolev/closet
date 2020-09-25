@@ -18,7 +18,7 @@
     ],
     "str": [
         "BGroup",
-        "{|type|:|BPieceTop|,|id|:14,|x|:127.62586309952269,|y|:220,|children|:[{|type|:|BPieceObject|,|id|:24,|x|:0,|y|:0,|intSah|:0,|intSah1|:0,|hrenNiz|:{|intSah|:0,|intSah1|:0},|polka|:true,|children|:[],|idColor|:|m_8|},{|type|:|BPieceObject|,|id|:51,|x|:0,|y|:-105.60000000000001,|intSah|:0,|intSah1|:0,|hrenNiz|:{|intSah|:0,|intSah1|:-1},|polka|:false,|children|:[],|idColor|:|m_8|,|sahSuper|:null}]}",
+        "{|type|:|BPieceTop|,|id|:14,|x|:106.05880811595861,|y|:189.99446630484542,|children|:[{|type|:|BPieceObject|,|id|:24,|x|:0,|y|:0,|intSah|:0,|intSah1|:0,|hrenNiz|:{|intSah|:0,|intSah1|:0},|polka1|:|null|,|polka|:true,|plusR|:false,|plusL|:false,|children|:[],|idColor|:|m_8|,|sahSuper|:null,|up1|:false},{|type|:|BPieceObject|,|id|:51,|x|:0,|y|:-105.60000000000001,|intSah|:0,|intSah1|:0,|hrenNiz|:{|intSah|:0,|intSah1|:-1},|polka1|:|null|,|polka|:false,|plusR|:false,|plusL|:false,|children|:[],|idColor|:|m_8|,|sahSuper|:null,|up1|:false}],|visiNisu|:{|array|:[{|x|:-30,|h|:112.43367633071198,|h1|:115.6},{|x|:30,|h|:112.43367633071198,|h1|:115.6}]}}",
         "0",
         "0",
         "0",

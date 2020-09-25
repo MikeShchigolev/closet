@@ -278,6 +278,8 @@ export class BPieceObject extends Blok {
                     } 
                 }
 
+
+
                 
                 if(bbr==true){
                                    
@@ -292,7 +294,7 @@ export class BPieceObject extends Blok {
                         this.boxColizi.rectCollisMeshdy._x=xx2  
                     }
                     //_xxxx=xx2+bxx.bpt.x
-                    trace(idMax+"  "+_x+"    "+_xxxx+"    "+xx2+"    "+bxx.bpt.x)
+                    
                     return false; 
                 }else{
                     if(this.parent!=undefined){                        
@@ -412,6 +414,7 @@ export class BPieceObject extends Blok {
         this.arrDerag=[]
         this.bds=false;
         this.dragStart=function(){
+
             if(this.mO.boolClone){  
                          
                 let o=this.getObj();
@@ -1018,7 +1021,9 @@ export class BPieceObject extends Blok {
         this.iAp=0
         //this function working with key event
         this.sobKey = function(tip,e,arrNa){                       
+           
             if(this.parent){
+                if(e.keyCode==38 || e.keyCode==87||e.keyCode==40 || e.keyCode==83){}else return
                 let b=false;         
                 let xxx=this.parent.boxColizi.rectCollisMeshdy.x+this.boxColizi.rectCollisMeshdy.x+this.boxColizi.rectCollisMeshdy.width/2;
                 let yyy=this.parent.boxColizi.rectCollisMeshdy.y+this.boxColizi.rectCollisMeshdy.y+this.boxColizi.rectCollisMeshdy.height;               
