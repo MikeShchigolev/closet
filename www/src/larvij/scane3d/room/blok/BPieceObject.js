@@ -126,11 +126,7 @@ export class BPieceObject extends Blok {
                 self.cont3dLoad.position.z=self.object.bagY;
             }
 
-            if(this.object.str[1]=="0"){
-                trace("&&&",this.object)
-                trace(this.yS,"&&&",this.rect)
-                //this.yS=-this.rect[2]
-            }
+            
             
             this.testYF(); 
                
@@ -184,7 +180,11 @@ export class BPieceObject extends Blok {
             aS=mO.par.sten;
             if(this.isOver(aS,_x,_y)==false)return;           
 
-            if(this.funOnrB(aS,_x,_y)==true)return;//this.oneBool==true)   
+            if(this.funOnrB(aS,_x,_y)==true)return;//this.oneBool==true) 
+            if(this.oneBool==true){
+               // _x= _xxxx-Math.random()-0.5                
+            }
+             
 
             b=this.testObject(_x,_y);  
                  
@@ -221,22 +221,48 @@ export class BPieceObject extends Blok {
 
 
         var xx,xx1,xx2,xxr, bbr,bbr2
+        var maxW,idMax
+        var _xxxx
         this.funOnrB=function(aS,_x,_y){
-            xxr=10;
+            xxr=20;
+            _xxxx=_x;
             if(this.oneBool==true){
-                bbr=false
-                popo=this.testObject2(_x,_y)
-                //trace(_x,_y,popo,aS);
-                if(aS!=undefined){                
-                    //trace("!",aS.children) 
+                bbr=false 
+                if(aS!=undefined){
                     for (var i = 0; i < aS.children.length; i++) {                                       
+                        maxW=99999;
+                        idMax=-1;
                         if(aS.children[i].type=="BPieceTop"){
                             bxx=aS.children[i].testPosition(_x, _y, this,undefined,true)
+                            
                             if(bxx!=null) {                                
-                                xx=_x-bxx.bpt.x;
-                                
-                                for (var j = 0; j < bxx.bpt.visiNisu.array.length; j++) { 
+                                xx =_x-bxx.bpt.x;
+
+
+                                for (var j = 0; j < bxx.bpt.visiNisu.array.length; j++) {                                     
                                     if(bxx.bpt.visiNisu.array[j].visible==false ||bxx.bpt.visiNisu.array[j].height<=0)continue;
+                                    xx1=bxx.bpt.visiNisu.array[j]._x;
+                                    xx2=Math.abs(xx-xx1);
+                                    
+                                    if(xx2<maxW){
+                                        maxW=xx2
+                                        idMax=j
+                                    }
+                                }
+
+
+                                if(idMax!=99999){
+                                    xx2=bxx.bpt.visiNisu.array[idMax]._x;
+                                    bbr=true;
+                                    bbr2=bxx.bpt;
+                                    break;
+                                }
+
+
+                                /*for (var j = 0; j < bxx.bpt.visiNisu.array.length; j++) { 
+                                    
+                                    if(bxx.bpt.visiNisu.array[j].visible==false ||bxx.bpt.visiNisu.array[j].height<=0)continue;
+                                    trace(j+">>>",bxx.bpt.visiNisu.array[j].height)
                                     xx1=bxx.bpt.visiNisu.array[j]._x;
 
                                     if(xx>xx1-xxr && xx<xx1+xxr){                                        
@@ -246,32 +272,35 @@ export class BPieceObject extends Blok {
 
                                         break;
                                     }
-
-                                }
+                                }*/
                             }                            
                         }
                     } 
                 }
 
+
+
                 
                 if(bbr==true){
+                                   
                     if(this.parent==undefined){
                         
                         this.x=xx2
-                        this.boxColizi.rectCollisMeshdy._x=xx2
-
-                        bbr2.add(this);                        
+                        this.boxColizi.rectCollisMeshdy._x=xx2                        
+                        bbr2.add(this);                                             
                         tStyle.glaf.dragPic.stop()                       
+                    }else{
+                        this.x=xx2
+                        this.boxColizi.rectCollisMeshdy._x=xx2  
                     }
+                    //_xxxx=xx2+bxx.bpt.x
+                    
                     return false; 
                 }else{
-                    if(this.parent!=undefined){
-                        
+                    if(this.parent!=undefined){                        
                         this.parent.remove(this);                        
                         let l=this.mO.par.getLink(self.object)                        
-                        tStyle.glaf.dragPic.start(32, l, null,null,true);
-
-                        
+                        tStyle.glaf.dragPic.start(32, l, null,null,true);                       
                     }
 
                 }
@@ -337,11 +366,9 @@ export class BPieceObject extends Blok {
                 mO.pieceTop.setXY(_x,_y); 
 
             }else{
-                if(aS.idArr != mO.pieceTop.parent.idArr){
-                    console.warn(">>>>>>>3>>>>>>>>")
+                if(aS.idArr != mO.pieceTop.parent.idArr){                    
                     mO.pieceTop.parent.remove(mO.pieceTop);
                     aS.sWidth=aS._W;
-
                     aS.add(mO.pieceTop);
                 }
             }
@@ -366,7 +393,7 @@ export class BPieceObject extends Blok {
                     
                     bbb=true;
                     var ppp=this.parent
-                    console.warn(">>>>>>>2>>>>>>>>")
+                    
                     this.parent.remove(this)                     
                     this.boxColizi.rectCollisMeshdy.x=-this.boxColizi.rectCollisMeshdy.width/2;
                     this.boxColizi.rectCollisMeshdy.y=-(this.yPol+this.yS)+mO.pieceTop.visiNisu.otstup-mO.pieceTop.visiNisu.oPod;                    
@@ -387,6 +414,7 @@ export class BPieceObject extends Blok {
         this.arrDerag=[]
         this.bds=false;
         this.dragStart=function(){
+
             if(this.mO.boolClone){  
                          
                 let o=this.getObj();
@@ -457,7 +485,7 @@ export class BPieceObject extends Blok {
 
             if(p.idRandom==mO.pieceTop.idRandom){
                 if(p.parent){
-                    console.warn(">>>>>>>1>>>>>>>>")
+                    
                     p.parent.remove(p)
                 }
             }
@@ -835,6 +863,7 @@ export class BPieceObject extends Blok {
         ////////////////////////////////////////////////////////
         var aaa,aa,ad,po,aaaWW
         this.getPrice=function(intColor, idMat){
+
             aaa=[];
             aa=null;
             if(this.bvColor==false)return aaa
@@ -992,7 +1021,9 @@ export class BPieceObject extends Blok {
         this.iAp=0
         //this function working with key event
         this.sobKey = function(tip,e,arrNa){                       
+           
             if(this.parent){
+                if(e.keyCode==38 || e.keyCode==87||e.keyCode==40 || e.keyCode==83){}else return
                 let b=false;         
                 let xxx=this.parent.boxColizi.rectCollisMeshdy.x+this.boxColizi.rectCollisMeshdy.x+this.boxColizi.rectCollisMeshdy.width/2;
                 let yyy=this.parent.boxColizi.rectCollisMeshdy.y+this.boxColizi.rectCollisMeshdy.y+this.boxColizi.rectCollisMeshdy.height;               
@@ -1008,7 +1039,7 @@ export class BPieceObject extends Blok {
                         b=true;
                     }
                     this.bds=true;
-                    this.setXY(xxx,yyy)
+                    this.setXY(xxx,yyy);
                     this.bds=false;
                     if(b){
                         this.fun("visi3d"); 
@@ -1068,7 +1099,8 @@ export class BPieceObject extends Blok {
 
     set parent(v) {
         if(this._parent!=v){
-            this.parOld=this._parent;           
+            this.parOld=this._parent;
+                      
             if(this.dragParentDo) this.dragParentDo(this._parent, v);   
             this._parent= v; 
             if(this._parent==undefined){
@@ -1080,6 +1112,8 @@ export class BPieceObject extends Blok {
             } else{
                 this.mO.visi3D.event3DArr.addChild(this.c3dNa);
                 if(this._parent.content)this._parent.content.addChild(this.content)
+
+                if(this.hrenNiz.bool3==true)this.hrenNiz.drag();
                 this.testKorektActiv();               
                 this.dragToPanel();  
                 this.drahShadow();                         
@@ -1631,7 +1665,7 @@ export class HrenNiz {
             this.arrHron.push(new BKHron(this, arr[1], 1))//2
             this.arrHron.push(new BKHron(this, arr[2], 1))//3
             this.arrHron.push(new BKHron(this, arr[3], 1))//4
-            trace("arr",arr)
+           
         }
         if(this.bool3==true){
             setTimeout(function() {
@@ -1685,6 +1719,7 @@ export class HrenNiz {
         self.hmp1=null
         this.drag=function(){
             this.clear();
+
             for (var i = 0; i < this.arrHron.length; i++) {
                 if(this.arrHron[i].obj3d==undefined){
                     this.timeTest()
@@ -1758,6 +1793,8 @@ export class HrenNiz {
 
             mesh.position.y=oPlus1.y;
             mesh.position.z=oPlus1.z;
+
+            console.warn("mesh>>>>>>",mesh);
 
             
             self.hmp1=null
@@ -1855,7 +1892,7 @@ export class HrenNiz {
                
             //висяшки первая
             //aaa=[]
-            trace("self.hmp1 ",self.bool3)
+          
             if(self.bool3==false && this.arrHron[2]){ 
                 aaa = menedsherMaterial.getArrOtObj(this.arrHron[2].object.obj, idMat, intColor)  
                 //this.parsArr(this.arrHron[2].object.obj[strXZ], aaa)           
@@ -1963,7 +2000,7 @@ export class HrenNiz {
 
 
     set polka(v) {
-        if(this.bool3==true && v==false)return
+        if(this.bool3==true)v=true;           
         if(this._polka!=v){
             this._polka= v; 
             if(this.bool==false) return              
@@ -1985,20 +2022,16 @@ export class HrenNiz {
 
     set polka1(v) {  
         if(this._polka1=="null" && v=="null")return;
-        if(this._polka1!="null" && this._polka1==v)v="null";
-
-        
+        if(this._polka1!="null" && this._polka1==v)v="null";        
         this._polka1= v;          
         this.initP1();
-
         this.drag();
         if(this._polka1=="null"){
             this.par.yF=this.par.krai.yF;
             this.par.ySMin=this.par.krai.ySMin;    
         }else{
             if(this.hmp1!=null){
-                this.polka=false;
-                //this.par.yS=this.rect.h;
+                //this.polka=false;                
                 this.par.yF=-this.rect.h; 
                 this.par.ySMin=this.ySMin;    
             }            

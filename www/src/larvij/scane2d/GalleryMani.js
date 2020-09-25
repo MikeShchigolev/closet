@@ -22,7 +22,63 @@ export class GalleryMani extends DGallery {
         this.type="GalleryMani";
         if(dCont!=undefined)if(dCont.add!=undefined)dCont.add(this);
         var self=this;
-        this.fun=fun
+        this.fun=fun;
+
+        this.aCol=[]
+        this.setManiOArr=function(a){
+            this.aCol=a    
+            this.redragColor(a)
+        }
+
+        let _cAct1 = "#acdaec";
+        let _cAct2 = '#5b9db8';
+
+        let bbb=false
+        var a=[];
+        let maxPri=0
+        let idPri=0
+        this.redragColor=function(a){
+           
+            maxPri=-1;
+            idPri=-1;    
+            for (var i = 0; i < this.array.length; i++) {
+                bbb=false;
+                for (var j = 0; j < a.length; j++) {
+                    
+                    if(!bbb&&this.array[i].object11 &&this.array[i].object11.aText[8].id==a[j][8].id ){
+                       
+                        bbb=true;
+                        if(maxPri==-1){
+                            if(a[j][8].priority){
+                                maxPri=a[j][8].priority
+                            }
+                            maxPri=0
+                            idPri=i
+                            continue;
+                        }
+                        if(a[j][8].priority){
+                            if(maxPri<a[j][8].priority){
+                                maxPri=a[j][8].priority
+                                idPri=i
+                            }
+                        }
+                    }
+                }
+                if(bbb==false)this.array[i].setColor(this._color)
+                else this.array[i].setColor(_cAct1)
+
+
+                //this.array[i].
+            }            
+            if(idPri!=-1){
+                this.array[idPri].setColor(_cAct2);
+                this.korektPoIndex(idPri)
+            }
+
+        }
+
+
+
         // Функция клика по иконке
         this.downBtn = function (s,p) {  
             if(s==undefined) {
@@ -155,12 +211,19 @@ export class GalleryMani extends DGallery {
     set prosentH(value) {
                 
         this._prosentH = value;
-             
+        let hd=(this.hh-this._height)*this._prosentH;
+
+      
+        if(hd>0)hd=0
+        this.content.y=  hd   
         
     }
     get prosentH() {
         let hd=this.hh-this._height;
-        if(hd<0) return 0;
+       
+        this._prosentH=this.content.y/hd
+
+        //if(this._prosentH<0) this._prosentH=0;
         return  this._prosentH;
     }
  
@@ -242,7 +305,13 @@ export class BoxMani extends DBox {
 
         this.mouseOver1 = function (e) {            
             self.funOver33()
-        }; 
+        };
+
+        this.setColor=function(c){            
+            if(this._color1==c)return;
+            this.color1=c
+            this.panel.color=c
+        }
 
 
         this.panel.div.removeEventListener("mouseout", this.mouseOut);

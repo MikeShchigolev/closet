@@ -137,8 +137,12 @@ export class LMain  {
   		}
 
 
-  		this.redactorCSVObj = function(){ 			
-  			var k=new KlassCSVObj(self.csvConfig,self.objectBase);
+  		this.redactorCSVObj = function(){ 
+
+  			var k=new KlassCSVObj(self.csvConfig,self.objectBase);  			
+  			if(self.confText.prosentSCV!=undefined)k.prosentSCV=self.confText.prosentSCV/100;  			
+  			k.init();
+
   			self.csvConfigArray=k.csvConfigArray;
   		}
 
@@ -147,7 +151,11 @@ export class LMain  {
   		this.startText = function(){  
   			//грузим текстовый фаил
   			let link="resources/configText.json"+this.plus;
-  			if(this.php.key!=null)link="users/"+this.php.key+"/configText.json"+this.plus+"&"+Math.random();
+  			if(this.php.key!=null){  				
+  				link="users/"+this.php.key+"/configText.json"+this.plus+"&"+Math.random();
+  			}
+	  		
+
 	  		$.ajax({
 	            url: link,
 	            success: function function_name(data) {                         
@@ -158,7 +166,7 @@ export class LMain  {
 					
 					self.tip=0
 					if(self.confText.buy!=undefined)if(self.confText.buy==false)self.tip=1
-					self.start();	                                
+					self.startCSV();	                                
 	            },
 	            error:function function_name(data) {
 	                console.log("Что то случилось с конфигом")
@@ -170,7 +178,11 @@ export class LMain  {
   		this.startCSV = function(){  
   			//грузим текстовый фаил
   			let link="resources/csvConfig.csv"+this.plus;
-  			if(this.php.key!=null)link="users/"+this.php.key+"/csvConfig.csv"+this.plus+"&"+Math.random();
+  			if(this.php.key!=null){
+  				let b=true;
+  				if(self.confText.mainSCV!=undefined&&self.confText.mainSCV==true)b=false;  				
+  				if(b)link="users/"+this.php.key+"/csvConfig.csv"+this.plus+"&"+Math.random();
+  			}
   			
   			//return
 	  		$.ajax({	  			
@@ -178,11 +190,11 @@ export class LMain  {
 	            success: function function_name(data) {
 					self.csvConfig = data;
 					self.redactorCSVObj();
-					self.startText();		                                
+					self.start();		                                
 	            },
 	            error:function function_name(data) {
 	                console.log("Что то случилось с конфигом")
-	                self.startText();	
+	                self.start();	
 	            }
 	        });
   		}
@@ -234,8 +246,8 @@ export class LMain  {
 					self.objectBase = conf;
 				} else self.objectBase = data;		
 				
-				self.startCSV();	  			
-				//self.startText();	                                
+				//self.startCSV();	  			
+				self.startText();	                                
             },
             error:function function_name(data) {
                 console.log("Что то случилось с конфигом")
@@ -248,7 +260,7 @@ export class KlassCSVObj  {
   	constructor(csvConfig,objectBase) {  		
   		this.type="KlassCSVObj";
   		var self=this;
-
+  		this.prosentSCV=1.0;
   		this.objectBase=objectBase
   		this.csvConfigArray
 	  	var ak= 'юбьтимсчяэждлорпавыфъхзщшгнекуцйЮБЬТИМСЧЯЭЖДЛОРПАВЫФЪХЗЩШГНЕКУЦЙ';
@@ -425,7 +437,7 @@ export class KlassCSVObj  {
 	                //o.color[ddd[sah]].id=arr[i][0];
 	                o.color[ddd[sah]].art=arr[i][jj];
 
-	                o.color[ddd[sah]].pri=arr[i][jj+1]*1;
+	                o.color[ddd[sah]].pri=Math.round(arr[i][jj+1]*self.prosentSCV);
 	                if(isNaN(o.color[ddd[sah]].pri))o.color[ddd[sah]].pri=arr[i][jj+1]
 
 	                o.color[ddd[sah]].niz=arr[i][jj+2];
@@ -433,6 +445,7 @@ export class KlassCSVObj  {
 	                sah++;
 	            }
 	            array.push(o);
+	            trace(array)
 
 
 	            for (var j = 0; j < this.objectBase.bd.length; j++) {
@@ -460,6 +473,9 @@ export class KlassCSVObj  {
 
 	        //trace(JSON.stringify(o, null,4))
 	    }
-	    this.bigZamena(csvConfig)	   
+	    this.init=function(){
+	    	this.bigZamena(csvConfig)
+	    }
+	    	   
   	}
 }

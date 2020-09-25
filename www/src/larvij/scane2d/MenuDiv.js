@@ -58,9 +58,7 @@ export class MenuDiv  {
 
         var ss=3;    
 
-        if(this.par.par.tip==0){
-
-            
+        if(this.par.par.tip==0){            
             this.buttonMani=new DButSim(this.dCont, 0,0,dcmParam.tCInfa.getText(2),function(){                
                 if(!self.menuSave.сhangesSave){
                    self.menuSave.active=true;  
@@ -80,8 +78,20 @@ export class MenuDiv  {
             this.buttonMani.fontSize=24;
             this.buttonMani.color="#e2e7ed"
             this.buttonMani.colorText="#424242"
-            this.buttonMani.label.x=35
-                
+            this.buttonMani.label.x=35                
+        }
+
+        let aaa=[]
+        this.setManiO=function(o){
+            
+
+            if(o==null)this.mani.minMani.setManiOArr([]);
+            if(o && o.getPrice)this.mani.minMani.setManiOArr(o.getPrice(0,o.idColor));
+            /*aaa.length=0
+            if(o.getPrice){
+                o.getPrice
+            } */  
+
         }
 
 
@@ -284,11 +294,8 @@ export class Mani  {
                 bb=true
                 if(array[i].parent==undefined)bb=false
                 else{
-                    if(array[i].type=="BPieceObject")if(array[i].parent.parent==undefined)bb=false
-                    
-                    if(this.testParSten(array[i])==false)bb=false; 
-
-                                       
+                    if(array[i].type=="BPieceObject")if(array[i].parent.parent==undefined)bb=false                    
+                    if(this.testParSten(array[i])==false)bb=false;                                       
                 } 
                 if(bb==true){                    
                     b=true;                   
@@ -766,6 +773,10 @@ export class MinMani  {
             }
         }
 
+        this.setManiOArr=function(a){            
+            this.galleryMani.setManiOArr(a);
+        }
+
 
         this.tween = new TWEEN.Tween(this.dC);
         //this.dC.x=370
@@ -825,7 +836,7 @@ export class MinMani  {
             this.arraySet=a;
             let pp=this.galleryMani.prosentH;
             this.galleryMani.start(a);
-
+            this.galleryMani.setManiOArr(this.galleryMani.aCol)
 
             this.setADrah();
             this.galleryMani.prosentH=pp

@@ -38,7 +38,7 @@ function DopInfo(par, fun) {
                 self.init2();                                
             },
             error:function function_name(data) {
-                trace("Что то случилось с конфигом");
+
                 self.confText={};
                 self.confText.email="xz@xz.xz";
                 self.confText.array=[]  ;  
@@ -62,7 +62,7 @@ function DopInfo(par, fun) {
     this.setActiv = function(o){  
                
         for (var i = 0; i < this.array.length; i++) {
-            trace(i+"  "+this.array[i])
+
             if(this.array[i].type==o.type) this.array[i].active = true
             else this.array[i].active = false
         }
@@ -247,14 +247,14 @@ function DICsv(par) {
                 s+="\n";             
             }          
         }
-        self.batSave.alpha=0.25; 
+        //self.batSave.alpha=0.25; 
         s=s.slice(0, -1);
         
         
         
         var l = "../resources/csvConfig.csv";        
         aGlaf.php.load({tip:"saveJSON", link:l, text:s},function(e){
-            trace(">>>>>>>>>>>>>>>>>>",e);
+           
 
         });
         
@@ -310,6 +310,30 @@ function DICsv(par) {
     this.batS.width=250;
     this.batS.startFile("csv");
 
+    this.batS1=new DButton(this.panel, this.otstup, this.otstup,"csv Масса/Обьем ",function(s){
+        var a=s.split("base64,");
+        var str=window.atob(a[1]);
+        let aa=str.split("\n");
+        
+       
+        for (var i = 0; i < aa.length; i++) {
+            aa[i]=self.par.vsakoe.testStr(aa[i])
+        }
+        
+        var kol=0
+        for (var i = 0; i < self.arrayColor.length; i++) {
+           kol+=self.arrayColor[i].testMassa(aa)
+        }
+        mInfo.setFun("Измение массы","заменено "+kol+"элементов")
+        
+       
+
+        
+         
+    });
+    this.batS1.width=150;
+    this.batS1.startFile("csv");
+
 
 
     this.bat=new DCheckBox(this.panel, 125, this.otstup, " ",function(){
@@ -324,7 +348,7 @@ function DICsv(par) {
     });
     this.batSave.color="#f28044";
     this.batSave.width=120
-    this.batSave.alpha=0.2
+    //this.batSave.alpha=0.2
 
     this.abc=[];
     this.redragColor=function(){
@@ -362,6 +386,8 @@ function DICsv(par) {
         }
         this.panel.width=w-4
         this.batS.x=this.panel.width-this.batS.width;
+
+        this.batS1.x=this.batS.x-this.batS1.width-2;
         
         this.dGal.sizeWindow(w,h);
     }
@@ -579,7 +605,7 @@ function DGBig(par, fun) {
 
 
 function DIVColor(par, strStart) { 
-    trace(strStart)
+  
     this.strStart=strStart;
     this.par=par;
     this.name="null";
@@ -645,14 +671,93 @@ function DIVColor(par, strStart) {
 
     }
 
+    this.testMassa=function(a){   
+      
+        
+       /* for (var ii = 0; ii < a.length; ii++) {
+            if(a[ii]){
+                let aaa=a[ii].split(";") 
+                trace(aaa[0])
+            }
 
-    this.testMarkArr=function(a){
-       
+        }*/
+        var kol=0
+
         for (var j = 0; j < this.arrayBlok.length; j++) {
             for (var i = 0; i < this.arrayColor.length; i++){            
                 if(this.arrayBlok[j][5+i*4]!=undefined){
                     if(this.arrayBlok[j][5+i*4].length>3){
-                        //trace("  >>>  "+this.arrayBlok[j][5+i*4]+"    "+this.arrayBlok[j][6+i*4]);
+                        //trace(i+"  "+j+"  >>>  "+this.arrayBlok[j][5+i*4]);
+                        
+                        for (var ii = 0; ii < a.length; ii++) {
+                            //
+                            if(a[ii]){
+                                let aaa=a[ii].split(";") 
+                                //if(i==5&&j==5)trace(aaa[0]+"   "+this.arrayBlok[j][5+i*4])
+
+                                
+                                if(aaa[0] == this.arrayBlok[j][5+i*4]){
+                                    if(this.arrayBlok[j][0]=="86"){
+                                        trace(i+"  "+j+"  >>>>>>>>>>>>> "+aaa);
+
+                                    }
+                                    //this.arrayBlok[j][6+i*4]=a[ii+1] 
+                                    let b=false
+                                    if(aaa[2]&&aaa[2]!="0"){
+                                        let s=aaa[2].replace(/,/gi, '.');
+                                        let m=s*1;
+                                        if(isNaN(m)==false){
+                                            this.arrayBlok[j][3]=(Math.round(m*100)/100)+"";                                            
+                                            b=true
+                                        }                                        
+                                        
+                                    }
+
+                                    if(aaa[3]){
+                                        let aaaa=aaa[3].split("x");
+                                        if(aaaa.length==1)aaaa=aaa[3].split("х");
+                                        if(aaaa.length==3){
+                                            let m=aaaa[0]*aaaa[1]*aaaa[2];
+                                            if(isNaN(m)==false){
+                                                m=Math.round(m*0.0000001*100)/100
+                                                this.arrayBlok[j][4]=m+""; 
+                                                
+                                                b=true
+                                            }                                            
+                                        }
+                                    }
+
+                                    if(aaa[4]){
+                                        let m=aaa[4]*1;
+                                        if(isNaN(m)==false){                                            
+                                            if(typeof m =="number" && m>0){
+                                                this.arrayBlok[j][6+i*4]=m+"";
+                                                b=true;
+                                            } 
+                                        }
+                                    }
+
+                                    if(b)kol++;
+                                                               
+                                } 
+                            }
+                            
+                        }                   
+                    }
+                }  
+            }
+        } 
+        return kol;
+    }
+
+
+
+    this.testMarkArr=function(a){       
+        for (var j = 0; j < this.arrayBlok.length; j++) {
+            for (var i = 0; i < this.arrayColor.length; i++){            
+                if(this.arrayBlok[j][5+i*4]!=undefined){
+                    if(this.arrayBlok[j][5+i*4].length>3){
+                     
                         for (var ii = 0; ii < a.length-1; ii++) {
                             if(a[ii] == this.arrayBlok[j][5+i*4]){
                                 this.arrayBlok[j][6+i*4]=a[ii+1]                              
@@ -840,7 +945,7 @@ function DXZXZ(par, fun) {
             ac.push(this.array[i].input.value);
         }   
 
-
+/*
         let b=dcmParam._color1
         for (var i = 0; i < ac.length; i++) {
             for (var j = 0; j< ac.length; j++) {                
@@ -849,10 +954,10 @@ function DXZXZ(par, fun) {
                 }
             }
         }
-        trace(">>>>>>>>>>>>",b,ac)
+
         for (var i = 0; i < this.array.length; i++) {            
             this.array[i].input.color1=b
-        } 
+        } */
 
     }
 
@@ -1008,13 +1113,12 @@ function GalleryXZ1(dCont, _x, _y, _fun) {
         //jj++;
 
         ii = this.array.length-1;
-        /*trace(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",axz,this.array)
-        trace(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",this._kolII)
+        /*
         for (var i = 0; i <= this._kolII; i++) {
             for (var j = 0; j < jj; j++) {                
                 if(axz[i]!=undefined){
                     if(axz[j][i]!=undefined){
-                        trace(ii+"  "+i+"  "+j+"  ",axz[j][i])                    
+                                       
                         this.array[ii].x = axz[j][i].x;
                         this.array[ii].y = axz[j][i].y;
 
@@ -1158,7 +1262,7 @@ function BoxXZ1(dCont, _x, _y, _fun, par) {
             let b=false
             if(bool==undefined)this.image.link = "resources/data/"+this.object[0]+"/100.png";
             this.label.visible=true 
-            if(this.object[0]==iiii)trace(">>>>>"+this.object)
+
 
             this.label.value=this.object[0]
 
@@ -1172,7 +1276,7 @@ function BoxXZ1(dCont, _x, _y, _fun, par) {
                     continue
                 }
                 if(this.object[i]==""){
-                    if(this.object[0]==iiii)trace(i+">>>>>"+this.object[i])
+
                     b=true
                     continue;
                 }
@@ -1181,28 +1285,27 @@ function BoxXZ1(dCont, _x, _y, _fun, par) {
 
 
 
-            for (var i = 5; i < this.object.length-1; i+=4) {
+          /*  for (var i = 5; i < this.object.length-1; i+=4) {
                 s2+="\t"+this.object[i+1];
                 ac.push(this.object[i]);
 
-                if(this.object[i]==""){ 
-                    if(this.object[0]==iiii)trace(i+">+1>>>>"+this.object[i+1]);                  
+                if(this.object[i]==""){                
                     b=true
                 }
                 if(this.object[i+1]==""){ 
-                    if(this.object[0]==iiii)trace(i+">+2>>>>"+this.object[i+2])                   
+               
                     b=true
                 }
-
             }
+
             for (var i = 0; i < ac.length; i++) {
                 for (var j = 0; j < ac.length; j++) {
                     if(i!=j)if(ac[i]==ac[j]){
                         b=true
-                        if(this.object[0]==iiii)trace(i+">+2>>>>"+ac[i],ac[j],i,j) 
+
                     }
                 }
-            }
+            }*/
 
 
 
@@ -1466,7 +1569,7 @@ function DIVsakoe(par) {
     //Хрень с точками продажи
     this.dopSamovuvoz=new DopSamovuvoz(this.dCont, this.otstup, yy, function(s,p){
         self.par.saveTime(); 
-        trace(self.confText)
+
     });
     
         
@@ -1734,7 +1837,7 @@ function DopSamovuvoz(dCont,x,y, fun) {
                         self.drag()
                         self._index=-1
                         self.fun();
-                        trace(this.idArr,self.object.array)
+
                         return;
                     }                   
                     
@@ -1793,7 +1896,7 @@ function DopSamovuvoz(dCont,x,y, fun) {
             if(this._index!=value){
                 this._index=value;
                 var b=false;
-                trace("dfgdfg",this._index )
+
                 for (var i = 0; i < this.array.length; i++) {
                     if(i==this._index){
                         this.array[i].active=true
@@ -2000,7 +2103,7 @@ function DIArrText(par) {
         set: function (value) {            
             if(this._active!=value){
                 this._active=value;
-                trace("this._active   ",this._active)
+
                 if(value) this.button.alpha =0.5
                 else this.button.alpha =1
                 this.dCont.visible=value;

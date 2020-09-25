@@ -2,6 +2,7 @@
 
 
 var menuBig
+var mInfo
 function Menu(aGlaf, fun) {  
     var self=this;  
     this.type="Menu";
@@ -35,7 +36,7 @@ function Menu(aGlaf, fun) {
 
     this.mInfo=new MInfo(this.par.dCont);
 
-
+    mInfo=this.mInfo
 
     var script = document.createElement('script');
     // мы можем загрузить любой скрипт с любого домена
