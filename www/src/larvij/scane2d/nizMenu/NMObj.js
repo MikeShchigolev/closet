@@ -11,7 +11,7 @@
 
 */
 
-import { DWindowS, VuborMat, GaleriLitel, DButSim } from '../Zapshsti.js';
+import { DWindowS, VuborMat, GaleriLitel } from '../Zapshsti.js';
 import { DragWHXZ } from './DragWHXZ.js';
 import { BatArr } from './BatArr.js';
 
@@ -36,7 +36,7 @@ export class NMObj  {
         this.panel = new DPanel(this.dCont,0,0);
         this.panel.height=this._vusot+this.otstup*1.7;  
         this.panel.width=  this._width   
-        this.panel.div.style.borderRadius = this._vusot+"px";
+        this.panel.borderRadius = this._vusot;
 
         this.up1Menu=undefined;
 

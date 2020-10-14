@@ -23,9 +23,11 @@ export class GalleryMani extends DGallery {
         if(dCont!=undefined)if(dCont.add!=undefined)dCont.add(this);
         var self=this;
         this.fun=fun;
+        dcmParam.addFunNotActivDiv(this.div)
 
         this.aCol=[]
         this.setManiOArr=function(a){
+            return
             this.aCol=a    
             this.redragColor(a)
         }
@@ -208,22 +210,16 @@ export class GalleryMani extends DGallery {
     get height() { return  this._height;}/**/
 
 
-    set prosentH(value) {
-                
+    set prosentH(value) {                
         this._prosentH = value;
-        let hd=(this.hh-this._height)*this._prosentH;
-
-      
+        let hd=(this.hh-this._height)*this._prosentH;      
         if(hd>0)hd=0
         this.content.y=  hd   
         
     }
     get prosentH() {
-        let hd=this.hh-this._height;
-       
+        let hd=this.hh-this._height;       
         this._prosentH=this.content.y/hd
-
-        //if(this._prosentH<0) this._prosentH=0;
         return  this._prosentH;
     }
  

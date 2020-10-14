@@ -839,7 +839,7 @@ export class MinMani  {
             this.galleryMani.setManiOArr(this.galleryMani.aCol)
 
             this.setADrah();
-            this.galleryMani.prosentH=pp
+            this.galleryMani.prosentH=pp;
         }
 
         var hh
