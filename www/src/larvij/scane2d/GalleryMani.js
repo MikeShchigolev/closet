@@ -27,7 +27,8 @@ export class GalleryMani extends DGallery {
 
         this.aCol=[]
         this.setManiOArr=function(a){
-            return
+            //return
+            if( main.localStorage.object.dubag==false)return
             this.aCol=a    
             this.redragColor(a)
         }

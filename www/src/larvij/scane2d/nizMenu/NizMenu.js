@@ -23,7 +23,7 @@ export class NizMenu  {
         
         this.dC=new DCont(par.dContPod);
         this.dCont=new DCont(this.dC);
-        dcmParam.addFunNotActivDiv(this.dC)
+        dcmParam.addFunNotActivDiv(this.dC);
 
         this.widthBig=this.par.widthBig;
         this.otstup=this.par.otstup*2;
