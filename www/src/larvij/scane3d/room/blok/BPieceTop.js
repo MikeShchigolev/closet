@@ -219,11 +219,15 @@ export class BPieceTop extends Blok {
                 }
             }  
             this.bptColiz.clearBig(); 
-            this.visiNisu.clearHH() 
+            this.visiNisu.clearHH(); 
+            this.mO.dragPriceScane();
 
-            this.mO.dragPriceScane() 
-            
-                           
+            for (var i = 0; i < this.visiNisu.array.length; i++) {
+                this.visiNisu.array[i].x=0
+            }   
+
+
+                                  
         };
         
 
@@ -1762,11 +1766,11 @@ export class VNB {
 
         this.clear=function(){
             this._height=0
-            this.visible = false;
-           
+            this.visible = false;            
             for (var i = 0; i < this.array.length; i++) {
                 this.array[i].visible=false;                 
             }
+
 
         }
 

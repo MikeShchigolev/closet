@@ -359,7 +359,8 @@ export class Mani  {
         var kkkk
         var bbI, aa
         var lll
-        this.dragPArr2=function(){             
+        this.dragPArr2=function(){ 
+                      
             arrP2=[]   
             this.mass=0;
             this.volume=0;      
@@ -402,6 +403,7 @@ export class Mani  {
                 arrP2[i][7]=0;
                 if(arrP2[i][8])if(arrP2[i][8].priority)arrP2[i][7]=arrP2[i][8].priority*1;
             }
+            
            
              
             this.dragarrP2();    
@@ -504,9 +506,16 @@ export class Mani  {
             }
             return rez;
         }
+        var aOkr=[
+            new BlaHreniZboku(108),
+            new BlaHreniZboku(109),
+            new BHZ2(178,4),
+            new BHZ2(177,2)
+        ]
 
-        this.bhp108= new BlaHreniZboku(108)
-        this.bhp109= new BlaHreniZboku(109)
+        //this.bhp108= new BlaHreniZboku(108)
+        //this.bhp109= new BlaHreniZboku(109)
+        //BHZ2(109)
         this.dragarrP2=function(){
             var num54=0;
             var id23=-1;
@@ -547,6 +556,12 @@ export class Mani  {
                 
                 if(arrP2[i][9]==108){ kol108++}
             } 
+            for (var i = arrP2.length-1; i >=0; i--) {
+                //trace(i+"  ",arrP2[i])
+                if(arrP2[i][1]&&arrP2[i][1].indexOf("NOT USING")!=-1)  arrP2.splice(i,1)
+                
+            }
+
             if(this.grabStoiki==true){
                 if(kolMinus23!=0){//перила ид 23 нужно вычесть 2                
                     id23=-1;
@@ -567,8 +582,10 @@ export class Mani  {
                     }
                 }
             }
-            this.bhp108.set(arrP2)
-            this.bhp109.set(arrP2)
+            for (var i = 0; i < aOkr.length; i++) {
+                aOkr[i].set(arrP2)
+            }
+          
         }
 
 
@@ -625,7 +642,7 @@ export class BlaHreniZboku  {
             kol=0
             kol1=0
             for (var i = 0; i < a.length; i++) {                    
-                if(a[i][9]==this.id){
+                if(a[i][9]==this.id){                    
                     var sss=a[i][11]/a[i][10]
                     kol=a[i][5]
                     if(kol<a[i][6])kol=a[i][6]
@@ -636,6 +653,32 @@ export class BlaHreniZboku  {
         }
     }
 }
+
+export class BHZ2  {
+    constructor(id,del) { 
+        this.id = id;        
+        var kol,kol1,b
+        self=this;
+        self.del=del
+
+        this.set=function(a){
+            b=false;
+            kol=0
+            kol1=0
+            for (var i = 0; i < a.length; i++) {                    
+                if(a[i][9]==this.id){
+                    
+                    var sss=a[i][11]/a[i][10]
+                    kol=Math.ceil(a[i][10]/self.del)                                        
+                    a[i][10] = kol 
+                    a[i][11]= kol *sss                    
+                }
+            }
+        }
+    }
+}
+
+
 
 
 
@@ -839,7 +882,7 @@ export class MinMani  {
             this.galleryMani.setManiOArr(this.galleryMani.aCol)
 
             this.setADrah();
-            this.galleryMani.prosentH=pp
+            this.galleryMani.prosentH=pp;
         }
 
         var hh

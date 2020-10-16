@@ -363,6 +363,7 @@ export class BPieceObject extends Blok {
             if(mO.pieceTop.parent==undefined){
                 
                 aS.add(mO.pieceTop);
+
                 mO.pieceTop.setXY(_x,_y); 
 
             }else{
@@ -707,7 +708,7 @@ export class BPieceObject extends Blok {
 
         this.aaSob=function(s,p){
             var r=false
-            
+            trace(s,p)
             if(s=="clear"){
                 self.mO.par.clear(self);
                 self.clear();
@@ -760,8 +761,13 @@ export class BPieceObject extends Blok {
                     return "Для установки аксессуара недостаточно свободного места.";
                 }  
 
-                
-
+                trace()
+                //if(s==true){
+                    self._polka=true
+                    self.polka=false
+                    self.hrenNiz._polka=true;
+                    self.hrenNiz.polka=false;
+                //}
                 self.hrenNiz.polka1=s;
                 self.dragRect();
                 self.testKorektActiv();
@@ -1794,7 +1800,7 @@ export class HrenNiz {
             mesh.position.y=oPlus1.y;
             mesh.position.z=oPlus1.z;
 
-            console.warn("mesh>>>>>>",mesh);
+
 
             
             self.hmp1=null
@@ -1882,9 +1888,47 @@ export class HrenNiz {
         this.funDragColor2=function(){               
             this.arrHron[2].dragC(this.par.material)
         }
-
+       
         var strXZ, aaa, aaa1;
         this.getPrice=function(a, intColor, idMat){            
+            
+
+
+
+            if(self.polka1!="null"){
+                
+                for (var i = 0; i < self.aP1.length; i++) {                    
+                    if(self.polka1.indexOf(self.aP1[i].object.id+"")!=-1){
+                        aaa = menedsherMaterial.getArrOtObj(self.aP1[i].object.obj, idMat, intColor)  
+                        //this.parsArr(this.arrHron[2].object.obj[strXZ], aaa)           
+                        aaa[9]=self.aP1[i].object.obj.id;
+                        aaa[8]=self.aP1[i].object.obj;
+                        /*aaa[5]=1
+                        aaa[6]=0*/
+                        a.push(aaa);
+                        //trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",aaa)
+                        //trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",a)
+                        /*if(self.aP1[i].obj3d!=undefined){                            
+                            trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",self.aP1[i].obj3d)
+                           
+                            let sah=(self.par.object.mod.r[3]/(self.kolP1+1))                            
+                            for (var j = 0; j < self.kolP1; j++) {
+                                mesh=self.aP1[i].get();
+                                mesh.rotation.x=-Math.PI/2;
+                                self.hmp1=self.aP1[i] 
+                                mesh.position.y=0//self.aP1[i].object.obj.mod.r[1]; 
+                                mesh.position.x=self.par.object.mod.r[0]+sah+j*sah  
+                                mesh.position.z=- self.par.object.mod.r[2]                             
+                            }
+                                                      
+                            break;
+                        } */                       
+                    }
+                }
+            }     
+
+
+
             if(this._polka==false)return
             strXZ="plus"
             if(intColor==1)strXZ="plus1"
@@ -1962,6 +2006,9 @@ export class HrenNiz {
                 }
                 
             }
+           
+
+
         } 
 
         this.parsArr=function(a, a1){
@@ -2035,7 +2082,8 @@ export class HrenNiz {
                 this.par.yF=-this.rect.h; 
                 this.par.ySMin=this.ySMin;    
             }            
-        }       
+        }
+        trace("this._polka1  ",this._polka1)       
 
 
         
@@ -2438,7 +2486,7 @@ export class SahSuper {
                     o.z=Math.round(this.array[i].position.z*100)/100;
                     o.ii=this.array[i].ii;
                     o.jj=this.array[i].jj;
-                    o.id=this.array[i].idObj;
+                    o.id = this.array[i].idObj;
                     a.push(o)
                 }
             }                
@@ -2450,7 +2498,7 @@ export class SahSuper {
             if(a==null) return;                    
             this.clear();
             for (var i = 0; i < a.length; i++) {
-                this.setOS(a[i])
+                this.setOS(a[i]);
             }
         } 
 

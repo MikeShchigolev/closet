@@ -11,7 +11,7 @@
 
 */
 
-import { DWindowS, VuborMat, GaleriLitel, DButSim } from './Zapshsti.js';
+import { DWindowS, VuborMat, GaleriLitel} from './Zapshsti.js';
 
 
 export class NizMenu  {

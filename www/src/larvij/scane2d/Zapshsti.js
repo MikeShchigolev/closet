@@ -583,7 +583,7 @@ export class GLBox  {
 
 
 
-
+/*
 export class DButSim extends DCont {
     constructor(dCont, _x, _y, _text, _fun, _link) {
         super(); 
@@ -634,8 +634,8 @@ export class DButSim extends DCont {
         this.panel1.alpha=0
 
         
-        this.panel.div.style.borderRadius=this._borderRadius+"px";
-        this.panel1.div.style.borderRadius=this._borderRadius+"px";
+        this.panel.borderRadius=this._borderRadius;
+        this.panel1.borderRadius=this._borderRadius;
 
         this.label=new DLabel(this.dCont, 5, (this._height-this._fontSize)/2,_text);    
         this.label.div.style.pointerEvents="none";
@@ -906,4 +906,4 @@ export class DButSim extends DCont {
     }
     get activMouse() { return  this._activMouse;}
 
-}
+}*/

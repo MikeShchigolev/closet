@@ -1,5 +1,5 @@
 
-import { DWindowS,DButSim} from './Zapshsti.js';
+import { DWindowS} from './Zapshsti.js';
 
 export class MPDF {
     constructor(dC) {   

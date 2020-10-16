@@ -445,7 +445,7 @@ export class KlassCSVObj  {
 	                sah++;
 	            }
 	            array.push(o);
-	            trace(array)
+	           
 
 
 	            for (var j = 0; j < this.objectBase.bd.length; j++) {
@@ -471,7 +471,7 @@ export class KlassCSVObj  {
 	        	array:this.csvConfigArray
 	        }
 
-	        //trace(JSON.stringify(o, null,4))
+	        
 	    }
 	    this.init=function(){
 	    	this.bigZamena(csvConfig)

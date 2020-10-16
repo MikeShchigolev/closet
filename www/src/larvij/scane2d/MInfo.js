@@ -11,7 +11,7 @@
 окно поверх с инпутами
 
 */
-import { DWindowS,DButSim} from './Zapshsti.js';
+import { DWindowS} from './Zapshsti.js';
 
 export class MInfo  {
     constructor(dC) {   

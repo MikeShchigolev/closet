@@ -11,7 +11,7 @@
 
 */
 
-import { DWindowS, VuborMat, GaleriLitel, DButSim } from '../Zapshsti.js';
+import { DWindowS, VuborMat, GaleriLitel} from '../Zapshsti.js';
 import { NMObj } from './NMObj.js';
 
 export class NizMenu  {
@@ -23,7 +23,7 @@ export class NizMenu  {
         
         this.dC=new DCont(par.dContPod);
         this.dCont=new DCont(this.dC);
-        
+        dcmParam.addFunNotActivDiv(this.dC);
 
         this.widthBig=this.par.widthBig;
         this.otstup=this.par.otstup*2;
@@ -283,7 +283,7 @@ export class NMWebCam  {
         this.panel = new DPanel(this.dCont,0,0);
         this.panel.height=this._vusot+this.otstup*1.7;  
         this.panel.width=  this._width   
-        this.panel.div.style.borderRadius = this._vusot+"px";        
+        this.panel.borderRadius = this._vusot;        
 
         var xx=this.otstup
         this.but=new DButSim(this.dCont,xx,this.otstup," ",function(){
@@ -378,7 +378,7 @@ export class NMGalf  {
 
         this.panel = new DPanel(this.dCont,0,0);        
         this.panel.height=this._vusot+this.otstup*1.7;       
-        this.panel.div.style.borderRadius = this._vusot+"px";
+        this.panel.borderRadius = this._vusot;
 
 
 
