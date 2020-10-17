@@ -761,7 +761,7 @@ export class BPieceObject extends Blok {
                     return "Для установки аксессуара недостаточно свободного места.";
                 }  
 
-                trace()
+                
                 //if(s==true){
                     self._polka=true
                     self.polka=false
@@ -771,6 +771,7 @@ export class BPieceObject extends Blok {
                 self.hrenNiz.polka1=s;
                 self.dragRect();
                 self.testKorektActiv();
+                self.mO.dragPriceScane()
                 return false
             }
 

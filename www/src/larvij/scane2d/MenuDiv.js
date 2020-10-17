@@ -656,22 +656,27 @@ export class BlaHreniZboku  {
 
 export class BHZ2  {
     constructor(id,del) { 
-        this.id = id;        
+        this.id = id;
+        this.del = del        
         var kol,kol1,b
-        self=this;
-        self.del=del
-
+        var self=this;
+        
+      
         this.set=function(a){
             b=false;
             kol=0
             kol1=0
             for (var i = 0; i < a.length; i++) {                    
                 if(a[i][9]==this.id){
-                    
+                   
                     var sss=a[i][11]/a[i][10]
-                    kol=Math.ceil(a[i][10]/self.del)                                        
+                    
+                    kol=Math.ceil(a[i][10]/self.del) 
+
                     a[i][10] = kol 
-                    a[i][11]= kol *sss                    
+                    a[i][11]= kol *sss
+                 
+
                 }
             }
         }
