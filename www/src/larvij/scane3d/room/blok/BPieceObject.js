@@ -1152,7 +1152,7 @@ export class BKrai {
         this.content3d = new THREE.Object3D();
         this.par.c3dNa.add(this.content3d);
         this.yMax=this.par.yMax;
-        this.idSvaz=this.par.object.str[2]
+        this.idSvaz=this.par.object.str[2];
         this.boolStorona=false;
         this.bool=false
         this.yS=0;
@@ -1177,8 +1177,8 @@ export class BKrai {
             this.ySMin=this.arrHron[0].object.obj.mod.r[5]*1
             if(this.par.ySMin<this.ySMin)this.par.ySMin=this.ySMin;
             //this.ySMin
-            this.par.testYF()
-
+            this.par.testYF();
+            //-1.5,7.9,4,5.8,3.23,1,0.5,|244|1   {|type|:|polka1|,|id|:247,|kol|:1}
 
             this.initHron3()          
         }
@@ -1204,8 +1204,10 @@ export class BKrai {
 
         this.initKey=function(){
             if(this.bkhKey!=null)return;            
-            var kkk="235"
+            var kkk="235";
             if(self.par.object.mod.r[4]>35)kkk="236";
+
+           
             this.bkhKey = new BKHron(this, kkk, 1);
 
             //L
@@ -1364,17 +1366,24 @@ export class BKrai {
         if(this.par.object.str[2]*1!=0){ 
             this.bool=true;           
             if(this.par.object.str[2]==32)this.plusHron(109);
-            if(this.par.object.str[2]==23)this.plusHron(108);
+            if(this.par.object.str[2]==23)this.plusHron(108);//длинная
             //if(this.par.object.str[2]==236)this.plusHron(108);  
             this.arrHron=[new BKHron(this, this.par.object.str[2],0), new BKHron(this, this.par.object.str[3],1)]
             for (var i = 0; i < this.arrHron.length; i++) {
                 this.arrHron[i].init();
             }
            
-            if(this.par.object.str[2]==32||this.par.object.str[2]==23){
-                this.par.aa.unshift("plusR");
-                this.par.aa.unshift("plusL");
-
+            if(this.par.object.str[2]==23){ //длинная   236
+                if(this.par.mO.getInTEXT(236,"NOT USING")==false){
+                    this.par.aa.unshift("plusR");
+                    this.par.aa.unshift("plusL"); 
+                } 
+            }
+            if(this.par.object.str[2]==32){   //"235" 
+                if(this.par.mO.getInTEXT(235,"NOT USING")==false){        
+                    this.par.aa.unshift("plusR");
+                    this.par.aa.unshift("plusL");
+                }
             }
             
         }else{
@@ -1396,21 +1405,27 @@ export class BKrai {
             strXZ="plus"
             if(intColor==1)strXZ="plus1"; 
 
-
+            //if(this.par.mO.getInTEXT(236,"NOT USING")==false){
+            
             if(this.c3dkR && this.c3dkR.visible){
                 aaa = menedsherMaterial.getArrOtObj(this.bkhKey.object.obj,idMat,intColor)
+
+                
                 aaa[9]=this.bkhKey.object.obj.id;
                 aaa[8]=this.bkhKey.object.obj;
                 a.push(aaa); 
                 
             }
+            
             if(this.c3dkL && this.c3dkL.visible){
                 
                 aaa = menedsherMaterial.getArrOtObj(this.bkhKey.object.obj,idMat,intColor)
+
+               
                 aaa[9]=this.bkhKey.object.obj.id;
                 aaa[8]=this.bkhKey.object.obj;
                 a.push(aaa);
-                
+                 trace(aaa,">>>>c3dkL>>>>>",a)
             }
 
             if(this._intSah!=-1){
@@ -1536,42 +1551,43 @@ export class HrenNiz {
         if(this.par.object.str[5]!=undefined){
             if((this.par.object.str[5]+"").length>6){
                 if(this.par.object.str[5].indexOf("polka1")!=-1){
+                    //{|type|:|polka1|,|id|:247,|kol|:1}
+
                     let ss=""
                     for (var i = 0; i < this.par.object.str[5].length; i++) {                        
                         if(this.par.object.str[5][i]=="|")ss+='"'
-                        else ss+=this.par.object.str[5][i]
-                            
+                        else ss+=this.par.object.str[5][i]                            
                     }
+
                     var oo={type:"polka1",id:244}              
                     let o=JSON.parse(ss); 
+                    
+
                     if(o.type && o.type=="polka1" && o.id) {
-                        this.arrP1.push(o.id)
-                        if(o.kol)this.kolP1= o.kol;
-
-
                         let oo=this.par.mO.getIdObj(o.id);
-                        
-                        let sah=(self.par.object.mod.r[3]/(self.kolP1+1))
+
+                        //проверяем наличие
+                        if(o.obj)if(o.obj.info)if(o.obj.info.text!="NOT USING"){
+                                               
+
+                            this.arrP1.push(o.id)
+                            if(o.kol)this.kolP1= o.kol;                            
+                            
+                            let sah=(self.par.object.mod.r[3]/(self.kolP1+1))
 
 
-                        this.rect.x=self.par.object.mod.r[0]+sah
-                        let f = self.par.object.mod.r[0]+sah+(self.kolP1-1)*sah
-                        this.rect.w=f-this.rect.x;
+                            this.rect.x=self.par.object.mod.r[0]+sah
+                            let f = self.par.object.mod.r[0]+sah+(self.kolP1-1)*sah
+                            this.rect.w=f-this.rect.x;
 
-                        this.rect.x+=oo.obj.mod.r[0];
-                        this.rect.w+=oo.obj.mod.r[3];
+                            this.rect.x+=oo.obj.mod.r[0];
+                            this.rect.w+=oo.obj.mod.r[3];
 
-                        this.rect.y=oo.obj.mod.r[1];
-                        this.rect.h=oo.obj.mod.r[4];
-
-                     
-
+                            this.rect.y=oo.obj.mod.r[1];
+                            this.rect.h=oo.obj.mod.r[4];
+                        }
                     }
-
-         
-                    //{|type|:|polka1|,|id|:242,|kol|:2}
-                }
-                
+                }                
             }
         }
 
@@ -1657,12 +1673,9 @@ export class HrenNiz {
         var oPlus=new THREE.Vector3(0,0,0); 
         var oPlus1=new THREE.Vector3(0,0,0);       
         if(this.bool3==false){            
-            this.par.aa.unshift("polka");
-
-            for (var i = 0; i < this.arrP1.length; i++) {
-                
+            this.par.aa.unshift("polka");            
+            for (var i = 0; i < this.arrP1.length; i++) {                
                 this.par.aa.splice(1,0,"p1_"+this.arrP1[i]);
-
                 this.aP1.push(new BKHron(this, this.arrP1[i], 1));
             }
 
@@ -2176,6 +2189,20 @@ export class SahSuper {
            
             idR=-1
         }
+        trace("####",ab)
+
+
+        var objbb
+        for (var i = ab.length-1; i >=0; i--) {
+            objbb=this.par.mO.getIdObj(ab[i]);  
+            if(objbb.obj)if(objbb.obj.info)if(objbb.obj.info.text=="NOT USING"){
+                ab.splice(i,1)
+            }
+            trace(i+" ",ab[i],"----",objbb)
+        }
+
+
+
         for (var j = 0; j < ab.length; j++) {
             b=true;
             this.par.aa.push("mod_"+ab[j])
@@ -2585,6 +2612,7 @@ export class PPPObj {
             //this.bool=false;
            
             if(main.glaf.up1==true){//Включена смена 55 up1
+
                 this.up1.init();
             }
             
@@ -2698,8 +2726,8 @@ export class UP1 {
             this.par.o3d.add(this.o3d1);
             this.o3d1.visible=false;
 
-
-            this.par.par.aa.push("mod_55_false")
+            if(this.par.par.mO.getInTEXT(177,"NOT USING")==false)this.par.par.aa.push("mod_55_false")
+            
         }
 
 
@@ -2756,39 +2784,7 @@ export class UP1 {
                 o.rotation.y=-Math.PI/2;               
                 self.par.par.fun("visi3d");                  
                 self.o3d1.add(o); 
-
-
                 self.par.par.recurcChild(o);
-/*
-                let dCont=new DCont(main.contentHTML)
-                dCont.x=400
-                dCont.y=200;
-                this.slid=new DSliderBig(dCont, 2,2, function(s){ 
-                    o.position.x=-self.par.object.obj.mod.r[0]-this.value*1;
-                    self.par.par.fun("visi3d");  
-                }, "x", 0, 5);
-                this.slid.value=self.o178.obj.mod.r[0]*1
-                this.slid.width=200
-
-                this.slid=new DSliderBig(dCont, 2,50, function(s){ 
-                    o.position.y=this.value*1;
-                    self.par.par.fun("visi3d");  
-                }, "y", -5, 5);
-                this.slid.value=self.o178.obj.mod.r[1]*1
-                this.slid.width=200
-                 this.slid=new DSliderBig(dCont, 2,100, function(s){ 
-                    o.position.z=this.value*1;
-                    self.par.par.fun("visi3d");  
-                }, "z", 0, 100);
-                this.slid.value=self.o178.obj.mod.r[2]*1
-                this.slid.width=200;
-
-                this.slid=new DSliderBig(dCont, 2,150, function(s){ 
-                    o.position.z=this.value*1;
-                    self.par.par.fun("visi3d");  
-                }, "z1", 0, 100);
-                this.slid.value=self.o178.obj.mod.r[3]*1
-                this.slid.width=200;*/
             });
 
 
