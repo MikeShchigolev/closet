@@ -53,6 +53,8 @@ function Setings(p, fun) {
 
     var but1=new DButton(this.w.content, array[1].width+array[1].x+10, yy,"<<<<<<<",function(){         
         var o=JSON.parse(input.text)
+        
+
         array[1].text=o.lists[0].id
         main.objectBase.idList=array[1].text;
         main.saveTime()

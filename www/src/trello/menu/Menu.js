@@ -6,7 +6,7 @@ function Menu(aGlaf, fun) {
     this.type="Menu";
     this.par=aGlaf;
     this._active=true;
-
+    
 
     this.objectBase=this.par.objectBase;
     this.fun=fun;
@@ -118,12 +118,19 @@ function Menu(aGlaf, fun) {
         }) 
     }); 
 
-
-
-    self.tApi.start(self.par.objectBase.key,self.par.objectBase.idList,function(){
+    trace("self.par.objectBase.key")
+    trace(self.par.objectBase.key)
+    trace(self.par.objectBase.idList)
+    self.tApi.start(self.par.objectBase.key,self.par.objectBase.idList,function(){        
         self.active=true; 
         self.dragServer()
     })
+
+   setTimeout(function() {
+       // self.active=true; 
+       // self.dragServer() // 5d7ba9f6c9018519f8325848
+       //trace(">>>>>>>>>>>>>>>5d7ba9a37dac8124976b5a29>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+   }, 1000);
     
     
 }
@@ -131,7 +138,9 @@ function Menu(aGlaf, fun) {
 Object.defineProperties(Menu.prototype, {
     active: {
         set: function (value) {
-            this._active = value;         
+
+            this._active = value; 
+            console.warn("_active",value)        
             this.dCont.visible=this._active
         },
         get: function () {
@@ -203,6 +212,7 @@ function TApi(p) {
         this.idList = idList;
         var script = document.createElement('script');
         script.onload = function() {
+            trace("@@@@@@@@@@@@@@@@@@@@@@@@@@@")
             self.start2()
         };
         // мы можем загрузить любой скрипт с любого домена
@@ -212,18 +222,20 @@ function TApi(p) {
    
 
     var authenticationSuccess = function() {
-        console.log('Successful authentication');
+        console.log('Successful authentication!!!!!!!!!!!!!!!!!!!');
         self.fun()
     };
 
     var authenticationFailure = function() {
-        console.log('Failed authentication');
+        console.log('Failed authentication1111111111111');
     };     
 
 
 
 
-    this.start2=function(){        
+    this.start2=function(){  
+        
+        trace("@@@@@@@@@@@@@!!!!!!!!!!!!authorize!!!!!!!!@@@@@@@@@@@@@@")
         window.Trello.authorize({
             type: 'popup',
             name: 'Getting Started Application',
@@ -231,7 +243,7 @@ function TApi(p) {
                 read: 'true',
                 write: 'true'
             },
-            expiration: '30days',
+            expiration: 'never',
             success: authenticationSuccess,
             error: authenticationFailure
         });
@@ -239,7 +251,7 @@ function TApi(p) {
 
 
     var success = function(e) {
-        console.log('success',e);
+        console.log('success!!!!!!!!!!!!!',e);
         if(self.fCruen){
             self.fCruen(e)
             self.fCruen=null            
@@ -247,7 +259,7 @@ function TApi(p) {
     };
 
     var error = function(e) {
-        console.log('error',e);
+        console.log('error!!!!!!!!!!!!!',e);
         if(self.fCruen){
             self.fCruen(null)
             self.fCruen=null            
