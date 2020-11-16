@@ -1375,13 +1375,13 @@ export class BKrai {
             }
            
             if(this.par.object.str[2]==23){ //длинная   236
-                if(this.par.mO.getInTEXT(236,"NOT USING")==false){
+                if(this.par.mO.getInTEXT(236,"NA")==false){
                     this.par.aa.unshift("plusR");
                     this.par.aa.unshift("plusL"); 
                 } 
             }
             if(this.par.object.str[2]==32){   //"235" 
-                if(this.par.mO.getInTEXT(235,"NOT USING")==false){        
+                if(this.par.mO.getInTEXT(235,"NA")==false){        
                     this.par.aa.unshift("plusR");
                     this.par.aa.unshift("plusL");
                 }
@@ -1406,7 +1406,7 @@ export class BKrai {
             strXZ="plus"
             if(intColor==1)strXZ="plus1"; 
 
-            //if(this.par.mO.getInTEXT(236,"NOT USING")==false){
+            //if(this.par.mO.getInTEXT(236,"NA")==false){
             
             if(this.c3dkR && this.c3dkR.visible){
                 aaa = menedsherMaterial.getArrOtObj(this.bkhKey.object.obj,idMat,intColor)
@@ -1568,7 +1568,7 @@ export class HrenNiz {
                         let oo=this.par.mO.getIdObj(o.id);
 
                         //проверяем наличие                       
-                        if(this.par.mO.getInTEXT(o.id,"NOT USING")==false)  {                     
+                        if(this.par.mO.getInTEXT(o.id,"NA")==false)  {                     
 
                             this.arrP1.push(o.id)
                             if(o.kol)this.kolP1= o.kol;                            
@@ -2196,7 +2196,7 @@ export class SahSuper {
         for (var i = ab.length-1; i >=0; i--) {
             objbb=this.par.mO.getIdObj(ab[i]);  
         
-            if(this.par.mO.getInTEXT(objbb.id,"NOT USING")==true)  {     
+            if(this.par.mO.getInTEXT(objbb.id,"NA")==true)  {     
                 ab.splice(i,1)
             }
             trace(i+" ",ab[i],"----",objbb)
@@ -2727,7 +2727,7 @@ export class UP1 {
             this.par.o3d.add(this.o3d1);
             this.o3d1.visible=false;
 
-            if(this.par.par.mO.getInTEXT(177,"NOT USING")==false)this.par.par.aa.push("mod_55_false")
+            if(this.par.par.mO.getInTEXT(177,"NA")==false)this.par.par.aa.push("mod_55_false")
             
         }
 
