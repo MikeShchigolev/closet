@@ -481,12 +481,15 @@ export class Up1Menu  {
                 main.localStorage.object.up1.sahTime--;
                 main.localStorage.save();
                 
-                
+                trace("main.localStorage.object.up1    ===",o.pppObj.up1)
+                let ww=60//+10
+                let xx=115+ww/2+(o.pppObj.up1.aaPosit-2)*ww// o.pppObj.up1.aaPosit*33
+
                 self.par.par.par.mHelp.setHelp(
                     "Выберите нужный вариант установки корзины:\nна раму или на телескопические направляющие.",
                     "resources/image/mhelp.png",
                     this.par.dCont,
-                    {x:260,y:-3}
+                    {x:xx,y:-3}
                 );
                /* self.par.par.par.mHelp.setIframe(
                     main.glaf.up1Obj.link,

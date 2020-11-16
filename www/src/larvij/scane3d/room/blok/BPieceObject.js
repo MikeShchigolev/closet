@@ -2592,6 +2592,7 @@ export class PPPObj {
         this.up1=new UP1(this);      
         
         
+
        
         if(this.par.object.num[3]+""!="0"){ 
             this.bool=true;            
@@ -2717,6 +2718,7 @@ export class UP1 {
 
         this.o3d0=undefined;
         this.o3d1=undefined;
+        this.aaPosit=-1
         this.init=function(){
             
             if(this.o3d0 !=undefined)return;
@@ -2727,7 +2729,10 @@ export class UP1 {
             this.par.o3d.add(this.o3d1);
             this.o3d1.visible=false;
 
-            if(this.par.par.mO.getInTEXT(177,"NA")==false)this.par.par.aa.push("mod_55_false")
+            if(this.par.par.mO.getInTEXT(177,"NA")==false){
+                this.aaPosit=this.par.par.aa.length
+                this.par.par.aa.push("mod_55_false")
+            }
             
         }
 
