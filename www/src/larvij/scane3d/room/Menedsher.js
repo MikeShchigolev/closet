@@ -790,7 +790,9 @@ export class MenedsherObject  {
         var oo
         this.getInTEXT=function(_id,_text){ 
             oo=this.getIdObj(_id)
-            if(oo)if(oo.obj)if(oo.obj.info)if(oo.obj.info.text==_text)return true;
+            if(oo)if(oo.obj)if(oo.obj.info){
+                if(oo.obj.info.text.indexOf(_text)!=-1)return true;
+            }
             return false;
         }
 

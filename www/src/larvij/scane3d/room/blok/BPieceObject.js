@@ -977,6 +977,7 @@ export class BPieceObject extends Blok {
             this.setXYPosit(obj.x,obj.y);             
 
             if(obj.sahSuper!=undefined){
+
                 this.sahSuper.setObj(obj.sahSuper)
             }            
 
@@ -1566,9 +1567,8 @@ export class HrenNiz {
                     if(o.type && o.type=="polka1" && o.id) {
                         let oo=this.par.mO.getIdObj(o.id);
 
-                        //проверяем наличие
-                        if(o.obj)if(o.obj.info)if(o.obj.info.text!="NOT USING"){
-                                               
+                        //проверяем наличие                       
+                        if(this.par.mO.getInTEXT(o.id,"NOT USING")==false)  {                     
 
                             this.arrP1.push(o.id)
                             if(o.kol)this.kolP1= o.kol;                            
@@ -2195,7 +2195,8 @@ export class SahSuper {
         var objbb
         for (var i = ab.length-1; i >=0; i--) {
             objbb=this.par.mO.getIdObj(ab[i]);  
-            if(objbb.obj)if(objbb.obj.info)if(objbb.obj.info.text=="NOT USING"){
+        
+            if(this.par.mO.getInTEXT(objbb.id,"NOT USING")==true)  {     
                 ab.splice(i,1)
             }
             trace(i+" ",ab[i],"----",objbb)
