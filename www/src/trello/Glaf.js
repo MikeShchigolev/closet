@@ -41,7 +41,8 @@ function Glaf(main) {
 	this.dCont=new DCont(main.contentHTML);
 
 
-    this.init=function(){        
+    this.init=function(){ 
+        trace("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");       
         this.menu=new Menu(this, function(s, p){
             
             

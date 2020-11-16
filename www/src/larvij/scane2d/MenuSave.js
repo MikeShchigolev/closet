@@ -251,7 +251,7 @@ export function MenuSave (par) {
             this.arrComp[2].colorText1=dcmParam.colorText1
         }
 
-        if(this.arrComp[3].value=="Коментарии"){
+        if(this.arrComp[3].value=="Комментарии"){
             this.arrComp[3].colorText1=this.colorStart
         }else{            
             this.arrComp[3].colorText1=dcmParam.colorText1;
@@ -316,7 +316,7 @@ export function MenuSave (par) {
     yy+=sss;*/
 
 
-    this.arrComp[this.arrComp.length]=new DTextArea(this.window.content,this.otstup2,yy,"Коментарии",function(){
+    this.arrComp[this.arrComp.length]=new DTextArea(this.window.content,this.otstup2,yy,"Комментарии",function(){
 
         self.dragForm() 
     })
@@ -324,7 +324,7 @@ export function MenuSave (par) {
 
     
     this.arrComp[this.arrComp.length-1].width=this.window.width-this.otstup2*2-35+5;
-    dcmParam.styleInput(this.arrComp[this.arrComp.length-1],"Коментарии", this.hh, this.fs)
+    dcmParam.styleInput(this.arrComp[this.arrComp.length-1],"Комментарии", this.hh, this.fs)
     this.arrComp[this.arrComp.length-1].height=100;    
     yy+=120;
 
@@ -334,7 +334,7 @@ export function MenuSave (par) {
         this.arrComp[0].text="Имя*";
         this.arrComp[1].text="Телефон*";
         this.arrComp[2].text="e-mail*";
-        this.arrComp[3].text="Коментарии";
+        this.arrComp[3].text="Комментарии";
     }
 
 
@@ -816,7 +816,7 @@ export function Otprovlashka (par, cont) {
     this.finish=function(){        
         aGlaf.par.fun("creatLarvij",self.par.idSave);
         self.par.active=false;        
-        self.par.par.mInfo.setFun("ЗАКАЗ ОФОРМЛЕН","В ближайшее время наш менеджер свяжеться с Вами для подтверждения заказа.");
+        self.par.par.mInfo.setFun("ЗАКАЗ ОФОРМЛЕН","В ближайшее время наш менеджер свяжется с Вами для подтверждения заказа.");
     }
 
 
@@ -831,7 +831,7 @@ export function Otprovlashka (par, cont) {
         var r="Здравствуйте, "+this.par.arrComp[0].text+"!\n";
         r+="Телефон: "+this.par.arrComp[1].text+"\n";
         r+=this.par.arrComp[2].text+"\n";
-        r+="Коментарии: "+this.par.arrComp[3].text+"\n";
+        r+="Комментарии: "+this.par.arrComp[3].text+"\n";
         r+="Доставка: "+this.par.dostavka+"\n\n";
       
 
@@ -848,7 +848,7 @@ export function Otprovlashka (par, cont) {
         if(dcmParam.tCInfa.getText(8)!="null")r+=dcmParam.tCInfa.getText(8)+"\n\n";
         
         r+="Благодарим Вас за выбор гардеробной системы Ларвидж.\n";
-        r+="Уверены, что простота в обращении, надежность и удобство гардеробной Ларвидж будут\n";
+        r+="Уверены, что простота в обращении, надежность и удобство гардеробной Ларвидж будут ";
         r+="радовать Вас долгие годы.\n\n";
 
         r+=dcmParam.tCInfa.getText(3)+"\n";

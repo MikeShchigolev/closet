@@ -360,7 +360,7 @@ export class Mani  {
         var bbI, aa
         var lll
         this.dragPArr2=function(){ 
-                      
+             
             arrP2=[]   
             this.mass=0;
             this.volume=0;      

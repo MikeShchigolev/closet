@@ -787,7 +787,14 @@ export class MenedsherObject  {
             return null;
         }
 
-
+        var oo
+        this.getInTEXT=function(_id,_text){ 
+            oo=this.getIdObj(_id)
+            if(oo)if(oo.obj)if(oo.obj.info){
+                if(oo.obj.info.text.indexOf(_text)!=-1)return true;
+            }
+            return false;
+        }
 
 
         this.getIdObj=function(id){           
