@@ -171,17 +171,9 @@ export class PlusMM  {
 
                 if(this.array[p].link=="resources/image/w2.png"){//save
 
-                    self.par.par.mInfo.setFun("ПИСЬМО ОТПРАВЛЕННО.", "Письмо было отправелнено на Ваш эмеил, но могло попасть в спам!",function(){},true)
+                    self.par.par.mInfo.setFun("ПРОЕКТ ОТПРАВЛЕН", "Ссылка на ваш проект отправлена на имейл. Если письмо не пришло, проверьте папку Спам.",function(){},true)
                                
-                   /* self.par.par.menuSave.getNewProd(function(str){
-                        self.par.par.mInfo.setFunSave(str,
-                            function(s){              
-                                self.par.par.menuSave.setMail(this.text, function(){
-                                    self.par.par.mInfo.setFun("ПИСЬМО ОТПРАВЛЕННО.", "Письмо было отправелнено на Ваш эмеил, но могло попасть в спам!",function(){},true)
-                                });
-                            }
-                        );
-                    })*/ 
+                    
                 }  
                
                 if(this.array[p].link=="resources/image/w0.png"){//новый проект

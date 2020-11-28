@@ -168,7 +168,7 @@ export function MenuSave (par) {
     this.panel.alpha=0.85
     this.panel.color1="#000000"
 
-    this.window=new DWindowS(this.dCont,0,0,"ОФОРМЛЕНИЕ ЗАКАЗА.",function(){
+    this.window=new DWindowS(this.dCont,0,0,"ОФОРМЛЕНИЕ ЗАКАЗА",function(){
         self.active=false;
     },'resources/image/kross.png')
     this.window.panel1.visible=false

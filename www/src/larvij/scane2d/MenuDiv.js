@@ -510,7 +510,8 @@ export class Mani  {
             new BlaHreniZboku(108),
             new BlaHreniZboku(109),
             new BHZ2(178,4),
-            new BHZ2(177,2)
+            new BHZ2(177,2),
+            new BHZ2(187,6)
         ]
 
         //this.bhp108= new BlaHreniZboku(108)
