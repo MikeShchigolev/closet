@@ -262,7 +262,7 @@ export class BPieceObject extends Blok {
                                 /*for (var j = 0; j < bxx.bpt.visiNisu.array.length; j++) { 
                                     
                                     if(bxx.bpt.visiNisu.array[j].visible==false ||bxx.bpt.visiNisu.array[j].height<=0)continue;
-                                    trace(j+">>>",bxx.bpt.visiNisu.array[j].height)
+                   
                                     xx1=bxx.bpt.visiNisu.array[j]._x;
 
                                     if(xx>xx1-xxr && xx<xx1+xxr){                                        
@@ -708,7 +708,7 @@ export class BPieceObject extends Blok {
 
         this.aaSob=function(s,p){
             var r=false
-            trace(s,p)
+           
             if(s=="clear"){
                 self.mO.par.clear(self);
                 self.clear();
@@ -1426,7 +1426,7 @@ export class BKrai {
                 aaa[9]=this.bkhKey.object.obj.id;
                 aaa[8]=this.bkhKey.object.obj;
                 a.push(aaa);
-                 trace(aaa,">>>>c3dkL>>>>>",a)
+                
             }
 
             if(this._intSah!=-1){
@@ -1787,6 +1787,8 @@ export class HrenNiz {
             if(this._intSah1!=-1){
                 if(this._intSah1==0){
                     if(this.arrHron[1]){
+
+                        
                         mesh=this.arrHron[1].get();
                         mesh.position.x=+this.www/2 +this.otstup;
                         mesh.scale.x=-1
@@ -1920,10 +1922,10 @@ export class HrenNiz {
                         /*aaa[5]=1
                         aaa[6]=0*/
                         a.push(aaa);
-                        //trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",aaa)
-                        //trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",a)
+                       
+                       
                         /*if(self.aP1[i].obj3d!=undefined){                            
-                            trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",self.aP1[i].obj3d)
+                           
                            
                             let sah=(self.par.object.mod.r[3]/(self.kolP1+1))                            
                             for (var j = 0; j < self.kolP1; j++) {
@@ -1942,6 +1944,7 @@ export class HrenNiz {
             }     
 
 
+            
 
             if(this._polka==false)return
             strXZ="plus"
@@ -1950,13 +1953,13 @@ export class HrenNiz {
                
             //висяшки первая
             //aaa=[]
-          
+            
             if(self.bool3==false && this.arrHron[2]){ 
                 aaa = menedsherMaterial.getArrOtObj(this.arrHron[2].object.obj, idMat, intColor)  
                 //this.parsArr(this.arrHron[2].object.obj[strXZ], aaa)           
                 aaa[9]=this.arrHron[2].object.obj.id;
                 aaa[8]=this.arrHron[2].object.obj;
-                //a.push(aaa)
+                a.push(aaa)
             }
                
             
@@ -1966,14 +1969,15 @@ export class HrenNiz {
                     aaa1=[]                 
                     aaa1 = menedsherMaterial.getArrOtObj(this.arrHron[2].object.obj, idMat, intColor)  
                     //this.parsArr(aaa, aaa1) 
+
                     aaa1[9]=this.arrHron[2].object.obj.id;
                     aaa1[8]=this.arrHron[2].object.obj;
-                    //a.push(aaa1);
+                    a.push(aaa1);
                 }
 
                          
             }
-
+            
             var p=-1;
             for (var i = this.arrTrub.length-1; i >=0; i--) {
                 if(ww<this.arrTrub[i].obj.num[0]/10){                    
@@ -1989,7 +1993,9 @@ export class HrenNiz {
             }
 
             if(this._intSah==0){
+                
                 aaa = menedsherMaterial.getArrOtObj(this.arrHron[1].object.obj, idMat, intColor) 
+                
                 aaa[9]=this.arrHron[1].object.obj.id;
                 aaa[8]=this.arrHron[1].object.obj;
                 a.push(aaa)               
@@ -2097,7 +2103,7 @@ export class HrenNiz {
                 this.par.ySMin=this.ySMin;    
             }            
         }
-        trace("this._polka1  ",this._polka1)       
+     
 
 
         
@@ -2189,7 +2195,7 @@ export class SahSuper {
            
             idR=-1
         }
-        trace("####",ab)
+   
 
 
         var objbb
@@ -2199,7 +2205,7 @@ export class SahSuper {
             if(this.par.mO.getInTEXT(objbb.id,"NA")==true)  {     
                 ab.splice(i,1)
             }
-            trace(i+" ",ab[i],"----",objbb)
+            
         }
 
 

@@ -397,14 +397,14 @@ export class DHelpxz extends DCont {
         this._boolLine=dcmParam._boolLine;
 
         this._fontFamily=dcmParam._fontFamily;
-        this._borderRadius=0;
+        this._borderRadius=10;
 
         this._boolNiz=false;
 
 
 
         this.panel=new DPanel(this.dCont)
-        this.panel.div.style.borderRadius=this._borderRadius+"px";
+        this.panel.borderRadius=this._borderRadius;
         this.panel.color1=this._color; 
 
         this.label=new DLabel(this.dCont);

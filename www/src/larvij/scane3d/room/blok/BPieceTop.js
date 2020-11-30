@@ -1269,17 +1269,19 @@ export class VisiNisu {
             if(_obj){
                 let w=0;
                 if(_obj.boxColizi.rectCollisMeshdy.width<15)w=-15
-               
-                if(_obj.isBoxParent({
-                    x:_obj.boxColizi.rectCollisMeshdy.x+w,
-                    w:_obj.boxColizi.rectCollisMeshdy.width-w*2,
-                    h:yy
-                },[_obj.idArr],null) !=null){                    
-                    return {xz:"xz"}; 
-                    
-                   // return 1;
+                if(_obj.polka==false){
+                    if(_obj.isBoxParent({
+                        x:_obj.boxColizi.rectCollisMeshdy.x+w,
+                        w:_obj.boxColizi.rectCollisMeshdy.width-w*2,
+                        h:yy
+                    },[_obj.idArr],null) !=null){                    
+                        return {xz:"xz"}; 
+                        
+                       // return 1;
+                    } 
                 }
-            }
+                
+            }/**/
 
             return null;
         }
