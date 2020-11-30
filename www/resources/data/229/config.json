@@ -2,7 +2,7 @@
     "id": 229,
     "title": 229,
     "key": "o_229",
-    "orig": "xz.png",
+    "orig": "melkoset_korz_samll.png",
     "mod": {
         "key": "glb",
         "name": "korz_m_2.glb",
@@ -55,8 +55,8 @@
     "bagY": 0,
     "plus": [
         "0",
-        "0",
-        "0",
+        "Мелкосет. корзина",
+        "",
         "0",
         "0"
     ],

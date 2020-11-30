@@ -2,7 +2,7 @@
     "id": 254,
     "title": 254,
     "key": "o_254",
-    "orig": "xz.png",
+    "orig": "melkos_korz.png",
     "mod": {
         "key": "glb",
         "name": "melkaya_setka_glub.glb",
@@ -55,8 +55,8 @@
     "bagY": 0,
     "plus": [
         "0",
-        "0",
-        "0",
+        "Мелкосет. корзина",
+        "",
         "0",
         "0"
     ],
