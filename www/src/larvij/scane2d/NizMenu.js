@@ -44,6 +44,7 @@ export class NizMenu  {
         this.fotoMenu=new FotoMenu(this);//принскрин сохронялки
 
         
+        
 
         this.object=undefined;
 
