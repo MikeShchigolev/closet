@@ -38,10 +38,10 @@ export class BPieceTop extends Blok {
         this.visiBPT=new VisiBPT(this);//верхушка
         this.visiNisu=new VisiNisu(this);//расчет драгеров
         this.bptColiz=new BPTColiz(this); //Дополнителдьные колизии       
+        this.korekt=new Korekt(this); //Проверяет полку на баги в ней)))   
 
 
-
-       /* let aa=new THREE.AxesHelper(100);
+        /*let aa=new THREE.AxesHelper(100);
         this.content3d.add(aa);*/
         
         this.funInit=function(){            
@@ -180,9 +180,12 @@ export class BPieceTop extends Blok {
               
             if(this.parent==undefined){
                 if(this.boolOTS==true)if(this.objts)if(this.objts.parent){
-                    this.objts.parent.add(this)                   
+                    this.objts.parent.add(this)   
+
                     this.setXYPosit(this.objts.x,this.objts.y);
+                    
                     this.drahShadow()
+                    //this.korekt.start()
                     this.fun("visi3d");
                     return;
                 }
@@ -224,10 +227,7 @@ export class BPieceTop extends Blok {
 
             for (var i = 0; i < this.visiNisu.array.length; i++) {
                 this.visiNisu.array[i].x=0
-            }   
-
-
-                                  
+            }                     
         };
         
 
@@ -272,12 +272,17 @@ export class BPieceTop extends Blok {
             this.testWWWW();
             this.dVertic();
             this.visiNisu.sort(); 
-            this.mO.dragPriceScane();
+            
             if(this.mO.activIndex==this.idArr) {
                 this.mO._activIndex=-1;
                 this.mO.activIndex=this.idArr
             } 
             this.dragCildren();
+            this.korekt.start()
+            /*setTimeout(function() {
+                self.korekt.start()
+            }, 10);*/
+            this.mO.dragPriceScane();
             this.fun("visi3d");         
         }
 
@@ -839,7 +844,8 @@ export class VisiNisu {
         var ssss=0
         var mmm=8888
         var mmmXX=8888
-        this.sortMini=function(){            
+        this.sortMini=function(){ 
+                    
             mmmXX=8888
             if(this.array[0])if(this.array[0].visible==true){
                 mmmXX =this.par.visiBPT._width/2+this.array[0].x;       
@@ -2078,6 +2084,11 @@ export class VisiBPT {
         this.par.c3dNa.add(this.cont3d);
         this.content3d=new THREE.Object3D();
         this.cont3d.add(this.content3d)
+
+     /*   let aa=new THREE.AxesHelper(100);
+        this.content3d.add(aa);*/
+
+
         this.material=undefined
         this.arrImage=[];
         this.content=new PIXI.Container();
@@ -2255,13 +2266,14 @@ export class VisiBPT {
             //this.content3d.scale.x=0.1
             this.dragCont(); 
 
-               
+           
         } 
 
 
         this.zdvigX=function(mmmXX) {                   
             self.cont3d.position.x=mmmXX;
             self.contMin.position.x=mmmXX;
+            
         }
 
 
@@ -2374,3 +2386,80 @@ export class VisiBPT {
     }   
     get width() { return  this._width;}
 }
+
+
+export class Korekt {
+    constructor(par) {  
+        this.type = "Korekt";
+        var self=this;
+        this._width=100;
+        this.par=par;
+
+        this.start=function(){
+            
+            this.startPolki()
+        }
+
+
+        var arrPoz=[];
+        this.startPolki=function(){
+            
+            arrPoz.length=0;
+
+            for (var i = 0; i < this.par.children.length; i++) {
+                arrPoz.push({
+                    x:Math.round(this.par.children[i].boxColizi.rectCollisMeshdy.x),
+                    y:this.par.children[i].boxColizi.rectCollisMeshdy.y+this.par.children[i].boxColizi.rectCollisMeshdy.height}
+                )
+                arrPoz.push({
+                    x:Math.round(this.par.children[i].boxColizi.rectCollisMeshdy.x+this.par.children[i].boxColizi.rectCollisMeshdy.width),
+                    y:this.par.children[i].boxColizi.rectCollisMeshdy.y+this.par.children[i].boxColizi.rectCollisMeshdy.height}
+                )
+            }   
+            arrPoz.sort(function(a,b){
+                return a.x-b.x
+            })
+
+            for (var i = arrPoz.length-1; i >=0; i--) {
+                if(arrPoz[i+1])if(arrPoz[i+1].x==arrPoz[i].x){
+                    if(arrPoz[i+1].y>arrPoz[i].y)arrPoz.splice(i+1,1)
+                    else arrPoz.splice(i,1)
+                    
+                }
+            } 
+
+     
+
+            var bb, vh
+            for (var j = 0; j < arrPoz.length; j++) {
+                bb=-1;
+                for (var i = 0; i < this.par.visiNisu.array.length; i++) {
+                    if(arrPoz[j].x==this.par.visiNisu.array[i].x){
+                        if(this.par.visiNisu.array[i].visible==true){
+                            bb=i
+                        }                        
+                    }
+                }
+
+                if(bb==-1){
+                    vh=this.par.visiNisu.creat(arrPoz[j].x);
+                }else{
+                    vh=this.par.visiNisu.array[bb]
+                }
+                vh.height=-arrPoz[j].y
+               
+            }
+
+            this.par.visiBPT.content3d.position.x=arrPoz[0].x
+
+            //this.par.visiBPT.draw()
+          
+
+        }
+
+
+
+        //if(this.visiNisu.array[0]!=undefined){
+    }
+}
+

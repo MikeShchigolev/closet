@@ -452,7 +452,9 @@ export class BPieceObject extends Blok {
                         aS.add(blok, false); 
                         blok.stopDrag();
                         blok.dragCildren()
+                        
                         blok.visiNisu.sort();
+                        blok.korekt.start()
                     }    
                 }else{
                     this.parent.visiNisu.sort();
@@ -763,15 +765,33 @@ export class BPieceObject extends Blok {
 
                 
                 //if(s==true){
-                    self._polka=true
-                    self.polka=false
-                    self.hrenNiz._polka=true;
-                    self.hrenNiz.polka=false;
+                
+                let xx=null
+                let xx1=null
+                if(self._polka==true){
+                    xx=self.xz
+                    xx1=self.xz1
+                }
+
+                self._polka=true
+                self.polka=false
+                self.hrenNiz._polka=true;
+                self.hrenNiz.polka=false;
+
                 //}
                 self.hrenNiz.polka1=s;
                 self.dragRect();
                 self.testKorektActiv();
-                self.mO.dragPriceScane()
+                self.mO.dragPriceScane();
+
+               
+                if(xx!=null){
+                    xx.hrenNiz.intSah1=0                   
+                }
+                if(xx1!=null){
+                    xx1.hrenNiz.intSah=0                   
+                }  
+
                 return false
             }
 
@@ -1235,7 +1255,7 @@ export class BKrai {
                 self.c3dkL.rotation.x=Math.PI/2;
 
                 var omb, o
-                var mark=self.par.markers
+                var mark=self.par.markers;
                 for (var i = m.children[0].children.length-1; i >=0 ; i--) {                    
                     if(m.children[0].children[i].name.indexOf("marker")!=-1){                        
                         o = self.par.mO.getRendomID("tit12");                        
@@ -1261,7 +1281,6 @@ export class BKrai {
                 self.c3dkR.position.z=self.par.object.mod.r[4]/2;
                 self.c3dkR.rotation.z=-Math.PI/2;
                 self.c3dkR.rotation.x=Math.PI/2;
-
 
                 for (var i = m.children[0].children.length-1; i >=0 ; i--) {                    
                     if(m.children[0].children[i].name.indexOf("marker")!=-1){                        
@@ -1612,6 +1631,7 @@ export class HrenNiz {
         this.ySMin=0;
         this.arrHron=[];
         this.arrMark=undefined;
+        this.arrMark1=undefined;
 
         this.bool3=false;
         if(this.par.object.num[2]==1)this.bool3=true;
@@ -1841,11 +1861,11 @@ export class HrenNiz {
                 }
             }
 
-
-            self.initMark();
+            self.initMark()
+            self.initMark1();
             self.par.fun("visi3d");
 
-            
+             
         }
 
 
@@ -1853,6 +1873,16 @@ export class HrenNiz {
             if(this.arrMark==undefined)return; 
             for (var i = 0; i < this.arrMark.length; i++) {
                 this.arrMark[i].c2.visible=this._polka
+            }
+        }
+
+        this.dragMark1=function(){
+            if(this.arrMark1==undefined)return; 
+            for (var i = 0; i < this.arrMark1.length; i++) {
+                if(this._polka1=="null" )this.arrMark1[i].c2.visible=false
+                else this.arrMark1[i].c2.visible=true
+
+                
             }
         }
 
@@ -1891,6 +1921,65 @@ export class HrenNiz {
                 } 
             }
         }
+
+
+        this.initMark1=function(){
+            if(this.arrMark1!=undefined)return;
+            if(this._polka1=="null" ) return;
+
+            this.arrMark1=[];
+            var mark=this.par.markers;
+            var otSah=self.par.object.mod.r[0]+2;
+            var omb;
+            //var o=this.par.mO.getRendomID("tit3");
+
+            var o=this.par.mO.getIdObj(122)
+           /* for (var i = 0; i < 92; i++) {                
+                if(o!=null){
+
+                    omb=mark.getO3D(o);
+                    this.arrMark.push(omb); 
+                    let z=o.obj.mod.r[4]+this.object.obj.mod.r[1]-this.arrHron[0].object.obj.mod.r[5]/2-1+o.obj.mod.r[1]
+                    let y= this.object.obj.mod.r[2]+this.arrHron[0].object.obj.mod.r[5]/2+ o.obj.mod.r[5]/2+o.obj.mod.r[2];
+                    if(this.bool3==true) {
+                        z=o.obj.mod.r[4]-2-oPlus1.z 
+                        y=this.content3d.position.z-3-oPlus1.y 
+                    } 
+
+                    omb.setPRS({
+                        x:otSah-o.obj.mod.r[0],
+                        y:y,
+                        z:z
+                    });
+                    otSah+=o.obj.mod.r[3]+2;
+                }
+                o = this.par.mO.getRendomID("tit3"); 
+                if(otSah+o.obj.mod.r[3] > self.par.object.mod.r[3]+self.par.object.mod.r[0]-4) {
+                    break;
+                } 
+
+            }*/
+            if(o!==null){
+                let z=o.obj.mod.r[4]+this.object.obj.mod.r[1]-this.arrHron[0].object.obj.mod.r[5]/2-1+o.obj.mod.r[1]+3.8
+                omb=mark.getO3D(o);
+                omb.setPRS({
+                    x:2,
+                    y:15,
+                    z:z
+                });
+                omb.c2.rotation.z=-1
+                this.arrMark1.push(omb); 
+
+                trace("%%%%%%%%%%%%%%%%%%%%%%%");
+
+            }
+            
+
+
+        }
+
+
+
 
 
         var sto
@@ -2082,7 +2171,8 @@ export class HrenNiz {
                 this.par.yF=this.par.krai.yF;
                 this.par.ySMin=this.par.krai.ySMin;   
             } 
-            this.dragMark();            
+            this.dragMark();
+            this.dragMark1();            
         }       
     }   
     get polka() { return  this._polka;}
@@ -2106,8 +2196,8 @@ export class HrenNiz {
      
 
 
-        
-        this.dragMark(); 
+        this.dragMark();
+        this.dragMark1(); 
                                     
            
     }   

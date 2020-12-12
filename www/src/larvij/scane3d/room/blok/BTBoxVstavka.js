@@ -72,15 +72,19 @@ export class BTBoxVstavka extends Blok {
         
         var b
         this.setXY=function(_x,_y){             
-            b=this.testTumb(_x,_y);            
+            b=this.testTumb(_x,_y);  
+                     
             if(b==true){
+
                 if(mO.btBoxDin.parent!=undefined){                    
                     if(mO.btBoxDin.idRandom!=this.parent.idRandom){
                         mO.btBoxDin.parent.remove(mO.btBoxDin)
-                    }else{                        
+                    }else{ 
+                                             
                         mO.btBoxDin.setXY(_x,_y);
                     }                   
-                }
+                } 
+
                 this.drahShadow()
                 if(this._parent)this._parent.changeMarkers();  
                 return
@@ -105,6 +109,7 @@ export class BTBoxVstavka extends Blok {
         this.yMP1=0
         this.omb=undefined
         this.funInitMod = function(){
+
             this.creadDebag(self.cont3dLoad.children[0]);
             visi3D.objShadow(self.cont3dLoad, true)            
             self.boolLoad=true;
@@ -139,12 +144,14 @@ export class BTBoxVstavka extends Blok {
             if(this.id==225){
                 zz-=4
             }
-
+            var zzzzz=0
+            if(this.object.bagY)zzzzz=this.object.bagY
+            
 
             omb.setPRS({
                 x:0,
                 y:yy,
-                z:zz
+                z:zz+zzzzz
             });
             this.omb=omb;
 
@@ -188,9 +195,6 @@ export class BTBoxVstavka extends Blok {
                 this.boxColizi.x=-t/2;/*//*/
         
 
-                //this.boxColizi.sy=-10;
-                //this.boxColizi.y=-10;
-                //this.boxColizi.rectCollisMeshdy.y=-10;
             }
             self.dragObjNWD();
             if(self.activTime==true){
@@ -262,10 +266,11 @@ export class BTBoxVstavka extends Blok {
         this.dragImeag=function(){self.drahShadow()}
         //есть ли возможность вписаться в тумбочку
         //если есть то вписываем возврат да
-        var rcm, b
+        var rcm, b;
         this.testTumb = function(_x,_y){
             if(mO.par.sten)this.collision=mO.par.sten.collision
             else this.collision= undefined 
+              
             if(this.collision!=undefined){
                 for (var i = 0; i < this.collision.arrRect.length; i++) {                   
                     if(this.collision.arrRect[i].parent){
@@ -274,7 +279,8 @@ export class BTBoxVstavka extends Blok {
                             if(_x>rcm.x){
                                 if(_x<rcm.x+rcm.width){
                                     if(_y>rcm.y){
-                                        if(_y<rcm.y+rcm.height){                                            
+                                        if(_y<rcm.y+rcm.height){                                             
+                                            if(_y<this.boxColizi.rectCollisMeshdy.height+10)_y=this.boxColizi.rectCollisMeshdy.height+10 
                                             b=this.testTumb1(_x, _y, this.collision.arrRect[i])                                            
                                             return b;
                                         }
@@ -388,7 +394,7 @@ export class BTBoxVstavka extends Blok {
             aS=mO.par.sten;
 
             //проверяем возможность но постоновку дебага
-            
+            trace("######",_x,_y);
             p=mO.par.getPNa();
             if(p==null)return
             else{
@@ -911,8 +917,21 @@ export class BVPlus {
                 let aa=menedsherMaterial.getArrOtObj(self.hron.object.obj,idMat,intColor);                 
                 if(aa!=null){
                     
-                    let aaaa=[]                   
-                    for (var ii = 0; ii < 2; ii++) {
+                    let aaaa=[] 
+                    for (var ii = 0; ii < 1; ii++) {
+                        let ad=[];                         
+                        for (var j = 0; j < aa.length; j++) {
+                            ad[j]=aa[j];                                
+                        }
+                        ad[6]="BTboxDin_BVPlus";
+                        ad[8]=self.hron.object.obj;
+                        ad[9]=self.hron.object.obj.id;
+                        ad[10]=1;
+                        ad[11]=aa[3]*1;
+                        aaaa.push(ad); 
+                    }
+
+                   /* for (var ii = 0; ii < 2; ii++) {
                         let ad=[];                         
                         for (var j = 0; j < aa.length; j++) {
                             ad[j]=aa[j];                                
@@ -936,7 +955,7 @@ export class BVPlus {
                         ad[10]=1;
                         ad[11]=aa[3]*1;
                         aaaa.push(ad); 
-                    }
+                    }*/
 
                     return aaaa;               
                 }
