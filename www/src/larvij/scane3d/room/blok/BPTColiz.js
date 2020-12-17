@@ -176,11 +176,15 @@ export class BPTColiz{
             _p1.x=x-this.par.visiBPT._width/2
             _p.y=y;
             _p1.y=y;  
-            pointPoisk=null              
+            
+            pointPoisk=null;
+            this.par.boolDragLip=false              
             for (var i = 0; i < this.par.parent.children.length; i++) {
                 if(this.par.parent.children[i].type=="BPieceTop"){
+                    
                     if(this.par.parent.children[i].idRandom!=this.par.idRandom){                  
-                        this.par.boolDragLip=true  
+                        this.par.boolDragLip=true
+                         
                         _p3.x=this.par.parent.children[i].x-this.par.parent.children[i].visiBPT._width/2;                        
                         _p3.y=this.par.parent.children[i].y;   
 

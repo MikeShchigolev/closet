@@ -185,15 +185,17 @@ export class BPieceObject extends Blok {
                // _x= _xxxx-Math.random()-0.5                
             }
              
-
+           
             b=this.testObject(_x,_y);  
-                 
+               
             if(b==false){
+              
                 if(this.parent!=undefined){
                     if(this.bSort==true){
                         this.bSort=false
                         this.parent.visiNisu.sort(); 
-                    }                    
+                    } 
+
                     this.parent.visiNisu.sortMini(); 
                     this.parent.parent.upDateRect();                   
                 }  
@@ -201,7 +203,7 @@ export class BPieceObject extends Blok {
                 return;
             }
             else{
-
+               
                 this.dragXZ(_x,_y);
                 if(this.parent!=undefined){
                     if(this.parent.parent!=undefined){                      
@@ -211,6 +213,7 @@ export class BPieceObject extends Blok {
                 this.drahShadow();
                 return;
             }
+           
             this.boxColizi.position._x = _x;
             this.boxColizi.position.y = _y;            
             if(this.bundefined){
@@ -504,11 +507,11 @@ export class BPieceObject extends Blok {
 
             aS=mO.par.sten;
             //return true
-            
+           
             if(this.bds==true){                
                 if(this.parent!=undefined){                 
                     popo=this.testObject2(_x,_y)
-                  
+                    
                     vb=false; 
                     
                     if(popo==null){
@@ -558,9 +561,10 @@ export class BPieceObject extends Blok {
                     }
                     return vb                  
                 }
-            }else{
+            }else{                
                 if(this.parent!=undefined){                    
                     if(mO.pieceTop.idRandom==this.parent.idRandom){
+                       
                         if(this.parent.boolDragLip==true){
                             
                             popo=this.testObject2(_x,_y)
@@ -1970,7 +1974,7 @@ export class HrenNiz {
                 omb.c2.rotation.z=-1
                 this.arrMark1.push(omb); 
 
-                trace("%%%%%%%%%%%%%%%%%%%%%%%");
+               
 
             }
             

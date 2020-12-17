@@ -605,11 +605,19 @@ export class Menedsher  {
             }, 1000);
         }
 
+        
+
 
         this.sobKey = function(tip,e,arrNa){ 
+
+            //self.object
             
             this.menedsherObject.sobKey(tip,e,arrNa);
+            
+
         } 
+
+
     }
 
     set materialBase(v) {

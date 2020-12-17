@@ -2085,7 +2085,7 @@ export class VisiBPT {
         this.content3d=new THREE.Object3D();
         this.cont3d.add(this.content3d)
 
-     /*   let aa=new THREE.AxesHelper(100);
+        /*let aa=new THREE.AxesHelper(100);
         this.content3d.add(aa);*/
 
 
@@ -2400,9 +2400,11 @@ export class Korekt {
             this.startPolki()
         }
 
-
+        var xm=0;
+        var xm1=0;
+        var xw=0;
         var arrPoz=[];
-        this.startPolki=function(){
+        this.startPolki=function(b){
             
             arrPoz.length=0;
 
@@ -2419,12 +2421,26 @@ export class Korekt {
             arrPoz.sort(function(a,b){
                 return a.x-b.x
             })
+            xm=arrPoz[0].x;
+            xm1=arrPoz[arrPoz.length-1].x;
+            xw=xm1-xm
+            trace("@@@@@@@@@",xm,xm1,xw,(-xw/2));
+            
+            if(b===undefined && xm!=-xw/2){
+                trace("@@@@@@@@@@ бля не равны  @@@@@@@@@@@@");
+                this.par.visiNisu.sortFalse()
+                this.par.visiNisu.testPustotu()// sortFalse
+
+
+                this.startPolki(true)
+                return
+            }
+
 
             for (var i = arrPoz.length-1; i >=0; i--) {
                 if(arrPoz[i+1])if(arrPoz[i+1].x==arrPoz[i].x){
                     if(arrPoz[i+1].y>arrPoz[i].y)arrPoz.splice(i+1,1)
-                    else arrPoz.splice(i,1)
-                    
+                    else arrPoz.splice(i,1)                    
                 }
             } 
 
@@ -2446,11 +2462,12 @@ export class Korekt {
                 }else{
                     vh=this.par.visiNisu.array[bb]
                 }
-                vh.height=-arrPoz[j].y
-               
+                vh.height=-arrPoz[j].y               
             }
 
             this.par.visiBPT.content3d.position.x=arrPoz[0].x
+            this.par.visiBPT.dragCont()
+            trace("@@@@@@@@@",arrPoz[0].x);
 
             //this.par.visiBPT.draw()
           
