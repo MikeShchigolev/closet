@@ -41,7 +41,7 @@ export class BPieceTop extends Blok {
         this.korekt=new Korekt(this); //Проверяет полку на баги в ней)))   
 
 
-        /*let aa=new THREE.AxesHelper(100);
+       /* let aa=new THREE.AxesHelper(100);
         this.content3d.add(aa);*/
         
         this.funInit=function(){            
@@ -2424,17 +2424,9 @@ export class Korekt {
             xm=arrPoz[0].x;
             xm1=arrPoz[arrPoz.length-1].x;
             xw=xm1-xm
-            trace("@@@@@@@@@",xm,xm1,xw,(-xw/2));
+           // console.warn("@@@@@@@@@",xm,xm1,xw,(-xw/2));
             
-            if(b===undefined && xm!=-xw/2){
-                trace("@@@@@@@@@@ бля не равны  @@@@@@@@@@@@");
-                this.par.visiNisu.sortFalse()
-                this.par.visiNisu.testPustotu()// sortFalse
-
-
-                this.startPolki(true)
-                return
-            }
+           
 
 
             for (var i = arrPoz.length-1; i >=0; i--) {
@@ -2467,12 +2459,37 @@ export class Korekt {
 
             this.par.visiBPT.content3d.position.x=arrPoz[0].x
             this.par.visiBPT.dragCont()
-            trace("@@@@@@@@@",arrPoz[0].x);
+          
 
-            //this.par.visiBPT.draw()
+
+             if(b===undefined && xm!=-xw/2){
+               
+                this.par.visiNisu.sort()
+               // this.par.visiNisu.sortFalse()
+               // this.par.visiNisu.testPustotu()// sortFalse
+
+
+                this.startPolki(true)
+                return
+            }
+
+          /*    if(b===true && xm!=-xw/2){
+        
+                
+                setTimeout(function() {
+                   
+                    self.par.dVertic()
+                    self.startPolki("нах")
+                }, 30);
+                
+                return;
+            }*/
+
           
 
         }
+
+
 
 
 
