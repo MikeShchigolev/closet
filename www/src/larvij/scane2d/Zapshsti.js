@@ -9,7 +9,7 @@ export class DWindowS extends DCont {
     constructor(dCont, _x, _y, _text, _fun,_link) {
         super(); 
         this.type="DWindowS";
-        if(dcmParam==undefined)dcmParam=new DCM();
+      //  if(dcmParam==undefined)dcmParam=new DCM();
         
         var self=this;
         this.fun=_fun;  
@@ -402,6 +402,13 @@ export class GaleriLitel{
         this.array=[]
         this.arrayCech=[]
         this.linkPosle="yoriginal.png"
+/*
+        var p = new DButSim(this.dCont,0,-300,"eeeexz1",null,"resources/image/w0.png")
+        p.borderRadius=111;
+        p.boolLine=false;
+        p.width=47; 
+        p.height=47;
+        p.color =dcmParam.compToHexArray(dcmParam.hexDec(dcmParam._color1), -10);*/
 
 
         this.bool=false;
@@ -444,13 +451,30 @@ export class GaleriLitel{
                 this.array[i].restart(this.object.array[i])
                 this.array[i].dCont.visible = true; 
 
+                trace(i+" ",this.object.array[i])
+                if(this.object.array[i].src=="resources/image/w3.png"){
+                    let l=this.arrayCech[i].but2Link
+                    setTimeout(function() {
+                        trace("llllllll",l)
+                        self.parDrag(l)
+                    }, 3000);
+                }
             }
          
 
         }  
 
+        var sss=0
+        this.parDrag = function (p) {
+            trace(sss,p.alpha,p.scale)
+            if(p.parent){             
 
-        
+               sss++;
+               this.parDrag(p.parent) 
+            }
+
+
+        }    
 
 
 

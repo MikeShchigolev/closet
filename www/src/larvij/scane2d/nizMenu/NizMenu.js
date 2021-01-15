@@ -44,6 +44,14 @@ export class NizMenu  {
         this.plusMM=new PlusMM(this);//выподалка с доп функциами
         this.fotoMenu=new FotoMenu(this);//принскрин сохронялки
 
+/*
+        var p = new DButSim(this.dCont,200,-300,"eeeexz2",null,"resources/image/w0.png")
+        p.borderRadius=111;
+        p.boolLine=false;
+        p.width=47; 
+        p.height=47;
+        p.color =dcmParam.compToHexArray(dcmParam.hexDec(dcmParam._color1), -10);*/
+
 
 
         this.object=undefined;
@@ -127,11 +135,21 @@ export class PlusMM  {
         }
 
         var arrObj={array:[]}
-        if(bb==true)if(this.par.par.par.par.tip==0)arrObj.array.push({src:"resources/image/xp0.png"})
-        arrObj.array.push({src:"resources/image/xp1.png"})
-        arrObj.array.push({src:"resources/image/w3.png"})
-        if(this.par.par.par.par.tip==0)arrObj.array.push({src:"resources/image/w2.png"})
-        arrObj.array.push({src:"resources/image/w0.png"})
+        if(bb==true)if(this.par.par.par.par.tip==0)arrObj.array.push({src:"resources/image/xp0.png"});
+        arrObj.array.push({src:"resources/image/xp1.png"});
+        arrObj.array.push({src:"resources/image/w3.png"});
+        if(this.par.par.par.par.tip==0)arrObj.array.push({src:"resources/image/w2.png"});
+        arrObj.array.push({src:"resources/image/w0.png"});
+
+         
+      
+/*
+        var p = new DButSim(this.dCont,300,-300,"eeeexz$$$",null,"resources/image/w0.png")
+        p.borderRadius=111;
+        p.boolLine=false;
+        p.width=47; 
+        p.height=47;
+        p.color =dcmParam.compToHexArray(dcmParam.hexDec(dcmParam._color1), -10);*/
 
         this.galeri = new GaleriLitel(this,0,0,arrObj,function(s,p){ 
             if(s=="index"){
@@ -234,8 +252,8 @@ export class PlusMM  {
             this.wPan=w;
             this.dCont.y=0;
             this.dCont.scale=1
-            this.dCont.x=(this.wPan)/2+86
-            this.dCont.y=-this._vusot/2-10;            
+            this.dCont.x=Math.round((this.wPan)/2)+86
+            this.dCont.y=-Math.round(this._vusot/2)-10;            
         }
 
 

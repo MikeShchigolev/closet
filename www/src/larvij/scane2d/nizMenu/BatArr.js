@@ -32,6 +32,8 @@ export class BatArr  {
         this._width=100;
         this.array=[];
 
+       
+
         this.clear=function(){
             this._width=0;
             for (var i = 0; i < this.array.length; i++) {
@@ -80,7 +82,7 @@ export class BatArr  {
             }
             if(p==-1){
                 var xp=new DButSim(this.dCont,0,0," ",this.down,"resources/image/a_"+s+".png")
-                xp.name=s
+                xp.name=s;
                 xp.borderRadius=111;
                 xp.boolLine=false;
                 xp.width=this._vusot; 
