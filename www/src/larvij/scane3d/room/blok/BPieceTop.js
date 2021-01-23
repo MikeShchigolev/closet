@@ -1176,6 +1176,14 @@ export class VisiNisu {
                 }                
             }
 
+            trace("-----------------")
+            trace("0+",this.aAr)
+            trace("1+",this.aLeft)
+            trace("2+",this.aRight)
+            trace("3+",this.aIn)
+            trace("4+",this.aWith)
+            trace("5+",this.arrAll)
+
             for (var i = 0; i < this.aIn.length; i++) {
                 for (var j = this.aAr.length-1; j >= 0; j--) {                    
                     if(this.aIn[i].idRandom==this.aAr[j].idRandom){
@@ -1230,12 +1238,17 @@ export class VisiNisu {
 
             //мелкие хрени
             yy=y+(_obj.yPol+_obj.yS+_obj.ySRR);
-            yh=yy-_obj.krai.ySMin;            
+            //yh=yy-_obj.krai.ySMin;
+            yh=yy-_obj.rect[5];
+            trace(yy,yh,_obj.rect)
+
             for (var i = 0; i < this.aLeft.length; i++) {                
                 yy1=this.aLeft[i].boxColizi.rectCollisMeshdy.y+(this.aLeft[i].yPol+this.aLeft[i].yS+_obj.ySRR);
-                yh1=yy1-this.aLeft[i].krai.ySMin;
+                //yh1=yy1-this.aLeft[i].krai.ySMin;
+                yh1=yy1-this.aLeft[i].rect[5];
                 if((_obj.boolKr==true&&this.aLeft[i].boolKr==true)||(_obj.krai.bool==false||this.aLeft[i].krai.bool==false) ){
                 }else{
+                    
                     if(this.testLineXZ(yy,yh,yy1,yh1)==true){
                         if(Math.round(yy)!=Math.round(yy1))return i;
                         else{
@@ -1250,7 +1263,10 @@ export class VisiNisu {
 
             for (var i = 0; i < this.aRight.length; i++) {                
                 yy1=this.aRight[i].boxColizi.rectCollisMeshdy.y+(this.aRight[i].yPol+this.aRight[i].yS+_obj.ySRR);
-                yh1=this.aRight[i].boxColizi.rectCollisMeshdy.y+(this.aRight[i].yPol+this.aRight[i].yS+_obj.ySRR-this.aRight[i].krai.ySMin); 
+                
+                //yh1=this.aRight[i].boxColizi.rectCollisMeshdy.y+(this.aRight[i].yPol+this.aRight[i].yS+_obj.ySRR-this.aRight[i].krai.ySMin);
+                yh1=this.aRight[i].boxColizi.rectCollisMeshdy.y+(this.aRight[i].yPol+this.aRight[i].yS+_obj.ySRR-this.aRight[i].rect[5]);
+
                 if((_obj.boolKr==true&&this.aRight[i].boolKr==true)||(_obj.krai.bool==false||this.aRight[i].krai.bool==false) ){
 
                 }else{
@@ -1287,7 +1303,7 @@ export class VisiNisu {
                     } 
                 }
                 
-            }/**/
+            }
 
             return null;
         }

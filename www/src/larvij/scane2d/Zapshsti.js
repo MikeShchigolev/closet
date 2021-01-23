@@ -401,7 +401,7 @@ export class GaleriLitel{
         this.object=undefined
         this.array=[]
         this.arrayCech=[]
-        this.linkPosle="yoriginal.png"
+        this.linkPosle="yoriginal.png";
 /*
         var p = new DButSim(this.dCont,0,-300,"eeeexz1",null,"resources/image/w0.png")
         p.borderRadius=111;
@@ -451,11 +451,11 @@ export class GaleriLitel{
                 this.array[i].restart(this.object.array[i])
                 this.array[i].dCont.visible = true; 
 
-                trace(i+" ",this.object.array[i])
+              
                 if(this.object.array[i].src=="resources/image/w3.png"){
                     let l=this.arrayCech[i].but2Link
                     setTimeout(function() {
-                        trace("llllllll",l)
+                       
                         self.parDrag(l)
                     }, 3000);
                 }
@@ -480,14 +480,25 @@ export class GaleriLitel{
 
 
         this.mouseDown = function (e) {
+            
             if(self.dCont.visible==true){
                 self.setTime(100,false);
-            }            
+            } 
+
         }
 
-        this.restart(arrObj)
+        this.restart(arrObj)    
 
-        document.addEventListener("mousedown", this.mouseDown);
+        if (dcmParam.mobile == false) {
+            document.addEventListener("mousedown", this.mouseDown);
+            
+        } else {
+            document.addEventListener("touchstart", this.mouseDown);
+            
+        }
+
+        
+
     }
 
     set prosent(v) {

@@ -390,6 +390,7 @@ export class BoxLXZ{
         this.dCont.add(this.lD); 
 
         this.input=new DInput(this.dCont,-this._width/2,-this._height/2-3,this._value+"",function(){
+            trace(this)
             if(isNaN(this.value/10)==true)this.value=self.value*10         
                 self.value  = this.value/10;
             self.fun("drag",self.value/10);    
@@ -397,7 +398,16 @@ export class BoxLXZ{
         })
 
         this.input.funFocus=function(){
-            self.actBig=this.boolFocus 
+            self.actBig=this.boolFocus
+
+            if(this.boolFocus==false){
+                if(isNaN(this.object.value*1)!=true){
+                    
+                    this.value=this.object.value*1
+                    if(this.fun)this.fun()
+                }
+            }            
+          
             if(self.funFocus) self.funFocus()         
         }
 

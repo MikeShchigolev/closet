@@ -109,7 +109,7 @@ export class Glaf  {
 
             var sf=20
             if(_sf)sf=_sf   
-
+                trace("this.boolFocus!!!!!!!>>>!!!!!!",ibput,text)
             ibput.height=hh
             ibput.object.style.borderRadius=ibput.height/2+"px";
             ibput.object.style.fontFamily="SFUIDisplay-Light";
@@ -121,15 +121,35 @@ export class Glaf  {
                 var t=text;
                 ibput.text=t;
                 ibput.funFocus=function(){
+                    trace("this.boolFocus!!!!!!!!!!!!!!!!!!!",this.boolFocus)
                     if(this.boolFocus==true && this.text==t){
                         this.text="";
                     }
                     if(this.boolFocus==false && this.text==""){
+                        
+                        //this.fun()
                         this.text=t;
                     }
+                    
                 }
+            }else{
+                /*ibput.funFocus=function(){
+                    trace("this.boolFocus!!!!!!!!!!!!!!!!!!!",this.boolFocus)
+                }*/
             }
+
+           /* ibput.funFocus=function(){
+                if(ibput.boolFocus==false){
+                    
+                    trace("###")
+                    ibput.fun()
+                }
+            }*/
         }
+
+
+
+
    
         //порезаный от пикси вювер        
 		this.visi3D = new MVisi3D(main.contentHTML, null, dcmParam.mobile, true, true, true, true);		

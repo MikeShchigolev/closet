@@ -1855,7 +1855,7 @@ export class HrenNiz {
                                 mesh.rotation.x=-Math.PI/2;
                                 self.hmp1=self.aP1[i] 
                                 mesh.position.y=0//self.aP1[i].object.obj.mod.r[1]; 
-                                mesh.position.x=self.par.object.mod.r[0]+sah+j*sah  
+                                mesh.position.x=self.par.object.mod.r[0]+sah+j*sah 
                                 mesh.position.z=- self.par.object.mod.r[2]                             
                             }
                                                       
@@ -1938,36 +1938,19 @@ export class HrenNiz {
             //var o=this.par.mO.getRendomID("tit3");
 
             var o=this.par.mO.getIdObj(122)
-           /* for (var i = 0; i < 92; i++) {                
-                if(o!=null){
 
-                    omb=mark.getO3D(o);
-                    this.arrMark.push(omb); 
-                    let z=o.obj.mod.r[4]+this.object.obj.mod.r[1]-this.arrHron[0].object.obj.mod.r[5]/2-1+o.obj.mod.r[1]
-                    let y= this.object.obj.mod.r[2]+this.arrHron[0].object.obj.mod.r[5]/2+ o.obj.mod.r[5]/2+o.obj.mod.r[2];
-                    if(this.bool3==true) {
-                        z=o.obj.mod.r[4]-2-oPlus1.z 
-                        y=this.content3d.position.z-3-oPlus1.y 
-                    } 
 
-                    omb.setPRS({
-                        x:otSah-o.obj.mod.r[0],
-                        y:y,
-                        z:z
-                    });
-                    otSah+=o.obj.mod.r[3]+2;
-                }
-                o = this.par.mO.getRendomID("tit3"); 
-                if(otSah+o.obj.mod.r[3] > self.par.object.mod.r[3]+self.par.object.mod.r[0]-4) {
-                    break;
-                } 
-
-            }*/
             if(o!==null){
+                let zzxx=0;
+                if(self.par.object.mod.r[0]<-50){
+                    zzxx=-20
+                    
+                }
+                
                 let z=o.obj.mod.r[4]+this.object.obj.mod.r[1]-this.arrHron[0].object.obj.mod.r[5]/2-1+o.obj.mod.r[1]+3.8
                 omb=mark.getO3D(o);
                 omb.setPRS({
-                    x:2,
+                    x:2+zzxx,
                     y:15,
                     z:z
                 });
