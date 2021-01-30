@@ -1176,13 +1176,13 @@ export class VisiNisu {
                 }                
             }
 
-            trace("-----------------")
+         /*   trace("-----------------")
             trace("0+",this.aAr)
             trace("1+",this.aLeft)
             trace("2+",this.aRight)
             trace("3+",this.aIn)
             trace("4+",this.aWith)
-            trace("5+",this.arrAll)
+            trace("5+",this.arrAll)*/
 
             for (var i = 0; i < this.aIn.length; i++) {
                 for (var j = this.aAr.length-1; j >= 0; j--) {                    
@@ -1240,7 +1240,7 @@ export class VisiNisu {
             yy=y+(_obj.yPol+_obj.yS+_obj.ySRR);
             //yh=yy-_obj.krai.ySMin;
             yh=yy-_obj.rect[5];
-            trace(yy,yh,_obj.rect)
+            //trace(yy,yh,_obj.rect)
 
             for (var i = 0; i < this.aLeft.length; i++) {                
                 yy1=this.aLeft[i].boxColizi.rectCollisMeshdy.y+(this.aLeft[i].yPol+this.aLeft[i].yS+_obj.ySRR);

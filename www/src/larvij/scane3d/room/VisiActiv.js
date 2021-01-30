@@ -585,9 +585,9 @@ export class VABox  {
         this.label2.material=this._matText;
         this.label2.fontSize=this._fontSize;      
 
-        this.label.object3d.scale.z=0.02
-        this.label1.object3d.scale.z=0.02
-        this.label2.object3d.scale.z=0.02
+        this.label.object3d.scale.z=0.02;
+        this.label1.object3d.scale.z=0.02;
+        this.label2.object3d.scale.z=0.02;
 
 
         var w,h,d,n;

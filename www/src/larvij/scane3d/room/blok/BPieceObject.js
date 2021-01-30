@@ -1758,7 +1758,7 @@ export class HrenNiz {
         }
 
 
-
+        self.kolPolta1=0
 
         self.hmp1=null
         this.drag=function(){
@@ -1845,6 +1845,7 @@ export class HrenNiz {
             
             self.hmp1=null
             if(self.polka1!="null"){
+                self.kolPolta1=0
                 for (var i = 0; i < self.aP1.length; i++) {                    
                     if(self.polka1.indexOf(self.aP1[i].object.id+"")!=-1){
                         if(self.aP1[i].obj3d!=undefined){                            
@@ -1856,7 +1857,8 @@ export class HrenNiz {
                                 self.hmp1=self.aP1[i] 
                                 mesh.position.y=0//self.aP1[i].object.obj.mod.r[1]; 
                                 mesh.position.x=self.par.object.mod.r[0]+sah+j*sah 
-                                mesh.position.z=- self.par.object.mod.r[2]                             
+                                mesh.position.z=- self.par.object.mod.r[2]   
+                                self.kolPolta1++;                          
                             }
                                                       
                             break;
@@ -1989,15 +1991,24 @@ export class HrenNiz {
 
             if(self.polka1!="null"){
                 
-                for (var i = 0; i < self.aP1.length; i++) {                    
+                let sah=(self.par.object.mod.r[3]/(self.kolP1+1)) 
+                trace(sah+">>>>>>>>>>>>>>>>>>",self.kolPolta1,self.aP1)
+
+                for (var i = 0; i < self.aP1.length; i++) { 
+
+                    
+
                     if(self.polka1.indexOf(self.aP1[i].object.id+"")!=-1){
-                        aaa = menedsherMaterial.getArrOtObj(self.aP1[i].object.obj, idMat, intColor)  
-                        //this.parsArr(this.arrHron[2].object.obj[strXZ], aaa)           
-                        aaa[9]=self.aP1[i].object.obj.id;
-                        aaa[8]=self.aP1[i].object.obj;
-                        /*aaa[5]=1
-                        aaa[6]=0*/
-                        a.push(aaa);
+                        for (var k = 0; k < self.kolPolta1; k++) {
+                            aaa = menedsherMaterial.getArrOtObj(self.aP1[i].object.obj, idMat, intColor)  
+                            //this.parsArr(this.arrHron[2].object.obj[strXZ], aaa)           
+                            aaa[9]=self.aP1[i].object.obj.id;
+                            aaa[8]=self.aP1[i].object.obj;
+                            /*aaa[5]=1
+                            aaa[6]=0*/
+                            a.push(aaa); 
+                        }
+                        
                        
                        
                         /*if(self.aP1[i].obj3d!=undefined){                            

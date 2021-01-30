@@ -490,8 +490,7 @@ export class GaleriLitel{
         this.restart(arrObj)    
 
         if (dcmParam.mobile == false) {
-            document.addEventListener("mousedown", this.mouseDown);
-            
+            document.addEventListener("mousedown", this.mouseDown);            
         } else {
             document.addEventListener("touchstart", this.mouseDown);
             
